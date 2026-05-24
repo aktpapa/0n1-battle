@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>0N1 FORCE — NEON RING CLASH</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
+:root{
+  --bg:#04030c;--ink:#eef0ff;--muted:#7d72a8;
+  --pink:#ff1f6d;--cyan:#22e6e0;--violet:#9b3cff;--gold:#ffc83a;
+  --line:rgba(155,60,255,.42);--panel:rgba(18,8,38,.82);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:'Chakra Petch',sans-serif;background:#04030c;color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* ===== 背景 ===== */
+.scene{position:fixed;inset:0;z-index:0;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 12%,rgba(255,31,109,.22),transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(34,230,224,.18),transparent 50%),
+    linear-gradient(180deg,#0b0322 0%,#04030c 65%)}
+.city{position:absolute;left:0;right:0;bottom:42%;height:30%;opacity:.5;
+  background:repeating-linear-gradient(90deg,#160a30 0 32px,#0d0420 32px 64px,#1a0b38 64px 96px);
+  clip-path:polygon(0 60%,4% 30%,8% 55%,12% 18%,17% 45%,22% 25%,27% 60%,33% 22%,38% 50%,44% 15%,50% 48%,56% 28%,62% 58%,68% 20%,74% 52%,80% 30%,86% 60%,92% 25%,97% 50%,100% 35%,100% 100%,0 100%)}
+.floor{position:absolute;left:-40%;right:-40%;bottom:0;height:46%;
+  background-image:linear-gradient(rgba(155,60,255,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(34,230,224,.42) 1px,transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(380px) rotateX(70deg);transform-origin:bottom;
+  mask-image:linear-gradient(transparent 8%,#000 60%);-webkit-mask-image:linear-gradient(transparent 8%,#000 60%);
+  animation:flo 5s linear infinite}
+@keyframes flo{from{background-position:0 0}to{background-position:0 60px}}
+.scan{position:fixed;inset:0;z-index:90;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+
+.wrap{position:relative;z-index:5;max-width:940px;margin:0 auto;padding:16px 14px 38px}
+header{text-align:center;margin-bottom:14px}
+.logo{font-family:'Zen Dots';font-size:clamp(22px,5vw,40px);letter-spacing:.03em;
+  background:linear-gradient(92deg,var(--pink),var(--gold),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 26px rgba(255,31,109,.4)}
+.sub{color:var(--muted);letter-spacing:.4em;font-size:10px;margin-top:5px;text-transform:uppercase}
+
+/* 言語切替 */
+.lang-switch{position:absolute;top:14px;right:14px;display:flex;gap:6px;z-index:100}
+.lang-btn{font-family:'Chakra Petch';font-size:11px;font-weight:700;letter-spacing:.1em;
+  padding:6px 12px;border:1px solid var(--line);background:rgba(18,8,38,.7);color:var(--muted);
+  border-radius:8px;cursor:pointer;transition:.15s}
+.lang-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.lang-btn.active{background:linear-gradient(95deg,var(--cyan),var(--gold));color:#04030c;border-color:transparent}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  backdrop-filter:blur(7px);box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 20px 50px -28px rgba(155,60,255,.6)}
+
+/* ===== Start ===== */
+#start{padding:34px 26px;text-align:center}
+#start h2{font-family:'Zen Dots';font-size:17px;color:var(--cyan);margin-bottom:6px}
+#start p{color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:22px}
+.irow{display:flex;gap:10px;max-width:400px;margin:0 auto 14px;flex-wrap:wrap;justify-content:center}
+#tokenId{flex:1;min-width:170px;background:rgba(0,0,0,.45);border:1px solid var(--line);
+  color:var(--ink);font-family:'Chakra Petch';font-size:18px;font-weight:600;
+  padding:13px 16px;border-radius:11px;text-align:center;outline:none;transition:.2s}
+#tokenId:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,230,224,.16)}
+#tokenId::placeholder{color:#564a78}
+.btn{font-family:'Chakra Petch';font-weight:700;font-size:14px;letter-spacing:.07em;
+  text-transform:uppercase;border:none;cursor:pointer;border-radius:11px;padding:13px 24px;
+  color:#04030c;background:linear-gradient(95deg,var(--cyan),var(--gold));transition:transform .15s;
+  box-shadow:0 8px 22px -10px var(--cyan)}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn:disabled{opacity:.32;cursor:not-allowed;transform:none}
+.hint{font-size:11px;color:#5a4f7d;margin-top:12px;line-height:1.7}
+
+/* ===== RING（密度UP・3D感UP・配置整理）===== */
+#battle{display:none}
+.ring{position:relative;height:460px;margin-bottom:14px;border-radius:18px;overflow:hidden;
+  border:1px solid var(--line);perspective:1000px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(155,60,255,.25),transparent 65%),
+    linear-gradient(180deg,#100634 0%,#08021a 60%,#04030c 100%)}
+
+/* 観客席（左右暗いスタンド） */
+.stand{position:absolute;bottom:0;width:18%;height:62%;z-index:1;
+  background:linear-gradient(90deg,#0a041c,#06021a 80%,transparent);
+  border-right:1px solid rgba(155,60,255,.2)}
+.stand.r{right:0;left:auto;transform:scaleX(-1)}
+.stand::before{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,rgba(255,31,109,.06) 0 6px,transparent 6px 14px),
+    repeating-linear-gradient(90deg,rgba(34,230,224,.08) 0 4px,transparent 4px 22px)}
+/* 観客（点点） */
+.crowd{position:absolute;bottom:5%;left:2%;width:14%;height:50%;z-index:2;
+  background-image:radial-gradient(rgba(34,230,224,.5) 1px,transparent 1.5px);
+  background-size:14px 18px;opacity:.6}
+.crowd.r{left:auto;right:2%}
+
+/* レーザー光線（天井から下りる） */
+.laser{position:absolute;top:0;width:2px;height:55%;z-index:2;opacity:.55;
+  transform-origin:top center;animation:laserSweep 6s ease-in-out infinite}
+.laser.l1{left:25%;background:linear-gradient(#ff1f6d,transparent);box-shadow:0 0 10px var(--pink);animation-delay:0s}
+.laser.l2{left:50%;background:linear-gradient(#22e6e0,transparent);box-shadow:0 0 10px var(--cyan);animation-delay:-2s}
+.laser.l3{left:75%;background:linear-gradient(#9b3cff,transparent);box-shadow:0 0 10px var(--violet);animation-delay:-4s}
+@keyframes laserSweep{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+
+/* リングマット（台形・3D感UP） */
+.mat{position:absolute;left:50%;bottom:5%;width:64%;height:54%;transform:translateX(-50%);z-index:3;
+  background:
+    repeating-linear-gradient(0deg,rgba(34,230,224,.10) 0 22px,transparent 22px 44px),
+    radial-gradient(ellipse at 50% 30%,rgba(255,31,109,.18),transparent 60%),
+    linear-gradient(180deg,rgba(34,230,224,.10),rgba(155,60,255,.08));
+  clip-path:polygon(18% 0,82% 0,100% 100%,0 100%);
+  border-top:2px solid rgba(34,230,224,.5);
+  box-shadow:0 0 40px rgba(155,60,255,.25)}
+.mat::before{content:"0N1";position:absolute;top:36%;left:50%;transform:translateX(-50%);
+  font-family:'Zen Dots';font-size:60px;color:rgba(155,60,255,.22);letter-spacing:.08em}
+.mat::after{content:"FORCE";position:absolute;top:62%;left:50%;transform:translateX(-50%);
+  font-family:'Zen Dots';font-size:14px;color:rgba(34,230,224,.28);letter-spacing:.4em}
+
+/* ロープ */
+.ropes{position:absolute;inset:0;pointer-events:none;z-index:4}
+.rope{position:absolute;border-radius:3px}
+/* 奥ロープ（コーナー手前→手前コーナーへ繋がる横3本） */
+.rope.b1{height:3px;left:18%;right:18%;top:46%;background:linear-gradient(90deg,transparent,var(--pink),transparent);box-shadow:0 0 10px var(--pink)}
+.rope.b2{height:3px;left:18%;right:18%;top:50%;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 10px var(--cyan)}
+.rope.b3{height:3px;left:18%;right:18%;top:54%;background:linear-gradient(90deg,transparent,var(--violet),transparent);box-shadow:0 0 10px var(--violet)}
+/* 手前ロープ（3本・パース感を出す） */
+.rope.f1{height:4px;left:0;right:0;bottom:7%;background:linear-gradient(90deg,transparent 5%,var(--pink) 50%,transparent 95%);box-shadow:0 0 14px var(--pink)}
+.rope.f2{height:4px;left:5%;right:5%;bottom:13%;background:linear-gradient(90deg,transparent 5%,var(--cyan) 50%,transparent 95%);box-shadow:0 0 12px var(--cyan)}
+.rope.f3{height:3px;left:10%;right:10%;bottom:19%;background:linear-gradient(90deg,transparent 8%,var(--violet) 50%,transparent 92%);box-shadow:0 0 10px var(--violet)}
+/* 左サイドロープ（奥→手前へ斜めに3本） */
+.rope.sl1{width:3px;left:18%;top:46%;height:24%;transform-origin:top left;
+  transform:skewY(40deg) scaleY(2.5);background:linear-gradient(180deg,var(--pink),var(--pink));box-shadow:0 0 8px var(--pink);opacity:.7}
+.rope.sl2{width:3px;left:18%;top:50%;height:24%;transform-origin:top left;
+  transform:skewY(40deg) scaleY(2.5);background:linear-gradient(180deg,var(--cyan),var(--cyan));box-shadow:0 0 8px var(--cyan);opacity:.7}
+.rope.sl3{width:3px;left:18%;top:54%;height:24%;transform-origin:top left;
+  transform:skewY(40deg) scaleY(2.5);background:linear-gradient(180deg,var(--violet),var(--violet));box-shadow:0 0 8px var(--violet);opacity:.7}
+/* 右サイドロープ */
+.rope.sr1{width:3px;right:18%;top:46%;height:24%;transform-origin:top right;
+  transform:skewY(-40deg) scaleY(2.5);background:linear-gradient(180deg,var(--pink),var(--pink));box-shadow:0 0 8px var(--pink);opacity:.7}
+.rope.sr2{width:3px;right:18%;top:50%;height:24%;transform-origin:top right;
+  transform:skewY(-40deg) scaleY(2.5);background:linear-gradient(180deg,var(--cyan),var(--cyan));box-shadow:0 0 8px var(--cyan);opacity:.7}
+.rope.sr3{width:3px;right:18%;top:54%;height:24%;transform-origin:top right;
+  transform:skewY(-40deg) scaleY(2.5);background:linear-gradient(180deg,var(--violet),var(--violet));box-shadow:0 0 8px var(--violet);opacity:.7}
+
+/* コーナーポスト（4本） */
+.post{position:absolute;width:10px;border-radius:5px;z-index:5;
+  background:linear-gradient(180deg,var(--gold),#5a3d00);box-shadow:0 0 18px rgba(255,200,58,.7)}
+.post.bl{left:18%;top:42%;height:18%;width:7px}
+.post.br{right:18%;top:42%;height:18%;width:7px}
+.post.fl{left:5%;bottom:4%;height:28%;transform:skewX(-8deg)}
+.post.fr{right:5%;bottom:4%;height:28%;transform:skewX(8deg)}
+
+/* スポットライト（天井から下方） */
+.spotlight{position:absolute;top:0;width:0;height:0;z-index:2;pointer-events:none}
+.spotlight.l{left:20%;border-left:60px solid transparent;border-right:60px solid transparent;
+  border-top:230px solid rgba(255,31,109,.12)}
+.spotlight.r{right:20%;border-left:60px solid transparent;border-right:60px solid transparent;
+  border-top:230px solid rgba(34,230,224,.12)}
+
+/* 煙/フォグ */
+.fog{position:absolute;left:0;right:0;bottom:0;height:30%;z-index:3;pointer-events:none;
+  background:radial-gradient(ellipse at 30% 100%,rgba(255,31,109,.18),transparent 50%),
+    radial-gradient(ellipse at 70% 100%,rgba(34,230,224,.16),transparent 50%);
+  filter:blur(6px)}
+
+/* ===== 敵：奥のコーナー（右寄せ・上方へ移動） ===== */
+.corner.en{position:absolute;top:8%;left:72%;transform:translateX(-50%) scale(.58);z-index:6;
+  filter:drop-shadow(0 0 22px rgba(255,31,109,.6))}
+/* ===== 自分：左下（HPバーと被らない位置） ===== */
+.corner.me{position:absolute;bottom:13%;left:28%;transform:translateX(-50%);z-index:7;
+  filter:drop-shadow(0 0 28px rgba(34,230,224,.65))}
+
+/* リング内コマンドマス（横並び） */
+.ring-queue{position:absolute;display:flex;flex-direction:column;gap:4px;z-index:7}
+.ring-queue.en{top:9%;left:6%;}
+.ring-queue.en .ring-qlabel{color:var(--pink);text-align:left}
+.ring-queue.me{bottom:6%;right:4%;}
+.ring-queue.me .ring-qlabel{color:var(--cyan);text-align:right}
+.ring-qlabel{font-family:'Zen Dots';font-size:9px;letter-spacing:.15em;margin-bottom:2px}
+.ring-qslots{display:flex;flex-direction:row;gap:5px}
+.ring-qslot{width:46px;height:48px;border-radius:9px;border:1px dashed var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:8px;color:var(--muted);background:rgba(4,3,12,.85);transition:.2s;text-align:center}
+.ring-qslot.filled{border-style:solid;border-color:var(--cyan);color:var(--ink);background:rgba(34,230,224,.18)}
+.ring-qslot .ic{font-size:13px;margin-bottom:1px}
+.ring-qslot.en{border-color:var(--pink)}
+.ring-qslot.back{background:repeating-linear-gradient(45deg,#1a0b33,#1a0b33 5px,#250f47 5px,#250f47 10px);border-color:var(--pink);color:var(--pink)}
+.ring-qslot.reveal{border-color:var(--pink);background:rgba(255,31,109,.18);color:var(--ink)}
+.ring-qslot.active{transform:scale(1.25);box-shadow:0 0 22px var(--gold);border-color:var(--gold) !important;z-index:2}
+
+/* トレカ */
+.tcg{width:200px;border-radius:14px;overflow:hidden;position:relative;
+  border:2px solid var(--cyan);background:linear-gradient(160deg,#10082a,#1c0e3c)}
+.corner.en .tcg{width:175px;border-color:var(--pink)}
+.tcg-head{display:flex;justify-content:space-between;align-items:center;
+  padding:5px 9px;font-family:'Zen Dots';font-size:10px;background:rgba(0,0,0,.4)}
+.corner.me .tcg-head .nm{color:var(--cyan)}.corner.en .tcg-head .nm{color:var(--pink)}
+.tcg-type{font-size:8px;padding:2px 7px;border-radius:10px;letter-spacing:.08em;border:1px solid currentColor}
+.tcg-art{width:100%;aspect-ratio:1/1;background:#0a0420;position:relative;overflow:hidden}
+.tcg-art img,.tcg-art canvas{width:100%;height:100%;object-fit:cover;display:block}
+.tcg-art .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--muted);letter-spacing:.2em}
+/* エフェクトレイヤー（カード上に重ねる） */
+.tcg-fx{position:absolute;inset:0;pointer-events:none;z-index:5}
+.tcg-fx svg{position:absolute;inset:0;width:100%;height:100%}
+.tcg-stats{display:flex;padding:5px 4px;gap:2px;background:rgba(0,0,0,.4)}
+.tcg-stats .st{flex:1;text-align:center;min-width:0}
+.tcg-stats .st .l{font-size:8px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;line-height:1.2}
+.tcg-stats .st .v{font-family:'Zen Dots';font-size:13px;line-height:1.1}
+.tcg-stats .st .b{font-family:'Chakra Petch';font-size:9px;color:var(--gold);margin-left:2px;font-weight:600}
+.tcg-stats .st .b.neg{color:var(--pink)}
+.st.sp .v{color:var(--cyan)}.st.str .v{color:var(--pink)}.st.sty .v{color:var(--gold)}
+.tcg-foot{padding:4px 8px;font-size:8px;color:var(--muted);background:rgba(0,0,0,.55);text-align:center;letter-spacing:.05em}
+
+/* HP/RAGE バー */
+.bars{position:absolute;z-index:8}
+/* 敵HPバー：上部中央（敵キュー[左]と敵カード[右]の間に挟まる） */
+.bars.top{top:10px;left:24%;right:24%;padding:0}
+/* 自分HPバー：下部全幅 */
+.bars.bot{bottom:8px;left:0;right:0;padding:0 16px}
+.nameline{display:flex;justify-content:space-between;align-items:center;font-size:10px;margin-bottom:4px}
+.nameline .nm-id{font-family:'Zen Dots';font-size:15px;letter-spacing:.05em;text-shadow:0 0 10px currentColor}
+.barwrap{height:13px;border-radius:7px;background:rgba(0,0,0,.65);overflow:hidden;border:1px solid var(--line)}
+.barfill{height:100%;transition:width .55s cubic-bezier(.4,1.4,.5,1);border-radius:7px}
+.me .barfill{background:linear-gradient(90deg,#127a73,var(--cyan))}
+.en .barfill{background:linear-gradient(90deg,#7a1240,var(--pink))}
+.ragewrap{height:6px;border-radius:4px;background:rgba(0,0,0,.5);overflow:hidden;margin-top:3px;border:1px solid rgba(255,200,58,.3)}
+.ragefill{height:100%;width:0;background:linear-gradient(90deg,#7a5400,var(--gold));transition:width .4s;border-radius:4px}
+.ragefill.full{animation:rg .8s infinite}
+@keyframes rg{0%,100%{box-shadow:0 0 4px var(--gold)}50%{box-shadow:0 0 16px var(--gold)}}
+.hptxt{font-size:9px;color:var(--muted)}
+.me-a{color:var(--cyan)}.en-a{color:var(--pink)}
+
+/* ===== 全画面エフェクト（リング中央に出る大きいエフェクト） ===== */
+.fullfx{position:absolute;inset:0;z-index:9;pointer-events:none}
+.fullfx svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;max-width:400px;aspect-ratio:1/1}
+
+/* ===== Typebar ===== */
+.typebar{display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:8px;margin-bottom:12px;font-size:11px;letter-spacing:.05em}
+.typechip{padding:3px 11px;border-radius:12px;border:1px solid currentColor;font-weight:700;font-size:11px}
+.vsmark{color:var(--muted);font-family:'Zen Dots';font-size:11px}
+.matchup{font-family:'Zen Dots';font-size:12px}
+.matchup.adv{color:var(--cyan)}.matchup.dis{color:var(--pink)}.matchup.neu{color:var(--muted)}
+
+/* ===== Phase / Queue / Commands ===== */
+.phase{text-align:center;font-family:'Zen Dots';font-size:13px;letter-spacing:.08em;margin-bottom:10px;color:var(--cyan)}
+.phase.solve{color:var(--pink)}
+.queue{display:flex;justify-content:center;gap:7px;margin-bottom:11px}
+.qslot{width:58px;height:60px;border-radius:11px;border:1px dashed var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:9px;color:var(--muted);background:rgba(18,8,38,.5);transition:.2s;text-align:center}
+.qslot.filled{border-style:solid;border-color:var(--cyan);color:var(--ink);background:rgba(34,230,224,.12)}
+.qslot .ic{font-size:17px;margin-bottom:2px}
+.qslot.en{border-color:var(--pink)}
+.qslot.back{background:repeating-linear-gradient(45deg,#1a0b33,#1a0b33 6px,#250f47 6px,#250f47 12px);border-color:var(--pink);color:var(--pink)}
+.qslot.reveal{border-color:var(--pink);background:rgba(255,31,109,.12);color:var(--ink)}
+.qslot.active{transform:scale(1.18);box-shadow:0 0 22px var(--gold);border-color:var(--gold) !important;z-index:2}
+
+.commands{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:11px}
+@media(max-width:620px){.commands{grid-template-columns:repeat(3,1fr)}}
+.cmd{font-family:'Chakra Petch';font-weight:700;font-size:12px;padding:13px 5px;border-radius:11px;
+  cursor:pointer;background:rgba(18,8,38,.85);border:1px solid var(--line);color:var(--ink);
+  transition:.15s;text-align:center;letter-spacing:.03em}
+.cmd .ic{display:block;font-size:19px;margin-bottom:3px}
+.cmd .sm{display:block;font-size:8px;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.3}
+.cmd:hover:not(:disabled){border-color:var(--cyan);transform:translateY(-2px);color:var(--cyan)}
+.cmd.counter{border-color:var(--violet)}.cmd.counter:hover:not(:disabled){color:var(--violet)}
+.cmd.sp{border-color:var(--gold)}.cmd.sp:hover:not(:disabled){color:var(--gold)}
+.cmd.sp.ready{animation:rg 1s infinite;border-color:var(--gold)}
+.cmd:disabled{opacity:.3;cursor:not-allowed}
+
+.ctrlrow{display:flex;gap:10px;justify-content:center;margin-bottom:13px}
+.log{padding:12px 15px;height:160px;overflow-y:auto;font-size:12px;line-height:1.85;scrollbar-width:thin}
+.log-title-after{font-family:'Zen Dots';font-size:11px;letter-spacing:.25em;color:var(--muted);
+  text-align:center;margin:24px 0 10px;text-transform:uppercase}
+.log::-webkit-scrollbar{width:5px}.log::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.log p{margin-bottom:1px;animation:sl .3s}
+@keyframes sl{from{opacity:0;transform:translateX(-6px)}to{opacity:1}}
+.log .sys{color:var(--muted)}.log .me-a{color:var(--cyan)}.log .en-a{color:var(--pink)}
+.log .crit{color:var(--gold);font-weight:700}.log .dmg{color:#ff6ea0}
+.log .clash{color:var(--violet);font-weight:700}.log .adv{color:var(--cyan);font-weight:700}
+
+.hit{animation:hk .4s}
+@keyframes hk{0%,100%{transform:translateX(-50%) scale(.62)}50%{transform:translateX(-46%) scale(.62)}}
+.corner.me.hit{animation:hkm .4s}
+@keyframes hkm{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-45%)}}
+.flash{animation:fl .4s}
+@keyframes fl{0%{filter:none}50%{filter:brightness(1.9) saturate(2)}100%{filter:none}}
+.float{position:absolute;font-family:'Zen Dots';font-size:30px;pointer-events:none;z-index:30;
+  animation:fu 1.1s ease-out forwards;left:50%;text-shadow:0 2px 12px #000,0 0 20px currentColor}
+@keyframes fu{0%{opacity:0;transform:translate(-50%,0) scale(.5)}20%{opacity:1;transform:translate(-50%,-14px) scale(1.3)}100%{opacity:0;transform:translate(-50%,-70px) scale(1)}}
+
+/* ===== Ready / Fight 大型アナウンス ===== */
+.announce{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:50;
+  font-family:'Zen Dots',sans-serif;pointer-events:none;text-align:center;
+  font-size:clamp(54px,11vw,110px);letter-spacing:.06em;
+  text-shadow:0 0 30px currentColor,0 0 60px currentColor,0 4px 8px #000;
+  white-space:nowrap}
+.announce.ready{color:var(--gold);animation:annReady 1.0s ease-out forwards}
+.announce.fight{color:var(--pink);animation:annFight 1.0s ease-out forwards}
+@keyframes annReady{
+  0%   {opacity:0;transform:translate(-50%,-50%) scale(2.5) rotate(-8deg)}
+  18%  {opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(2deg)}
+  30%  {transform:translate(-50%,-50%) scale(1.0) rotate(0deg)}
+  78%  {opacity:1;transform:translate(-50%,-50%) scale(1.05)}
+  100% {opacity:0;transform:translate(-50%,-50%) scale(.85)}
+}
+@keyframes annFight{
+  0%   {opacity:0;transform:translate(-50%,-50%) scale(0.3) rotate(5deg)}
+  12%  {opacity:1;transform:translate(-50%,-50%) scale(1.6) rotate(-3deg)}
+  25%  {transform:translate(-50%,-50%) scale(1.2) rotate(0deg)}
+  85%  {opacity:1;transform:translate(-50%,-50%) scale(1.25)}
+  100% {opacity:0;transform:translate(-50%,-50%) scale(2.0)}
+}
+/* 画面を一瞬白く光らせる */
+.flashbang{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:45;
+  animation:flashbang .5s ease-out forwards}
+@keyframes flashbang{0%{opacity:0}10%{opacity:.6}100%{opacity:0}}
+
+/* ===== バトル終了オーバーレイ（ログを残したまま勝敗表示）===== */
+.endbanner{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);z-index:55;
+  font-family:'Zen Dots',sans-serif;text-align:center;pointer-events:none;
+  font-size:clamp(46px,9vw,90px);letter-spacing:.08em;
+  text-shadow:0 0 30px currentColor,0 0 60px currentColor,0 4px 12px #000;
+  animation:endBan 1.0s ease-out forwards}
+.endbanner.win{color:var(--cyan)}
+.endbanner.lose{color:var(--pink)}
+@keyframes endBan{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(0.4)}
+  20%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1.0)}
+}
+.endbanner.persist{animation:endBanPersist 2s infinite alternate}
+@keyframes endBanPersist{
+  from{text-shadow:0 0 20px currentColor,0 0 40px currentColor,0 4px 12px #000}
+  to{text-shadow:0 0 40px currentColor,0 0 80px currentColor,0 4px 12px #000}
+}
+.endpanel{margin:12px 0 14px;padding:14px 18px;text-align:center;
+  border:1px solid var(--gold);border-radius:14px;
+  background:linear-gradient(95deg,rgba(255,200,58,.08),rgba(155,60,255,.08));
+  animation:endPanFade .6s ease-out forwards;opacity:0}
+@keyframes endPanFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.endpanel .endmsg{font-size:13px;color:var(--ink);margin-bottom:10px;line-height:1.6}
+.endpanel .endmsg b{color:var(--gold)}
+
+#result{display:none;padding:40px 26px;text-align:center}
+#result .rt{font-family:'Zen Dots';font-size:32px;margin-bottom:10px}
+.win{color:var(--cyan);text-shadow:0 0 28px rgba(34,230,224,.5)}
+.lose{color:var(--pink);text-shadow:0 0 28px rgba(255,31,109,.5)}
+#result p{color:var(--muted);margin-bottom:22px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="scene"><div class="city"></div><div class="floor"></div></div>
+<div class="scan"></div>
+
+<div class="wrap">
+  <div class="lang-switch">
+    <button class="lang-btn active" id="bgmToggle" title="BGM ON/OFF" style="font-size:13px">🔊</button>
+    <button class="lang-btn active" data-lang="ja">日本語</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+
+  <header>
+    <div class="logo">NEON RING CLASH</div>
+    <div class="sub">0N1 Force · Cyber Trading Battle</div>
+  </header>
+
+  <div class="panel" id="start">
+    <h2 data-i18n="summon_title">ファイターを召喚</h2>
+    <p data-i18n="summon_desc"></p>
+    <div class="irow">
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
+    </div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
+    <div class="hint" data-i18n="hint"></div>
+  </div>
+
+  <div id="battle">
+    <div class="ring" id="ring">
+      <!-- 背景レイヤー -->
+      <div class="stand l"></div><div class="stand r"></div>
+      <div class="crowd l"></div><div class="crowd r"></div>
+      <div class="laser l1"></div><div class="laser l2"></div><div class="laser l3"></div>
+      <div class="spotlight l"></div><div class="spotlight r"></div>
+      <div class="mat"></div>
+      <div class="post bl"></div><div class="post br"></div>
+      <div class="post fl"></div><div class="post fr"></div>
+      <div class="ropes">
+        <div class="rope b1"></div><div class="rope b2"></div><div class="rope b3"></div>
+        <div class="rope f1"></div><div class="rope f2"></div><div class="rope f3"></div>
+        <div class="rope sl1"></div><div class="rope sl2"></div><div class="rope sl3"></div>
+        <div class="rope sr1"></div><div class="rope sr2"></div><div class="rope sr3"></div>
+      </div>
+      <div class="fog"></div>
+
+      <!-- リング内コマンドマス：敵は左上、自分は右下 -->
+      <div class="ring-queue en" id="ringEnQueueWrap">
+        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY CMD</div>
+        <div class="ring-qslots" id="ringEnQueue"></div>
+      </div>
+      <div class="ring-queue me" id="ringMeQueueWrap">
+        <div class="ring-qlabel" data-i18n="your_cmd">YOUR CMD</div>
+        <div class="ring-qslots" id="ringMeQueue"></div>
+      </div>
+
+      <!-- HPバー：敵が上、自分が下 -->
+      <div class="bars top en">
+        <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #----</span><span class="hptxt" id="enHpTxt">100/100</span></div>
+        <div class="barwrap"><div class="barfill" id="enHp" style="width:100%"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="enRage"></div></div>
+      </div>
+
+      <!-- 敵：奥 -->
+      <div class="corner en" id="enCorner">
+        <div class="tcg" id="enCard"></div>
+      </div>
+      <!-- 自分：手前下 -->
+      <div class="corner me" id="meCorner">
+        <div class="tcg" id="meCard"></div>
+      </div>
+
+      <div class="bars bot me">
+        <div class="nameline"><span class="me-a nm-id" id="meName">0N1 #----</span><span class="hptxt" id="meHpTxt">100/100</span></div>
+        <div class="barwrap"><div class="barfill" id="meHp" style="width:100%"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="meRage"></div></div>
+      </div>
+
+      <!-- 全画面エフェクトレイヤー -->
+      <div class="fullfx" id="fullfx"></div>
+    </div>
+
+    <div class="panel typebar" id="typebar"></div>
+
+    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
+
+    <div class="commands">
+      <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
+      <button class="cmd counter" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
+      <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
+      <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
+      <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
+    </div>
+
+    <div class="ctrlrow">
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
+      <button class="btn" id="fightBtn" disabled data-i18n="btn_fight">FIGHT！</button>
+    </div>
+    <div class="panel log" id="log"></div>
+  </div>
+
+  <div class="panel" id="result">
+    <div class="rt" id="rTitle">VICTORY</div>
+    <p id="rDesc"></p>
+    <button class="btn" id="againBtn" data-i18n="btn_again">再戦</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
+
+// =========================================================
+// ★ 特性データ（traits）の読み込み機構
+// =========================================================
+// HTMLと同じ場所に "0n1_traits.json" を置くと自動で読み込まれ、本物の特性が反映される。
+// ファイルが無い場合は、トークン番号から決定論的にType（Cyber/Demon/Ninja/Spirit）を振り分ける。
+//
+// 想定するJSON形式（例）：
+// {
+//   "4718": {
+//     "Type": "Ninja",         // Cyber / Demon / Ninja / Spirit のいずれか
+//     "Spirit": 30,            // 任意：上書きしたい場合に
+//     "Strength": 40,
+//     "Style": 80
+//   },
+//   "255": { "Type": "Demon" }
+// }
+//
+// もしくは OpenSea風のフォーマット：
+// {
+//   "4718": {
+//     "attributes": [
+//       {"trait_type":"Type","value":"Ninja"},
+//       {"trait_type":"Spirit","value":"30"},
+//       ...
+//     ]
+//   }
+// }
+// 両方とも自動で解釈する。Typeのみの指定でもOK（その場合はTypeデフォルトのステータスが使われる）。
+// =========================================================
+var TRAITS_FILE = "0n1_traits.json";
+var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
+
+// 文字列値（"High" "Common" 等）を数値1〜10に換算する辞書
+var TRAIT_NUMBER_MAP = {
+  "Common":2,"Uncommon":4,"Rare":6,"Epic":8,"Legendary":10,"Mythic":10,
+  "Low":2,"Mid":5,"Medium":5,"High":8,"Max":10,
+  "Weak":2,"Average":5,"Strong":8,
+};
+
+function parseTraitValue(v){
+  if(v == null) return null;
+  // 数値ならそのまま（1〜10想定）
+  var n = parseInt(v,10);
+  if(!isNaN(n)){
+    return Math.max(1, Math.min(10, n));
+  }
+  // 文字列マップ（古い形式の互換用）
+  var s = String(v);
+  if(TRAIT_NUMBER_MAP[s] != null) return TRAIT_NUMBER_MAP[s];
+  // ハッシュベース
+  var h = 0; for(var i=0;i<s.length;i++) h = ((h<<5)-h + s.charCodeAt(i))|0;
+  return 1 + Math.abs(h) % 10;
+}
+
+// OpenSea風 attributes 配列をフラットなオブジェクトに変換
+function normalizeTraits(raw){
+  if(!raw) return null;
+  if(raw.attributes && Array.isArray(raw.attributes)){
+    var o = {};
+    raw.attributes.forEach(function(a){ if(a&&a.trait_type) o[a.trait_type] = a.value; });
+    return o;
+  }
+  return raw;
+}
+
+// JSON読み込み（起動時に1回・失敗してもエラーで止まらない）
+function loadTraits(callback){
+  try{
+    fetch(TRAITS_FILE, {cache:"no-cache"})
+      .then(function(r){ if(!r.ok) throw new Error("status "+r.status); return r.json(); })
+      .then(function(json){
+        TRAITS_DATA = json;
+        console.log("[0N1] traits 読み込み成功:", Object.keys(json).length, "件");
+        if(callback) callback();
+      })
+      .catch(function(e){
+        console.log("[0N1] traits 未読み込み（疑似乱数で動作）:", e.message);
+        if(callback) callback();
+      });
+  } catch(e){
+    console.log("[0N1] traits 読み込み不可:", e.message);
+    if(callback) callback();
+  }
+}
+
+// ===================== 4Type 定義（実値1〜10 / HP 60）=====================
+// CSVの実Type名を使用。じゃんけん相性あり
+var TYPES = ["Y0K-A1","B4K3M0-N0","0N1","K4M-1"];
+var TYPE_COLOR = {
+  "Y0K-A1":    "#22e6e0",   // シアン（一般・68%）
+  "B4K3M0-N0": "#ff1f6d",   // ピンク（準レア・27%）
+  "0N1":       "#ffc83a",   // ゴールド（レア・5%）
+  "K4M-1":     "#9b3cff"    // バイオレット（超レア・0.09%）
+};
+// じゃんけん相性：ADV[A]に入っているTypeに対してAは有利
+var ADV = {
+  "Y0K-A1":    ["K4M-1"],       // Y0K-A1 → K4M-1（反転後）
+  "K4M-1":     ["0N1"],         // K4M-1 → 0N1
+  "0N1":       ["B4K3M0-N0"],   // 0N1 → B4K3M0-N0
+  "B4K3M0-N0": ["Y0K-A1"]       // B4K3M0-N0 → Y0K-A1（4すくみ・反転）
+};
+// 属性相性で適用するダメージ倍率
+function typeMod(attackerType, defenderType){
+  if(ADV[attackerType] && ADV[attackerType].indexOf(defenderType) >= 0) return 1.30; // 有利
+  if(ADV[defenderType] && ADV[defenderType].indexOf(attackerType) >= 0) return 0.75; // 不利
+  return 1.0;
+}
+function matchup(a, d){
+  if(ADV[a] && ADV[a].indexOf(d) >= 0) return 1;
+  if(ADV[d] && ADV[d].indexOf(a) >= 0) return -1;
+  return 0;
+}
+
+// 実値1〜10ベースのため、HPは60に縮小
+var INITIAL_HP = 60;
+
+// Typeが不明な場合のデフォルトステータス
+var DEFAULT_STATS = {spirit:5, strength:5, style:5};
+
+// トークン番号からTypeを決定
+function typeOf(id){
+  var t = TRAITS_DATA && normalizeTraits(TRAITS_DATA[id]);
+  if(t && t.Type){
+    var ty = String(t.Type);
+    if(TYPES.indexOf(ty) >= 0) return ty;
+  }
+  // フォールバック：番号をシードに4Typeのいずれかへ決定論的に
+  var r = seeded(id * 40503 + 777);
+  return TYPES[Math.floor(r() * TYPES.length)];
+}
+
+// ステータス算出：CSV実値（1〜10）をそのまま使用
+function deriveStats(id){
+  var t = TRAITS_DATA && normalizeTraits(TRAITS_DATA[id]);
+  if(t){
+    var sp = parseTraitValue(t.Spirit);
+    var str = parseTraitValue(t.Strength);
+    var sty = parseTraitValue(t.Style);
+    if(sp != null && str != null && sty != null){
+      // _base が JSON に入っていればそれを保持（trait点数化前の元値）
+      var baseObj = t._base;
+      var base = (baseObj && baseObj.spirit != null)
+        ? {spirit: baseObj.spirit, strength: baseObj.strength, style: baseObj.style}
+        : null;
+      var result = {spirit:sp, strength:str, style:sty, _real:true};
+      if(base) result._base = base;
+      return result;
+    }
+  }
+  // フォールバック：番号をシードに1〜10の乱数（CSV未読み込み時）
+  var r = seeded(id * 2654435761 + 0x9e37);
+  function gen(){ return 1 + Math.floor(r() * 10); }
+  return {spirit:gen(), strength:gen(), style:gen(), _real:false};
+}
+
+// 必殺技は全Type共通。技名は4種から選ぶ（実Type名は技名と独立）
+var SPECIAL_NAMES = {
+  "Y0K-A1":    "OVERDRIVE FIST",
+  "B4K3M0-N0": "PHANTOM SLASH",
+  "0N1":       "SPIRIT NOVA",
+  "K4M-1":     "VOID CRASH"
+};
+function specialInfo(stats, type){
+  return {kind: SPECIAL_NAMES[type] || "OVERDRIVE FIST"};
+}
+
+// ===================== 効果音システム（Web Audio合成） =====================
+var SFX = (function(){
+  var ctx = null, master = null, dry = null, wet = null, reverb = null;
+  var MASTER_VOLUME = 1.8;
+
+  function makeReverb(duration, decay){
+    var rate = ctx.sampleRate, len = Math.floor(rate * duration);
+    var imp = ctx.createBuffer(2, len, rate);
+    for(var c=0;c<2;c++){
+      var ch = imp.getChannelData(c);
+      for(var i=0;i<len;i++){
+        ch[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+      }
+    }
+    var conv = ctx.createConvolver();
+    conv.buffer = imp;
+    return conv;
+  }
+
+  function init(){
+    if(ctx) return ctx;
+    try {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      master = ctx.createGain();
+      master.gain.value = MASTER_VOLUME;
+      dry = ctx.createGain(); dry.gain.value = 0.85;
+      wet = ctx.createGain(); wet.gain.value = 0.35;
+      reverb = makeReverb(2.0, 2.4);
+      dry.connect(master);
+      wet.connect(reverb).connect(master);
+      master.connect(ctx.destination);
+    } catch(e){ console.log("[SFX] AudioContext unavailable"); }
+    return ctx;
+  }
+
+  function bus(wetLevel){
+    var entry = ctx.createGain();
+    entry.connect(dry);
+    if(wetLevel > 0){
+      var w = ctx.createGain(); w.gain.value = wetLevel;
+      entry.connect(w);
+      w.connect(wet);
+    }
+    return entry;
+  }
+
+  function makeDistortion(amount){
+    var n = 256, curve = new Float32Array(n), k = amount;
+    for(var i=0;i<n;i++){
+      var x = i*2/n - 1;
+      curve[i] = (3+k)*x*20*Math.PI/180/(Math.PI + k*Math.abs(x));
+    }
+    var ws = ctx.createWaveShaper();
+    ws.curve = curve;
+    ws.oversample = '2x';
+    return ws;
+  }
+
+  function osc(t, dur, f1, f2, vol, type, out, atk){
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f1, t);
+    if(f2 !== f1) o.frequency.exponentialRampToValueAtTime(Math.max(1,f2), t+dur);
+    atk = atk||0.005;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vol, t+atk);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    o.connect(g).connect(out);
+    o.start(t); o.stop(t+dur+0.02);
+    return o;
+  }
+
+  function noiseBurst(t, dur, vol, filterType, freq, q, out){
+    var n = Math.floor(ctx.sampleRate*dur);
+    var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+    var d = buf.getChannelData(0);
+    for(var i=0;i<n;i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/n, 1.5);
+    var src = ctx.createBufferSource(); src.buffer = buf;
+    var g = ctx.createGain(); g.gain.value = vol;
+    var f = ctx.createBiquadFilter();
+    f.type = filterType||'bandpass';
+    f.frequency.value = freq||1000;
+    f.Q.value = q||1;
+    src.connect(f).connect(g).connect(out);
+    src.start(t);
+  }
+
+  return {
+    init: init,
+    setVolume: function(v){ MASTER_VOLUME=v; if(master) master.gain.value=v; },
+
+    attack: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.15);
+      // 低音インパクト
+      osc(t, .15, 110, 35, .55, 'sine', out, .002);
+      osc(t, .12, 220, 50, .35, 'triangle', out, .002);
+      // 中音パンチ
+      osc(t+.005, .08, 380, 120, .30, 'square', out, .003);
+      // 歪んだスナップ
+      var dist = makeDistortion(8);
+      dist.connect(out);
+      osc(t, .04, 800, 200, .35, 'sawtooth', dist, .001);
+      // ノイズアタック
+      noiseBurst(t, .06, .35, 'highpass', 800, 1, out);
+      noiseBurst(t+.01, .08, .2, 'bandpass', 2500, 3, out);
+    },
+
+    counter: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.35);
+      // 1音目：鋭い金属音
+      osc(t, .06, 1200, 600, .25, 'square', out, .001);
+      osc(t, .12, 800, 200, .20, 'sawtooth', out, .002);
+      noiseBurst(t, .08, .25, 'highpass', 3000, 2, out);
+      // 2音目：反撃の重い一撃
+      var t2 = t + .12;
+      osc(t2, .18, 90, 40, .55, 'sine', out, .002);
+      osc(t2, .15, 400, 120, .35, 'square', out, .003);
+      noiseBurst(t2, .1, .3, 'bandpass', 1500, 2, out);
+    },
+
+    defend: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.5);
+      // 金属衝突（複数倍音）
+      [440, 660, 880, 1320, 1760, 2640].forEach(function(f,i){
+        osc(t, .35 - i*0.04, f, f*0.95, .15 - i*0.02, 'sine', out, .002);
+      });
+      noiseBurst(t, .04, .3, 'highpass', 2000, 5, out);
+      osc(t+.05, .25, 220, 200, .15, 'triangle', out, .01);
+    },
+
+    charge: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.4);
+      osc(t, .7, 80, 280, .35, 'sawtooth', out, .15);
+      osc(t, .7, 160, 560, .25, 'square', out, .15);
+      osc(t+.1, .55, 200, 1200, .18, 'triangle', out, .2);
+      noiseBurst(t, .6, .12, 'bandpass', 800, 4, out);
+      setTimeout(function(){
+        var t2 = ctx.currentTime;
+        var out2 = bus(0.4);
+        osc(t2, .15, 1320, 880, .25, 'square', out2, .002);
+        noiseBurst(t2, .1, .2, 'highpass', 1500, 2, out2);
+      }, 600);
+    },
+
+    special: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.6);
+      var dist = makeDistortion(15);
+      dist.connect(out);
+      // 第1段：低音爆発
+      osc(t, .8, 80, 30, .7, 'sawtooth', dist, .002);
+      osc(t, .6, 160, 50, .5, 'square', dist, .002);
+      noiseBurst(t, .15, .5, 'lowpass', 400, 1, out);
+      // 第2段：金属的な切り裂き音
+      var t2 = t + .12;
+      osc(t2, .4, 1200, 300, .35, 'sawtooth', dist, .005);
+      osc(t2, .35, 800, 200, .3, 'square', out, .005);
+      noiseBurst(t2, .25, .4, 'bandpass', 2000, 1.5, out);
+      // 第3段：高音の輝き
+      var t3 = t + .28;
+      osc(t3, .5, 880, 440, .25, 'sine', out, .005);
+      osc(t3, .5, 1760, 880, .15, 'triangle', out, .005);
+      // フィニッシュ
+      setTimeout(function(){
+        var tf = ctx.currentTime;
+        var out2 = bus(0.6);
+        var d2 = makeDistortion(15); d2.connect(out2);
+        osc(tf, .3, 220, 60, .45, 'sawtooth', d2, .002);
+        noiseBurst(tf, .2, .4, 'lowpass', 600, 1, out2);
+      }, 450);
+    },
+
+    hit: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.2);
+      osc(t, .12, 100, 40, .5, 'sine', out, .002);
+      osc(t, .08, 300, 80, .3, 'square', out, .003);
+      noiseBurst(t, .06, .3, 'lowpass', 800, 1, out);
+    },
+
+    miss: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.3);
+      osc(t, .2, 600, 1200, .2, 'sine', out, .01);
+      osc(t+.05, .15, 900, 450, .15, 'triangle', out, .01);
+    },
+
+    heal: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.5);
+      [659, 988, 1319].forEach(function(f,i){
+        osc(t + i*0.04, .4 - i*0.05, f, f*0.98, .2 - i*0.05, 'sine', out, .005);
+      });
+      osc(t+.1, .25, 1319, 1976, .12, 'triangle', out, .005);
+    },
+
+    click: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.1);
+      osc(t, .03, 800, 1200, .15, 'square', out, .001);
+      noiseBurst(t, .02, .1, 'highpass', 3000, 2, out);
+    },
+
+    fight: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.45);
+      var dist = makeDistortion(6);
+      dist.connect(out);
+      osc(t, .15, 220, 440, .45, 'sawtooth', dist, .002);
+      osc(t, .15, 440, 880, .3, 'square', out, .002);
+      noiseBurst(t, .08, .25, 'bandpass', 1500, 2, out);
+      var t2 = t + .15;
+      osc(t2, .3, 440, 660, .5, 'sawtooth', dist, .003);
+      osc(t2, .3, 880, 1320, .3, 'square', out, .003);
+      osc(t2, .3, 110, 165, .4, 'sine', out, .003);
+    },
+
+    win: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.55);
+      var notes = [{f:392,d:.2},{f:494,d:.2},{f:587,d:.2},{f:784,d:.5}];
+      notes.forEach(function(n,i){
+        var nt = t + i*0.12;
+        osc(nt, n.d, n.f, n.f, .25, 'square', out, .005);
+        osc(nt, n.d, n.f*0.5, n.f*0.5, .2, 'sawtooth', out, .005);
+        osc(nt, n.d, n.f*2, n.f*2, .12, 'triangle', out, .005);
+      });
+      setTimeout(function(){
+        var tf = ctx.currentTime;
+        var out2 = bus(0.55);
+        osc(tf, 1.0, 98, 98, .35, 'sine', out2, .01);
+        osc(tf, 1.0, 196, 196, .25, 'triangle', out2, .01);
+      }, 500);
+    },
+
+    lose: function(){
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.55);
+      var notes = [{f:440,d:.3},{f:370,d:.3},{f:311,d:.3},{f:233,d:.8}];
+      notes.forEach(function(n,i){
+        var nt = t + i*0.18;
+        osc(nt, n.d, n.f, n.f*0.85, .3, 'sawtooth', out, .01);
+        osc(nt, n.d, n.f*0.5, n.f*0.42, .25, 'triangle', out, .01);
+        osc(nt, n.d*1.2, n.f*0.25, n.f*0.21, .2, 'sine', out, .01);
+      });
+      setTimeout(function(){
+        var tf = ctx.currentTime;
+        var out2 = bus(0.55);
+        osc(tf, 1.2, 110, 40, .4, 'sawtooth', out2, .02);
+        noiseBurst(tf, .8, .15, 'lowpass', 300, 1, out2);
+      }, 600);
+    }
+  };
+})();
+
+// =========================================================
+// ★ BGM システム（mp3同梱優先、無ければ合成）
+// =========================================================
+// HTMLと同じ場所に以下のファイルを置くと自動再生されます：
+//   bgm_start.mp3   ... スタート画面（キャラ選択時）のBGM
+//   bgm_battle.mp3  ... 戦闘中のBGM
+// ファイルが無い場合は Web Audio で合成したループBGMが流れます。
+// =========================================================
+var BGM = (function(){
+  var ctx = null;
+  var currentTrack = null; // 'start' | 'battle' | null
+  var mp3Audio = {start:null, battle:null};
+  var mp3Available = {start:false, battle:false};
+  var mp3Gain = null;        // mp3用のWebAudio経由Gain（フェード制御用）
+  var synthState = null;     // 合成BGM動作中の状態
+  var enabled = true;
+  var masterVol = 0.45;      // BGM全体音量（効果音より控えめに）
+
+  // mp3を読み込み試行
+  function tryLoadMp3(key, path){
+    var a = new Audio(path);
+    a.loop = true;
+    a.preload = 'auto';
+    a.volume = 0;
+    a.addEventListener('canplaythrough', function(){
+      mp3Available[key] = true;
+      console.log("[BGM] "+path+" 利用可能");
+    }, {once:true});
+    a.addEventListener('error', function(){
+      console.log("[BGM] "+path+" 未配置（合成BGMで代替）");
+    });
+    mp3Audio[key] = a;
+  }
+
+  function preload(){
+    tryLoadMp3('start', 'bgm_start.mp3');
+    tryLoadMp3('battle', 'bgm_battle.mp3');
+  }
+
+  // --------- 合成BGM（mp3が無い時の代替） ---------
+  function startSynthBgm(kind){
+    stopSynthBgm();
+    if(!SFX.init()) return;
+    ctx = SFX._getCtx ? SFX._getCtx() : null;
+    if(!ctx){
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    var master = ctx.createGain();
+    master.gain.value = 0;
+
+    // リバーブ（広がりのある空間音響）
+    var rate = ctx.sampleRate, rLen = Math.floor(rate * 1.6);
+    var imp = ctx.createBuffer(2, rLen, rate);
+    for(var c=0;c<2;c++){
+      var ch = imp.getChannelData(c);
+      for(var ii=0;ii<rLen;ii++) ch[ii] = (Math.random()*2-1) * Math.pow(1-ii/rLen, 2.2);
+    }
+    var conv = ctx.createConvolver(); conv.buffer = imp;
+    var wetGain = ctx.createGain(); wetGain.gain.value = 0.35;
+    var dryGain = ctx.createGain(); dryGain.gain.value = 0.8;
+    master.connect(dryGain).connect(ctx.destination);
+    master.connect(wetGain).connect(conv).connect(ctx.destination);
+
+    // フェードイン
+    master.gain.linearRampToValueAtTime(masterVol * 0.7, ctx.currentTime + 1.5);
+
+    // ===== トラック設定 =====
+    var bpm, bassNotes, leadNotes, padNotes, arpNotes, drumPattern, hatPattern, snarePattern;
+
+    if(kind==='battle'){
+      // 戦闘BGM：ダーク・ドライビング（135 BPM）
+      bpm = 135;
+      // ベース：A1 → E2 → F1 → G1 の循環
+      bassNotes = [55,55,73,55, 65,55,55,73,  55,55,82,73, 65,55,55,87];
+      // リード：単音メロディ
+      leadNotes = [0,0,220,0, 0,0,165,0,   0,0,247,0, 220,165,0,0];
+      padNotes = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0]; // パッドなし
+      arpNotes = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0]; // アルペジオなし
+      drumPattern  = [1,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,0]; // 4つ打ちkick
+      hatPattern   = [0,0,1,0, 0,0,1,0, 0,0,1,0, 0,0,1,0]; // 8分ハイハット
+      snarePattern = [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0]; // 2/4スネア
+    } else {
+      // ★ スタートBGM：戦いに向かう高揚感（110 BPM、Aマイナー進行）
+      bpm = 110;
+      // ベース：Am → F → C → G の力強い進行（4小節 = 32ステップを表現）
+      // 8ステップ = 1小節として、各小節のルート音を低音で
+      bassNotes = [
+        55,0,55,0, 55,0,55,0,    // Am (A1)
+        44,0,44,0, 44,0,44,0,    // F1
+        65,0,65,0, 65,0,65,0,    // C2
+        49,0,49,0, 49,0,49,0     // G1
+      ];
+      // リード：英雄的メロディ（A→C→E→A の上昇＋装飾）
+      leadNotes = [
+        440,0,0,0, 523,0,0,0,    // A4 → C5
+        349,0,0,0, 440,0,0,0,    // F4 → A4
+        523,0,659,0, 0,0,587,0,  // C5 → E5 → D5
+        494,0,440,0, 392,0,0,0   // B4 → A4 → G4
+      ];
+      // パッド：和音持続（ロングノート）
+      padNotes = [
+        220,0,0,0, 0,0,0,0,      // A3（Am）
+        174,0,0,0, 0,0,0,0,      // F3
+        262,0,0,0, 0,0,0,0,      // C4
+        196,0,0,0, 0,0,0,0       // G3
+      ];
+      // アルペジオ：上昇する16分音符の連打（高揚感の核）
+      arpNotes = [
+        220,262,330,440, 220,262,330,440,  // Am分散和音
+        174,220,262,349, 174,220,262,349,  // F分散和音
+        262,330,392,523, 262,330,392,523,  // C分散和音
+        196,247,294,392, 196,247,294,392   // G分散和音
+      ];
+      // ドラム：4つ打ちで盛り上げる
+      drumPattern  = [1,0,0,0, 1,0,0,0, 1,0,0,0, 1,0,0,0,
+                      1,0,0,0, 1,0,0,0, 1,0,0,0, 1,0,0,0];
+      hatPattern   = [0,0,1,0, 0,0,1,0, 0,0,1,0, 0,0,1,0,
+                      0,0,1,0, 0,0,1,0, 0,0,1,0, 0,0,1,1];
+      snarePattern = [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0,
+                      0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,1,0];
+    }
+
+    var stepDur = 60 / bpm / 2; // 8分音符の半分（16分音符）
+    var step = 0;
+    var patternLen = bassNotes.length;
+
+    function playStep(){
+      if(!synthState || synthState.kind !== kind) return;
+      var t = ctx.currentTime;
+      var i = step % patternLen;
+
+      // ===== ベース =====
+      var bn = bassNotes[i];
+      if(bn){
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = 'sawtooth';
+        o.frequency.setValueAtTime(bn, t);
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(kind==='battle'?0.18:0.22, t+0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, t+stepDur*0.9);
+        var lp = ctx.createBiquadFilter();
+        lp.type='lowpass'; lp.frequency.value = kind==='battle'?400:550; lp.Q.value=4;
+        o.connect(lp).connect(g).connect(master);
+        o.start(t); o.stop(t+stepDur*1.1);
+        // サブベース（オクターブ下、薄く重ねて厚み）
+        if(kind==='start'){
+          var sub = ctx.createOscillator(), sg = ctx.createGain();
+          sub.type='sine';
+          sub.frequency.setValueAtTime(bn*0.5, t);
+          sg.gain.setValueAtTime(0, t);
+          sg.gain.linearRampToValueAtTime(0.12, t+0.02);
+          sg.gain.exponentialRampToValueAtTime(0.001, t+stepDur*0.95);
+          sub.connect(sg).connect(master);
+          sub.start(t); sub.stop(t+stepDur*1.1);
+        }
+      }
+
+      // ===== リード =====
+      var ln = leadNotes[i];
+      if(ln){
+        var o2 = ctx.createOscillator(), g2 = ctx.createGain();
+        o2.type = kind==='battle'?'square':'sawtooth';
+        o2.frequency.setValueAtTime(ln, t);
+        g2.gain.setValueAtTime(0, t);
+        var leadVol = kind==='battle'?0.1:0.12;
+        g2.gain.linearRampToValueAtTime(leadVol, t+0.04);
+        g2.gain.exponentialRampToValueAtTime(0.001, t + stepDur*(kind==='battle'?1.5:3.5));
+        // リードフィルター（明るく）
+        var bp = ctx.createBiquadFilter();
+        bp.type='lowpass'; bp.frequency.value = 2200; bp.Q.value=2;
+        o2.connect(bp).connect(g2).connect(master);
+        o2.start(t); o2.stop(t + stepDur*(kind==='battle'?1.8:4));
+      }
+
+      // ===== パッド（スタートのみ）=====
+      var pn = padNotes[i];
+      if(pn){
+        // 和音3音を重ねて広がり
+        [pn, pn*1.25, pn*1.5].forEach(function(freq){
+          var op = ctx.createOscillator(), gp = ctx.createGain();
+          op.type='triangle';
+          op.frequency.setValueAtTime(freq, t);
+          gp.gain.setValueAtTime(0, t);
+          gp.gain.linearRampToValueAtTime(0.045, t+0.3);
+          gp.gain.linearRampToValueAtTime(0.04, t+stepDur*6);
+          gp.gain.exponentialRampToValueAtTime(0.001, t+stepDur*8);
+          op.connect(gp).connect(master);
+          op.start(t); op.stop(t+stepDur*8.5);
+        });
+      }
+
+      // ===== アルペジオ（スタートのみ）=====
+      var an = arpNotes[i];
+      if(an){
+        var oa = ctx.createOscillator(), ga = ctx.createGain();
+        oa.type='square';
+        oa.frequency.setValueAtTime(an, t);
+        ga.gain.setValueAtTime(0, t);
+        ga.gain.linearRampToValueAtTime(0.055, t+0.005);
+        ga.gain.exponentialRampToValueAtTime(0.001, t+stepDur*0.9);
+        // 高音用フィルター
+        var hf = ctx.createBiquadFilter();
+        hf.type='lowpass'; hf.frequency.value = 3500; hf.Q.value=3;
+        oa.connect(hf).connect(ga).connect(master);
+        oa.start(t); oa.stop(t+stepDur*1.0);
+      }
+
+      // ===== ドラム（kick）=====
+      if(drumPattern[i]===1){
+        var k = ctx.createOscillator(), kg = ctx.createGain();
+        k.type='sine';
+        k.frequency.setValueAtTime(150, t);
+        k.frequency.exponentialRampToValueAtTime(40, t+0.08);
+        kg.gain.setValueAtTime(0.5, t);
+        kg.gain.exponentialRampToValueAtTime(0.001, t+0.15);
+        k.connect(kg).connect(master);
+        k.start(t); k.stop(t+0.18);
+      }
+
+      // ===== ハイハット =====
+      if(hatPattern[i]===1){
+        var hn = Math.floor(ctx.sampleRate*0.05);
+        var hbuf = ctx.createBuffer(1, hn, ctx.sampleRate);
+        var hd = hbuf.getChannelData(0);
+        for(var hi=0;hi<hn;hi++) hd[hi] = (Math.random()*2-1) * Math.pow(1-hi/hn,3);
+        var hsrc = ctx.createBufferSource(); hsrc.buffer=hbuf;
+        var hg = ctx.createGain(); hg.gain.value = 0.18;
+        var hp = ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=6000;
+        hsrc.connect(hp).connect(hg).connect(master);
+        hsrc.start(t);
+      }
+
+      // ===== スネア =====
+      if(snarePattern[i]===1){
+        // ノイズスネア
+        var sn = Math.floor(ctx.sampleRate*0.15);
+        var sbuf = ctx.createBuffer(1, sn, ctx.sampleRate);
+        var sd = sbuf.getChannelData(0);
+        for(var si=0;si<sn;si++) sd[si] = (Math.random()*2-1) * Math.pow(1-si/sn,1.8);
+        var ssrc = ctx.createBufferSource(); ssrc.buffer=sbuf;
+        var sg = ctx.createGain(); sg.gain.value = 0.22;
+        var sbp = ctx.createBiquadFilter(); sbp.type='bandpass';
+        sbp.frequency.value=1800; sbp.Q.value=1.5;
+        ssrc.connect(sbp).connect(sg).connect(master);
+        ssrc.start(t);
+        // 音程感を出すトーン部分
+        var sto = ctx.createOscillator(), stg = ctx.createGain();
+        sto.type='triangle';
+        sto.frequency.setValueAtTime(200, t);
+        sto.frequency.exponentialRampToValueAtTime(150, t+0.08);
+        stg.gain.setValueAtTime(0.18, t);
+        stg.gain.exponentialRampToValueAtTime(0.001, t+0.12);
+        sto.connect(stg).connect(master);
+        sto.start(t); sto.stop(t+0.13);
+      }
+
+      step++;
+    }
+
+    var intervalId = setInterval(playStep, stepDur*1000);
+    synthState = {kind:kind, intervalId:intervalId, master:master, dry:dryGain, wet:wetGain};
+  }
+  function stopSynthBgm(){
+    if(!synthState) return;
+    var s = synthState;
+    synthState = null;
+    clearInterval(s.intervalId);
+    try{
+      var t = s.master.context.currentTime;
+      s.master.gain.cancelScheduledValues(t);
+      s.master.gain.setValueAtTime(s.master.gain.value, t);
+      s.master.gain.linearRampToValueAtTime(0, t+0.8);
+      setTimeout(function(){
+        try{ s.master.disconnect(); s.dry.disconnect(); s.wet.disconnect(); }catch(e){}
+      }, 900);
+    }catch(e){}
+  }
+
+  // --------- mp3制御 ---------
+  function fadeMp3(audio, toVol, dur){
+    if(!audio) return;
+    var startVol = audio.volume;
+    var startT = Date.now();
+    var iv = setInterval(function(){
+      var p = Math.min(1, (Date.now()-startT)/(dur*1000));
+      try { audio.volume = startVol + (toVol-startVol)*p; } catch(e){}
+      if(p>=1){
+        clearInterval(iv);
+        if(toVol === 0){ try{ audio.pause(); }catch(e){} }
+      }
+    }, 30);
+  }
+
+  function playMp3(key){
+    var a = mp3Audio[key];
+    if(!a) return false;
+    try {
+      a.volume = 0;
+      a.currentTime = a.currentTime || 0;
+      var p = a.play();
+      if(p && p.catch) p.catch(function(){});
+      fadeMp3(a, masterVol, 1.0);
+      return true;
+    } catch(e){ return false; }
+  }
+
+  return {
+    preload: preload,
+    setVolume: function(v){
+      masterVol = v;
+      if(currentTrack && mp3Available[currentTrack]){
+        try{ mp3Audio[currentTrack].volume = v; }catch(e){}
+      }
+    },
+    setEnabled: function(on){
+      enabled = on;
+      if(!on){
+        // 全停止
+        ['start','battle'].forEach(function(k){
+          if(mp3Audio[k]){ fadeMp3(mp3Audio[k], 0, 0.4); }
+        });
+        stopSynthBgm();
+        currentTrack = null;
+      } else if(currentTrack){
+        var k = currentTrack; currentTrack = null;
+        BGM.play(k);
+      }
+    },
+    isEnabled: function(){ return enabled; },
+    play: function(kind){
+      if(!enabled) return;
+      if(currentTrack === kind) return;
+      // 前のトラックをフェードアウト
+      ['start','battle'].forEach(function(k){
+        if(k !== kind && mp3Audio[k] && !mp3Audio[k].paused){
+          fadeMp3(mp3Audio[k], 0, 0.8);
+        }
+      });
+      stopSynthBgm();
+      currentTrack = kind;
+      // mp3優先
+      if(mp3Available[kind]){
+        playMp3(kind);
+      } else {
+        // 合成BGMで代替
+        setTimeout(function(){ startSynthBgm(kind); }, 100);
+      }
+    },
+    stop: function(){
+      currentTrack = null;
+      ['start','battle'].forEach(function(k){
+        if(mp3Audio[k] && !mp3Audio[k].paused){ fadeMp3(mp3Audio[k], 0, 0.6); }
+      });
+      stopSynthBgm();
+    }
+  };
+})();
+BGM.preload();
+
+
+function drawAvatar(box,id,s){
+  box.querySelectorAll('canvas,img,.loading').forEach(function(n){n.remove();});
+  var cv=document.createElement('canvas');cv.width=340;cv.height=340;box.appendChild(cv);
+  var x=cv.getContext('2d'),r=seeded(id*7919+13);
+  var hA=Math.floor(r()*360),hB=(hA+90+Math.floor(r()*120))%360;
+  var g=x.createLinearGradient(0,0,340,340);
+  g.addColorStop(0,'hsl('+hA+',72%,20%)');g.addColorStop(1,'hsl('+hB+',76%,12%)');
+  x.fillStyle=g;x.fillRect(0,0,340,340);
+  for(var i=0;i<22;i++){x.globalAlpha=0.05+r()*0.22;
+    x.fillStyle='hsl('+(Math.floor(r()*360))+',85%,'+(45+r()*30)+'%)';
+    var sz=14+r()*92,px=r()*340,py=r()*340;
+    if(r()>0.5)x.fillRect(px,py,sz,sz);else{x.beginPath();x.arc(px,py,sz/2,0,7);x.fill();}}
+  x.globalAlpha=.9;x.fillStyle='rgba(0,0,0,.45)';
+  x.beginPath();x.moveTo(102,306);x.quadraticCurveTo(76,170,144,102);
+  x.quadraticCurveTo(187,60,238,94);x.quadraticCurveTo(255,145,221,179);
+  x.quadraticCurveTo(255,213,212,255);x.lineTo(212,306);x.closePath();x.fill();
+  x.globalAlpha=1;
+  [['#22e6e0',s.spirit],['#ff1f6d',s.strength],['#ffc83a',s.style]].forEach(function(t,k){
+    x.strokeStyle=t[0];x.lineWidth=5;
+    x.beginPath();x.arc(170,170,140-k*14,-Math.PI/2,-Math.PI/2+(t[1]/10)*Math.PI*2);x.stroke();});
+  x.globalAlpha=.85;x.fillStyle='#fff';x.font='bold 24px "Chakra Petch",sans-serif';
+  x.textAlign='center';x.fillText('0N1 #'+id,170,326);
+}
+// =========================================================
+// ★ 画像設定（変更したい場合はこの数行を書き換える）
+// =========================================================
+// IMG_FOLDER  … HTMLと同じ場所に置いた画像フォルダ名
+// IMG_EXT     … 画像の拡張子（"png" / "jpg" / "webp"等）
+// IMG_PREFIX  … ファイル名の番号の前につく文字（例：「0N1#」、無しなら""）
+// IMG_PAD     … 0埋め桁数。0なら埋めない、4なら0001
+// =========================================================
+var IMG_FOLDER = "images";       // 画像フォルダ名
+var IMG_EXT    = "webp";          // 画像の拡張子
+var IMG_PREFIX = "0N1#";          // ファイル名の番号の前の文字（"0N1#1.webp"の"0N1#"部分）
+var IMG_PAD    = 0;               // 0埋め桁数
+
+function localPath(id){
+  var n = String(id);
+  if(IMG_PAD > 0) while(n.length < IMG_PAD) n = "0"+n;
+  // 「#」など特殊文字を含むファイル名はURLエンコードする
+  var fileName = encodeURIComponent(IMG_PREFIX + n) + "." + IMG_EXT;
+  return IMG_FOLDER + "/" + fileName;
+}
+
+function loadPortrait(box,id,s){
+  drawAvatar(box,id,s); // 先にアバターを描いて待ち時間ゼロ
+  // 候補：① ローカルフォルダ（最優先）→ ② 外部CDN → ③ アバター維持
+  var cand=[
+    localPath(id),
+    "https://api.0n1force.com/api/v1/0n1/"+id+"/image",
+    "https://0n1-force.s3.amazonaws.com/img/"+id+".png",
+    "https://gateway.pinata.cloud/ipfs/QmdwfNHTM5LjmuZ2By3rfh3uXyKqRzD2cnwFX1ohpzv3wf/"+id
+  ];
+  var i=0;
+  (function tn(){
+    if(i>=cand.length){
+      console.log("[0N1] #"+id+" の画像が見つかりません。アバターを表示します。期待パス:", cand[0]);
+      return;
+    }
+    var im=new Image();
+    // ローカル（相対パス）はCORS不要、外部のみ crossOrigin を付ける
+    if(cand[i].indexOf("http")===0) im.crossOrigin="anonymous";
+    var done=false;
+    im.onload=function(){if(done)return;done=true;
+      box.querySelectorAll('canvas,img,.loading').forEach(function(n){n.remove();});
+      im.style.width="100%";im.style.height="100%";im.style.objectFit="cover";box.appendChild(im);
+      if(i===0) console.log("[0N1] #"+id+" ローカル画像 OK:", cand[0]);
+    };
+    im.onerror=function(){if(done)return;done=true;
+      if(i===0) console.log("[0N1] #"+id+" ローカル画像なし → 外部を試行:", cand[0]);
+      i++;tn();
+    };
+    im.src=cand[i];
+    setTimeout(function(){if(!done){done=true;i++;tn();}},2200);
+  })();
+}
+
+// ===================== エフェクトSVG生成 =====================
+var FX_ID=0;
+function fxAttack(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="gA${u}"><feGaussianBlur stdDeviation="3"/></filter></defs>
+    ${[0,45,90,135,180,225,270,315].map(function(a){return `<g transform="rotate(${a} 200 200)" filter="url(#gA${u})">
+      <polygon points="200,80 215,140 200,200 185,140" fill="${a%90===0?'#22e6e0':'#ff1f6d'}" opacity=".95">
+        <animateTransform attributeName="transform" type="translate" from="0 0" to="0 -50" dur=".6s" fill="freeze"/>
+        <animate attributeName="opacity" from=".95" to="0" dur=".6s" fill="freeze"/>
+      </polygon></g>`}).join('')}
+    <circle cx="200" cy="200" r="40" fill="none" stroke="#ffc83a" stroke-width="4" filter="url(#gA${u})">
+      <animate attributeName="r" from="20" to="180" dur=".7s" fill="freeze"/>
+      <animate attributeName="opacity" from="1" to="0" dur=".7s" fill="freeze"/>
+    </circle>
+    <text x="200" y="225" font-family="Zen Dots,sans-serif" font-size="48" fill="#ffc83a" text-anchor="middle" opacity="0" filter="url(#gA${u})">HIT!
+      <animate attributeName="opacity" values="0;1;0" dur="1s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="scale" values="0;1.5;1.2" additive="sum" dur=".5s" fill="freeze"/>
+    </text>
+  </svg>`;}
+function fxOverdrive(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="gO${u}"><feGaussianBlur stdDeviation="6"/></filter></defs>
+    <circle cx="200" cy="200" r="40" fill="none" stroke="#ff1f6d" stroke-width="6" filter="url(#gO${u})">
+      <animate attributeName="r" from="10" to="200" dur="1s" fill="freeze"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" fill="freeze"/></circle>
+    <circle cx="200" cy="200" r="30" fill="none" stroke="#ffc83a" stroke-width="4" filter="url(#gO${u})">
+      <animate attributeName="r" from="10" to="150" dur=".8s" begin=".15s" fill="freeze"/>
+      <animate attributeName="opacity" from="1" to="0" dur=".8s" begin=".15s" fill="freeze"/></circle>
+    <text x="200" y="240" font-family="Zen Dots,sans-serif" font-size="160" fill="#ffc83a" text-anchor="middle" opacity="0" filter="url(#gO${u})">拳
+      <animate attributeName="opacity" values="0;1;.4" dur=".8s" begin=".1s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="scale" values=".3;1.3;1" additive="sum" dur=".8s" begin=".1s" fill="freeze"/>
+    </text>
+    ${Array.from({length:12}).map(function(_,i){var a=i*30,r=180;
+      return `<circle cx="${200+Math.cos(a*Math.PI/180)*r}" cy="${200+Math.sin(a*Math.PI/180)*r}" r="5" fill="#ffc83a" opacity="0">
+        <animate attributeName="opacity" values="1;0" dur=".7s" begin="${.2+i*.02}s" fill="freeze"/></circle>`}).join('')}
+  </svg>`;}
+function fxSpiritNova(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="gS${u}"><feGaussianBlur stdDeviation="6"/></filter></defs>
+    <circle cx="200" cy="200" r="20" fill="#22e6e0" filter="url(#gS${u})">
+      <animate attributeName="r" values="5;80;50" dur="1.1s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;.8;.5" dur="1.1s" fill="freeze"/></circle>
+    <circle cx="200" cy="200" r="30" fill="none" stroke="#22e6e0" stroke-width="4" filter="url(#gS${u})">
+      <animate attributeName="r" from="20" to="190" dur="1s" fill="freeze"/>
+      <animate attributeName="opacity" from="1" to="0" dur="1s" fill="freeze"/></circle>
+    <circle cx="200" cy="200" r="30" fill="none" stroke="#9b3cff" stroke-width="3" filter="url(#gS${u})">
+      <animate attributeName="r" from="10" to="150" dur=".9s" begin=".2s" fill="freeze"/>
+      <animate attributeName="opacity" from="1" to="0" dur=".9s" begin=".2s" fill="freeze"/></circle>
+    ${[{x:90,y:130,c:'霊',col:'#22e6e0'},{x:300,y:140,c:'魂',col:'#9b3cff'},
+       {x:90,y:280,c:'気',col:'#22e6e0'},{x:310,y:290,c:'力',col:'#9b3cff'},
+       {x:200,y:90,c:'神',col:'#ffc83a'}].map(function(o,i){
+      return `<text x="${o.x}" y="${o.y}" font-family="Zen Dots,sans-serif" font-size="36" fill="${o.col}" text-anchor="middle" filter="url(#gS${u})" opacity="0">${o.c}
+        <animate attributeName="opacity" values="0;1;0" dur="1.3s" begin="${.2+i*.05}s" fill="freeze"/>
+        <animateTransform attributeName="transform" type="translate" from="0 0" to="0 -40" dur="1.3s" begin="${.2+i*.05}s" fill="freeze"/>
+      </text>`}).join('')}
+    ${[0,45,90,135,180,225,270,315].map(function(a){
+      return `<line x1="200" y1="200" x2="200" y2="200" stroke="#22e6e0" stroke-width="2.5" filter="url(#gS${u})" transform="rotate(${a} 200 200)">
+        <animate attributeName="y2" from="200" to="20" dur=".9s" begin=".15s" fill="freeze"/>
+        <animate attributeName="opacity" values="0;.9;0" dur=".9s" begin=".15s" fill="freeze"/></line>`}).join('')}
+  </svg>`;}
+function fxPhantomSlash(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="gP${u}"><feGaussianBlur stdDeviation="3"/></filter></defs>
+    ${[{dx:-80,col:'#9b3cff',op:.5,d:0},{dx:0,col:'#22e6e0',op:.8,d:.15},{dx:80,col:'#ffc83a',op:1,d:.3}].map(function(o){
+      return `<g opacity="0" filter="url(#gP${u})">
+        <animate attributeName="opacity" values="0;${o.op};0" dur=".9s" begin="${o.d}s" fill="freeze"/>
+        <line x1="${50+o.dx}" y1="340" x2="${350+o.dx}" y2="60" stroke="${o.col}" stroke-width="8" stroke-linecap="round"/>
+        <line x1="${70+o.dx}" y1="360" x2="${370+o.dx}" y2="80" stroke="${o.col}" stroke-width="4" opacity=".6" stroke-linecap="round"/>
+      </g>`}).join('')}
+    <line x1="40" y1="360" x2="360" y2="40" stroke="#ffffff" stroke-width="3" opacity="0" filter="url(#gP${u})">
+      <animate attributeName="opacity" values="0;1;0" dur=".4s" begin=".5s" fill="freeze"/></line>
+    <text x="200" y="240" font-family="Zen Dots,sans-serif" font-size="150" fill="#9b3cff" text-anchor="middle" opacity="0" filter="url(#gP${u})">幻
+      <animate attributeName="opacity" values="0;.9;.4" dur=".8s" begin=".5s" fill="freeze"/>
+    </text>
+  </svg>`;}
+function fxDefend(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="gD${u}"><feGaussianBlur stdDeviation="4"/></filter></defs>
+    <polygon points="200,80 320,150 320,250 200,320 80,250 80,150" fill="none" stroke="#22e6e0" stroke-width="5" filter="url(#gD${u})" opacity="0">
+      <animate attributeName="opacity" values="0;.95;.7" dur=".6s" fill="freeze"/>
+    </polygon>
+    <polygon points="200,120 280,170 280,230 200,280 120,230 120,170" fill="#22e6e0" filter="url(#gD${u})" opacity="0">
+      <animate attributeName="opacity" values="0;.4;.2" dur=".6s" fill="freeze"/>
+    </polygon>
+    <text x="200" y="225" font-family="Zen Dots,sans-serif" font-size="70" fill="#ffffff" text-anchor="middle" opacity="0" filter="url(#gD${u})">守
+      <animate attributeName="opacity" values="0;1;.6" dur=".6s" begin=".15s" fill="freeze"/>
+    </text>
+    <text x="200" y="60" font-family="Zen Dots,sans-serif" font-size="22" fill="#22e6e0" text-anchor="middle" opacity="0">DEFEND
+      <animate attributeName="opacity" values="0;1;.5" dur=".5s" begin=".2s" fill="freeze"/>
+    </text>
+  </svg>`;}
+function fxCounter(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="gC${u}"><feGaussianBlur stdDeviation="3"/></filter></defs>
+    ${Array.from({length:8}).map(function(_,i){var y=60+i*45;
+      return `<line x1="0" y1="${y}" x2="0" y2="${y}" stroke="${i%2?'#22e6e0':'#9b3cff'}" stroke-width="3" opacity="0">
+        <animate attributeName="x2" from="0" to="400" dur=".4s" begin="${i*.04}s" fill="freeze"/>
+        <animate attributeName="opacity" values="0;.8;0" dur=".4s" begin="${i*.04}s" fill="freeze"/>
+      </line>`}).join('')}
+    <text x="200" y="240" font-family="Zen Dots,sans-serif" font-size="130" fill="#9b3cff" text-anchor="middle" opacity="0" filter="url(#gC${u})">反
+      <animate attributeName="opacity" values="0;1;.5" dur=".7s" begin=".3s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="scale" values="0;1.3;1" additive="sum" dur=".7s" begin=".3s" fill="freeze"/>
+    </text>
+  </svg>`;}
+function fxMiss(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <text x="200" y="220" font-family="Zen Dots,sans-serif" font-size="90" fill="#22e6e0" text-anchor="middle" opacity="0" stroke="#000" stroke-width="2">MISS
+      <animate attributeName="opacity" values="0;1;0" dur=".8s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="scale" values=".5;1.3;1" additive="sum" dur=".8s" fill="freeze"/>
+    </text>
+  </svg>`;}
+function fxCharge(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs><filter id="gE${u}"><feGaussianBlur stdDeviation="4"/></filter></defs>
+    ${Array.from({length:10}).map(function(_,i){var x=100+Math.random()*200;
+      return `<circle cx="${x}" cy="350" r="${3+Math.random()*3}" fill="${Math.random()<.5?'#ffc83a':'#ff1f6d'}" opacity="0">
+        <animate attributeName="opacity" values="1;0" dur="1s" begin="${i*.08}s" fill="freeze"/>
+        <animate attributeName="cy" from="350" to="${50+Math.random()*100}" dur="1s" begin="${i*.08}s" fill="freeze"/>
+      </circle>`}).join('')}
+    <text x="200" y="230" font-family="Zen Dots,sans-serif" font-size="110" fill="#ffc83a" text-anchor="middle" opacity="0" filter="url(#gE${u})">力
+      <animate attributeName="opacity" values="0;1;.5" dur=".8s" begin=".2s" fill="freeze"/>
+    </text>
+  </svg>`;}
+
+var FX={attack:fxAttack,overdrive:fxOverdrive,spirit:fxSpiritNova,phantom:fxPhantomSlash,
+  defend:fxDefend,counter:fxCounter,miss:fxMiss,charge:fxCharge};
+
+// エフェクトを画面中央に大きく表示
+function showFullFx(kind,dur){
+  var box=document.getElementById('fullfx');
+  var wrap=document.createElement('div');
+  wrap.style.cssText='position:absolute;inset:0';
+  wrap.innerHTML=FX[kind]();
+  box.appendChild(wrap);
+  setTimeout(function(){if(wrap.parentNode)wrap.parentNode.removeChild(wrap);},dur||1200);
+}
+
+var ICON={attack:'⚔',counter:'↩',defend:'🛡',charge:'⚡',special:'✦'};
+
+// ===================== 多言語辞書 =====================
+var LANG = 'ja'; // 現在の言語
+var I18N = {
+  ja: {
+    // スタート画面
+    summon_title: "ファイターを召喚",
+    summon_desc: "0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style が能力を、<b>Background属性</b>がタイプ相性を決める。",
+    ph_token: "例: 4718",
+    btn_summon: "召喚",
+    btn_random: "ランダムで選ぶ",
+    hint: "毎ラウンド、5種から3つ選んでセット → 相手の伏せた3手と1手ずつ突き合わせ解決。<br><b>属性じゃんけん</b>で与ダメ±変動。被ダメで怒り蓄積、満タンで必殺技。",
+    // バトル
+    enemy_cmd: "ENEMY",
+    your_cmd: "YOU",
+    phase_select: "コマンドを3つ選べ",
+    phase_select_turn: "コマンドを3つ選べ（ラウンド {n}）",
+    phase_clash: "— CLASH —",
+    cmd_attack: "攻撃", cmd_attack_d: "確実な一撃",
+    cmd_counter: "カウンター", cmd_counter_d: "受ければ反撃",
+    cmd_defend: "防御", cmd_defend_d: "被ダメ激減+回復",
+    cmd_charge: "ためる", cmd_charge_d: "怒り大↑/隙",
+    cmd_special: "必殺技", cmd_special_d: "怒り満タン",
+    btn_undo: "取消",
+    btn_fight: "FIGHT！",
+    btn_again: "再戦",
+    // 行動名（ログ用）
+    act_attack: "攻撃", act_counter: "反撃", act_defend: "防御", act_charge: "ためる", act_special: "必殺",
+    // ログ
+    you: "YOU", enemy: "ENEMY",
+    turn_label: "━━ ラウンド {n} ━━",
+    matchup_adv: "YOU 有利 ▲", matchup_dis: "YOU 不利 ▼", matchup_neu: "互角 =",
+    entry_me: "⚔ 0N1 #{id} [{type}/{arch}] 入場！",
+    entry_en: "☠ 敵 0N1 #{id} [{type}/{arch}] 選出！",
+    matchup_log_adv: "⚡ 属性相性は YOU 有利！",
+    matchup_log_dis: "属性相性は YOU 不利…",
+    matchup_log_neu: "属性相性は互角",
+    pair_label: "<span class=\"me-a\">YOU</span> [{me}] ✕ <span class=\"en-a\">ENEMY</span> [{en}]",
+    defend_heal: "{who}は{label}で体勢を立て直し HP+{hp}",
+    label_defend: "防御", label_counter: "構え",
+    charge_msg: "{who}は気を溜めた（怒り+42・無防備）",
+    spirit_heal: "{who}は霊力で HP+{hp}",
+    sp_pierce: "{tag}の必殺技はカウンターを貫通（一部軽減）",
+    defend_block: "{tag}の{kind} → 相手は防御、ダメージ激減",
+    counter_atk: "{deftag} の反撃！ {att}に <span class=\"dmg\">{dmg}</span>",
+    you_kanji: "あなた", enemy_kanji: "敵",
+    attack_kanji: "攻撃",
+    type_adv: "⚡ 属性有利！ダメージ増幅",
+    type_dis: "属性不利…ダメージ減衰",
+    deal_dmg: "{tag}の{kind}が {who}に <span class=\"dmg\">{dmg}</span> ダメージ",
+    dodge_evade: "{deftag}は攻撃を完全に回避！",
+    // リザルト
+    victory: "VICTORY", defeat: "DEFEAT",
+    win_desc: "0N1 #{me}（{type}/{arch}）が 0N1 #{en} を撃破！ {turn}ラウンドで決着。",
+    lose_desc: "0N1 #{me} は 0N1 #{en}（{type}/{arch}）に敗北…",
+  },
+  en: {
+    summon_title: "Summon Your Fighter",
+    summon_desc: "Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style determine your stats, <b>Background</b> determines type matchups.",
+    ph_token: "e.g. 4718",
+    btn_summon: "Summon",
+    btn_random: "Pick at Random",
+    hint: "Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.",
+    enemy_cmd: "ENEMY",
+    your_cmd: "YOU",
+    phase_select: "Pick 3 Commands",
+    phase_select_turn: "Pick 3 Commands (Round {n})",
+    phase_clash: "— CLASH —",
+    cmd_attack: "Attack", cmd_attack_d: "Solid hit",
+    cmd_counter: "Counter", cmd_counter_d: "Reflect attack",
+    cmd_defend: "Defend", cmd_defend_d: "Reduce & heal",
+    cmd_charge: "Charge", cmd_charge_d: "Rage++ / open",
+    cmd_special: "Special", cmd_special_d: "Need full Rage",
+    btn_undo: "Undo",
+    btn_fight: "FIGHT！",
+    btn_again: "Rematch",
+    act_attack: "Attack", act_counter: "Counter", act_defend: "Defend", act_charge: "Charge", act_special: "Special",
+    you: "YOU", enemy: "ENEMY",
+    turn_label: "━━ ROUND {n} ━━",
+    matchup_adv: "YOU Advantage ▲", matchup_dis: "YOU Disadvantage ▼", matchup_neu: "Even =",
+    entry_me: "⚔ 0N1 #{id} [{type}/{arch}] enters the ring!",
+    entry_en: "☠ Enemy 0N1 #{id} [{type}/{arch}] appears!",
+    matchup_log_adv: "⚡ Type matchup: YOU Advantage!",
+    matchup_log_dis: "Type matchup: YOU Disadvantage...",
+    matchup_log_neu: "Type matchup is even",
+    pair_label: "<span class=\"me-a\">YOU</span> [{me}] ✕ <span class=\"en-a\">ENEMY</span> [{en}]",
+    defend_heal: "{who} regrouped with {label}, HP+{hp}",
+    label_defend: "Defend", label_counter: "Stance",
+    charge_msg: "{who} charged up (Rage+42, exposed)",
+    spirit_heal: "{who} restored HP+{hp} with Spirit",
+    sp_pierce: "{tag}'s Special pierces Counter (partial reduction)",
+    defend_block: "{tag}'s {kind} → blocked, damage greatly reduced",
+    counter_atk: "{deftag}'s Counter! {att} takes <span class=\"dmg\">{dmg}</span>",
+    you_kanji: "you", enemy_kanji: "enemy",
+    attack_kanji: "attack",
+    type_adv: "⚡ Type advantage! Damage amplified",
+    type_dis: "Type disadvantage... damage reduced",
+    deal_dmg: "{tag}'s {kind} deals <span class=\"dmg\">{dmg}</span> to {who}",
+    dodge_evade: "{deftag} completely evaded the attack!",
+    victory: "VICTORY", defeat: "DEFEAT",
+    win_desc: "0N1 #{me} ({type}/{arch}) defeated 0N1 #{en}! Decided in {turn} rounds.",
+    lose_desc: "0N1 #{me} was defeated by 0N1 #{en} ({type}/{arch})...",
+  }
+};
+function T(key, vars){
+  var s = (I18N[LANG] && I18N[LANG][key]) || (I18N.ja[key] || key);
+  if(vars) for(var k in vars) s = s.split('{'+k+'}').join(vars[k]);
+  return s;
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    el.innerHTML = T(k);
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+    var k = el.getAttribute('data-i18n-ph');
+    el.placeholder = T(k);
+  });
+  // ANAMEを言語に合わせて差し替え
+  ANAME = {
+    attack: T('act_attack'),
+    counter: T('act_counter'),
+    defend: T('act_defend'),
+    charge: T('act_charge'),
+    special: T('act_special')
+  };
+  // phaseラベルを更新（バトル中なら）
+  if(G && !G.over){
+    if(G.phase==='select') el('#phase').innerHTML = T('phase_select_turn',{n:G.turn});
+    if(G.phase==='solve') el('#phase').innerHTML = T('phase_clash');
+    // キューの表示も再描画
+    renderQueue();
+    renderEnemyQueue(G.phase!=='solve');
+    renderTypebar();
+  }
+}
+var ANAME={attack:'攻撃',counter:'反撃',defend:'防御',charge:'ためる',special:'必殺'};
+var GAUGE_MAX=5; // 必殺技ゲージ上限（保険）
+var G=null;
+function el(q){return document.querySelector(q);}
+
+function makeFighter(id){
+  var ty=typeOf(id);
+  var s=deriveStats(id);
+  var sp=specialInfo(s,ty);
+  return {
+    id:id, st:s, type:ty,
+    hp:INITIAL_HP, maxhp:INITIAL_HP,
+    gauge:0,           // 必殺技ゲージ（"ためる"で+1, "必殺"で-1）
+    special:sp
+  };
+}
+function buildCard(side){
+  var f=side==='me'?G.me:G.en;
+  var c=el(side==='me'?'#meCard':'#enCard');
+  var col=TYPE_COLOR[f.type]||'#9b3cff';
+  var realBadge = f.st._real ? '<span style="color:var(--gold);margin-right:4px" title="OpenSea実データ">★</span>' : '';
+
+  // base値があれば差分を表示
+  function statCell(cls, label, base, final){
+    var diff = final - base;
+    var bonus = '';
+    if(diff > 0)      bonus = ' <span class="b">(+'+diff+')</span>';
+    else if(diff < 0) bonus = ' <span class="b neg">('+diff+')</span>';
+    return '<div class="st '+cls+'"><div class="l">'+label+'</div>'+
+           '<div class="v">'+base+bonus+'</div></div>';
+  }
+  var base = f.st._base || {spirit:f.st.spirit, strength:f.st.strength, style:f.st.style};
+
+  c.innerHTML='<div class="tcg-head"><span class="nm">'+realBadge+'0N1 #'+f.id+'</span>'+
+    '<span class="tcg-type" style="color:'+col+'">'+f.type+'</span></div>'+
+    '<div class="tcg-art" id="'+side+'Art"><div class="tcg-fx" id="'+side+'Fx"></div></div>'+
+    '<div class="tcg-stats">'+
+    statCell('sp',  'Spirit',   base.spirit,   f.st.spirit) +
+    statCell('str', 'Strength', base.strength, f.st.strength) +
+    statCell('sty', 'Style',    base.style,    f.st.style) +
+    '</div>'+
+    '<div class="tcg-foot">'+f.type+' · '+f.special.kind+'</div>';
+  loadPortrait(el('#'+side+'Art'),f.id,f.st);
+}
+function renderTypebar(){
+  // 4Typeシステムでは属性じゃんけんが無いので、代わりに両者のType名とゲージを表示
+  var me=G.me, en=G.en;
+  var cM=TYPE_COLOR[me.type], cE=TYPE_COLOR[en.type];
+  el('#typebar').innerHTML =
+    '<span class="typechip" style="color:'+cM+'">'+me.type+'</span>'+
+    '<span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡'+me.gauge+'</span>'+
+    '<span class="vsmark">VS</span>'+
+    '<span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡'+en.gauge+'</span>'+
+    '<span class="typechip" style="color:'+cE+'">'+en.type+'</span>';
+}
+function updateBars(f,side){
+  var p=side==='me'?'#me':'#en';
+  el(p+'Hp').style.width=Math.max(0,f.hp)/f.maxhp*100+'%';
+  el(p+'HpTxt').textContent=Math.max(0,Math.round(f.hp))+'/'+f.maxhp;
+  // 必殺技ゲージ表示（0〜GAUGE_MAX、満タンでなく1以上で必殺可）
+  var rf=el(p+'Rage');
+  rf.style.width=Math.min(100, (f.gauge/GAUGE_MAX*100))+'%';
+  if(f.gauge>=1)rf.classList.add('full');else rf.classList.remove('full');
+  if(side==='me')el('#spBtn').classList.toggle('ready',f.gauge>=1);
+  // 上のtypebarも更新（ゲージ数値表示のため）
+  if(G && !G.over){ renderTypebar(); }
+}
+function log(h,c){var L=el('#log'),p=document.createElement('p');if(c)p.className=c;p.innerHTML=h;L.appendChild(p);L.scrollTop=L.scrollHeight;}
+function floatTxt(side,t,col){var c=el(side==='me'?'#meCorner':'#enCorner');
+  var f=document.createElement('div');f.className='float';f.textContent=t;
+  f.style.color=col||'#ff6ea0';f.style.top=side==='me'?'-10%':'15%';
+  c.appendChild(f);setTimeout(function(){f.remove();},1100);}
+function shake(side,red){var c=el(side==='me'?'#meCorner':'#enCorner');
+  c.classList.add('hit');if(red)c.classList.add('flash');
+  setTimeout(function(){c.classList.remove('hit','flash');},420);}
+
+function atkPower(att){var base=5+att.st.strength*0.65,v=Math.random()*3-1;
+  var crit=Math.random()<(0.06+att.st.style*0.012);var d=base+v;if(crit)d*=1.7;
+  return{dmg:Math.max(1,Math.round(d)),crit:crit};}
+function specialPower(att){return Math.max(1,Math.round(att.maxhp*att.special.ratio*(0.85+Math.random()*0.3)));}
+// ===================== 敵AI（4Type仕様）=====================
+function enemyPlan(){
+  var en=G.en, me=G.me, plan=[];
+  for(var i=0;i<3;i++){
+    var s=en.st;
+    var w={attack:1.2, defend:1.0, charge:1.0, counter:1.0};
+    // Strengthが高ければ攻撃寄り
+    if(s.strength >= 60) w.attack += 1.5;
+    // Styleが高ければカウンター寄り
+    if(s.style >= 70) w.counter += 1.5;
+    // Spiritが高ければ防御寄り
+    if(s.spirit >= 60) w.defend += 1.2;
+    // HP少ない時は守り寄り
+    if(en.hp/en.maxhp < 0.35){ w.defend+=1.5; w.attack*=0.7; }
+    // 必殺技ゲージあれば一定確率で
+    if(en.gauge >= 1 && Math.random() < 0.45){
+      plan.push('special'); continue;
+    }
+    // ゲージが0なら時々ためる
+    if(en.gauge === 0 && Math.random() < 0.18){
+      plan.push('charge'); continue;
+    }
+    var tot=w.attack+w.defend+w.charge+w.counter, pk=Math.random()*tot;
+    if((pk-=w.attack)<0) plan.push('attack');
+    else if((pk-=w.defend)<0) plan.push('defend');
+    else if((pk-=w.charge)<0) plan.push('charge');
+    else plan.push('counter');
+  }
+  return plan;
+}
+
+function specialFxKind(kind){
+  if(kind==='OVERDRIVE FIST')return 'overdrive';
+  if(kind==='SPIRIT NOVA')return 'spirit';
+  return 'phantom';
+}
+
+function resolvePair(meAct,enAct){
+  var me=G.me, en=G.en, lines=[];
+
+  // ゲージ無しで必殺技を選んだ場合は攻撃に降格
+  if(meAct==='special' && me.gauge<=0){
+    lines.push({h:'<span class="me-a">YOU</span>はゲージ不足→攻撃に降格', c:'sys'});
+    meAct='attack';
+  }
+  if(enAct==='special' && en.gauge<=0){
+    lines.push({h:'<span class="en-a">ENEMY</span>はゲージ不足→攻撃に降格', c:'sys'});
+    enAct='attack';
+  }
+
+  lines.push({h:T('pair_label',{me:ANAME[meAct],en:ANAME[enAct]}),c:'clash'});
+
+  // -------- 演出（攻撃/必殺以外の即時エフェクト・効果音）--------
+  if(meAct==='defend'||enAct==='defend'){ showFullFx('defend',900); SFX.defend(); }
+  else if(meAct==='counter'||enAct==='counter'){ showFullFx('counter',900); SFX.counter(); }
+  if(meAct==='charge'||enAct==='charge'){ showFullFx('charge',1000); SFX.charge(); }
+
+  // -------- ヘルパー：HP/ゲージ操作と表示 --------
+  function dealDamage(target, side, dmg, opts){
+    opts = opts||{};
+    dmg = Math.max(0, Math.round(dmg));
+    target.hp = Math.max(0, target.hp - dmg);
+    updateBars(target, side);
+    shake(side, true);
+    if(dmg>0){
+      floatTxt(side, '-'+dmg, opts.crit?'#ffc83a':'#ff6ea0');
+    }
+    return dmg;
+  }
+  function addGauge(f, side, n){
+    f.gauge = Math.min(GAUGE_MAX, Math.max(0, f.gauge + n));
+    updateBars(f, side);
+  }
+  function resetGauge(f, side){
+    f.gauge = 0; updateBars(f, side);
+  }
+  function tagOf(side){
+    return side==='me' ? '<span class="me-a">YOU</span>' : '<span class="en-a">ENEMY</span>';
+  }
+  function nameOf(side){ return side==='me' ? T('you_kanji') : T('enemy_kanji'); }
+
+  // -------- 数値式（実値1〜10ベース／HP60）--------
+  // 通常攻撃 = Strength（1〜10）
+  // カウンター反撃 = Strength + Style（2〜20）
+  // 必殺技 vs 攻撃   = 20 + Strength（21〜30）
+  // 必殺技 vs 防御   = max(3, 15 - 相手Spirit)
+  // 必殺技 vs ためる = 25 + Strength（26〜35）
+  // 必殺技 vs カウンター = 不発、相手のカウンター120%返し
+  // 必殺技 vs 必殺技 = 相討ち（互いに 20+Strength）
+
+  // Type相性を適用してダメージを倍率化（攻撃／必殺技のみ）
+  // 攻撃側のType vs 防御側のType
+  function applyTypeMod(dmg, attType, defType){
+    var mod = typeMod(attType, defType);
+    return Math.max(1, Math.round(dmg * mod));
+  }
+  function typeAdvLog(attType, defType, attSide){
+    var m = matchup(attType, defType);
+    if(m > 0) return {h:tagOf(attSide)+' [<b style="color:'+TYPE_COLOR[attType]+'">'+attType+'</b>] が相性有利！ ダメージ増幅', c:'adv'};
+    if(m < 0) return {h:tagOf(attSide)+' [<b style="color:'+TYPE_COLOR[attType]+'">'+attType+'</b>] は相性不利… ダメージ減衰', c:'sys'};
+    return null;
+  }
+
+  // Styleで先制判定（同値はランダム）
+  function whoFirst(){
+    if(me.st.style > en.st.style) return 'me';
+    if(en.st.style > me.st.style) return 'en';
+    return Math.random()<0.5 ? 'me' : 'en';
+  }
+
+  // -------- ペアごとの処理 --------
+  var pair = meAct + ':' + enAct;
+
+  // ========== 同じコマンド ==========
+  if(meAct === enAct){
+    if(meAct === 'attack'){
+      // Style先制 → トドメ判定
+      var f = whoFirst();
+      showFullFx('attack', 800); SFX.attack();
+      var firstTarget = f==='me' ? 'en' : 'me';
+      var attChar1 = f==='me'?me:en, defChar1 = f==='me'?en:me;
+      var d1 = applyTypeMod(attChar1.st.strength, attChar1.type, defChar1.type);
+      dealDamage(defChar1, firstTarget, d1);
+      var adv1 = typeAdvLog(attChar1.type, defChar1.type, f); if(adv1) lines.push(adv1);
+      lines.push({h:tagOf(f)+'が先制攻撃！ '+nameOf(firstTarget)+'に <span class="dmg">'+d1+'</span>', c:f==='me'?'me-a':'en-a'});
+      if(defChar1.hp > 0){
+        // 後発反撃
+        var secondSide = f==='me'?'en':'me';
+        var attChar2 = secondSide==='me'?me:en, defChar2 = secondSide==='me'?en:me;
+        var d2 = applyTypeMod(attChar2.st.strength, attChar2.type, defChar2.type);
+        setTimeout(function(){
+          if(G.over) return;
+          showFullFx('attack', 800); SFX.attack();
+          dealDamage(defChar2, f, d2);
+        }, 600);
+        var adv2 = typeAdvLog(attChar2.type, defChar2.type, secondSide); if(adv2) lines.push(adv2);
+        lines.push({h:tagOf(secondSide)+'も反撃！ '+nameOf(f)+'に <span class="dmg">'+d2+'</span>', c:secondSide==='me'?'me-a':'en-a'});
+      } else {
+        lines.push({h:nameOf(firstTarget)+'は倒れて反撃できなかった', c:'sys'});
+      }
+      return lines;
+    }
+    if(meAct === 'defend'){
+      // 防御同士：両者がSpiritで回復（HP60ベース）
+      function healDefender(f, side){
+        var heal = Math.max(2, Math.round(2 + f.st.spirit * 0.3));
+        if(f.hp >= f.maxhp) { return 0; }
+        var actual = Math.min(heal, f.maxhp - f.hp);
+        f.hp += actual;
+        updateBars(f, side);
+        floatTxt(side, '+'+actual, '#22e6e0');
+        return actual;
+      }
+      SFX.defend(); SFX.heal();
+      showFullFx('defend', 900);
+      var hMe = healDefender(me, 'me');
+      var hEn = healDefender(en, 'en');
+      lines.push({h:'両者防御で体勢を立て直した！ YOU HP+<span style="color:var(--cyan)">'+hMe+'</span> / ENEMY HP+<span style="color:var(--pink)">'+hEn+'</span>', c:'sys'});
+      return lines;
+    }
+    if(meAct === 'charge'){
+      addGauge(me, 'me', 1); addGauge(en, 'en', 1);
+      floatTxt('me','+1','#ffc83a'); floatTxt('en','+1','#ffc83a');
+      lines.push({h:'両者ため！ 互いに ⚡+1', c:'sys'});
+      return lines;
+    }
+    if(meAct === 'counter'){
+      lines.push({h:'両者カウンター態勢。動かず…', c:'sys'});
+      return lines;
+    }
+    if(meAct === 'special'){
+      // 必殺技同士＝相討ち（20 + 互いのStrength）に相性適用
+      var dm = applyTypeMod(20 + me.st.strength, me.type, en.type);
+      var de = applyTypeMod(20 + en.st.strength, en.type, me.type);
+      resetGauge(me,'me'); resetGauge(en,'en');
+      showFullFx(specialFxKind(me.special.kind), 1200); SFX.special();
+      dealDamage(en,'en',dm,{crit:true});
+      dealDamage(me,'me',de,{crit:true});
+      var advLog1 = typeAdvLog(me.type, en.type, 'me'); if(advLog1) lines.push(advLog1);
+      var advLog2 = typeAdvLog(en.type, me.type, 'en'); if(advLog2) lines.push(advLog2);
+      lines.push({h:'必殺技同士の激突！ 相討ち（YOU→<span class="dmg">'+dm+'</span> / ENEMY→<span class="dmg">'+de+'</span>）', c:'clash'});
+      return lines;
+    }
+  }
+
+  // ========== 攻撃 vs 防御 ==========
+  if(pair === 'attack:defend' || pair === 'defend:attack'){
+    var atkSide = (pair==='attack:defend')?'me':'en';
+    lines.push({h:tagOf(atkSide==='me'?'en':'me')+'は防御！ '+tagOf(atkSide)+'の攻撃を完全に防いだ', c:'sys'});
+    return lines;
+  }
+
+  // ========== 攻撃 vs ためる ==========
+  if(pair === 'attack:charge' || pair === 'charge:attack'){
+    var aS = (pair==='attack:charge')?'me':'en';
+    var cS = aS==='me'?'en':'me';
+    var attChar = aS==='me'?me:en;
+    var chgChar = cS==='me'?me:en;
+    showFullFx('attack', 800); SFX.attack();
+    var dmg = applyTypeMod(attChar.st.strength, attChar.type, chgChar.type);
+    resetGauge(chgChar, cS);
+    dealDamage(chgChar, cS, dmg);
+    var adv = typeAdvLog(attChar.type, chgChar.type, aS); if(adv) lines.push(adv);
+    lines.push({h:tagOf(cS)+'のため解除！ '+tagOf(aS)+'の攻撃 <span class="dmg">'+dmg+'</span> ダメージ', c:aS==='me'?'me-a':'en-a'});
+    return lines;
+  }
+
+  // ========== 攻撃 vs カウンター ==========
+  if(pair === 'attack:counter' || pair === 'counter:attack'){
+    var atS = (pair==='attack:counter')?'me':'en';
+    var coS = atS==='me'?'en':'me';
+    var coChar = coS==='me'?me:en;
+    var atChar = atS==='me'?me:en;
+    showFullFx('counter', 1000); SFX.counter();
+    // カウンター反撃 = Strength + Style（相性適用）
+    var ctr = applyTypeMod(coChar.st.strength + coChar.st.style, coChar.type, atChar.type);
+    dealDamage(atChar, atS, ctr, {crit:true});
+    var adv = typeAdvLog(coChar.type, atChar.type, coS); if(adv) lines.push(adv);
+    lines.push({h:tagOf(coS)+'のカウンター成立！ '+tagOf(atS)+'に <span class="dmg">'+ctr+'</span> ダメージ返し', c:'clash'});
+    return lines;
+  }
+
+  // ========== 防御 vs ためる ==========
+  if(pair === 'defend:charge' || pair === 'charge:defend'){
+    var chS = (pair==='defend:charge')?'en':'me';
+    addGauge(chS==='me'?me:en, chS, 1);
+    floatTxt(chS,'+1','#ffc83a');
+    lines.push({h:tagOf(chS)+'は隙をついて気を溜めた（⚡+1）', c:'sys'});
+    return lines;
+  }
+
+  // ========== 防御 vs カウンター ==========
+  if(pair === 'defend:counter' || pair === 'counter:defend'){
+    var defSide = (pair === 'defend:counter') ? 'me' : 'en';
+    var defChar = defSide === 'me' ? me : en;
+    var ctrSide = defSide === 'me' ? 'en' : 'me';
+    // 防御側が回復、カウンター側は空振り（不発）
+    var heal = Math.max(2, Math.round(2 + defChar.st.spirit * 0.3));
+    var actual = 0;
+    if(defChar.hp < defChar.maxhp){
+      actual = Math.min(heal, defChar.maxhp - defChar.hp);
+      defChar.hp += actual;
+      updateBars(defChar, defSide);
+      floatTxt(defSide, '+'+actual, '#22e6e0');
+    }
+    SFX.defend(); if(actual>0) SFX.heal();
+    showFullFx('defend', 900);
+    lines.push({h:tagOf(ctrSide)+'のカウンターは空振り。'+tagOf(defSide)+'は防御で体勢を立て直し HP+<span style="color:var(--cyan)">'+actual+'</span>', c:'sys'});
+    return lines;
+  }
+
+  // ========== ためる vs カウンター ==========
+  if(pair === 'charge:counter' || pair === 'counter:charge'){
+    var cgS = (pair==='charge:counter')?'me':'en';
+    addGauge(cgS==='me'?me:en, cgS, 1);
+    floatTxt(cgS,'+1','#ffc83a');
+    var ctS = cgS==='me'?'en':'me';
+    lines.push({h:tagOf(ctS)+'のカウンターは空振り。'+tagOf(cgS)+'は気を溜めた（⚡+1）', c:'sys'});
+    return lines;
+  }
+
+  // ========== 必殺技 vs * ==========
+  if(meAct === 'special' || enAct === 'special'){
+    var spS, oppS, spChar, oppChar, oppAct;
+    if(meAct === 'special'){ spS='me'; oppS='en'; spChar=me; oppChar=en; oppAct=enAct; }
+    else { spS='en'; oppS='me'; spChar=en; oppChar=me; oppAct=meAct; }
+
+    // 必殺 vs 攻撃
+    if(oppAct === 'attack'){
+      var first = whoFirst();
+      var spDmg = applyTypeMod(20 + spChar.st.strength, spChar.type, oppChar.type);
+      var atkDmg = applyTypeMod(oppChar.st.strength, oppChar.type, spChar.type);
+      resetGauge(spChar, spS);
+      var advSp = typeAdvLog(spChar.type, oppChar.type, spS);
+      var advAt = typeAdvLog(oppChar.type, spChar.type, oppS);
+      if(first === spS){
+        // 必殺が先 → トドメ判定
+        showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
+        dealDamage(oppChar, oppS, spDmg, {crit:true});
+        if(advSp) lines.push(advSp);
+        lines.push({h:tagOf(spS)+'の必殺技が先制！ '+tagOf(oppS)+'に <span class="dmg">'+spDmg+'</span>', c:spS==='me'?'me-a':'en-a'});
+        if(oppChar.hp <= 0){
+          lines.push({h:tagOf(oppS)+'は倒れて反撃不能！', c:'sys'});
+        } else {
+          setTimeout(function(){
+            if(G.over) return;
+            showFullFx('attack', 800); SFX.attack();
+            dealDamage(spChar, spS, atkDmg);
+          }, 600);
+          if(advAt) lines.push(advAt);
+          lines.push({h:tagOf(oppS)+'の通常攻撃が反撃！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>', c:oppS==='me'?'me-a':'en-a'});
+        }
+      } else {
+        // 通常攻撃が先制
+        showFullFx('attack', 800); SFX.attack();
+        dealDamage(spChar, spS, atkDmg);
+        if(advAt) lines.push(advAt);
+        lines.push({h:tagOf(oppS)+'の通常攻撃が先制！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>', c:oppS==='me'?'me-a':'en-a'});
+        setTimeout(function(){
+          if(G.over) return;
+          showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
+          dealDamage(oppChar, oppS, spDmg, {crit:true});
+        }, 600);
+        if(advSp) lines.push(advSp);
+        lines.push({h:tagOf(spS)+'の必殺技がヒット！ '+tagOf(oppS)+'に <span class="dmg">'+spDmg+'</span>', c:spS==='me'?'me-a':'en-a'});
+      }
+      return lines;
+    }
+
+    // 必殺 vs 防御（15 - 相手Spirit、最低3）
+    if(oppAct === 'defend'){
+      var redDmg = applyTypeMod(Math.max(3, 15 - oppChar.st.spirit), spChar.type, oppChar.type);
+      resetGauge(spChar, spS);
+      showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
+      dealDamage(oppChar, oppS, redDmg, {crit:true});
+      var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
+      lines.push({h:tagOf(oppS)+'は防御で必殺技を耐えたが <span class="dmg">'+redDmg+'</span> ダメージ（Spirit軽減）', c:'sys'});
+      return lines;
+    }
+
+    // 必殺 vs ためる（25 + Strength直撃）
+    if(oppAct === 'charge'){
+      var chgDmg = applyTypeMod(25 + spChar.st.strength, spChar.type, oppChar.type);
+      resetGauge(spChar, spS);
+      resetGauge(oppChar, oppS);
+      showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
+      dealDamage(oppChar, oppS, chgDmg, {crit:true});
+      var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
+      lines.push({h:tagOf(oppS)+'のため中に必殺直撃！ <span class="dmg">'+chgDmg+'</span> ダメージ ＋ ⚡リセット', c:'clash'});
+      return lines;
+    }
+
+    // 必殺 vs カウンター（120%返し: (STR + STY) * 1.2）
+    if(oppAct === 'counter'){
+      var coDmg = applyTypeMod(Math.round((oppChar.st.strength + oppChar.st.style) * 1.2), oppChar.type, spChar.type);
+      resetGauge(spChar, spS);
+      showFullFx('counter', 1000); SFX.counter();
+      dealDamage(spChar, spS, coDmg, {crit:true});
+      var adv = typeAdvLog(oppChar.type, spChar.type, oppS); if(adv) lines.push(adv);
+      lines.push({h:tagOf(spS)+'の必殺技不発！ '+tagOf(oppS)+'のカウンターが120%返し <span class="dmg">'+coDmg+'</span>', c:'clash'});
+      return lines;
+    }
+  }
+
+  // 未定義の組み合わせ（フォールバック）
+  lines.push({h:'…動きなし', c:'sys'});
+  return lines;
+}
+
+function startTurn(){
+  G.meQueue=[];G.enQueue=enemyPlan();G.phase='select';
+  el('#phase').innerHTML=T('phase_select_turn',{n:G.turn});
+  el('#phase').className='phase';
+  renderQueue();renderEnemyQueue(true,-1);
+  el('#fightBtn').disabled=true;el('#undoBtn').disabled=false;
+  setCmd(true);
+}
+function renderQueue(active){
+  var q=el('#ringMeQueue');q.innerHTML='';
+  for(var i=0;i<3;i++){var d=document.createElement('div'),a=G.meQueue[i];
+    d.className='ring-qslot'+(a?' filled':'')+(active===i?' active':'');
+    d.innerHTML=a?('<span class="ic">'+ICON[a]+'</span>'+ANAME[a]):('<span style="opacity:.5">'+(i+1)+'</span>');
+    q.appendChild(d);}}
+function renderEnemyQueue(hidden,active){
+  var q=el('#ringEnQueue');q.innerHTML='';
+  for(var i=0;i<3;i++){var d=document.createElement('div');
+    if(hidden){d.className='ring-qslot en back';d.innerHTML='<span class="ic">?</span>';}
+    else{var a=G.enQueue[i];d.className='ring-qslot en reveal'+(active===i?' active':'');
+      d.innerHTML='<span class="ic">'+ICON[a]+'</span>'+ANAME[a];}
+    q.appendChild(d);}}
+function setCmd(on){document.querySelectorAll('.cmd').forEach(function(b){
+  var act=b.dataset.act,dis=!on||G.phase!=='select'||G.meQueue.length>=3;
+  if(act==='special'&&G.me.gauge<1)dis=true;
+  b.disabled=dis;});}
+function pickCmd(act){if(G.phase!=='select'||G.meQueue.length>=3)return;
+  if(act==='special'&&G.me.gauge<1)return;
+  SFX.click();
+  G.meQueue.push(act);renderQueue();
+  if(G.meQueue.length>=3)el('#fightBtn').disabled=false;setCmd(true);}
+function undo(){if(G.phase!=='select'||!G.meQueue.length)return;
+  SFX.click();
+  G.meQueue.pop();renderQueue();el('#fightBtn').disabled=true;setCmd(true);}
+
+// 大型アナウンス表示（Ready / Fight / 任意の文字）
+function showAnnounce(text, kind, duration){
+  var ring = el('#ring');
+  if(!ring) return;
+  var a = document.createElement('div');
+  a.className = 'announce ' + (kind||'ready');
+  a.textContent = text;
+  ring.appendChild(a);
+  // 白フラッシュ（Fightだけ）
+  if(kind==='fight'){
+    var fb = document.createElement('div');
+    fb.className = 'flashbang';
+    ring.appendChild(fb);
+    setTimeout(function(){ if(fb.parentNode) fb.parentNode.removeChild(fb); }, 500);
+  }
+  setTimeout(function(){ if(a.parentNode) a.parentNode.removeChild(a); }, duration||1000);
+}
+
+function doFight(){
+  if(G.phase!=='select'||G.meQueue.length<3)return;
+  G.phase='solve';setCmd(false);
+  el('#fightBtn').disabled=true;el('#undoBtn').disabled=true;
+  el('#phase').innerHTML=T('phase_clash');el('#phase').className='phase solve';
+  renderEnemyQueue(false,-1);
+  log(T('turn_label',{n:G.turn}),'sys');
+
+  // ===== Ready → Fight! アナウンス =====
+  // Ready（金色、1秒）
+  showAnnounce('READY', 'ready', 1000);
+  SFX.click(); // 控えめなReady音
+  // 1秒後 → Fight!（ピンク、フラッシュ付き）
+  setTimeout(function(){
+    if(G.over) return;
+    showAnnounce('FIGHT！', 'fight', 1000);
+    SFX.fight(); // 派手なFight音
+  }, 900);
+
+  // 戦闘解決はアナウンス完了後に開始（1.7秒待つ）
+  setTimeout(function(){
+    if(G.over) return;
+    var step=0;
+    (function next(){
+      if(G.over)return;
+      if(step>=3){endTurn();return;}
+      renderQueue(step);renderEnemyQueue(false,step);
+      resolvePair(G.meQueue[step],G.enQueue[step]).forEach(function(l){log(l.h,l.c);});
+      step++;
+      if(G.me.hp<=0||G.en.hp<=0){setTimeout(finish,800);return;}
+      setTimeout(next,1500);
+    })();
+  }, 1700);
+}
+function endTurn(){if(G.over)return;G.turn++;setTimeout(startTurn,900);}
+
+// バトル終了：リザルト画面に切り替え、ログだけ下に残す
+function finish(){
+  if(G.over)return;
+  G.over=true;
+  setCmd(false);
+  el('#fightBtn').disabled=true;
+  el('#undoBtn').disabled=true;
+  BGM.stop();
+
+  var win = G.me.hp>0;
+
+  setTimeout(function(){
+    // 最終ログメッセージ（強調）
+    log('━━━━━━━━━━━━━━', 'sys');
+    log((win
+      ? '<span style="color:var(--cyan);font-weight:700;font-size:14px">★ '+T('victory')+' ★</span>'
+      : '<span style="color:var(--pink);font-weight:700;font-size:14px">☠ '+T('defeat')+' ☠</span>'),
+      'sys');
+    log('━━━━━━━━━━━━━━', 'sys');
+
+    // バトル画面を隠す
+    el('#battle').style.display='none';
+    // リザルト画面を表示
+    var r=el('#result');r.style.display='block';
+    var t=el('#rTitle');
+    t.textContent=win?T('victory'):T('defeat');
+    t.className='rt '+(win?'win':'lose');
+    if(win) SFX.win(); else SFX.lose();
+    el('#rDesc').textContent=win
+      ? T('win_desc',{me:G.me.id,type:G.me.type,arch:G.me.type,en:G.en.id,turn:G.turn-1})
+      : T('lose_desc',{me:G.me.id,en:G.en.id,type:G.en.type,arch:G.en.type});
+
+    // ログだけリザルト画面の下に移動して残す
+    var logEl = el('#log');
+    if(logEl){
+      // ログタイトルを追加
+      var logTitle = document.createElement('div');
+      logTitle.className = 'log-title-after';
+      logTitle.textContent = LANG==='ja' ? '— 戦闘ログ —' : '— BATTLE LOG —';
+      // ログをリザルト画面の中（result要素内）に移動
+      r.appendChild(logTitle);
+      r.appendChild(logEl);
+      // ログの高さを大きく
+      logEl.style.height = '240px';
+      logEl.style.textAlign = 'left';
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+  },900);
+}
+
+function startBattle(myId){
+  // 前回の終了表示や移動したログタイトルを掃除
+  document.querySelectorAll('.endbanner, .endpanel, .log-title-after').forEach(function(n){
+    if(n.parentNode) n.parentNode.removeChild(n);
+  });
+  // ログがリザルト画面側に移動されていたら、バトル画面に戻す
+  var logEl = el('#log');
+  var battleEl = el('#battle');
+  if(logEl && logEl.parentNode !== battleEl){
+    battleEl.appendChild(logEl);
+    logEl.style.height = '';     // 高さリセット
+    logEl.style.textAlign = '';  // テキスト配置リセット
+  }
+  var enId;do{enId=1+Math.floor(Math.random()*7777);}while(enId===myId);
+  G={me:makeFighter(myId),en:makeFighter(enId),turn:1,phase:'select',meQueue:[],enQueue:[],over:false};
+  el('#start').style.display='none';el('#result').style.display='none';
+  el('#battle').style.display='block';el('#log').innerHTML='';
+  el('#meName').textContent='0N1 #'+myId;
+  el('#enName').textContent='0N1 #'+enId;
+  el('#spName').textContent=G.me.special.kind;
+  buildCard('me');buildCard('en');
+  renderTypebar();
+  updateBars(G.me,'me');updateBars(G.en,'en');
+  log(T('entry_me',{id:myId,type:G.me.type,arch:G.me.type}),'me-a');
+  log(T('entry_en',{id:enId,type:G.en.type,arch:G.en.type}),'en-a');
+  startTurn();
+}
+
+el('#summonBtn').addEventListener('click',function(){
+  SFX.init();
+  var v=parseInt(el('#tokenId').value,10);
+  if(!v||v<1||v>7777){el('#tokenId').focus();el('#tokenId').style.borderColor='var(--pink)';return;}
+  BGM.play('battle');
+  startBattle(v);});
+el('#tokenId').addEventListener('keydown',function(e){if(e.key==='Enter')el('#summonBtn').click();});
+el('#randBtn').addEventListener('click',function(){SFX.init();BGM.play('battle');startBattle(1+Math.floor(Math.random()*7777));});
+el('#againBtn').addEventListener('click',function(){
+  SFX.init();SFX.click();
+  el('#result').style.display='none';el('#start').style.display='block';
+  BGM.play('start');
+});
+el('#fightBtn').addEventListener('click',doFight);
+el('#undoBtn').addEventListener('click',undo);
+document.querySelectorAll('.cmd').forEach(function(b){
+  b.addEventListener('click',function(){pickCmd(b.dataset.act);});});
+
+// 言語切替（data-langを持つボタンのみ）
+document.querySelectorAll('.lang-btn[data-lang]').forEach(function(b){
+  b.addEventListener('click', function(){
+    LANG = b.dataset.lang;
+    document.querySelectorAll('.lang-btn[data-lang]').forEach(function(x){x.classList.toggle('active', x.dataset.lang===LANG);});
+    SFX.click();
+    applyI18n();
+  });
+});
+
+// BGM ON/OFFトグル
+el('#bgmToggle').addEventListener('click', function(){
+  SFX.init();
+  var on = !BGM.isEnabled();
+  BGM.setEnabled(on);
+  el('#bgmToggle').textContent = on ? '🔊' : '🔇';
+  el('#bgmToggle').classList.toggle('active', on);
+  // スタート画面表示中なら開始BGMを鳴らす
+  if(on && el('#start').style.display !== 'none'){
+    BGM.play('start');
+  }
+});
+
+// ユーザー初回操作時にスタートBGMを開始するため、最初のクリックで起動
+var bgmStarted = false;
+function tryStartBgm(){
+  if(bgmStarted || !BGM.isEnabled()) return;
+  bgmStarted = true;
+  // スタート画面表示中ならstart、そうでなければbattle
+  if(el('#start') && el('#start').style.display !== 'none'){
+    BGM.play('start');
+  }
+}
+document.addEventListener('click', tryStartBgm, {once:false});
+document.addEventListener('keydown', tryStartBgm, {once:false});
+
+// 初期表示で適用
+applyI18n();
+// 特性データを読み込み（成功すれば本物の特性が反映される）
+loadTraits();
+})();
+</script>
+</body>
+</html>
