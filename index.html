@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_6.html -->
+<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_7.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -180,9 +180,10 @@ header{text-align:center;margin-bottom:14px}
 .ring-queue{position:absolute;display:flex;flex-direction:column;gap:4px;z-index:7}
 .ring-queue.en{top:9%;left:6%;}
 .ring-queue.en .ring-qlabel{color:var(--pink);text-align:left}
-.ring-queue.me{bottom:6%;right:4%;}
-.ring-queue.me .ring-qlabel{color:var(--cyan);text-align:right}
-.ring-qlabel{font-family:'Zen Dots';font-size:9px;letter-spacing:.15em;margin-bottom:2px}
+/* 自分のキュー：HPバー(下端8px)と被らないよう上に */
+.ring-queue.me{bottom:22%;right:4%;}
+.ring-queue.me .ring-qlabel{color:var(--cyan);text-align:right;font-size:13px}
+.ring-qlabel{font-family:'Zen Dots';font-size:9px;letter-spacing:.15em;margin-bottom:4px}
 .ring-qslots{display:flex;flex-direction:row;gap:5px}
 .ring-qslot{width:46px;height:48px;border-radius:9px;border:1px dashed var(--line);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -287,6 +288,10 @@ header{text-align:center;margin-bottom:14px}
 .cmd:disabled{opacity:.3;cursor:not-allowed}
 
 .ctrlrow{display:flex;gap:10px;justify-content:center;margin-bottom:13px}
+/* コマンドの上に出るFIGHT/取消ボタン（3つ揃った時だけ表示） */
+.ctrlrow-top{margin:8px 0 14px;animation:popIn .3s ease-out}
+.ctrlrow-top .btn{font-size:15px;padding:10px 28px;letter-spacing:.08em}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
 .log{padding:12px 15px;height:160px;overflow-y:auto;font-size:12px;line-height:1.85;scrollbar-width:thin}
 .log-title-after{font-family:'Zen Dots';font-size:11px;letter-spacing:.25em;color:var(--muted);
   text-align:center;margin:24px 0 10px;text-transform:uppercase}
@@ -306,6 +311,92 @@ header{text-align:center;margin-bottom:14px}
 .float{position:absolute;font-family:'Zen Dots';font-size:30px;pointer-events:none;z-index:30;
   animation:fu 1.1s ease-out forwards;left:50%;text-shadow:0 2px 12px #000,0 0 20px currentColor}
 @keyframes fu{0%{opacity:0;transform:translate(-50%,0) scale(.5)}20%{opacity:1;transform:translate(-50%,-14px) scale(1.3)}100%{opacity:0;transform:translate(-50%,-70px) scale(1)}}
+
+/* ===== タイトル画面 ===== */
+#title{text-align:center;padding:50px 30px;max-width:600px;margin:50px auto;
+  background:linear-gradient(135deg,rgba(155,60,255,.15),rgba(34,230,224,.08));
+  border:2px solid var(--violet);box-shadow:0 0 60px rgba(155,60,255,.3),inset 0 0 40px rgba(255,31,109,.1)}
+.title-logo{margin-bottom:40px}
+/* 0N1 FORCE：ネオン管風のフラッシュ（たまにチカチカ＋暗くなる）*/
+.title-main{font-family:'Zen Dots';font-size:64px;color:var(--gold);letter-spacing:.05em;line-height:1;
+  text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000;
+  margin-bottom:14px;
+  animation:neonFlicker 7s infinite}
+@keyframes neonFlicker{
+  /* ほとんどの時間は明るく安定 */
+  0%, 30%, 50%, 100%{
+    opacity:1;
+    color:var(--gold);
+    text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000;
+  }
+  /* たまに一瞬チカッ（4箇所）*/
+  31%, 33%{
+    opacity:0.3;
+    color:#5a3d00;
+    text-shadow:0 0 5px var(--gold),0 4px 8px #000;
+  }
+  32%{
+    opacity:1;
+    color:var(--gold);
+    text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000;
+  }
+  /* 51〜55%で暗くなる（ネオン管が一瞬切れる）*/
+  51%, 54%{
+    opacity:0.25;
+    color:#3a2400;
+    text-shadow:0 0 3px var(--gold),0 4px 8px #000;
+  }
+  52%, 53%{
+    opacity:1;
+    color:var(--gold);
+    text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000;
+  }
+  55%{
+    opacity:0.6;
+    color:#7a5400;
+    text-shadow:0 0 10px var(--gold),0 4px 8px #000;
+  }
+  /* 70%でもう一瞬チカッ */
+  70%, 71%{
+    opacity:0.4;
+    color:#5a3d00;
+    text-shadow:0 0 8px var(--gold),0 4px 8px #000;
+  }
+}
+.title-sub{font-family:'Zen Dots';font-size:28px;color:var(--pink);letter-spacing:.15em;line-height:1;
+  text-shadow:0 0 20px var(--pink),0 2px 4px #000;
+  margin-bottom:8px;animation:titlePulse 2.5s ease-in-out infinite}
+@keyframes titlePulse{0%,100%{opacity:1;text-shadow:0 0 20px var(--pink),0 2px 4px #000}50%{opacity:.85;text-shadow:0 0 30px var(--pink),0 0 50px var(--violet),0 2px 4px #000}}
+.title-tag{font-family:'Chakra Petch';font-size:13px;color:var(--cyan);letter-spacing:.3em;margin-top:14px}
+.title-buttons{display:flex;flex-direction:column;gap:14px;max-width:280px;margin:30px auto 24px}
+.title-btn{font-size:16px !important;padding:14px 24px !important;letter-spacing:.08em}
+/* START GAMEだけ等間隔で点滅（"押してください"アピール）*/
+#titleStartBtn{animation:startBlink 1.4s ease-in-out infinite;
+  box-shadow:0 0 20px rgba(34,230,224,.4),0 0 40px rgba(255,200,58,.3)}
+@keyframes startBlink{
+  0%, 100%{
+    opacity:1;
+    box-shadow:0 0 25px rgba(34,230,224,.6),0 0 50px rgba(255,200,58,.5);
+    transform:scale(1);
+  }
+  50%{
+    opacity:0.75;
+    box-shadow:0 0 12px rgba(34,230,224,.3),0 0 25px rgba(255,200,58,.2);
+    transform:scale(.98);
+  }
+}
+.title-credit{font-family:'Chakra Petch';font-size:10px;color:var(--muted);letter-spacing:.15em;
+  margin-top:30px;opacity:.7}
+/* タイトルに戻るボタン（各画面左上） */
+.back-to-title{position:absolute;top:12px;left:12px;font-size:11px !important;padding:6px 12px !important}
+.panel{position:relative}
+/* 遊び方画面 */
+.howto-body{text-align:left;font-size:13px;line-height:1.9;color:var(--ink);padding:0 10px;max-height:60vh;overflow-y:auto}
+.howto-body h3{font-family:'Zen Dots';font-size:15px;color:var(--gold);margin:18px 0 8px;letter-spacing:.05em}
+.howto-body table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px}
+.howto-body th{background:rgba(155,60,255,.15);padding:6px;border:1px solid rgba(155,60,255,.3);color:var(--violet)}
+.howto-body td{padding:6px;border:1px solid rgba(155,60,255,.2)}
+.howto-body .cmd-name{color:var(--cyan);font-weight:700}
 
 /* ===== スコア・ランキング ===== */
 .scorebox{margin:14px 0;padding:14px 18px;text-align:center;
@@ -421,9 +512,10 @@ header{text-align:center;margin-bottom:14px}
 
 <div class="wrap">
   <div class="lang-switch">
+    <button class="lang-btn" id="globalTitleBtn" title="Return to Title" style="font-size:11px;display:none">🏠</button>
     <button class="lang-btn active" id="bgmToggle" title="BGM ON/OFF" style="font-size:13px">🔊</button>
-    <button class="lang-btn active" data-lang="ja">日本語</button>
-    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ja">日本語</button>
+    <button class="lang-btn active" data-lang="en">EN</button>
   </div>
 
   <header>
@@ -431,15 +523,38 @@ header{text-align:center;margin-bottom:14px}
     <div class="sub">0N1 Force · Cyber Trading Battle</div>
   </header>
 
-  <div class="panel" id="start">
-    <h2 data-i18n="summon_title">ファイターを召喚</h2>
-    <p data-i18n="summon_desc">0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style が能力を、<b>Background属性</b>がタイプ相性を決める。</p>
-    <div class="irow">
-      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
-      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
+  <!-- ===== タイトル画面 ===== -->
+  <div class="panel" id="title">
+    <div class="title-logo">
+      <div class="title-main">0N1 FORCE</div>
+      <div class="title-sub">NEON RING CLASH</div>
+      <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
-    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
-    <div class="hint" data-i18n="hint">毎ラウンド、5種から3つ選んでセット → 相手の伏せた3手と1手ずつ突き合わせ解決。<br><b>属性じゃんけん</b>で与ダメ±変動。被ダメで怒り蓄積、満タンで必殺技。</div>
+    <div class="title-buttons">
+      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
+      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
+      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
+    </div>
+    <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
+  </div>
+
+  <!-- ===== 遊び方画面 ===== -->
+  <div class="panel" id="howto" style="display:none">
+    <h2 data-i18n="how_title">How to Play</h2>
+    <div class="howto-body" id="howtoBody"></div>
+    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
+  </div>
+
+  <div class="panel" id="start" style="display:none">
+    <button class="btn ghost back-to-title" id="startBackBtn" data-i18n="btn_back_title">← Title</button>
+    <h2 data-i18n="summon_title">Summon Your Fighter</h2>
+    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style determine your stats, <b>Background</b> determines type matchups.</p>
+    <div class="irow">
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
+    </div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
+    <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
   </div>
 
   <div id="battle">
@@ -524,19 +639,25 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
+    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
 
-    <div class="commands">
-      <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
-      <button class="cmd counter" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
-      <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
-      <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
-      <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
+    <!-- 3つ揃った時だけ表示するFIGHT/取消ボタン領域（コマンドの上） -->
+    <div class="ctrlrow ctrlrow-top" id="ctrlTop" style="display:none">
+      <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">Undo</button>
+      <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
     </div>
 
+    <div class="commands">
+      <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
+      <button class="cmd counter" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
+      <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
+      <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
+      <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
+    </div>
+
+    <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
-      <button class="btn" id="fightBtn" disabled="" data-i18n="btn_fight">FIGHT！</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
@@ -555,9 +676,10 @@ header{text-align:center;margin-bottom:14px}
       <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
         border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
-        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
-        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
+        <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
+        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
       </div>
     </div>
   </div>
@@ -570,7 +692,8 @@ header{text-align:center;margin-bottom:14px}
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
-      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
+      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
     </div>
   </div>
 </div>
@@ -1231,9 +1354,9 @@ var SFX = (function(){
 // =========================================================
 var BGM = (function(){
   var ctx = null;
-  var currentTrack = null; // 'start' | 'battle' | null
-  var playlist = {start:[], battle:[]};        // 利用可能なAudio配列
-  var currentAudio = {start:null, battle:null}; // 現在再生中のAudio
+  var currentTrack = null; // 'title' | 'start' | 'battle' | null
+  var playlist = {title:[], start:[], battle:[]};        // 利用可能なAudio配列
+  var currentAudio = {title:null, start:null, battle:null}; // 現在再生中のAudio
   var synthState = null;     // 合成BGM動作中の状態
   var enabled = true;
   var masterVol = 0.45;
@@ -1265,7 +1388,7 @@ var BGM = (function(){
 
   function preload(){
     // 単一ファイル名（旧仕様）と番号付き（新仕様）の両方を試す
-    ['start','battle'].forEach(function(key){
+    ['title','start','battle'].forEach(function(key){
       tryLoadMp3(key, 'bgm_'+key+'.mp3');
       for(var i=1;i<=MAX_TRACKS;i++){
         tryLoadMp3(key, 'bgm_'+key+'_'+i+'.mp3');
@@ -1274,7 +1397,7 @@ var BGM = (function(){
   }
 
   // プレイリストからランダム選曲（前回と違う曲を優先）
-  var lastPlayed = {start:null, battle:null};
+  var lastPlayed = {title:null, start:null, battle:null};
   function pickRandomTrack(key){
     var list = playlist[key];
     if(!list || list.length === 0) return null;
@@ -1560,7 +1683,7 @@ var BGM = (function(){
 
   function fadeAllOut(key, dur){
     // 指定キー（または全部）の現在再生中のmp3をフェードアウト
-    var keys = key ? [key] : ['start','battle'];
+    var keys = key ? [key] : ['title','start','battle'];
     keys.forEach(function(k){
       playlist[k].forEach(function(a){
         if(!a.paused){ fadeMp3(a, 0, dur||0.6); }
@@ -1592,7 +1715,7 @@ var BGM = (function(){
       if(!enabled) return;
       if(currentTrack === kind) return;
       // 前のトラックをフェードアウト
-      ['start','battle'].forEach(function(k){
+      ['title','start','battle'].forEach(function(k){
         if(k !== kind) fadeAllOut(k, 0.8);
       });
       stopSynthBgm();
@@ -1600,9 +1723,14 @@ var BGM = (function(){
       // mp3優先（プレイリストに1曲以上あればmp3）
       if(playlist[kind].length > 0){
         playMp3(kind);
+      } else if(kind === 'title' && playlist.start.length > 0){
+        // titleが無ければstart BGMで代替（タイトル画面で「ゲーム開始」までstartを流す）
+        console.log('[BGM] title BGM未配置 → start BGMで代替');
+        playMp3('start');
       } else {
-        // 合成BGMで代替
-        setTimeout(function(){ startSynthBgm(kind); }, 100);
+        // 合成BGMで代替（titleの場合はstart用の合成を使う）
+        var synthKind = (kind === 'title') ? 'start' : kind;
+        setTimeout(function(){ startSynthBgm(synthKind); }, 100);
       }
     },
     stop: function(){
@@ -1865,7 +1993,7 @@ function showFullFx(kind,dur){
 var ICON={attack:'⚔',counter:'↩',defend:'🛡',charge:'⚡',special:'✦'};
 
 // ===================== 多言語辞書 =====================
-var LANG = 'ja'; // 現在の言語
+var LANG = 'en'; // 現在の言語（デフォルト英語）
 var I18N = {
   ja: {
     // スタート画面
@@ -1894,6 +2022,11 @@ var I18N = {
     btn_registered: "登録完了！",
     btn_ranking: "ランキングを見る",
     btn_close_ranking: "閉じる",
+    btn_back_title: "← タイトル",
+    title_start: "ゲーム開始",
+    title_ranking: "ランキング",
+    title_how: "遊び方",
+    how_title: "遊び方",
     score_label: "SCORE",
     sc_dmg_dealt: "与ダメージ:",
     sc_dmg_taken: "被ダメージ:",
@@ -1909,6 +2042,31 @@ var I18N = {
     ranking_count: "{n}件の記録",
     ranking_dmg_dealt: "与",
     ranking_dmg_taken: "被",
+    // 戦闘ログ
+    log_demote_me: "<span class=\"me-a\">YOU</span>はゲージMAX未満→攻撃に降格",
+    log_demote_en: "<span class=\"en-a\">ENEMY</span>はゲージMAX未満→攻撃に降格",
+    log_attack_first: "{tag}が先制攻撃！ {target}に <span class=\"dmg\">{dmg}</span>（⚡+1）",
+    log_attack_counter: "{tag}も反撃！ {target}に <span class=\"dmg\">{dmg}</span>（⚡+1）",
+    log_fall_no_counter: "{target}は倒れて反撃できなかった",
+    log_both_defend: "両者防御で体勢を立て直した！ YOU HP+<span style=\"color:var(--cyan)\">{hMe}</span> / ENEMY HP+<span style=\"color:var(--pink)\">{hEn}</span>",
+    log_both_charge: "両者ため！ 互いに ⚡+3",
+    log_both_counter: "両者カウンター態勢。動かず…",
+    log_special_clash: "必殺技同士の激突！ 相討ち（YOU→<span class=\"dmg\">{dm}</span> / ENEMY→<span class=\"dmg\">{de}</span>）",
+    log_defend_block: "{def}は防御！ {att}の攻撃を完全に防いだ",
+    log_charge_break: "{cS}のため解除！ {aS}の攻撃 <span class=\"dmg\">{dmg}</span> ダメージ（⚡+1）",
+    log_counter_hit: "{co}のカウンター成立！ {at}に <span class=\"dmg\">{dmg}</span> ダメージ返し（⚡+1）",
+    log_charge_gap: "{tag}は隙をついて気を溜めた（⚡+3）",
+    log_counter_miss_defend: "{ctr}のカウンターは空振り。{def}は防御で体勢を立て直し HP+<span style=\"color:var(--cyan)\">{hp}</span>",
+    log_counter_miss_charge: "{ct}のカウンターは空振り。{cg}は気を溜めた（⚡+3）",
+    log_special_first: "{tag}の必殺技が先制！ {target}に <span class=\"dmg\">{dmg}</span>",
+    log_fall_no_counter_sp: "{target}は倒れて反撃不能！",
+    log_attack_back: "{tag}の通常攻撃が反撃！ {target}に <span class=\"dmg\">{dmg}</span>（⚡+1）",
+    log_attack_lead: "{tag}の通常攻撃が先制！ {target}に <span class=\"dmg\">{dmg}</span>（⚡+1）",
+    log_special_hit: "{tag}の必殺技がヒット！ {target}に <span class=\"dmg\">{dmg}</span>",
+    log_special_blocked: "{tag}は防御で必殺技を耐えたが <span class=\"dmg\">{dmg}</span> ダメージ（Spirit軽減）",
+    log_special_on_charge: "{tag}のため中に必殺直撃！ <span class=\"dmg\">{dmg}</span> ダメージ ＋ ⚡リセット",
+    log_special_countered: "{sp}の必殺技不発！ {co}のカウンターが120%返し <span class=\"dmg\">{dmg}</span>（⚡+1）",
+    log_no_action: "…動きなし",
     // 行動名（ログ用）
     act_attack: "攻撃", act_counter: "反撃", act_defend: "防御", act_charge: "ためる", act_special: "必殺",
     // ログ
@@ -1964,6 +2122,11 @@ var I18N = {
     btn_registered: "Registered!",
     btn_ranking: "View Ranking",
     btn_close_ranking: "Close",
+    btn_back_title: "← Title",
+    title_start: "Start Game",
+    title_ranking: "Ranking",
+    title_how: "How to Play",
+    how_title: "How to Play",
     score_label: "SCORE",
     sc_dmg_dealt: "Damage Dealt:",
     sc_dmg_taken: "Damage Taken:",
@@ -1979,6 +2142,31 @@ var I18N = {
     ranking_count: "{n} records",
     ranking_dmg_dealt: "Dealt",
     ranking_dmg_taken: "Taken",
+    // Battle log
+    log_demote_me: "<span class=\"me-a\">YOU</span>: gauge not full → demoted to attack",
+    log_demote_en: "<span class=\"en-a\">ENEMY</span>: gauge not full → demoted to attack",
+    log_attack_first: "{tag} strikes first! {target} takes <span class=\"dmg\">{dmg}</span> (⚡+1)",
+    log_attack_counter: "{tag} counters! {target} takes <span class=\"dmg\">{dmg}</span> (⚡+1)",
+    log_fall_no_counter: "{target} fell, no counterattack",
+    log_both_defend: "Both defended and recovered! YOU HP+<span style=\"color:var(--cyan)\">{hMe}</span> / ENEMY HP+<span style=\"color:var(--pink)\">{hEn}</span>",
+    log_both_charge: "Both charge! Each gains ⚡+3",
+    log_both_counter: "Both in counter stance. No movement…",
+    log_special_clash: "Special clash! Mutual destruction (YOU→<span class=\"dmg\">{dm}</span> / ENEMY→<span class=\"dmg\">{de}</span>)",
+    log_defend_block: "{def} defends! {att}'s attack completely blocked",
+    log_charge_break: "{cS}'s charge broken! {aS}'s attack deals <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
+    log_counter_hit: "{co}'s counter lands! {at} takes <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
+    log_charge_gap: "{tag} exploited the gap and charged (⚡+3)",
+    log_counter_miss_defend: "{ctr}'s counter missed. {def} recovers HP+<span style=\"color:var(--cyan)\">{hp}</span>",
+    log_counter_miss_charge: "{ct}'s counter missed. {cg} charged power (⚡+3)",
+    log_special_first: "{tag}'s special strikes first! {target} takes <span class=\"dmg\">{dmg}</span>",
+    log_fall_no_counter_sp: "{target} fell, cannot counter!",
+    log_attack_back: "{tag}'s attack counters! {target} takes <span class=\"dmg\">{dmg}</span> (⚡+1)",
+    log_attack_lead: "{tag}'s attack strikes first! {target} takes <span class=\"dmg\">{dmg}</span> (⚡+1)",
+    log_special_hit: "{tag}'s special hits! {target} takes <span class=\"dmg\">{dmg}</span>",
+    log_special_blocked: "{tag} blocked the special, took <span class=\"dmg\">{dmg}</span> damage (Spirit reduction)",
+    log_special_on_charge: "{tag} was charging! Special direct hit <span class=\"dmg\">{dmg}</span> + ⚡reset",
+    log_special_countered: "{sp}'s special failed! {co}'s 120% counter <span class=\"dmg\">{dmg}</span> (⚡+1)",
+    log_no_action: "…no action",
     act_attack: "Attack", act_counter: "Counter", act_defend: "Defend", act_charge: "Charge", act_special: "Special",
     you: "YOU", enemy: "ENEMY",
     turn_label: "━━ ROUND {n} ━━",
@@ -2037,6 +2225,10 @@ function applyI18n(){
     renderQueue();
     renderEnemyQueue(G.phase!=='solve');
     renderTypebar();
+  }
+  // 遊び方画面が開いていれば再描画
+  if(el('#howto') && el('#howto').style.display === 'block'){
+    if(typeof renderHowto === 'function') renderHowto();
   }
 }
 var ANAME={attack:'攻撃',counter:'反撃',defend:'防御',charge:'ためる',special:'必殺'};
@@ -2185,12 +2377,12 @@ function resolvePair(meAct,enAct){
   // 必殺技はゲージMAXが必要（条件を満たさない場合は攻撃に降格）
   if(meAct==='special' && me.gauge<GAUGE_MAX){
     console.log('  [降格] meはゲージMAX未満で必殺→攻撃 (gauge='+me.gauge+'/'+GAUGE_MAX+')');
-    lines.push({h:'<span class="me-a">YOU</span>はゲージMAX未満→攻撃に降格', c:'sys'});
+    lines.push({h:T('log_demote_me'), c:'sys'});
     meAct='attack';
   }
   if(enAct==='special' && en.gauge<GAUGE_MAX){
     console.log('  [降格] enはゲージMAX未満で必殺→攻撃 (gauge='+en.gauge+'/'+GAUGE_MAX+')');
-    lines.push({h:'<span class="en-a">ENEMY</span>はゲージMAX未満→攻撃に降格', c:'sys'});
+    lines.push({h:T('log_demote_en'), c:'sys'});
     enAct='attack';
   }
   console.log('  pair = "'+meAct+':'+enAct+'"');
@@ -2289,7 +2481,7 @@ function resolvePair(meAct,enAct){
       dealDamage(defChar1, firstTarget, d1);
       hitGauge(f);  // 攻撃ヒットで攻撃側+1
       var adv1 = typeAdvLog(attChar1.type, defChar1.type, f); if(adv1) lines.push(adv1);
-      lines.push({h:tagOf(f)+'が先制攻撃！ '+nameOf(firstTarget)+'に <span class="dmg">'+d1+'</span>（⚡+1）', c:f==='me'?'me-a':'en-a'});
+      lines.push({h:T('log_attack_first',{tag:tagOf(f),target:nameOf(firstTarget),dmg:d1}), c:f==='me'?'me-a':'en-a'});
       if(defChar1.hp > 0){
         // 後発反撃
         var secondSide = f==='me'?'en':'me';
@@ -2302,9 +2494,9 @@ function resolvePair(meAct,enAct){
           hitGauge(secondSide);  // 反撃ヒットでも+1
         }, 600);
         var adv2 = typeAdvLog(attChar2.type, defChar2.type, secondSide); if(adv2) lines.push(adv2);
-        lines.push({h:tagOf(secondSide)+'も反撃！ '+nameOf(f)+'に <span class="dmg">'+d2+'</span>（⚡+1）', c:secondSide==='me'?'me-a':'en-a'});
+        lines.push({h:T('log_attack_counter',{tag:tagOf(secondSide),target:nameOf(f),dmg:d2}), c:secondSide==='me'?'me-a':'en-a'});
       } else {
-        lines.push({h:nameOf(firstTarget)+'は倒れて反撃できなかった', c:'sys'});
+        lines.push({h:T('log_fall_no_counter',{target:nameOf(firstTarget)}), c:'sys'});
       }
       return lines;
     }
@@ -2323,17 +2515,17 @@ function resolvePair(meAct,enAct){
       showFullFx('defend', 900);
       var hMe = healDefender(me, 'me');
       var hEn = healDefender(en, 'en');
-      lines.push({h:'両者防御で体勢を立て直した！ YOU HP+<span style="color:var(--cyan)">'+hMe+'</span> / ENEMY HP+<span style="color:var(--pink)">'+hEn+'</span>', c:'sys'});
+      lines.push({h:T('log_both_defend',{hMe:hMe,hEn:hEn}), c:'sys'});
       return lines;
     }
     if(meAct === 'charge'){
       addGauge(me, 'me', 3); addGauge(en, 'en', 3);
       floatTxt('me','+3','#ffc83a'); floatTxt('en','+3','#ffc83a');
-      lines.push({h:'両者ため！ 互いに ⚡+3', c:'sys'});
+      lines.push({h:T('log_both_charge'), c:'sys'});
       return lines;
     }
     if(meAct === 'counter'){
-      lines.push({h:'両者カウンター態勢。動かず…', c:'sys'});
+      lines.push({h:T('log_both_counter'), c:'sys'});
       return lines;
     }
     if(meAct === 'special'){
@@ -2346,7 +2538,7 @@ function resolvePair(meAct,enAct){
       dealDamage(me,'me',de,{crit:true});
       var advLog1 = typeAdvLog(me.type, en.type, 'me'); if(advLog1) lines.push(advLog1);
       var advLog2 = typeAdvLog(en.type, me.type, 'en'); if(advLog2) lines.push(advLog2);
-      lines.push({h:'必殺技同士の激突！ 相討ち（YOU→<span class="dmg">'+dm+'</span> / ENEMY→<span class="dmg">'+de+'</span>）', c:'clash'});
+      lines.push({h:T('log_special_clash',{dm:dm,de:de}), c:'clash'});
       return lines;
     }
   }
@@ -2365,7 +2557,7 @@ function resolvePair(meAct,enAct){
       // BLOCKED表示
       floatTxt(defSide, 'BLOCKED!', '#22e6e0');
     }, 250);
-    lines.push({h:tagOf(defSide)+'は防御！ '+tagOf(atkSide)+'の攻撃を完全に防いだ', c:'sys'});
+    lines.push({h:T('log_defend_block',{def:tagOf(defSide),att:tagOf(atkSide)}), c:'sys'});
     return lines;
   }
 
@@ -2382,7 +2574,7 @@ function resolvePair(meAct,enAct){
     dealDamage(chgChar, cS, dmg);
     hitGauge(aS);  // 攻撃ヒットで+1
     var adv = typeAdvLog(attChar.type, chgChar.type, aS); if(adv) lines.push(adv);
-    lines.push({h:tagOf(cS)+'のため解除！ '+tagOf(aS)+'の攻撃 <span class="dmg">'+dmg+'</span> ダメージ（⚡+1）', c:aS==='me'?'me-a':'en-a'});
+    lines.push({h:T('log_charge_break',{cS:tagOf(cS),aS:tagOf(aS),dmg:dmg}), c:aS==='me'?'me-a':'en-a'});
     return lines;
   }
 
@@ -2399,7 +2591,7 @@ function resolvePair(meAct,enAct){
     dealDamage(atChar, atS, ctr, {crit:true});
     hitGauge(coS);  // カウンター成功で+1
     var adv = typeAdvLog(coChar.type, atChar.type, coS); if(adv) lines.push(adv);
-    lines.push({h:tagOf(coS)+'のカウンター成立！ '+tagOf(atS)+'に <span class="dmg">'+ctr+'</span> ダメージ返し（⚡+1）', c:'clash'});
+    lines.push({h:T('log_counter_hit',{co:tagOf(coS),at:tagOf(atS),dmg:ctr}), c:'clash'});
     return lines;
   }
 
@@ -2409,7 +2601,7 @@ function resolvePair(meAct,enAct){
     var chS = (pair==='defend:charge')?'en':'me';
     addGauge(chS==='me'?me:en, chS, 3);
     floatTxt(chS,'+3','#ffc83a');
-    lines.push({h:tagOf(chS)+'は隙をついて気を溜めた（⚡+3）', c:'sys'});
+    lines.push({h:T('log_charge_gap',{tag:tagOf(chS)}), c:'sys'});
     return lines;
   }
 
@@ -2430,7 +2622,7 @@ function resolvePair(meAct,enAct){
     }
     SFX.defend(); if(actual>0) SFX.heal();
     showFullFx('defend', 900);
-    lines.push({h:tagOf(ctrSide)+'のカウンターは空振り。'+tagOf(defSide)+'は防御で体勢を立て直し HP+<span style="color:var(--cyan)">'+actual+'</span>', c:'sys'});
+    lines.push({h:T('log_counter_miss_defend',{ctr:tagOf(ctrSide),def:tagOf(defSide),hp:actual}), c:'sys'});
     return lines;
   }
 
@@ -2441,7 +2633,7 @@ function resolvePair(meAct,enAct){
     addGauge(cgS==='me'?me:en, cgS, 3);
     floatTxt(cgS,'+3','#ffc83a');
     var ctS = cgS==='me'?'en':'me';
-    lines.push({h:tagOf(ctS)+'のカウンターは空振り。'+tagOf(cgS)+'は気を溜めた（⚡+3）', c:'sys'});
+    lines.push({h:T('log_counter_miss_charge',{ct:tagOf(ctS),cg:tagOf(cgS)}), c:'sys'});
     return lines;
   }
 
@@ -2465,9 +2657,9 @@ function resolvePair(meAct,enAct){
         showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
         dealDamage(oppChar, oppS, spDmg, {crit:true});
         if(advSp) lines.push(advSp);
-        lines.push({h:tagOf(spS)+'の必殺技が先制！ '+tagOf(oppS)+'に <span class="dmg">'+spDmg+'</span>', c:spS==='me'?'me-a':'en-a'});
+        lines.push({h:T('log_special_first',{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg}), c:spS==='me'?'me-a':'en-a'});
         if(oppChar.hp <= 0){
-          lines.push({h:tagOf(oppS)+'は倒れて反撃不能！', c:'sys'});
+          lines.push({h:T('log_fall_no_counter_sp',{target:tagOf(oppS)}), c:'sys'});
         } else {
           setTimeout(function(){
             if(G.over) return;
@@ -2476,7 +2668,7 @@ function resolvePair(meAct,enAct){
             hitGauge(oppS);  // 通常攻撃側がヒットで+1
           }, 600);
           if(advAt) lines.push(advAt);
-          lines.push({h:tagOf(oppS)+'の通常攻撃が反撃！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>（⚡+1）', c:oppS==='me'?'me-a':'en-a'});
+          lines.push({h:T('log_attack_back',{tag:tagOf(oppS),target:tagOf(spS),dmg:atkDmg}), c:oppS==='me'?'me-a':'en-a'});
         }
       } else {
         // 通常攻撃が先制
@@ -2484,14 +2676,14 @@ function resolvePair(meAct,enAct){
         dealDamage(spChar, spS, atkDmg);
         hitGauge(oppS);  // 通常攻撃側がヒットで+1
         if(advAt) lines.push(advAt);
-        lines.push({h:tagOf(oppS)+'の通常攻撃が先制！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>（⚡+1）', c:oppS==='me'?'me-a':'en-a'});
+        lines.push({h:T('log_attack_lead',{tag:tagOf(oppS),target:tagOf(spS),dmg:atkDmg}), c:oppS==='me'?'me-a':'en-a'});
         setTimeout(function(){
           if(G.over) return;
           showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
           dealDamage(oppChar, oppS, spDmg, {crit:true});
         }, 600);
         if(advSp) lines.push(advSp);
-        lines.push({h:tagOf(spS)+'の必殺技がヒット！ '+tagOf(oppS)+'に <span class="dmg">'+spDmg+'</span>', c:spS==='me'?'me-a':'en-a'});
+        lines.push({h:T('log_special_hit',{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg}), c:spS==='me'?'me-a':'en-a'});
       }
       return lines;
     }
@@ -2503,7 +2695,7 @@ function resolvePair(meAct,enAct){
       showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
       dealDamage(oppChar, oppS, redDmg, {crit:true});
       var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
-      lines.push({h:tagOf(oppS)+'は防御で必殺技を耐えたが <span class="dmg">'+redDmg+'</span> ダメージ（Spirit軽減）', c:'sys'});
+      lines.push({h:T('log_special_blocked',{tag:tagOf(oppS),dmg:redDmg}), c:'sys'});
       return lines;
     }
 
@@ -2515,7 +2707,7 @@ function resolvePair(meAct,enAct){
       showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
       dealDamage(oppChar, oppS, chgDmg, {crit:true});
       var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
-      lines.push({h:tagOf(oppS)+'のため中に必殺直撃！ <span class="dmg">'+chgDmg+'</span> ダメージ ＋ ⚡リセット', c:'clash'});
+      lines.push({h:T('log_special_on_charge',{tag:tagOf(oppS),dmg:chgDmg}), c:'clash'});
       return lines;
     }
 
@@ -2527,13 +2719,13 @@ function resolvePair(meAct,enAct){
       dealDamage(spChar, spS, coDmg, {crit:true});
       hitGauge(oppS);  // カウンター成功で+1
       var adv = typeAdvLog(oppChar.type, spChar.type, oppS); if(adv) lines.push(adv);
-      lines.push({h:tagOf(spS)+'の必殺技不発！ '+tagOf(oppS)+'のカウンターが120%返し <span class="dmg">'+coDmg+'</span>（⚡+1）', c:'clash'});
+      lines.push({h:T('log_special_countered',{sp:tagOf(spS),co:tagOf(oppS),dmg:coDmg}), c:'clash'});
       return lines;
     }
   }
 
   // 未定義の組み合わせ（フォールバック）
-  lines.push({h:'…動きなし', c:'sys'});
+  lines.push({h:T('log_no_action'), c:'sys'});
   return lines;
 }
 
@@ -2547,6 +2739,7 @@ function startTurn(){
   el('#phase').className='phase';
   renderQueue();renderEnemyQueue(true,-1);
   el('#fightBtn').disabled=true;el('#undoBtn').disabled=false;
+  el('#ctrlTop').style.display='none'; // FIGHTボタン領域非表示
   setCmd(true);
 }
 function renderQueue(active){
@@ -2564,12 +2757,16 @@ function renderEnemyQueue(hidden,active){
     q.appendChild(d);}}
 // 選択中のコマンドキューから「現在の予測ゲージ」を計算
 // ためる選択で+3、必殺技選択でゲージリセット（必殺技はMAX消費）
+// 厳密な予測ゲージ計算（確実な分のみ）
+// - ためるは相手次第で潰される可能性があるので、ゲージ+3は予測しない
+// - 攻撃ヒットも相手次第なので、+1は予測しない
+// - 必殺技を使うことだけが確実（成功してもしなくてもゲージは消費する）
 function predictedGauge(){
   if(!G || !G.me) return 0;
   var g = G.me.gauge;
   for(var i=0;i<G.meQueue.length;i++){
-    if(G.meQueue[i] === 'charge')  g = Math.min(GAUGE_MAX, g + 3);
-    if(G.meQueue[i] === 'special') g = 0; // 必殺技でゲージ全消費
+    if(G.meQueue[i] === 'special') g = 0; // 必殺技でゲージ全消費（確実）
+    // 'charge' と 'attack'/'counter' のゲージ増加は予測に含めない
   }
   return g;
 }
@@ -2585,10 +2782,17 @@ function pickCmd(act){if(G.phase!=='select'||G.meQueue.length>=3)return;
   console.log('[pickCmd] 選択: '+act+' (queue長 '+G.meQueue.length+' -> '+(G.meQueue.length+1)+', 予測ゲージ '+predictedGauge()+')');
   SFX.click();
   G.meQueue.push(act);renderQueue();
-  if(G.meQueue.length>=3)el('#fightBtn').disabled=false;setCmd(true);}
+  if(G.meQueue.length>=3){
+    el('#fightBtn').disabled=false;
+    el('#ctrlTop').style.display='flex'; // FIGHTボタン領域表示
+  }
+  setCmd(true);}
 function undo(){if(G.phase!=='select'||!G.meQueue.length)return;
   SFX.click();
-  G.meQueue.pop();renderQueue();el('#fightBtn').disabled=true;setCmd(true);}
+  G.meQueue.pop();renderQueue();
+  el('#fightBtn').disabled=true;
+  el('#ctrlTop').style.display='none'; // FIGHTボタン領域非表示
+  setCmd(true);}
 
 // 大型アナウンス表示（Ready / Fight / 任意の文字）
 function showAnnounce(text, kind, duration){
@@ -2612,6 +2816,7 @@ function doFight(){
   if(G.phase!=='select'||G.meQueue.length<3)return;
   G.phase='solve';setCmd(false);
   el('#fightBtn').disabled=true;el('#undoBtn').disabled=true;
+  el('#ctrlTop').style.display='none'; // FIGHTボタン領域非表示
   el('#phase').innerHTML=T('phase_clash');el('#phase').className='phase solve';
   renderEnemyQueue(false,-1);
   log(T('turn_label',{n:G.turn}),'sys');
@@ -2873,7 +3078,9 @@ function startBattle(myId){
   G={me:makeFighter(myId),en:makeFighter(enId),turn:1,phase:'select',meQueue:[],enQueue:[],over:false,
      dmgDealt:0,dmgTaken:0};
   el('#start').style.display='none';el('#result').style.display='none';
+  el('#title').style.display='none';el('#howto').style.display='none';el('#ranking').style.display='none';
   el('#battle').style.display='block';el('#log').innerHTML='';
+  updateGlobalTitleBtn();
   el('#meName').textContent='0N1 #'+myId;
   el('#enName').textContent='0N1 #'+enId;
   el('#spName').textContent=G.me.special.kind;
@@ -2895,8 +3102,169 @@ el('#tokenId').addEventListener('keydown',function(e){if(e.key==='Enter')el('#su
 el('#randBtn').addEventListener('click',function(){SFX.init();BGM.play('battle');startBattle(1+Math.floor(Math.random()*7777));});
 el('#againBtn').addEventListener('click',function(){
   SFX.init();SFX.click();
+  // 移動した戦闘ログを元の位置に戻す
+  var logEl = el('#log');
+  if(logEl){
+    var battleBox = el('#battle');
+    if(battleBox && logEl.parentNode !== battleBox){
+      battleBox.appendChild(logEl);
+      logEl.style.height = '';
+      logEl.style.textAlign = '';
+    }
+  }
   el('#result').style.display='none';el('#start').style.display='block';
   BGM.play('start');
+});
+
+// ===== タイトル画面遷移 =====
+// グローバルホームボタンの表示制御
+function updateGlobalTitleBtn(){
+  var btn = el('#globalTitleBtn');
+  if(!btn) return;
+  // タイトル画面でなければ表示
+  var inTitle = el('#title') && el('#title').style.display !== 'none';
+  btn.style.display = inTitle ? 'none' : '';
+}
+function showTitle(){
+  // 移動した戦闘ログを元の位置に戻す
+  var logEl = el('#log');
+  if(logEl){
+    var battleBox = el('#battle');
+    if(battleBox && logEl.parentNode !== battleBox){
+      battleBox.appendChild(logEl);
+      logEl.style.height = '';
+      logEl.style.textAlign = '';
+    }
+  }
+  // 戦闘中フラグをリセット
+  if(G){ G.over = true; }
+  // すべての画面を隠す
+  ['#title','#howto','#start','#battle','#result','#ranking'].forEach(function(sel){
+    var e = el(sel); if(e) e.style.display = 'none';
+  });
+  // タイトル画面を表示
+  el('#title').style.display = 'block';
+  BGM.play('title'); // タイトル画面BGM（無ければstartにフォールバック）
+  updateGlobalTitleBtn();
+}
+function showStart(){
+  ['#title','#howto','#battle','#result','#ranking'].forEach(function(sel){
+    var e = el(sel); if(e) e.style.display = 'none';
+  });
+  el('#start').style.display = 'block';
+  BGM.play('start');
+  updateGlobalTitleBtn();
+}
+function showHowto(){
+  ['#title','#start','#battle','#result','#ranking'].forEach(function(sel){
+    var e = el(sel); if(e) e.style.display = 'none';
+  });
+  el('#howto').style.display = 'block';
+  renderHowto();
+  BGM.play('title'); // 遊び方画面でもtitle BGMを継続
+  updateGlobalTitleBtn();
+}
+function renderHowto(){
+  var ja = (LANG === 'ja');
+  var body = el('#howtoBody');
+  if(!body) return;
+  if(ja){
+    body.innerHTML =
+      '<h3>基本ルール</h3>'+
+      '<p>HP 60で対戦。1ラウンドに3コマンドをセットし、相手の3手と1手ずつ突き合わせ解決。先にHPが0になった方が負け。</p>'+
+      '<h3>5つのコマンド</h3>'+
+      '<table>'+
+        '<tr><th>コマンド</th><th>効果</th></tr>'+
+        '<tr><td class="cmd-name">攻撃</td><td>確実な一撃（STR分のダメージ・⚡+1）</td></tr>'+
+        '<tr><td class="cmd-name">防御</td><td>ダメージ激減＋HP回復</td></tr>'+
+        '<tr><td class="cmd-name">カウンター</td><td>攻撃にだけ反撃（STR+STYで返す・⚡+1）</td></tr>'+
+        '<tr><td class="cmd-name">ためる</td><td>ゲージ+3。攻撃と必殺技に弱い</td></tr>'+
+        '<tr><td class="cmd-name">必殺技</td><td>ゲージ満タン(⚡10)必要。大ダメージ</td></tr>'+
+      '</table>'+
+      '<h3>4Typeの相性</h3>'+
+      '<p>Y0K-A1 → K4M-1 → 0N1 → B4K3M0-N0 → Y0K-A1（弱者有利の循環）<br>有利時+30%、不利時-25%のダメージ補正。</p>'+
+      '<h3>ステータス</h3>'+
+      '<p><b>Spirit</b>：防御回復量、必殺技軽減<br><b>Strength</b>：通常攻撃・必殺技のダメージ<br><b>Style</b>：先制判定、カウンター反撃量</p>'+
+      '<h3>スコア計算</h3>'+
+      '<p>与ダメ×10 − 被ダメ×5 + 残HP×5 + 勝利時(1000−ラウンド数×50) または 敗北時(−500)</p>';
+  } else {
+    body.innerHTML =
+      '<h3>Basic Rules</h3>'+
+      '<p>Fight with HP 60. Each round, select 3 commands and resolve them one by one against the opponent\'s 3 commands. The first to reach 0 HP loses.</p>'+
+      '<h3>5 Commands</h3>'+
+      '<table>'+
+        '<tr><th>Command</th><th>Effect</th></tr>'+
+        '<tr><td class="cmd-name">Attack</td><td>Reliable hit (STR damage, ⚡+1)</td></tr>'+
+        '<tr><td class="cmd-name">Defend</td><td>Block damage + recover HP</td></tr>'+
+        '<tr><td class="cmd-name">Counter</td><td>Counters attacks (STR+STY return, ⚡+1)</td></tr>'+
+        '<tr><td class="cmd-name">Charge</td><td>Gauge +3. Weak to attack/special</td></tr>'+
+        '<tr><td class="cmd-name">Special</td><td>Requires full gauge (⚡10). Big damage</td></tr>'+
+      '</table>'+
+      '<h3>4 Type Matchups</h3>'+
+      '<p>Y0K-A1 → K4M-1 → 0N1 → B4K3M0-N0 → Y0K-A1 (cycle: underdog wins)<br>+30% damage when advantageous, -25% when disadvantageous.</p>'+
+      '<h3>Stats</h3>'+
+      '<p><b>Spirit</b>: Defense recovery, special reduction<br><b>Strength</b>: Attack/special damage<br><b>Style</b>: Speed, counter strength</p>'+
+      '<h3>Score Calculation</h3>'+
+      '<p>Dealt×10 − Taken×5 + RemainHP×5 + Win(1000−Rounds×50) or Loss(−500)</p>';
+  }
+}
+
+// ===== グローバルホームボタン（ヘッダ右上の🏠）=====
+el('#globalTitleBtn').addEventListener('click', function(){
+  SFX.click();
+  // 戦闘中なら確認（Gが存在してまだ終わってない=戦闘中）
+  var inBattle = (typeof G !== 'undefined') && G && G.over === false;
+  console.log('[globalTitleBtn] inBattle=' + inBattle + ', G=' + (G?'exists':'null') + ', G.over=' + (G?G.over:'?'));
+  if(inBattle){
+    var msg = (LANG === 'ja')
+      ? '戦闘中です。タイトルに戻りますか？\n（現在のバトルは記録されません）'
+      : 'Battle in progress. Return to title?\n(Current battle will not be saved)';
+    if(!confirm(msg)){
+      console.log('[globalTitleBtn] キャンセル選択');
+      return;
+    }
+    BGM.stop();
+  }
+  showTitle();
+});
+
+el('#titleStartBtn').addEventListener('click', function(){
+  SFX.init(); SFX.click();
+  showStart();
+});
+el('#titleRankingBtn').addEventListener('click', function(){
+  SFX.init(); SFX.click();
+  showRanking();
+});
+el('#titleHowBtn').addEventListener('click', function(){
+  SFX.init(); SFX.click();
+  showHowto();
+});
+el('#howBackBtn').addEventListener('click', function(){
+  SFX.click();
+  showTitle();
+});
+el('#startBackBtn').addEventListener('click', function(){
+  SFX.click();
+  showTitle();
+});
+el('#resultTitleBtn').addEventListener('click', function(){
+  SFX.click();
+  // 移動した戦闘ログを元の位置に戻す
+  var logEl = el('#log');
+  if(logEl){
+    var battleBox = el('#battle');
+    if(battleBox && logEl.parentNode !== battleBox){
+      battleBox.appendChild(logEl);
+      logEl.style.height = '';
+      logEl.style.textAlign = '';
+    }
+  }
+  showTitle();
+});
+el('#rankingTitleBtn').addEventListener('click', function(){
+  SFX.click();
+  showTitle();
 });
 el('#registerBtn').addEventListener('click', function(){
   SFX.click();
@@ -2908,14 +3276,21 @@ el('#rankingBtn').addEventListener('click', function(){
 });
 el('#closeRankingBtn').addEventListener('click', function(){
   SFX.click();
+  // どこから来たかに応じて戻る先を判定
   el('#ranking').style.display = 'none';
-  el('#start').style.display = 'block';
+  // result画面が見えていた状態だった場合はresultに戻す、そうでなければタイトル
+  if(G && G.over){
+    el('#result').style.display = 'block';
+  } else {
+    showTitle();
+  }
 });
 el('#playerName').addEventListener('keydown', function(e){
   if(e.key === 'Enter'){ e.preventDefault(); el('#registerBtn').click(); }
 });
 el('#fightBtn').addEventListener('click',doFight);
 el('#undoBtn').addEventListener('click',undo);
+el('#undoBtnTop').addEventListener('click',undo);
 document.querySelectorAll('.cmd').forEach(function(b){
   b.addEventListener('click',function(){pickCmd(b.dataset.act);});});
 
