@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_8.html -->
+<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -246,6 +246,8 @@ header{text-align:center;margin-bottom:14px}
 .ragefill.full{animation:rg .8s infinite}
 @keyframes rg{0%,100%{box-shadow:0 0 4px var(--gold)}50%{box-shadow:0 0 16px var(--gold)}}
 .hptxt{font-size:9px;color:var(--muted)}
+.bars.me .hptxt{color:var(--cyan)}
+.bars.en .hptxt{color:var(--pink)}
 .me-a{color:var(--cyan)}.en-a{color:var(--pink)}
 
 /* ===== 全画面エフェクト（リング中央に出る大きいエフェクト） ===== */
@@ -421,6 +423,16 @@ header{text-align:center;margin-bottom:14px}
 .rankrow .meta{grid-column:1/-1;font-size:10px;color:var(--muted);margin-top:2px}
 .rankrow .meta .type-tag{display:inline-block;padding:0 6px;border-radius:4px;
   background:rgba(155,60,255,.2);color:var(--ink);font-size:9px;margin-right:6px}
+/* シーズン情報（残り日数とリセット日時） */
+.season-info{text-align:center;padding:12px 14px;margin:10px 0 4px;
+  background:linear-gradient(95deg,rgba(155,60,255,.08),rgba(34,230,224,.08));
+  border:1px solid rgba(155,60,255,.3);border-radius:10px}
+.season-info:empty{display:none}
+.season-info .season-remain{font-family:'Zen Dots';font-size:13px;color:var(--gold);
+  text-shadow:0 0 12px rgba(255,200,58,.5);margin-bottom:4px;letter-spacing:.05em}
+.season-info .season-remain b{font-size:16px;color:var(--cyan)}
+.season-info .season-reset{font-family:'Chakra Petch';font-size:10px;color:var(--muted);
+  letter-spacing:.08em}
 .announce{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:50;
   font-family:'Zen Dots',sans-serif;pointer-events:none;text-align:center;
   font-size:clamp(54px,11vw,110px);letter-spacing:.06em;
@@ -428,6 +440,17 @@ header{text-align:center;margin-bottom:14px}
   white-space:nowrap}
 .announce.ready{color:var(--gold);animation:annReady 1.0s ease-out forwards}
 .announce.fight{color:var(--pink);animation:annFight 1.0s ease-out forwards}
+.announce.round-complete{color:var(--gold);font-size:clamp(40px,8vw,80px);
+  white-space:normal;line-height:1.1;
+  text-shadow:0 0 30px var(--gold),0 0 60px var(--gold),0 4px 8px #000;
+  animation:annRoundComplete 1.2s ease-out forwards}
+@keyframes annRoundComplete{
+  0%   {opacity:0;transform:translate(-50%,-50%) scale(0.5) translateY(-30px)}
+  20%  {opacity:1;transform:translate(-50%,-50%) scale(1.1) translateY(0)}
+  35%  {transform:translate(-50%,-50%) scale(1.0)}
+  75%  {opacity:1;transform:translate(-50%,-50%) scale(1.0)}
+  100% {opacity:0;transform:translate(-50%,-50%) scale(0.95) translateY(20px)}
+}
 @keyframes annReady{
   0%   {opacity:0;transform:translate(-50%,-50%) scale(2.5) rotate(-8deg)}
   18%  {opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(2deg)}
@@ -689,6 +712,7 @@ header{text-align:center;margin-bottom:14px}
     <div class="rt" style="color:var(--gold);background:linear-gradient(135deg,#3a2400,#1a1003);">
       🏆 RANKING TOP 100
     </div>
+    <div id="rankingSeasonInfo" class="season-info"></div>
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
@@ -872,26 +896,27 @@ var SFX = (function(){
   var MASTER_VOLUME = 1.8;
 
   // ===== ボイスmp3管理 =====
-  // ready.mp3 / fight.mp3 を起動時に読み込み試行
-  // 成功すれば mp3再生、失敗なら合成ボイス
-  var voiceMp3 = {ready:null, fight:null};
-  var voiceMp3Available = {ready:false, fight:false};
+  // ready.mp3 / fight.mp3 / round_complete.mp3 を起動時に読み込み試行
+  // 成功すれば mp3再生、失敗なら合成音
+  var voiceMp3 = {ready:null, fight:null, round_complete:null};
+  var voiceMp3Available = {ready:false, fight:false, round_complete:false};
   function tryLoadVoice(key, path){
     var a = new Audio(path);
     a.preload = 'auto';
     a.volume = 0.9;
     a.addEventListener('canplaythrough', function(){
       voiceMp3Available[key] = true;
-      console.log("[SFX] "+path+" 利用可能（ボイスmp3）");
+      console.log("[SFX] "+path+" 利用可能（mp3）");
     }, {once:true});
     a.addEventListener('error', function(){
-      console.log("[SFX] "+path+" 未配置（合成ボイスで代替）");
+      console.log("[SFX] "+path+" 未配置（合成音で代替）");
     });
     voiceMp3[key] = a;
   }
   // 起動時に試行
   tryLoadVoice('ready', 'ready.mp3');
   tryLoadVoice('fight', 'fight.mp3');
+  tryLoadVoice('round_complete', 'round_complete.mp3');
 
   function playVoiceMp3(key){
     var a = voiceMp3[key];
@@ -1294,6 +1319,59 @@ var SFX = (function(){
       kg.gain.exponentialRampToValueAtTime(0.001, t+0.3);
       kick.connect(kg).connect(out);
       kick.start(t); kick.stop(t+0.35);
+    },
+
+    // ラウンド完了：上昇する爽快な和音アルペジオ（mp3があれば優先）
+    roundComplete: function(){
+      // mp3があればそれを優先
+      if(playVoiceMp3('round_complete')) return;
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.5);
+
+      // 1. 上昇アルペジオ（C-E-G-C のメジャー）
+      var notes = [
+        {f:523, d:.18, vol:.30},  // C5
+        {f:659, d:.18, vol:.30},  // E5
+        {f:784, d:.18, vol:.32},  // G5
+        {f:1047, d:.45, vol:.38}, // C6（最後を伸ばす）
+      ];
+      notes.forEach(function(n,i){
+        var nt = t + i*0.10;  // ちょっと早めに次の音
+        // メイン（三角波で柔らかく）
+        osc(nt, n.d, n.f, n.f, n.vol, 'triangle', out, .003);
+        // 装飾の高オクターブ（控えめ）
+        osc(nt, n.d*0.6, n.f*2, n.f*2, n.vol*0.4, 'sine', out, .003);
+      });
+
+      // 2. 最後にキラーンとリバーブ強めの広い音
+      var t2 = t + 0.40;
+      var out2 = bus(0.7);  // 残響たっぷり
+      osc(t2, 0.7, 1568, 1568, .15, 'sine', out2, .005);  // G6
+      osc(t2, 0.7, 2093, 2093, .10, 'sine', out2, .005);  // C7
+      osc(t2, 0.7, 2637, 2637, .08, 'sine', out2, .008);  // E7
+
+      // 3. ベースの「ぽーん」とした重み
+      osc(t, 0.6, 131, 131, .22, 'sine', out, .005);   // C3
+      osc(t+0.3, 0.5, 196, 196, .18, 'sine', out, .005); // G3
+
+      // 4. 軽いキラキラ（高音のノイズ→バンドパス）
+      var noise = ctx.createBufferSource();
+      var n = Math.floor(ctx.sampleRate*0.3);
+      var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for(var i=0;i<n;i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/n, 1.5);
+      noise.buffer = buf;
+      var nb = ctx.createBiquadFilter();
+      nb.type='bandpass';
+      nb.frequency.setValueAtTime(2000, t);
+      nb.frequency.exponentialRampToValueAtTime(5000, t+0.3);
+      nb.Q.value = 6;
+      var ng = ctx.createGain();
+      ng.gain.setValueAtTime(0.08, t);
+      ng.gain.exponentialRampToValueAtTime(0.001, t+0.3);
+      noise.connect(nb).connect(ng).connect(out);
+      noise.start(t);
     },
 
     win: function(){
@@ -2800,7 +2878,12 @@ function showAnnounce(text, kind, duration){
   if(!ring) return;
   var a = document.createElement('div');
   a.className = 'announce ' + (kind||'ready');
-  a.textContent = text;
+  // round-complete だけ <br> 改行を許可（その他はtextContent）
+  if(kind === 'round-complete'){
+    a.innerHTML = text;
+  } else {
+    a.textContent = text;
+  }
   ring.appendChild(a);
   // 白フラッシュ（Fightだけ）
   if(kind==='fight'){
@@ -2847,7 +2930,16 @@ function doFight(){
     })();
   }, 1700);
 }
-function endTurn(){if(G.over)return;G.turn++;setTimeout(startTurn,900);}
+function endTurn(){
+  if(G.over)return;
+  // ラウンド完了アナウンス表示（2行・金色）
+  var line1 = 'ROUND ' + G.turn;
+  var line2 = 'COMPLETE!';
+  showAnnounce(line1 + '<br>' + line2, 'round-complete', 1200);
+  SFX.roundComplete(); // ラウンド完了の爽快SE
+  G.turn++;
+  setTimeout(startTurn, 1400); // アナウンス表示時間を確保
+}
 
 // バトル終了：リザルト画面に切り替え、ログだけ下に残す
 // スコア計算ロジック
@@ -2939,6 +3031,52 @@ function registerToRanking(){
 }
 
 // ランキング表示
+// シーズン管理：UTC月曜0時を基準に1週間ごとのシーズンを区切る
+// 例: 2026/5/18(月) 0:00 UTC 〜 2026/5/24(日) 23:59 UTC が1シーズン
+function getCurrentSeason(){
+  var now = new Date();
+  // UTC基準の現在時刻
+  var utcDay = now.getUTCDay(); // 0:日, 1:月, ..., 6:土
+  // 直近の月曜0時UTCを計算
+  var daysSinceMonday = (utcDay + 6) % 7; // 月曜=0, 火曜=1, ..., 日曜=6
+  var seasonStart = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() - daysSinceMonday,
+    0, 0, 0
+  ));
+  // シーズン終了は7日後（次の月曜0時UTC）
+  var seasonEnd = new Date(seasonStart.getTime() + 7*24*60*60*1000);
+  var remainMs = seasonEnd.getTime() - now.getTime();
+  var remainDays = Math.floor(remainMs / (24*60*60*1000));
+  var remainHours = Math.floor((remainMs % (24*60*60*1000)) / (60*60*1000));
+  return {
+    start: seasonStart,
+    end: seasonEnd,
+    remainDays: remainDays,
+    remainHours: remainHours,
+    remainMs: remainMs
+  };
+}
+
+// 日時を JST と UTC の両方で表示
+function formatDateTimeJSTUTC(date){
+  if(!date) return '';
+  // JST = UTC + 9時間
+  var jst = new Date(date.getTime() + 9*60*60*1000);
+  var jstStr = jst.getUTCFullYear() + '/' +
+    String(jst.getUTCMonth()+1).padStart(2,'0') + '/' +
+    String(jst.getUTCDate()).padStart(2,'0') + ' ' +
+    String(jst.getUTCHours()).padStart(2,'0') + ':' +
+    String(jst.getUTCMinutes()).padStart(2,'0') + ' JST';
+  var utcStr = date.getUTCFullYear() + '/' +
+    String(date.getUTCMonth()+1).padStart(2,'0') + '/' +
+    String(date.getUTCDate()).padStart(2,'0') + ' ' +
+    String(date.getUTCHours()).padStart(2,'0') + ':' +
+    String(date.getUTCMinutes()).padStart(2,'0') + ' UTC';
+  return jstStr + ' / ' + utcStr;
+}
+
 function showRanking(){
   el('#result').style.display = 'none';
   var r = el('#ranking');
@@ -2948,6 +3086,19 @@ function showRanking(){
   status.textContent = T('ranking_loading');
   listEl.innerHTML = '';
 
+  // シーズン情報を表示
+  var season = getCurrentSeason();
+  var seasonInfoEl = el('#rankingSeasonInfo');
+  if(seasonInfoEl){
+    var endsLabel = (LANG === 'ja') ? '今週のランキング 終了まで' : 'Weekly Ranking ends in';
+    var daysLabel = (LANG === 'ja') ? '日' : 'd';
+    var hoursLabel = (LANG === 'ja') ? '時間' : 'h';
+    var resetLabel = (LANG === 'ja') ? 'リセット' : 'Reset';
+    seasonInfoEl.innerHTML =
+      '<div class="season-remain">⏳ ' + endsLabel + ' <b>' + season.remainDays + daysLabel + ' ' + season.remainHours + hoursLabel + '</b></div>' +
+      '<div class="season-reset">' + resetLabel + ': ' + formatDateTimeJSTUTC(season.end) + '</div>';
+  }
+
   if(!window.FB || !window.FB.ready){
     status.textContent = T('err_fb_not_ready');
     return;
@@ -2955,21 +3106,35 @@ function showRanking(){
   var q = window.FB.query(
     window.FB.collection(window.FB.db, 'rankings'),
     window.FB.orderBy('score', 'desc'),
-    window.FB.limit(100)
+    window.FB.limit(500)  // 多めに取得して、7日以内でフィルタ
   );
   window.FB.getDocs(q).then(function(snap){
     var rank = 0;
     var html = '';
+    var filteredCount = 0;
     snap.forEach(function(doc){
-      rank++;
       var d = doc.data();
+      // 7日以内のエントリのみ採用
+      if(d.createdAt && d.createdAt.toDate){
+        var dt = d.createdAt.toDate();
+        if(dt.getTime() < season.start.getTime()){
+          filteredCount++;
+          return; // 期間外は除外
+        }
+      }
+      if(rank >= 100) return; // TOP100まで
+      rank++;
       var rowCls = rank<=3 ? 'top'+rank : '';
       var dateStr = '';
       if(d.createdAt && d.createdAt.toDate){
         var dt = d.createdAt.toDate();
-        var mm = (dt.getMonth()+1).toString().padStart(2,'0');
-        var dd = dt.getDate().toString().padStart(2,'0');
-        dateStr = mm+'/'+dd;
+        // JSTに変換
+        var jst = new Date(dt.getTime() + 9*60*60*1000);
+        var mm = (jst.getUTCMonth()+1).toString().padStart(2,'0');
+        var dd = jst.getUTCDate().toString().padStart(2,'0');
+        var hh = jst.getUTCHours().toString().padStart(2,'0');
+        var mi = jst.getUTCMinutes().toString().padStart(2,'0');
+        dateStr = mm+'/'+dd+' '+hh+':'+mi;
       }
       var winStr = d.win ? '🏆' : '☠';
       html += '<div class="rankrow '+rowCls+'">'+
@@ -2982,10 +3147,11 @@ function showRanking(){
           ' / '+T('ranking_dmg_dealt')+': '+(d.dmgDealt||0)+
           ' / '+T('ranking_dmg_taken')+': '+(d.dmgTaken||0)+
           ' / '+(d.rounds||0)+'R'+
-          (dateStr ? ' / '+dateStr : '')+
+          (dateStr ? ' / '+dateStr+' JST' : '')+
         '</div>'+
       '</div>';
     });
+    console.log('[ranking] 取得: '+snap.size+'件, 期間内: '+rank+'件, 期間外除外: '+filteredCount+'件');
     if(rank === 0){
       listEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">'+T('ranking_empty')+'</div>';
     } else {
