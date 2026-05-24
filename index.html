@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
+<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_6.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -319,6 +319,108 @@ header{text-align:center;margin-bottom:14px}
   background:linear-gradient(135deg,rgba(155,60,255,.15),rgba(34,230,224,.08));
   border:2px solid var(--violet);box-shadow:0 0 60px rgba(155,60,255,.3),inset 0 0 40px rgba(255,31,109,.1)}
 .title-logo{margin-bottom:40px}
+
+/* === 初期状態（電源OFF）：0N1 FORCE は薄暗く、他は非表示 === */
+/* === 初期状態（電源OFF）：0N1 FORCE は薄暗く、他は非表示 === */
+#title.power-off .title-sub,
+#title.power-off .title-tag,
+#title.power-off .title-buttons,
+#title.power-off .title-credit{
+  opacity:0 !important;
+  visibility:hidden;
+  pointer-events:none;
+}
+#title.power-off .title-main{
+  color:#2a1a00;
+  text-shadow:0 0 2px rgba(255,200,58,.15),0 4px 8px #000;
+  animation:none !important;  /* neonFlickerを停止 */
+  opacity:0.4;
+}
+
+/* === 電源ON移行中：ネオン点灯アニメーション === */
+#title.powering-on .title-main{
+  animation:neonPowerOn 2.5s ease-out forwards;
+}
+#title.powering-on .title-sub,
+#title.powering-on .title-tag,
+#title.powering-on .title-buttons,
+#title.powering-on .title-credit{
+  visibility:visible;
+}
+#title.powering-on .title-sub{
+  animation:fadeInDelayed 1.5s ease-out 1.8s forwards,
+            titlePulse 2.5s ease-in-out 3.3s infinite;
+  opacity:0;
+}
+#title.powering-on .title-tag,
+#title.powering-on .title-buttons,
+#title.powering-on .title-credit{
+  animation:fadeInDelayed 1.2s ease-out 2.3s forwards;
+  opacity:0;
+}
+
+@keyframes neonPowerOn{
+  /* チカチカと不規則に点いていく */
+  0%   {opacity:0.5;color:#3a2400;text-shadow:0 0 4px rgba(255,200,58,.2),0 4px 8px #000}
+  5%   {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+  8%   {opacity:0.3;color:#5a3d00;text-shadow:0 0 6px var(--gold),0 4px 8px #000}
+  12%  {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+  15%  {opacity:0.4;color:#5a3d00;text-shadow:0 0 8px var(--gold),0 4px 8px #000}
+  18%  {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+  22%  {opacity:0.6;color:#7a5400;text-shadow:0 0 12px var(--gold),0 4px 8px #000}
+  28%  {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+  35%  {opacity:0.5;color:#5a3d00;text-shadow:0 0 8px var(--gold),0 4px 8px #000}
+  40%  {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+  /* 後半は安定して明るく */
+  50%  {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+  60%  {opacity:0.7;color:#7a5400;text-shadow:0 0 18px var(--gold),0 4px 8px #000}
+  65%  {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+  100% {opacity:1;color:var(--gold);text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000}
+}
+
+@keyframes fadeInDelayed{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* === CLICK TO PLAY オーバーレイ（控えめ）=== */
+.click-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;
+  border-radius:inherit;
+  animation:overlayFadeIn 0.6s ease-out}
+@keyframes overlayFadeIn{from{opacity:0}to{opacity:1}}
+.click-to-play{
+  font-family:'Zen Dots';font-size:18px;letter-spacing:.18em;
+  padding:14px 36px;border-radius:10px;
+  background:rgba(20,10,30,0.7);
+  color:var(--ink);
+  border:1px solid rgba(155,60,255,.6);
+  text-shadow:0 0 8px rgba(155,60,255,.5);
+  box-shadow:0 0 20px rgba(155,60,255,.3),inset 0 0 12px rgba(155,60,255,.15);
+  cursor:pointer;
+  animation:clickToPlayPulse 1.6s ease-in-out infinite;
+  transition:transform 0.15s,box-shadow 0.15s}
+.click-to-play:hover{
+  transform:scale(1.03);
+  box-shadow:0 0 28px rgba(155,60,255,.5),inset 0 0 18px rgba(155,60,255,.25);
+  color:var(--gold);
+}
+.click-to-play:active{transform:scale(0.97)}
+@keyframes clickToPlayPulse{
+  0%,100%{
+    opacity:0.85;
+    box-shadow:0 0 18px rgba(155,60,255,.3),inset 0 0 12px rgba(155,60,255,.15);
+  }
+  50%{
+    opacity:1;
+    box-shadow:0 0 28px rgba(155,60,255,.5),inset 0 0 16px rgba(155,60,255,.25);
+  }
+}
+.click-overlay.fading{animation:overlayFadeOut 0.4s ease-out forwards}
+@keyframes overlayFadeOut{
+  from{opacity:1}
+  to{opacity:0;pointer-events:none}
+}
+
 /* 0N1 FORCE：ネオン管風のフラッシュ（たまにチカチカ＋暗くなる）*/
 .title-main{font-family:'Zen Dots';font-size:64px;color:var(--gold);letter-spacing:.05em;line-height:1;
   text-shadow:0 0 30px var(--gold),0 0 60px var(--pink),0 4px 8px #000;
@@ -550,7 +652,11 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel" id="title" style="display: block;">
+  <div class="panel power-off" id="title" style="display: block;">
+    <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
+    <div class="click-overlay" id="clickOverlay" style="display: flex;">
+      <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
+    </div>
     <div class="title-logo">
       <div class="title-main">0N1 FORCE</div>
       <div class="title-sub">NEON RING CLASH</div>
@@ -561,7 +667,6 @@ header{text-align:center;margin-bottom:14px}
       <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
       <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
     </div>
-    <div class="title-credit" id="titleSoundHint" style="display: none;">🔊 Click any button to start sound</div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
@@ -1795,7 +1900,14 @@ var BGM = (function(){
     isEnabled: function(){ return enabled; },
     play: function(kind){
       if(!enabled) return;
-      if(currentTrack === kind) return;
+      // currentTrackが同じでも、実際に再生中のAudioがpause状態なら再再生する
+      // （ブラウザの自動再生ブロックで止まっている可能性があるため）
+      if(currentTrack === kind){
+        var a = currentAudio[kind];
+        if(a && !a.paused) return; // 本当に再生中ならスキップ
+        // 同じkindだが実は鳴っていない → 続行して再生試行
+        console.log('[BGM] '+kind+' 状態は再生中だが実は止まっている → 再起動');
+      }
       // 前のトラックをフェードアウト
       ['title','start','battle'].forEach(function(k){
         if(k !== kind) fadeAllOut(k, 0.8);
@@ -3295,6 +3407,8 @@ function updateGlobalTitleBtn(){
   var inTitle = el('#title') && el('#title').style.display !== 'none';
   btn.style.display = inTitle ? 'none' : '';
 }
+// タイトル電源の初期化済みフラグ（一度ONにしたら以降は普通の表示）
+var titlePoweredOn = false;
 function showTitle(){
   // 移動した戦闘ログを元の位置に戻す
   var logEl = el('#log');
@@ -3315,9 +3429,27 @@ function showTitle(){
   // タイトル画面を表示
   el('#title').style.display = 'block';
   updateGlobalTitleBtn();
-  // ✨ タイトル画面が描画された後にBGMを再生
-  if (typeof BGM !== 'undefined') {
-    BGM.play('title');
+
+  // 初回起動時のみ「電源OFF + CLICK TO PLAY」状態にする
+  // 2回目以降の表示（再戦から戻ったときなど）は通常状態
+  if(!titlePoweredOn){
+    el('#title').classList.add('power-off');
+    el('#title').classList.remove('powering-on');
+    var overlay = el('#clickOverlay');
+    if(overlay){
+      overlay.style.display = 'flex';
+      overlay.classList.remove('fading');
+    }
+    // 注意：BGMはCLICK TO PLAYが押されてから再生する
+  } else {
+    // 通常時：オーバーレイ非表示、power-offクラスなし
+    el('#title').classList.remove('power-off','powering-on');
+    var ov = el('#clickOverlay');
+    if(ov) ov.style.display = 'none';
+    // ✨ タイトル画面が描画された後にBGMを再生
+    if (typeof BGM !== 'undefined') {
+      BGM.play('title');
+    }
   }
 }
 function showStart(){
@@ -3490,15 +3622,40 @@ el('#bgmToggle').addEventListener('click', function(){
   }
 });
 
+// CLICK TO PLAYボタンのハンドラ：電源ONアニメーション開始
+el('#clickToPlayBtn').addEventListener('click', function(e){
+  e.stopPropagation(); // 親へのバブリングを止めて二重起動を防ぐ
+  if(titlePoweredOn) return;
+  titlePoweredOn = true;
+  console.log('[Title] CLICK TO PLAY 押下 → 電源ON');
+  SFX.init();
+  // オーバーレイをフェードアウト
+  var overlay = el('#clickOverlay');
+  if(overlay){
+    overlay.classList.add('fading');
+    setTimeout(function(){
+      overlay.style.display = 'none';
+    }, 500);
+  }
+  // 電源ON アニメーション開始
+  var t = el('#title');
+  t.classList.remove('power-off');
+  t.classList.add('powering-on');
+  // BGM開始
+  bgmStarted = true;
+  if(typeof BGM !== 'undefined'){
+    BGM.play('title');
+  }
+});
+
 // ユーザー初回操作時にBGMを開始（ブラウザの自動再生制限対策）
 var bgmStarted = false;
 function tryStartBgm(){
   if(bgmStarted || !BGM.isEnabled()) return;
+  // タイトル画面の初回起動時は CLICK TO PLAY からのみ起動
+  if(!titlePoweredOn && el('#title') && el('#title').style.display !== 'none') return;
   bgmStarted = true;
   console.log('[BGM] 初回ユーザー操作検知 → BGM開始');
-  // サウンドヒントを消す
-  var hint = el('#titleSoundHint');
-  if(hint) hint.style.display = 'none';
   // 現在表示中の画面に応じて適切なBGMを再生
   if(el('#title') && el('#title').style.display !== 'none'){
     BGM.play('title');
