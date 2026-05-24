@@ -389,6 +389,9 @@ header{text-align:center;margin-bottom:14px}
 }
 .title-credit{font-family:'Chakra Petch';font-size:10px;color:var(--muted);letter-spacing:.15em;
   margin-top:30px;opacity:.7}
+#titleSoundHint{margin-top:14px;color:var(--gold);opacity:.85;
+  animation:soundHintPulse 1.8s ease-in-out infinite}
+@keyframes soundHintPulse{0%,100%{opacity:.6}50%{opacity:1}}
 /* タイトルに戻るボタン（各画面左上） */
 .back-to-title{position:absolute;top:12px;left:12px;font-size:11px !important;padding:6px 12px !important}
 .panel{position:relative}
@@ -547,7 +550,7 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel" id="title">
+  <div class="panel" id="title" style="display: block;">
     <div class="title-logo">
       <div class="title-main">0N1 FORCE</div>
       <div class="title-sub">NEON RING CLASH</div>
@@ -558,6 +561,7 @@ header{text-align:center;margin-bottom:14px}
       <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
       <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
     </div>
+    <div class="title-credit" id="titleSoundHint" style="display: none;">🔊 Click any button to start sound</div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
@@ -580,7 +584,7 @@ header{text-align:center;margin-bottom:14px}
     <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
   </div>
 
-  <div id="battle">
+  <div id="battle" style="display: none;">
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
       <div class="stand l"></div><div class="stand r"></div>
@@ -685,7 +689,7 @@ header{text-align:center;margin-bottom:14px}
     <div class="panel log" id="log"></div>
   </div>
 
-  <div class="panel" id="result">
+  <div class="panel" id="result" style="display: none;">
     <div class="rt" id="rTitle">VICTORY</div>
     <p id="rDesc"></p>
     <!-- スコア表示 -->
@@ -3310,8 +3314,11 @@ function showTitle(){
   });
   // タイトル画面を表示
   el('#title').style.display = 'block';
-  BGM.play('title'); // タイトル画面BGM（無ければstartにフォールバック）
   updateGlobalTitleBtn();
+  // ✨ タイトル画面が描画された後にBGMを再生
+  if (typeof BGM !== 'undefined') {
+    BGM.play('title');
+  }
 }
 function showStart(){
   ['#title','#howto','#battle','#result','#ranking'].forEach(function(sel){
@@ -3483,18 +3490,33 @@ el('#bgmToggle').addEventListener('click', function(){
   }
 });
 
-// ユーザー初回操作時にスタートBGMを開始するため、最初のクリックで起動
+// ユーザー初回操作時にBGMを開始（ブラウザの自動再生制限対策）
 var bgmStarted = false;
 function tryStartBgm(){
   if(bgmStarted || !BGM.isEnabled()) return;
   bgmStarted = true;
-  // スタート画面表示中ならstart、そうでなければbattle
-  if(el('#start') && el('#start').style.display !== 'none'){
+  console.log('[BGM] 初回ユーザー操作検知 → BGM開始');
+  // サウンドヒントを消す
+  var hint = el('#titleSoundHint');
+  if(hint) hint.style.display = 'none';
+  // 現在表示中の画面に応じて適切なBGMを再生
+  if(el('#title') && el('#title').style.display !== 'none'){
+    BGM.play('title');
+  } else if(el('#howto') && el('#howto').style.display !== 'none'){
+    BGM.play('title');
+  } else if(el('#start') && el('#start').style.display !== 'none'){
     BGM.play('start');
+  } else if(el('#ranking') && el('#ranking').style.display !== 'none'){
+    BGM.play('title');
   }
 }
+// ユーザーの最初の操作（クリック・タップ・キー入力）でBGM起動
 document.addEventListener('click', tryStartBgm, {once:false});
 document.addEventListener('keydown', tryStartBgm, {once:false});
+document.addEventListener('touchstart', tryStartBgm, {once:false});
+
+// 起動時にタイトル画面を表示
+showTitle();
 
 // 初期表示で適用
 applyI18n();
