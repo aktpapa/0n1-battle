@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_6.html -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
 <style>
@@ -95,12 +95,31 @@ header{text-align:center;margin-bottom:14px}
 .crowd.r{left:auto;right:2%}
 
 /* レーザー光線（天井から下りる） */
-.laser{position:absolute;top:0;width:2px;height:55%;z-index:2;opacity:.55;
+/* ディスコ風レーザー光線（8本・色・角度・速度バラバラ） */
+.laser{position:absolute;top:0;width:2px;height:65%;z-index:2;opacity:.6;
   transform-origin:top center;animation:laserSweep 6s ease-in-out infinite}
-.laser.l1{left:25%;background:linear-gradient(#ff1f6d,transparent);box-shadow:0 0 10px var(--pink);animation-delay:0s}
-.laser.l2{left:50%;background:linear-gradient(#22e6e0,transparent);box-shadow:0 0 10px var(--cyan);animation-delay:-2s}
-.laser.l3{left:75%;background:linear-gradient(#9b3cff,transparent);box-shadow:0 0 10px var(--violet);animation-delay:-4s}
-@keyframes laserSweep{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.laser.l1{left:10%;background:linear-gradient(#ff1f6d,transparent);box-shadow:0 0 12px #ff1f6d;animation-delay:0s;animation-duration:5s}
+.laser.l2{left:22%;background:linear-gradient(#22e6e0,transparent);box-shadow:0 0 12px #22e6e0;animation-delay:-1s;animation-duration:7s}
+.laser.l3{left:34%;background:linear-gradient(#ffc83a,transparent);box-shadow:0 0 12px #ffc83a;animation-delay:-2s;animation-duration:4s}
+.laser.l4{left:46%;background:linear-gradient(#9b3cff,transparent);box-shadow:0 0 12px #9b3cff;animation-delay:-3s;animation-duration:6s}
+.laser.l5{left:58%;background:linear-gradient(#ff1f6d,transparent);box-shadow:0 0 12px #ff1f6d;animation-delay:-2.5s;animation-duration:5.5s}
+.laser.l6{left:70%;background:linear-gradient(#22e6e0,transparent);box-shadow:0 0 12px #22e6e0;animation-delay:-1.5s;animation-duration:7.5s}
+.laser.l7{left:82%;background:linear-gradient(#ffc83a,transparent);box-shadow:0 0 12px #ffc83a;animation-delay:-4s;animation-duration:4.5s}
+.laser.l8{left:92%;background:linear-gradient(#9b3cff,transparent);box-shadow:0 0 12px #9b3cff;animation-delay:-0.5s;animation-duration:6.5s}
+@keyframes laserSweep{
+  0%   {transform:rotate(-22deg)}
+  25%  {transform:rotate(18deg)}
+  50%  {transform:rotate(-15deg)}
+  75%  {transform:rotate(25deg)}
+  100% {transform:rotate(-22deg)}
+}
+/* ディスコボール風の点滅光（リング全体に散らばる） */
+.disco-dot{position:absolute;width:6px;height:6px;border-radius:50%;z-index:2;pointer-events:none;
+  animation:discoPulse 1.5s ease-in-out infinite}
+@keyframes discoPulse{
+  0%,100%{opacity:0;transform:scale(0.5)}
+  50%    {opacity:1;transform:scale(1.5)}
+}
 
 /* リングマット（台形・3D感UP） */
 .mat{position:absolute;left:50%;bottom:5%;width:64%;height:54%;transform:translateX(-50%);z-index:3;
@@ -111,44 +130,31 @@ header{text-align:center;margin-bottom:14px}
   clip-path:polygon(18% 0,82% 0,100% 100%,0 100%);
   border-top:2px solid rgba(34,230,224,.5);
   box-shadow:0 0 40px rgba(155,60,255,.25)}
-.mat::before{content:"0N1";position:absolute;top:36%;left:50%;transform:translateX(-50%);
-  font-family:'Zen Dots';font-size:60px;color:rgba(155,60,255,.22);letter-spacing:.08em}
-.mat::after{content:"FORCE";position:absolute;top:62%;left:50%;transform:translateX(-50%);
-  font-family:'Zen Dots';font-size:14px;color:rgba(34,230,224,.28);letter-spacing:.4em}
+.mat::before{content:"0N1";position:absolute;top:22%;left:50%;transform:translateX(-50%);
+  font-family:'Zen Dots';font-size:56px;color:rgba(155,60,255,.30);letter-spacing:.08em;line-height:1;
+  text-shadow:0 0 20px rgba(155,60,255,.4)}
+.mat::after{content:"FORCE";position:absolute;top:56%;left:50%;transform:translateX(-50%);
+  font-family:'Zen Dots';font-size:56px;color:rgba(155,60,255,.30);letter-spacing:.08em;line-height:1;
+  text-shadow:0 0 20px rgba(155,60,255,.4)}
 
-/* ロープ */
+/* ロープ：SVGで描画してコーナーポストに正確接続 */
 .ropes{position:absolute;inset:0;pointer-events:none;z-index:4}
-.rope{position:absolute;border-radius:3px}
-/* 奥ロープ（コーナー手前→手前コーナーへ繋がる横3本） */
-.rope.b1{height:3px;left:18%;right:18%;top:46%;background:linear-gradient(90deg,transparent,var(--pink),transparent);box-shadow:0 0 10px var(--pink)}
-.rope.b2{height:3px;left:18%;right:18%;top:50%;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 10px var(--cyan)}
-.rope.b3{height:3px;left:18%;right:18%;top:54%;background:linear-gradient(90deg,transparent,var(--violet),transparent);box-shadow:0 0 10px var(--violet)}
-/* 手前ロープ（3本・パース感を出す） */
-.rope.f1{height:4px;left:0;right:0;bottom:7%;background:linear-gradient(90deg,transparent 5%,var(--pink) 50%,transparent 95%);box-shadow:0 0 14px var(--pink)}
-.rope.f2{height:4px;left:5%;right:5%;bottom:13%;background:linear-gradient(90deg,transparent 5%,var(--cyan) 50%,transparent 95%);box-shadow:0 0 12px var(--cyan)}
-.rope.f3{height:3px;left:10%;right:10%;bottom:19%;background:linear-gradient(90deg,transparent 8%,var(--violet) 50%,transparent 92%);box-shadow:0 0 10px var(--violet)}
-/* 左サイドロープ（奥→手前へ斜めに3本） */
-.rope.sl1{width:3px;left:18%;top:46%;height:24%;transform-origin:top left;
-  transform:skewY(40deg) scaleY(2.5);background:linear-gradient(180deg,var(--pink),var(--pink));box-shadow:0 0 8px var(--pink);opacity:.7}
-.rope.sl2{width:3px;left:18%;top:50%;height:24%;transform-origin:top left;
-  transform:skewY(40deg) scaleY(2.5);background:linear-gradient(180deg,var(--cyan),var(--cyan));box-shadow:0 0 8px var(--cyan);opacity:.7}
-.rope.sl3{width:3px;left:18%;top:54%;height:24%;transform-origin:top left;
-  transform:skewY(40deg) scaleY(2.5);background:linear-gradient(180deg,var(--violet),var(--violet));box-shadow:0 0 8px var(--violet);opacity:.7}
-/* 右サイドロープ */
-.rope.sr1{width:3px;right:18%;top:46%;height:24%;transform-origin:top right;
-  transform:skewY(-40deg) scaleY(2.5);background:linear-gradient(180deg,var(--pink),var(--pink));box-shadow:0 0 8px var(--pink);opacity:.7}
-.rope.sr2{width:3px;right:18%;top:50%;height:24%;transform-origin:top right;
-  transform:skewY(-40deg) scaleY(2.5);background:linear-gradient(180deg,var(--cyan),var(--cyan));box-shadow:0 0 8px var(--cyan);opacity:.7}
-.rope.sr3{width:3px;right:18%;top:54%;height:24%;transform-origin:top right;
-  transform:skewY(-40deg) scaleY(2.5);background:linear-gradient(180deg,var(--violet),var(--violet));box-shadow:0 0 8px var(--violet);opacity:.7}
+.ropes svg{width:100%;height:100%;display:block;overflow:visible}
+.rope-line{fill:none;stroke-linecap:round}
+.rope-line.pink{stroke:#ff1f6d;filter:drop-shadow(0 0 6px #ff1f6d)}
+.rope-line.gold{stroke:#ffc83a;filter:drop-shadow(0 0 6px #ffc83a)}
+.rope-line.violet{stroke:#9b3cff;filter:drop-shadow(0 0 6px #9b3cff)}
 
-/* コーナーポスト（4本） */
-.post{position:absolute;width:10px;border-radius:5px;z-index:5;
+
+/* コーナーポスト（4本） — ロープの位置に合わせて配置 */
+.post{position:absolute;border-radius:5px;z-index:5;
   background:linear-gradient(180deg,var(--gold),#5a3d00);box-shadow:0 0 18px rgba(255,200,58,.7)}
-.post.bl{left:18%;top:42%;height:18%;width:7px}
-.post.br{right:18%;top:42%;height:18%;width:7px}
-.post.fl{left:5%;bottom:4%;height:28%;transform:skewX(-8deg)}
-.post.fr{right:5%;bottom:4%;height:28%;transform:skewX(8deg)}
+/* 奥のポスト：top:44%（y=440）から下方向に15%伸びる（y=590まで） */
+.post.bl{left:17.5%;top:44%;width:8px;height:15%}
+.post.br{right:17.5%;top:44%;width:8px;height:15%}
+/* 手前のポスト：bottom:3%（y=970）から上方向に30%伸びる（y=670まで） */
+.post.fl{left:4%;bottom:3%;width:11px;height:30%}
+.post.fr{right:4%;bottom:3%;width:11px;height:30%}
 
 /* スポットライト（天井から下方） */
 .spotlight{position:absolute;top:0;width:0;height:0;z-index:2;pointer-events:none}
@@ -163,8 +169,8 @@ header{text-align:center;margin-bottom:14px}
     radial-gradient(ellipse at 70% 100%,rgba(34,230,224,.16),transparent 50%);
   filter:blur(6px)}
 
-/* ===== 敵：奥のコーナー（右寄せ・上方へ移動） ===== */
-.corner.en{position:absolute;top:8%;left:72%;transform:translateX(-50%) scale(.58);z-index:6;
+/* ===== 敵：奥のコーナー（右寄せ・自分より少し小さい） ===== */
+.corner.en{position:absolute;top:6%;left:72%;transform:translateX(-50%) scale(.78);z-index:6;
   filter:drop-shadow(0 0 22px rgba(255,31,109,.6))}
 /* ===== 自分：左下（HPバーと被らない位置） ===== */
 .corner.me{position:absolute;bottom:13%;left:28%;transform:translateX(-50%);z-index:7;
@@ -207,6 +213,7 @@ header{text-align:center;margin-bottom:14px}
 .tcg-stats .st{flex:1;text-align:center;min-width:0}
 .tcg-stats .st .l{font-size:8px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;line-height:1.2}
 .tcg-stats .st .v{font-family:'Zen Dots';font-size:13px;line-height:1.1}
+.tcg-stats .st .v .frac{font-size:8px;color:var(--gold);margin-left:1px;letter-spacing:0;font-weight:400;vertical-align:0px}
 .tcg-stats .st .b{font-family:'Chakra Petch';font-size:9px;color:var(--gold);margin-left:2px;font-weight:600}
 .tcg-stats .st .b.neg{color:var(--pink)}
 .st.sp .v{color:var(--cyan)}.st.str .v{color:var(--pink)}.st.sty .v{color:var(--gold)}
@@ -224,8 +231,17 @@ header{text-align:center;margin-bottom:14px}
 .barfill{height:100%;transition:width .55s cubic-bezier(.4,1.4,.5,1);border-radius:7px}
 .me .barfill{background:linear-gradient(90deg,#127a73,var(--cyan))}
 .en .barfill{background:linear-gradient(90deg,#7a1240,var(--pink))}
-.ragewrap{height:6px;border-radius:4px;background:rgba(0,0,0,.5);overflow:hidden;margin-top:3px;border:1px solid rgba(255,200,58,.3)}
-.ragefill{height:100%;width:0;background:linear-gradient(90deg,#7a5400,var(--gold));transition:width .4s;border-radius:4px}
+.ragewrap{height:8px;border-radius:4px;background:rgba(0,0,0,.5);overflow:hidden;margin-top:3px;border:1px solid rgba(255,200,58,.3);
+  /* 10段階の目盛り線（縦の細い線を10%間隔で描画） */
+  position:relative}
+.ragewrap::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(90deg,
+    transparent 0,
+    transparent calc(10% - 1px),
+    rgba(255,200,58,.35) calc(10% - 1px),
+    rgba(255,200,58,.35) 10%
+  );z-index:2}
+.ragefill{height:100%;width:0;background:linear-gradient(90deg,#7a5400,var(--gold));transition:width .4s;border-radius:4px;position:relative;z-index:1}
 .ragefill.full{animation:rg .8s infinite}
 @keyframes rg{0%,100%{box-shadow:0 0 4px var(--gold)}50%{box-shadow:0 0 16px var(--gold)}}
 .hptxt{font-size:9px;color:var(--muted)}
@@ -291,7 +307,29 @@ header{text-align:center;margin-bottom:14px}
   animation:fu 1.1s ease-out forwards;left:50%;text-shadow:0 2px 12px #000,0 0 20px currentColor}
 @keyframes fu{0%{opacity:0;transform:translate(-50%,0) scale(.5)}20%{opacity:1;transform:translate(-50%,-14px) scale(1.3)}100%{opacity:0;transform:translate(-50%,-70px) scale(1)}}
 
-/* ===== Ready / Fight 大型アナウンス ===== */
+/* ===== スコア・ランキング ===== */
+.scorebox{margin:14px 0;padding:14px 18px;text-align:center;
+  border:1px solid var(--gold);border-radius:14px;
+  background:linear-gradient(95deg,rgba(255,200,58,.08),rgba(155,60,255,.08))}
+.scoretitle{font-family:'Zen Dots';font-size:11px;color:var(--gold);letter-spacing:.2em;margin-bottom:8px}
+.scoreval{font-family:'Zen Dots';font-size:42px;color:var(--gold);line-height:1;
+  text-shadow:0 0 18px var(--gold),0 2px 6px #000;letter-spacing:.03em}
+.scorebreakdown{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7}
+.scorebreakdown b{color:var(--ink);font-weight:600}
+.regbox{padding:8px 4px}
+.ranklist{max-height:480px;overflow-y:auto;background:rgba(0,0,0,.4);border-radius:10px;padding:6px}
+.rankrow{display:grid;grid-template-columns:46px 1fr 80px;gap:8px;padding:8px 12px;align-items:center;
+  border-bottom:1px solid rgba(155,60,255,.15);font-size:12px}
+.rankrow:last-child{border-bottom:none}
+.rankrow .rk{font-family:'Zen Dots';font-size:14px;text-align:center;color:var(--muted)}
+.rankrow.top1 .rk{color:#ffd700;text-shadow:0 0 6px #ffd700}
+.rankrow.top2 .rk{color:#c0c0c0;text-shadow:0 0 6px #c0c0c0}
+.rankrow.top3 .rk{color:#cd7f32;text-shadow:0 0 6px #cd7f32}
+.rankrow .nm{font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rankrow .sc{font-family:'Zen Dots';color:var(--gold);text-align:right;font-size:13px}
+.rankrow .meta{grid-column:1/-1;font-size:10px;color:var(--muted);margin-top:2px}
+.rankrow .meta .type-tag{display:inline-block;padding:0 6px;border-radius:4px;
+  background:rgba(155,60,255,.2);color:var(--ink);font-size:9px;margin-right:6px}
 .announce{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:50;
   font-family:'Zen Dots',sans-serif;pointer-events:none;text-align:center;
   font-size:clamp(54px,11vw,110px);letter-spacing:.06em;
@@ -350,6 +388,32 @@ header{text-align:center;margin-bottom:14px}
 .lose{color:var(--pink);text-shadow:0 0 28px rgba(255,31,109,.5)}
 #result p{color:var(--muted);margin-bottom:22px;font-size:13px}
 </style>
+<!-- Firebase (ESM) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyAhz2y3vZ3mlXobyMwQgPB4vI8H0b-9PXI",
+    authDomain: "n1-battle-ranking.firebaseapp.com",
+    projectId: "n1-battle-ranking",
+    storageBucket: "n1-battle-ranking.firebasestorage.app",
+    messagingSenderId: "1066598172093",
+    appId: "1:1066598172093:web:9b145809b383f01f57bed4",
+    measurementId: "G-JE9K8WHGSR"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  // グローバルに公開してメインスクリプトから使えるように
+  window.FB = {
+    db: db,
+    addDoc: addDoc, collection: collection, query: query,
+    orderBy: orderBy, limit: limit, getDocs: getDocs,
+    serverTimestamp: serverTimestamp,
+    ready: true
+  };
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
 </head>
 <body>
 <div class="scene"><div class="city"></div><div class="floor"></div></div>
@@ -369,13 +433,13 @@ header{text-align:center;margin-bottom:14px}
 
   <div class="panel" id="start">
     <h2 data-i18n="summon_title">ファイターを召喚</h2>
-    <p data-i18n="summon_desc"></p>
+    <p data-i18n="summon_desc">0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style が能力を、<b>Background属性</b>がタイプ相性を決める。</p>
     <div class="irow">
       <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
       <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
     </div>
     <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
-    <div class="hint" data-i18n="hint"></div>
+    <div class="hint" data-i18n="hint">毎ラウンド、5種から3つ選んでセット → 相手の伏せた3手と1手ずつ突き合わせ解決。<br><b>属性じゃんけん</b>で与ダメ±変動。被ダメで怒り蓄積、満タンで必殺技。</div>
   </div>
 
   <div id="battle">
@@ -384,25 +448,51 @@ header{text-align:center;margin-bottom:14px}
       <div class="stand l"></div><div class="stand r"></div>
       <div class="crowd l"></div><div class="crowd r"></div>
       <div class="laser l1"></div><div class="laser l2"></div><div class="laser l3"></div>
+      <div class="laser l4"></div><div class="laser l5"></div><div class="laser l6"></div>
+      <div class="laser l7"></div><div class="laser l8"></div>
+      <!-- ディスコボール風のキラキラ点滅 -->
+      <div class="disco-dot" style="left:15%;top:20%;background:#ff1f6d;animation-delay:0s"></div>
+      <div class="disco-dot" style="left:38%;top:12%;background:#22e6e0;animation-delay:0.3s"></div>
+      <div class="disco-dot" style="left:62%;top:18%;background:#ffc83a;animation-delay:0.6s"></div>
+      <div class="disco-dot" style="left:85%;top:14%;background:#9b3cff;animation-delay:0.9s"></div>
+      <div class="disco-dot" style="left:25%;top:32%;background:#22e6e0;animation-delay:0.4s"></div>
+      <div class="disco-dot" style="left:75%;top:28%;background:#ff1f6d;animation-delay:0.7s"></div>
+      <div class="disco-dot" style="left:50%;top:36%;background:#ffc83a;animation-delay:1s"></div>
+      <div class="disco-dot" style="left:10%;top:38%;background:#9b3cff;animation-delay:0.2s"></div>
+      <div class="disco-dot" style="left:90%;top:40%;background:#22e6e0;animation-delay:0.5s"></div>
       <div class="spotlight l"></div><div class="spotlight r"></div>
       <div class="mat"></div>
       <div class="post bl"></div><div class="post br"></div>
       <div class="post fl"></div><div class="post fr"></div>
       <div class="ropes">
-        <div class="rope b1"></div><div class="rope b2"></div><div class="rope b3"></div>
-        <div class="rope f1"></div><div class="rope f2"></div><div class="rope f3"></div>
-        <div class="rope sl1"></div><div class="rope sl2"></div><div class="rope sl3"></div>
-        <div class="rope sr1"></div><div class="rope sr2"></div><div class="rope sr3"></div>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 奥ロープ（左ポスト→右ポスト 横3本）-->
+          <line class="rope-line pink" x1="184" y1="460" x2="816" y2="460" stroke-width="3"></line>
+          <line class="rope-line gold" x1="184" y1="510" x2="816" y2="510" stroke-width="3"></line>
+          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"></line>
+          <!-- 手前ロープ（左手前→右手前 横3本）-->
+          <line class="rope-line pink" x1="50" y1="720" x2="950" y2="720" stroke-width="5"></line>
+          <line class="rope-line gold" x1="50" y1="820" x2="950" y2="820" stroke-width="5"></line>
+          <line class="rope-line violet" x1="50" y1="920" x2="950" y2="920" stroke-width="5"></line>
+          <!-- 左サイドロープ（奥左→手前左 斜め3本）-->
+          <line class="rope-line pink" x1="184" y1="460" x2="50" y2="720" stroke-width="3"></line>
+          <line class="rope-line gold" x1="184" y1="510" x2="50" y2="820" stroke-width="3"></line>
+          <line class="rope-line violet" x1="184" y1="560" x2="50" y2="920" stroke-width="3"></line>
+          <!-- 右サイドロープ（奥右→手前右 斜め3本）-->
+          <line class="rope-line pink" x1="816" y1="460" x2="950" y2="720" stroke-width="3"></line>
+          <line class="rope-line gold" x1="816" y1="510" x2="950" y2="820" stroke-width="3"></line>
+          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"></line>
+        </svg>
       </div>
       <div class="fog"></div>
 
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
-        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY CMD</div>
+        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
         <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
-        <div class="ring-qlabel" data-i18n="your_cmd">YOUR CMD</div>
+        <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
         <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
@@ -446,7 +536,7 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="ctrlrow">
       <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
-      <button class="btn" id="fightBtn" disabled data-i18n="btn_fight">FIGHT！</button>
+      <button class="btn" id="fightBtn" disabled="" data-i18n="btn_fight">FIGHT！</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
@@ -454,7 +544,34 @@ header{text-align:center;margin-bottom:14px}
   <div class="panel" id="result">
     <div class="rt" id="rTitle">VICTORY</div>
     <p id="rDesc"></p>
-    <button class="btn" id="againBtn" data-i18n="btn_again">再戦</button>
+    <!-- スコア表示 -->
+    <div id="scorePanel" class="scorebox">
+      <div class="scoretitle" data-i18n="score_label">SCORE</div>
+      <div class="scoreval" id="scoreVal">0</div>
+      <div class="scorebreakdown" id="scoreBreakdown"></div>
+    </div>
+    <!-- 名前入力＆登録 -->
+    <div id="regForm" class="regbox">
+      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
+        border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ランキング画面 -->
+  <div class="panel" id="ranking" style="display:none;max-width:680px">
+    <div class="rt" style="color:var(--gold);background:linear-gradient(135deg,#3a2400,#1a1003);">
+      🏆 RANKING TOP 100
+    </div>
+    <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
+    <div id="rankingList" class="ranklist"></div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
+    </div>
   </div>
 </div>
 
@@ -504,10 +621,10 @@ var TRAIT_NUMBER_MAP = {
 
 function parseTraitValue(v){
   if(v == null) return null;
-  // 数値ならそのまま（1〜10想定）
-  var n = parseInt(v,10);
+  // 数値ならそのまま（1〜10.99想定、小数点許可）
+  var n = parseFloat(v);
   if(!isNaN(n)){
-    return Math.max(1, Math.min(10, n));
+    return Math.max(1, Math.min(10.99, n));
   }
   // 文字列マップ（古い形式の互換用）
   var s = String(v);
@@ -602,13 +719,10 @@ function deriveStats(id){
     var str = parseTraitValue(t.Strength);
     var sty = parseTraitValue(t.Style);
     if(sp != null && str != null && sty != null){
-      // _base が JSON に入っていればそれを保持（trait点数化前の元値）
-      var baseObj = t._base;
-      var base = (baseObj && baseObj.spirit != null)
-        ? {spirit: baseObj.spirit, strength: baseObj.strength, style: baseObj.style}
-        : null;
       var result = {spirit:sp, strength:str, style:sty, _real:true};
-      if(base) result._base = base;
+      if(t._base) result._base = t._base;
+      if(t._bonus_int) result._bonus_int = t._bonus_int;
+      if(t._bonus_dec) result._bonus_dec = t._bonus_dec;
       return result;
     }
   }
@@ -633,6 +747,40 @@ function specialInfo(stats, type){
 var SFX = (function(){
   var ctx = null, master = null, dry = null, wet = null, reverb = null;
   var MASTER_VOLUME = 1.8;
+
+  // ===== ボイスmp3管理 =====
+  // ready.mp3 / fight.mp3 を起動時に読み込み試行
+  // 成功すれば mp3再生、失敗なら合成ボイス
+  var voiceMp3 = {ready:null, fight:null};
+  var voiceMp3Available = {ready:false, fight:false};
+  function tryLoadVoice(key, path){
+    var a = new Audio(path);
+    a.preload = 'auto';
+    a.volume = 0.9;
+    a.addEventListener('canplaythrough', function(){
+      voiceMp3Available[key] = true;
+      console.log("[SFX] "+path+" 利用可能（ボイスmp3）");
+    }, {once:true});
+    a.addEventListener('error', function(){
+      console.log("[SFX] "+path+" 未配置（合成ボイスで代替）");
+    });
+    voiceMp3[key] = a;
+  }
+  // 起動時に試行
+  tryLoadVoice('ready', 'ready.mp3');
+  tryLoadVoice('fight', 'fight.mp3');
+
+  function playVoiceMp3(key){
+    var a = voiceMp3[key];
+    if(!a || !voiceMp3Available[key]) return false;
+    try {
+      // 再生途中だった場合は最初から
+      a.currentTime = 0;
+      var p = a.play();
+      if(p && p.catch) p.catch(function(){});
+      return true;
+    } catch(e){ return false; }
+  }
 
   function makeReverb(duration, decay){
     var rate = ctx.sampleRate, len = Math.floor(rate * duration);
@@ -860,6 +1008,171 @@ var SFX = (function(){
       osc(t2, .3, 110, 165, .4, 'sine', out, .003);
     },
 
+    // ボイス調Ready：「レディッ！」と短くハッキリ
+    readyVoice: function(){
+      // mp3ボイスがあればそれを優先
+      if(playVoiceMp3('ready')) return;
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.4);  // リバーブ薄め（残響で「レディ」感が残らないように）
+
+      // 女性アナウンサー風の高めの声でフォルマント合成
+      // 基音周波数：220〜280Hz（女性声の中音域）
+      function vowel(startTime, dur, baseHz, formants, vol, attack){
+        // 鋸波 + 矩形波の重ね（声の倍音感）
+        var saw = ctx.createOscillator();
+        saw.type='sawtooth';
+        saw.frequency.setValueAtTime(baseHz, startTime);
+        // ビブラート（声の揺らぎ）
+        var lfo = ctx.createOscillator();
+        lfo.type='sine'; lfo.frequency.value = 5;
+        var lfoGain = ctx.createGain(); lfoGain.gain.value = baseHz*0.015;
+        lfo.connect(lfoGain).connect(saw.frequency);
+
+        // 複数のフォルマント周波数を並列バンドパス
+        var mix = ctx.createGain();
+        formants.forEach(function(fo, i){
+          var bp = ctx.createBiquadFilter();
+          bp.type='bandpass';
+          bp.frequency.value = fo.f;
+          bp.Q.value = fo.q || 12;
+          var g = ctx.createGain();
+          g.gain.value = fo.g || 0.5;
+          saw.connect(bp).connect(g).connect(mix);
+        });
+
+        // 明瞭度を上げるためのハイシェルフ
+        var hs = ctx.createBiquadFilter();
+        hs.type='highshelf'; hs.frequency.value=2500; hs.gain.value=4;
+        mix.connect(hs);
+
+        // エンベロープ（ADSR）
+        var env = ctx.createGain();
+        env.gain.setValueAtTime(0, startTime);
+        env.gain.linearRampToValueAtTime(vol, startTime + (attack||0.02));
+        env.gain.setValueAtTime(vol*0.9, startTime+dur*0.6);
+        env.gain.exponentialRampToValueAtTime(0.001, startTime+dur);
+        hs.connect(env).connect(out);
+
+        saw.start(startTime); saw.stop(startTime+dur+0.05);
+        lfo.start(startTime); lfo.stop(startTime+dur+0.05);
+      }
+
+      // 「RE」: /e/ 母音、F1=500, F2=2200 (女性声)
+      vowel(t, 0.18, 240, [
+        {f:500,  q:10, g:0.6},
+        {f:2200, q:14, g:0.5},
+        {f:3100, q:18, g:0.3}
+      ], 0.5, 0.02);
+
+      // 短い無音（子音 /d/ の歯切れ感）
+      // 「DY」: /i/ 母音、F1=300, F2=2700 (短く切る)
+      vowel(t+0.22, 0.18, 270, [
+        {f:300,  q:12, g:0.5},
+        {f:2700, q:16, g:0.5},
+        {f:3400, q:18, g:0.3}
+      ], 0.55, 0.015);
+
+      // 子音 /R/ の擦過音を冒頭にちょっと付与
+      var noise = ctx.createBufferSource();
+      var n = Math.floor(ctx.sampleRate*0.04);
+      var buf = ctx.createBuffer(1, n, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for(var i=0;i<n;i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/n, 1.2);
+      noise.buffer = buf;
+      var nb = ctx.createBiquadFilter();
+      nb.type='bandpass'; nb.frequency.value=1500; nb.Q.value=3;
+      var ng = ctx.createGain(); ng.gain.value=0.15;
+      noise.connect(nb).connect(ng).connect(out);
+      noise.start(t);
+    },
+
+    // ボクシングのゴング「カーン！」（mp3があればそちらを使う）
+    fightVoice: function(){
+      // mp3ボイスがあればそれを優先
+      if(playVoiceMp3('fight')) return;
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.8);  // 長い余韻のためリバーブ多め
+
+      // ===== 1. 打音の瞬間「カッ！」（金属を叩いた瞬間の鋭い高音）=====
+      var hit = ctx.createBufferSource();
+      var hn = Math.floor(ctx.sampleRate*0.025);
+      var hbuf = ctx.createBuffer(1, hn, ctx.sampleRate);
+      var hd = hbuf.getChannelData(0);
+      for(var i=0;i<hn;i++) hd[i] = (Math.random()*2-1) * Math.pow(1-i/hn, 0.3);
+      hit.buffer = hbuf;
+      var hf = ctx.createBiquadFilter();
+      hf.type='bandpass'; hf.frequency.value=4500; hf.Q.value=3;
+      var hg = ctx.createGain(); hg.gain.value=0.55;
+      hit.connect(hf).connect(hg).connect(out);
+      hit.start(t);
+
+      // ===== 2. メインの金属共鳴音（複数の倍音を重ねる）=====
+      // 金属物の特徴：基音と非調和倍音（2.4倍, 4.8倍など整数倍ではない）
+      var fundamentals = [
+        {f: 420,  vol: 0.5,  decay: 2.5},   // 基音（カーンの「カ」）
+        {f: 850,  vol: 0.4,  decay: 2.2},   // 2倍に近い（金属の鳴り）
+        {f: 1320, vol: 0.35, decay: 1.8},   // 3.1倍
+        {f: 2200, vol: 0.25, decay: 1.2},   // 5.2倍
+        {f: 3300, vol: 0.18, decay: 0.9},   // 7.8倍
+        {f: 180,  vol: 0.45, decay: 3.5},   // 低音域（ゴングの重みづけ）
+      ];
+
+      fundamentals.forEach(function(p){
+        var o = ctx.createOscillator();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(p.f, t);
+        // 金属らしい微妙なピッチダウン（実物の余韻に似せる）
+        o.frequency.exponentialRampToValueAtTime(p.f*0.95, t+p.decay);
+
+        // FM変調（金属の震え）
+        var fmOsc = ctx.createOscillator();
+        fmOsc.type='sine';
+        fmOsc.frequency.value = 7 + Math.random()*3;
+        var fmGain = ctx.createGain();
+        fmGain.gain.value = p.f*0.008;
+        fmOsc.connect(fmGain).connect(o.frequency);
+
+        // エンベロープ
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(p.vol, t+0.005);  // 瞬時に立ち上がり
+        g.gain.exponentialRampToValueAtTime(0.001, t+p.decay);
+
+        o.connect(g).connect(out);
+        o.start(t); o.stop(t+p.decay+0.1);
+        fmOsc.start(t); fmOsc.stop(t+p.decay+0.1);
+      });
+
+      // ===== 3. 中盤の「ーン」の伸び（持続音で金属の鳴りを補強）=====
+      var sustain = ctx.createOscillator();
+      sustain.type = 'triangle';
+      sustain.frequency.setValueAtTime(440, t);
+      sustain.frequency.exponentialRampToValueAtTime(430, t+2.0);
+      var sg = ctx.createGain();
+      sg.gain.setValueAtTime(0, t);
+      sg.gain.linearRampToValueAtTime(0.18, t+0.05);
+      sg.gain.setValueAtTime(0.18, t+0.5);
+      sg.gain.exponentialRampToValueAtTime(0.001, t+2.5);
+
+      // バンドパスでメタリックな質感
+      var sBp = ctx.createBiquadFilter();
+      sBp.type='bandpass'; sBp.frequency.value=1200; sBp.Q.value=2;
+      sustain.connect(sBp).connect(sg).connect(out);
+      sustain.start(t); sustain.stop(t+2.7);
+
+      // ===== 4. 重低音インパクト（打撃の衝撃感）=====
+      var kick = ctx.createOscillator(), kg = ctx.createGain();
+      kick.type='sine';
+      kick.frequency.setValueAtTime(120, t);
+      kick.frequency.exponentialRampToValueAtTime(35, t+0.15);
+      kg.gain.setValueAtTime(0.7, t);
+      kg.gain.exponentialRampToValueAtTime(0.001, t+0.3);
+      kick.connect(kg).connect(out);
+      kick.start(t); kick.stop(t+0.35);
+    },
+
     win: function(){
       init();
       var t = ctx.currentTime;
@@ -904,39 +1217,73 @@ var SFX = (function(){
 // ★ BGM システム（mp3同梱優先、無ければ合成）
 // =========================================================
 // HTMLと同じ場所に以下のファイルを置くと自動再生されます：
+//
+// 【単一ファイル】
 //   bgm_start.mp3   ... スタート画面（キャラ選択時）のBGM
 //   bgm_battle.mp3  ... 戦闘中のBGM
+//
+// 【複数ファイル（プレイリスト）】
+//   bgm_start_1.mp3, bgm_start_2.mp3 ... bgm_start_8.mp3   (最大8曲)
+//   bgm_battle_1.mp3, bgm_battle_2.mp3 ... bgm_battle_8.mp3  (最大8曲)
+//
+// 複数あれば自動でランダム再生（曲が終わったら次の曲をランダムに）。
 // ファイルが無い場合は Web Audio で合成したループBGMが流れます。
 // =========================================================
 var BGM = (function(){
   var ctx = null;
   var currentTrack = null; // 'start' | 'battle' | null
-  var mp3Audio = {start:null, battle:null};
-  var mp3Available = {start:false, battle:false};
-  var mp3Gain = null;        // mp3用のWebAudio経由Gain（フェード制御用）
+  var playlist = {start:[], battle:[]};        // 利用可能なAudio配列
+  var currentAudio = {start:null, battle:null}; // 現在再生中のAudio
   var synthState = null;     // 合成BGM動作中の状態
   var enabled = true;
-  var masterVol = 0.45;      // BGM全体音量（効果音より控えめに）
+  var masterVol = 0.45;
+  var MAX_TRACKS = 8;        // 各カテゴリの最大曲数
 
-  // mp3を読み込み試行
+  // mp3を読み込み試行（プレイリスト用）
   function tryLoadMp3(key, path){
-    var a = new Audio(path);
-    a.loop = true;
-    a.preload = 'auto';
-    a.volume = 0;
-    a.addEventListener('canplaythrough', function(){
-      mp3Available[key] = true;
-      console.log("[BGM] "+path+" 利用可能");
-    }, {once:true});
-    a.addEventListener('error', function(){
-      console.log("[BGM] "+path+" 未配置（合成BGMで代替）");
+    return new Promise(function(resolve){
+      var a = new Audio(path);
+      a.preload = 'auto';
+      a.volume = 0;
+      var loaded = false;
+      a.addEventListener('canplaythrough', function(){
+        if(loaded) return;
+        loaded = true;
+        playlist[key].push(a);
+        console.log("[BGM] "+path+" 利用可能（"+key+"プレイリスト: "+playlist[key].length+"曲）");
+        resolve(true);
+      }, {once:true});
+      a.addEventListener('error', function(){
+        resolve(false);
+      });
+      // 5秒でタイムアウト
+      setTimeout(function(){
+        if(!loaded){ resolve(false); }
+      }, 5000);
     });
-    mp3Audio[key] = a;
   }
 
   function preload(){
-    tryLoadMp3('start', 'bgm_start.mp3');
-    tryLoadMp3('battle', 'bgm_battle.mp3');
+    // 単一ファイル名（旧仕様）と番号付き（新仕様）の両方を試す
+    ['start','battle'].forEach(function(key){
+      tryLoadMp3(key, 'bgm_'+key+'.mp3');
+      for(var i=1;i<=MAX_TRACKS;i++){
+        tryLoadMp3(key, 'bgm_'+key+'_'+i+'.mp3');
+      }
+    });
+  }
+
+  // プレイリストからランダム選曲（前回と違う曲を優先）
+  var lastPlayed = {start:null, battle:null};
+  function pickRandomTrack(key){
+    var list = playlist[key];
+    if(!list || list.length === 0) return null;
+    if(list.length === 1) return list[0];
+    // 前回と違う曲を選ぶ
+    var available = list.filter(function(a){ return a !== lastPlayed[key]; });
+    var pick = available[Math.floor(Math.random()*available.length)];
+    lastPlayed[key] = pick;
+    return pick;
   }
 
   // --------- 合成BGM（mp3が無い時の代替） ---------
@@ -1194,33 +1541,45 @@ var BGM = (function(){
   }
 
   function playMp3(key){
-    var a = mp3Audio[key];
+    var a = pickRandomTrack(key);
     if(!a) return false;
+    currentAudio[key] = a;
     try {
       a.volume = 0;
-      a.currentTime = a.currentTime || 0;
+      a.currentTime = 0;
+      // バトルでも1曲ループに統一：選曲した1曲を最後までループ
+      // 次のバトル開始時に違う曲がランダム選択される
+      a.loop = true;
       var p = a.play();
       if(p && p.catch) p.catch(function(){});
       fadeMp3(a, masterVol, 1.0);
+      console.log('[BGM] '+key+' 再生開始（1曲ループ）');
       return true;
     } catch(e){ return false; }
+  }
+
+  function fadeAllOut(key, dur){
+    // 指定キー（または全部）の現在再生中のmp3をフェードアウト
+    var keys = key ? [key] : ['start','battle'];
+    keys.forEach(function(k){
+      playlist[k].forEach(function(a){
+        if(!a.paused){ fadeMp3(a, 0, dur||0.6); }
+      });
+    });
   }
 
   return {
     preload: preload,
     setVolume: function(v){
       masterVol = v;
-      if(currentTrack && mp3Available[currentTrack]){
-        try{ mp3Audio[currentTrack].volume = v; }catch(e){}
+      if(currentTrack && currentAudio[currentTrack]){
+        try{ currentAudio[currentTrack].volume = v; }catch(e){}
       }
     },
     setEnabled: function(on){
       enabled = on;
       if(!on){
-        // 全停止
-        ['start','battle'].forEach(function(k){
-          if(mp3Audio[k]){ fadeMp3(mp3Audio[k], 0, 0.4); }
-        });
+        fadeAllOut(null, 0.4);
         stopSynthBgm();
         currentTrack = null;
       } else if(currentTrack){
@@ -1234,14 +1593,12 @@ var BGM = (function(){
       if(currentTrack === kind) return;
       // 前のトラックをフェードアウト
       ['start','battle'].forEach(function(k){
-        if(k !== kind && mp3Audio[k] && !mp3Audio[k].paused){
-          fadeMp3(mp3Audio[k], 0, 0.8);
-        }
+        if(k !== kind) fadeAllOut(k, 0.8);
       });
       stopSynthBgm();
       currentTrack = kind;
-      // mp3優先
-      if(mp3Available[kind]){
+      // mp3優先（プレイリストに1曲以上あればmp3）
+      if(playlist[kind].length > 0){
         playMp3(kind);
       } else {
         // 合成BGMで代替
@@ -1250,9 +1607,7 @@ var BGM = (function(){
     },
     stop: function(){
       currentTrack = null;
-      ['start','battle'].forEach(function(k){
-        if(mp3Audio[k] && !mp3Audio[k].paused){ fadeMp3(mp3Audio[k], 0, 0.6); }
-      });
+      fadeAllOut(null, 0.6);
       stopSynthBgm();
     }
   };
@@ -1412,6 +1767,38 @@ function fxPhantomSlash(){var u=++FX_ID;
       <animate attributeName="opacity" values="0;.9;.4" dur=".8s" begin=".5s" fill="freeze"/>
     </text>
   </svg>`;}
+function fxVoidCrash(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="gV${u}"><feGaussianBlur stdDeviation="3"/></filter>
+      <radialGradient id="vc${u}"><stop offset="0%" stop-color="#000" stop-opacity="1"/><stop offset="60%" stop-color="#9b3cff" stop-opacity=".6"/><stop offset="100%" stop-color="#9b3cff" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- 中央の闇穴（吸い込み）-->
+    <circle cx="200" cy="200" r="20" fill="url(#vc${u})" opacity="0">
+      <animate attributeName="r" values="20;180;0" dur="1.1s" fill="freeze"/>
+      <animate attributeName="opacity" values="0;1;0" dur="1.1s" fill="freeze"/>
+    </circle>
+    <!-- 8方向に裂ける亀裂 -->
+    ${[0,45,90,135,180,225,270,315].map(function(deg,i){
+      return `<g transform="rotate(${deg} 200 200)" opacity="0">
+        <animate attributeName="opacity" values="0;.9;0" dur=".9s" begin="${i*.04}s" fill="freeze"/>
+        <line x1="200" y1="200" x2="200" y2="20" stroke="#9b3cff" stroke-width="6" stroke-linecap="round" filter="url(#gV${u})"/>
+        <line x1="200" y1="200" x2="200" y2="50" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </g>`;
+    }).join('')}
+    <!-- 周囲を回転する三角粒子 -->
+    ${[0,72,144,216,288].map(function(deg,i){
+      var x = 200 + Math.cos(deg*Math.PI/180)*120;
+      var y = 200 + Math.sin(deg*Math.PI/180)*120;
+      return `<polygon points="${x},${y-10} ${x+8},${y+5} ${x-8},${y+5}" fill="#22e6e0" opacity="0">
+        <animate attributeName="opacity" values="0;1;0" dur=".8s" begin="${.2+i*.08}s" fill="freeze"/>
+        <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="180 200 200" dur="1s" begin="${.2+i*.08}s" fill="freeze"/>
+      </polygon>`;
+    }).join('')}
+    <text x="200" y="225" font-family="Zen Dots,sans-serif" font-size="80" fill="#9b3cff" text-anchor="middle" opacity="0" filter="url(#gV${u})" stroke="#000" stroke-width="2">虚
+      <animate attributeName="opacity" values="0;1;.5" dur=".7s" begin=".4s" fill="freeze"/>
+    </text>
+  </svg>`;}
 function fxDefend(){var u=++FX_ID;
   return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
     <defs><filter id="gD${u}"><feGaussianBlur stdDeviation="4"/></filter></defs>
@@ -1462,6 +1849,7 @@ function fxCharge(){var u=++FX_ID;
   </svg>`;}
 
 var FX={attack:fxAttack,overdrive:fxOverdrive,spirit:fxSpiritNova,phantom:fxPhantomSlash,
+  void:fxVoidCrash,
   defend:fxDefend,counter:fxCounter,miss:fxMiss,charge:fxCharge};
 
 // エフェクトを画面中央に大きく表示
@@ -1501,6 +1889,26 @@ var I18N = {
     btn_undo: "取消",
     btn_fight: "FIGHT！",
     btn_again: "再戦",
+    btn_register: "ランキングに登録",
+    btn_registering: "登録中…",
+    btn_registered: "登録完了！",
+    btn_ranking: "ランキングを見る",
+    btn_close_ranking: "閉じる",
+    score_label: "SCORE",
+    sc_dmg_dealt: "与ダメージ:",
+    sc_dmg_taken: "被ダメージ:",
+    sc_remain_hp: "残HP:",
+    sc_win_bonus: "勝利ボーナス:",
+    sc_lose_penalty: "敗北ペナルティ:",
+    err_no_name: "名前を入力してください",
+    err_fb_not_ready: "ランキングサーバーに接続できません",
+    err_register_failed: "登録に失敗しました",
+    err_load_failed: "読み込みに失敗しました",
+    ranking_loading: "ランキング読み込み中…",
+    ranking_empty: "まだ記録がありません。最初の挑戦者になろう！",
+    ranking_count: "{n}件の記録",
+    ranking_dmg_dealt: "与",
+    ranking_dmg_taken: "被",
     // 行動名（ログ用）
     act_attack: "攻撃", act_counter: "反撃", act_defend: "防御", act_charge: "ためる", act_special: "必殺",
     // ログ
@@ -1551,6 +1959,26 @@ var I18N = {
     btn_undo: "Undo",
     btn_fight: "FIGHT！",
     btn_again: "Rematch",
+    btn_register: "Register to Ranking",
+    btn_registering: "Registering…",
+    btn_registered: "Registered!",
+    btn_ranking: "View Ranking",
+    btn_close_ranking: "Close",
+    score_label: "SCORE",
+    sc_dmg_dealt: "Damage Dealt:",
+    sc_dmg_taken: "Damage Taken:",
+    sc_remain_hp: "HP Remaining:",
+    sc_win_bonus: "Victory Bonus:",
+    sc_lose_penalty: "Defeat Penalty:",
+    err_no_name: "Please enter your name",
+    err_fb_not_ready: "Cannot connect to ranking server",
+    err_register_failed: "Registration failed",
+    err_load_failed: "Failed to load",
+    ranking_loading: "Loading ranking…",
+    ranking_empty: "No records yet. Be the first challenger!",
+    ranking_count: "{n} records",
+    ranking_dmg_dealt: "Dealt",
+    ranking_dmg_taken: "Taken",
     act_attack: "Attack", act_counter: "Counter", act_defend: "Defend", act_charge: "Charge", act_special: "Special",
     you: "YOU", enemy: "ENEMY",
     turn_label: "━━ ROUND {n} ━━",
@@ -1612,7 +2040,7 @@ function applyI18n(){
   }
 }
 var ANAME={attack:'攻撃',counter:'反撃',defend:'防御',charge:'ためる',special:'必殺'};
-var GAUGE_MAX=5; // 必殺技ゲージ上限（保険）
+var GAUGE_MAX=10; // 必殺技ゲージ上限
 var G=null;
 function el(q){return document.querySelector(q);}
 
@@ -1633,24 +2061,39 @@ function buildCard(side){
   var col=TYPE_COLOR[f.type]||'#9b3cff';
   var realBadge = f.st._real ? '<span style="color:var(--gold);margin-right:4px" title="OpenSea実データ">★</span>' : '';
 
-  // base値があれば差分を表示
-  function statCell(cls, label, base, final){
-    var diff = final - base;
-    var bonus = '';
-    if(diff > 0)      bonus = ' <span class="b">(+'+diff+')</span>';
-    else if(diff < 0) bonus = ' <span class="b neg">('+diff+')</span>';
+  // base値・整数ボーナス・小数ボーナスの三層表示
+  // 例: 「4 (+3.08)」= base 4, +3点数化, +0.08ハッシュ
+  function statCell(cls, label, baseVal, intBonus, decBonus){
+    var baseStr = String(baseVal);
+    var bonusParts = [];
+    // 整数ボーナス
+    if(intBonus > 0)      bonusParts.push('+' + intBonus);
+    else if(intBonus < 0) bonusParts.push(String(intBonus));
+    // 小数ボーナス（常に表示、特徴的な数字なので）
+    if(decBonus > 0){
+      var fracVal = Math.round(decBonus * 100);
+      var fracStr = '.' + (fracVal<10?'0':'') + fracVal;
+      if(bonusParts.length === 0) bonusParts.push('+0' + fracStr);
+      else bonusParts[bonusParts.length-1] += fracStr;
+    }
+    var bonusHtml = '';
+    if(bonusParts.length > 0){
+      bonusHtml = ' <span class="b">(' + bonusParts.join('') + ')</span>';
+    }
     return '<div class="st '+cls+'"><div class="l">'+label+'</div>'+
-           '<div class="v">'+base+bonus+'</div></div>';
+           '<div class="v">'+baseStr+bonusHtml+'</div></div>';
   }
-  var base = f.st._base || {spirit:f.st.spirit, strength:f.st.strength, style:f.st.style};
+  var base = f.st._base || {spirit:Math.floor(f.st.spirit), strength:Math.floor(f.st.strength), style:Math.floor(f.st.style)};
+  var bInt = f.st._bonus_int || {spirit:0, strength:0, style:0};
+  var bDec = f.st._bonus_dec || {spirit:0, strength:0, style:0};
 
   c.innerHTML='<div class="tcg-head"><span class="nm">'+realBadge+'0N1 #'+f.id+'</span>'+
     '<span class="tcg-type" style="color:'+col+'">'+f.type+'</span></div>'+
     '<div class="tcg-art" id="'+side+'Art"><div class="tcg-fx" id="'+side+'Fx"></div></div>'+
     '<div class="tcg-stats">'+
-    statCell('sp',  'Spirit',   base.spirit,   f.st.spirit) +
-    statCell('str', 'Strength', base.strength, f.st.strength) +
-    statCell('sty', 'Style',    base.style,    f.st.style) +
+    statCell('sp',  'Spirit',   base.spirit,   bInt.spirit,   bDec.spirit) +
+    statCell('str', 'Strength', base.strength, bInt.strength, bDec.strength) +
+    statCell('sty', 'Style',    base.style,    bInt.style,    bDec.style) +
     '</div>'+
     '<div class="tcg-foot">'+f.type+' · '+f.special.kind+'</div>';
   loadPortrait(el('#'+side+'Art'),f.id,f.st);
@@ -1674,7 +2117,7 @@ function updateBars(f,side){
   var rf=el(p+'Rage');
   rf.style.width=Math.min(100, (f.gauge/GAUGE_MAX*100))+'%';
   if(f.gauge>=1)rf.classList.add('full');else rf.classList.remove('full');
-  if(side==='me')el('#spBtn').classList.toggle('ready',f.gauge>=1);
+  if(side==='me')el('#spBtn').classList.toggle('ready',f.gauge>=GAUGE_MAX);
   // 上のtypebarも更新（ゲージ数値表示のため）
   if(G && !G.over){ renderTypebar(); }
 }
@@ -1696,21 +2139,21 @@ function enemyPlan(){
   var en=G.en, me=G.me, plan=[];
   for(var i=0;i<3;i++){
     var s=en.st;
-    var w={attack:1.2, defend:1.0, charge:1.0, counter:1.0};
+    var w={attack:0.9, defend:1.0, charge:1.3, counter:0.9}; // 攻撃を下げ、ためる/防御を上げる
     // Strengthが高ければ攻撃寄り
-    if(s.strength >= 60) w.attack += 1.5;
+    if(s.strength >= 7) w.attack += 0.9;
     // Styleが高ければカウンター寄り
-    if(s.style >= 70) w.counter += 1.5;
+    if(s.style >= 7) w.counter += 1.0;
     // Spiritが高ければ防御寄り
-    if(s.spirit >= 60) w.defend += 1.2;
+    if(s.spirit >= 7) w.defend += 0.9;
     // HP少ない時は守り寄り
-    if(en.hp/en.maxhp < 0.35){ w.defend+=1.5; w.attack*=0.7; }
+    if(en.hp/en.maxhp < 0.35){ w.defend+=1.5; w.attack*=0.6; }
     // 必殺技ゲージあれば一定確率で
-    if(en.gauge >= 1 && Math.random() < 0.45){
+    if(en.gauge >= 1 && Math.random() < 0.5){
       plan.push('special'); continue;
     }
-    // ゲージが0なら時々ためる
-    if(en.gauge === 0 && Math.random() < 0.18){
+    // ゲージが0なら時々ためる（プレイヤーの溜め時間を作る）
+    if(en.gauge === 0 && Math.random() < 0.3){
       plan.push('charge'); continue;
     }
     var tot=w.attack+w.defend+w.charge+w.counter, pk=Math.random()*tot;
@@ -1725,21 +2168,32 @@ function enemyPlan(){
 function specialFxKind(kind){
   if(kind==='OVERDRIVE FIST')return 'overdrive';
   if(kind==='SPIRIT NOVA')return 'spirit';
+  if(kind==='VOID CRASH')return 'void';
   return 'phantom';
 }
 
 function resolvePair(meAct,enAct){
   var me=G.me, en=G.en, lines=[];
 
-  // ゲージ無しで必殺技を選んだ場合は攻撃に降格
-  if(meAct==='special' && me.gauge<=0){
-    lines.push({h:'<span class="me-a">YOU</span>はゲージ不足→攻撃に降格', c:'sys'});
+  // ===== デバッグログ =====
+  console.log('━━━━━━━━━━━━━━');
+  console.log('[resolvePair] 開始');
+  console.log('  meAct = ' + meAct + ', enAct = ' + enAct);
+  console.log('  before: me.gauge='+me.gauge+', en.gauge='+en.gauge);
+  console.log('  before: me.hp='+me.hp+'/'+me.maxhp+', en.hp='+en.hp+'/'+en.maxhp);
+
+  // 必殺技はゲージMAXが必要（条件を満たさない場合は攻撃に降格）
+  if(meAct==='special' && me.gauge<GAUGE_MAX){
+    console.log('  [降格] meはゲージMAX未満で必殺→攻撃 (gauge='+me.gauge+'/'+GAUGE_MAX+')');
+    lines.push({h:'<span class="me-a">YOU</span>はゲージMAX未満→攻撃に降格', c:'sys'});
     meAct='attack';
   }
-  if(enAct==='special' && en.gauge<=0){
-    lines.push({h:'<span class="en-a">ENEMY</span>はゲージ不足→攻撃に降格', c:'sys'});
+  if(enAct==='special' && en.gauge<GAUGE_MAX){
+    console.log('  [降格] enはゲージMAX未満で必殺→攻撃 (gauge='+en.gauge+'/'+GAUGE_MAX+')');
+    lines.push({h:'<span class="en-a">ENEMY</span>はゲージMAX未満→攻撃に降格', c:'sys'});
     enAct='attack';
   }
+  console.log('  pair = "'+meAct+':'+enAct+'"');
 
   lines.push({h:T('pair_label',{me:ANAME[meAct],en:ANAME[enAct]}),c:'clash'});
 
@@ -1751,8 +2205,13 @@ function resolvePair(meAct,enAct){
   // -------- ヘルパー：HP/ゲージ操作と表示 --------
   function dealDamage(target, side, dmg, opts){
     opts = opts||{};
-    dmg = Math.max(0, Math.round(dmg));
+    dmg = Math.max(0, Math.ceil(dmg));
     target.hp = Math.max(0, target.hp - dmg);
+    // スコア集計：sideは「ダメージを受ける側」なので、enならYOU与ダメ、meならYOU被ダメ
+    if(dmg > 0 && G){
+      if(side === 'en') G.dmgDealt = (G.dmgDealt||0) + dmg;
+      if(side === 'me') G.dmgTaken = (G.dmgTaken||0) + dmg;
+    }
     updateBars(target, side);
     shake(side, true);
     if(dmg>0){
@@ -1760,11 +2219,24 @@ function resolvePair(meAct,enAct){
     }
     return dmg;
   }
+  // 攻撃やカウンターのヒット時に攻撃側のゲージを+1する
+  function hitGauge(attackerSide){
+    var f = attackerSide==='me' ? me : en;
+    addGauge(f, attackerSide, 1);
+    floatTxt(attackerSide, '⚡+1', '#ffc83a');
+  }
   function addGauge(f, side, n){
+    var before = f.gauge;
     f.gauge = Math.min(GAUGE_MAX, Math.max(0, f.gauge + n));
+    if(typeof console !== 'undefined'){
+      console.log('[gauge] '+side+': '+before+' -> '+f.gauge+' (+'+n+')');
+    }
     updateBars(f, side);
   }
   function resetGauge(f, side){
+    if(f.gauge !== 0){
+      console.log('[gauge RESET] '+side+': '+f.gauge+' -> 0');
+    }
     f.gauge = 0; updateBars(f, side);
   }
   function tagOf(side){
@@ -1785,7 +2257,7 @@ function resolvePair(meAct,enAct){
   // 攻撃側のType vs 防御側のType
   function applyTypeMod(dmg, attType, defType){
     var mod = typeMod(attType, defType);
-    return Math.max(1, Math.round(dmg * mod));
+    return Math.max(1, Math.ceil(dmg * mod));
   }
   function typeAdvLog(attType, defType, attSide){
     var m = matchup(attType, defType);
@@ -1806,6 +2278,7 @@ function resolvePair(meAct,enAct){
 
   // ========== 同じコマンド ==========
   if(meAct === enAct){
+    console.log('  [case] 同じコマンド同士: '+meAct);
     if(meAct === 'attack'){
       // Style先制 → トドメ判定
       var f = whoFirst();
@@ -1814,8 +2287,9 @@ function resolvePair(meAct,enAct){
       var attChar1 = f==='me'?me:en, defChar1 = f==='me'?en:me;
       var d1 = applyTypeMod(attChar1.st.strength, attChar1.type, defChar1.type);
       dealDamage(defChar1, firstTarget, d1);
+      hitGauge(f);  // 攻撃ヒットで攻撃側+1
       var adv1 = typeAdvLog(attChar1.type, defChar1.type, f); if(adv1) lines.push(adv1);
-      lines.push({h:tagOf(f)+'が先制攻撃！ '+nameOf(firstTarget)+'に <span class="dmg">'+d1+'</span>', c:f==='me'?'me-a':'en-a'});
+      lines.push({h:tagOf(f)+'が先制攻撃！ '+nameOf(firstTarget)+'に <span class="dmg">'+d1+'</span>（⚡+1）', c:f==='me'?'me-a':'en-a'});
       if(defChar1.hp > 0){
         // 後発反撃
         var secondSide = f==='me'?'en':'me';
@@ -1825,9 +2299,10 @@ function resolvePair(meAct,enAct){
           if(G.over) return;
           showFullFx('attack', 800); SFX.attack();
           dealDamage(defChar2, f, d2);
+          hitGauge(secondSide);  // 反撃ヒットでも+1
         }, 600);
         var adv2 = typeAdvLog(attChar2.type, defChar2.type, secondSide); if(adv2) lines.push(adv2);
-        lines.push({h:tagOf(secondSide)+'も反撃！ '+nameOf(f)+'に <span class="dmg">'+d2+'</span>', c:secondSide==='me'?'me-a':'en-a'});
+        lines.push({h:tagOf(secondSide)+'も反撃！ '+nameOf(f)+'に <span class="dmg">'+d2+'</span>（⚡+1）', c:secondSide==='me'?'me-a':'en-a'});
       } else {
         lines.push({h:nameOf(firstTarget)+'は倒れて反撃できなかった', c:'sys'});
       }
@@ -1852,9 +2327,9 @@ function resolvePair(meAct,enAct){
       return lines;
     }
     if(meAct === 'charge'){
-      addGauge(me, 'me', 1); addGauge(en, 'en', 1);
-      floatTxt('me','+1','#ffc83a'); floatTxt('en','+1','#ffc83a');
-      lines.push({h:'両者ため！ 互いに ⚡+1', c:'sys'});
+      addGauge(me, 'me', 3); addGauge(en, 'en', 3);
+      floatTxt('me','+3','#ffc83a'); floatTxt('en','+3','#ffc83a');
+      lines.push({h:'両者ため！ 互いに ⚡+3', c:'sys'});
       return lines;
     }
     if(meAct === 'counter'){
@@ -1878,13 +2353,25 @@ function resolvePair(meAct,enAct){
 
   // ========== 攻撃 vs 防御 ==========
   if(pair === 'attack:defend' || pair === 'defend:attack'){
+    console.log('  [case] 攻撃 vs 防御');
     var atkSide = (pair==='attack:defend')?'me':'en';
-    lines.push({h:tagOf(atkSide==='me'?'en':'me')+'は防御！ '+tagOf(atkSide)+'の攻撃を完全に防いだ', c:'sys'});
+    var defSide = atkSide==='me'?'en':'me';
+    // 攻撃エフェクト + 攻撃音
+    showFullFx('attack', 700); SFX.attack();
+    // 少し遅れて防御エフェクト＋防御音（バリアで止めた感）
+    setTimeout(function(){
+      if(G.over) return;
+      showFullFx('defend', 700); SFX.defend();
+      // BLOCKED表示
+      floatTxt(defSide, 'BLOCKED!', '#22e6e0');
+    }, 250);
+    lines.push({h:tagOf(defSide)+'は防御！ '+tagOf(atkSide)+'の攻撃を完全に防いだ', c:'sys'});
     return lines;
   }
 
   // ========== 攻撃 vs ためる ==========
   if(pair === 'attack:charge' || pair === 'charge:attack'){
+    console.log('  [case] 攻撃 vs ためる (ためる側はゲージリセット)');
     var aS = (pair==='attack:charge')?'me':'en';
     var cS = aS==='me'?'en':'me';
     var attChar = aS==='me'?me:en;
@@ -1893,13 +2380,15 @@ function resolvePair(meAct,enAct){
     var dmg = applyTypeMod(attChar.st.strength, attChar.type, chgChar.type);
     resetGauge(chgChar, cS);
     dealDamage(chgChar, cS, dmg);
+    hitGauge(aS);  // 攻撃ヒットで+1
     var adv = typeAdvLog(attChar.type, chgChar.type, aS); if(adv) lines.push(adv);
-    lines.push({h:tagOf(cS)+'のため解除！ '+tagOf(aS)+'の攻撃 <span class="dmg">'+dmg+'</span> ダメージ', c:aS==='me'?'me-a':'en-a'});
+    lines.push({h:tagOf(cS)+'のため解除！ '+tagOf(aS)+'の攻撃 <span class="dmg">'+dmg+'</span> ダメージ（⚡+1）', c:aS==='me'?'me-a':'en-a'});
     return lines;
   }
 
   // ========== 攻撃 vs カウンター ==========
   if(pair === 'attack:counter' || pair === 'counter:attack'){
+    console.log('  [case] 攻撃 vs カウンター');
     var atS = (pair==='attack:counter')?'me':'en';
     var coS = atS==='me'?'en':'me';
     var coChar = coS==='me'?me:en;
@@ -1908,22 +2397,25 @@ function resolvePair(meAct,enAct){
     // カウンター反撃 = Strength + Style（相性適用）
     var ctr = applyTypeMod(coChar.st.strength + coChar.st.style, coChar.type, atChar.type);
     dealDamage(atChar, atS, ctr, {crit:true});
+    hitGauge(coS);  // カウンター成功で+1
     var adv = typeAdvLog(coChar.type, atChar.type, coS); if(adv) lines.push(adv);
-    lines.push({h:tagOf(coS)+'のカウンター成立！ '+tagOf(atS)+'に <span class="dmg">'+ctr+'</span> ダメージ返し', c:'clash'});
+    lines.push({h:tagOf(coS)+'のカウンター成立！ '+tagOf(atS)+'に <span class="dmg">'+ctr+'</span> ダメージ返し（⚡+1）', c:'clash'});
     return lines;
   }
 
   // ========== 防御 vs ためる ==========
   if(pair === 'defend:charge' || pair === 'charge:defend'){
+    console.log('  [case] 防御 vs ためる (ためる側 ⚡+3)');
     var chS = (pair==='defend:charge')?'en':'me';
-    addGauge(chS==='me'?me:en, chS, 1);
-    floatTxt(chS,'+1','#ffc83a');
-    lines.push({h:tagOf(chS)+'は隙をついて気を溜めた（⚡+1）', c:'sys'});
+    addGauge(chS==='me'?me:en, chS, 3);
+    floatTxt(chS,'+3','#ffc83a');
+    lines.push({h:tagOf(chS)+'は隙をついて気を溜めた（⚡+3）', c:'sys'});
     return lines;
   }
 
   // ========== 防御 vs カウンター ==========
   if(pair === 'defend:counter' || pair === 'counter:defend'){
+    console.log('  [case] 防御 vs カウンター');
     var defSide = (pair === 'defend:counter') ? 'me' : 'en';
     var defChar = defSide === 'me' ? me : en;
     var ctrSide = defSide === 'me' ? 'en' : 'me';
@@ -1944,16 +2436,18 @@ function resolvePair(meAct,enAct){
 
   // ========== ためる vs カウンター ==========
   if(pair === 'charge:counter' || pair === 'counter:charge'){
+    console.log('  [case] ためる vs カウンター (ためる側 ⚡+3)');
     var cgS = (pair==='charge:counter')?'me':'en';
-    addGauge(cgS==='me'?me:en, cgS, 1);
-    floatTxt(cgS,'+1','#ffc83a');
+    addGauge(cgS==='me'?me:en, cgS, 3);
+    floatTxt(cgS,'+3','#ffc83a');
     var ctS = cgS==='me'?'en':'me';
-    lines.push({h:tagOf(ctS)+'のカウンターは空振り。'+tagOf(cgS)+'は気を溜めた（⚡+1）', c:'sys'});
+    lines.push({h:tagOf(ctS)+'のカウンターは空振り。'+tagOf(cgS)+'は気を溜めた（⚡+3）', c:'sys'});
     return lines;
   }
 
   // ========== 必殺技 vs * ==========
   if(meAct === 'special' || enAct === 'special'){
+    console.log('  [case] 必殺技あり');
     var spS, oppS, spChar, oppChar, oppAct;
     if(meAct === 'special'){ spS='me'; oppS='en'; spChar=me; oppChar=en; oppAct=enAct; }
     else { spS='en'; oppS='me'; spChar=en; oppChar=me; oppAct=meAct; }
@@ -1979,16 +2473,18 @@ function resolvePair(meAct,enAct){
             if(G.over) return;
             showFullFx('attack', 800); SFX.attack();
             dealDamage(spChar, spS, atkDmg);
+            hitGauge(oppS);  // 通常攻撃側がヒットで+1
           }, 600);
           if(advAt) lines.push(advAt);
-          lines.push({h:tagOf(oppS)+'の通常攻撃が反撃！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>', c:oppS==='me'?'me-a':'en-a'});
+          lines.push({h:tagOf(oppS)+'の通常攻撃が反撃！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>（⚡+1）', c:oppS==='me'?'me-a':'en-a'});
         }
       } else {
         // 通常攻撃が先制
         showFullFx('attack', 800); SFX.attack();
         dealDamage(spChar, spS, atkDmg);
+        hitGauge(oppS);  // 通常攻撃側がヒットで+1
         if(advAt) lines.push(advAt);
-        lines.push({h:tagOf(oppS)+'の通常攻撃が先制！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>', c:oppS==='me'?'me-a':'en-a'});
+        lines.push({h:tagOf(oppS)+'の通常攻撃が先制！ '+tagOf(spS)+'に <span class="dmg">'+atkDmg+'</span>（⚡+1）', c:oppS==='me'?'me-a':'en-a'});
         setTimeout(function(){
           if(G.over) return;
           showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
@@ -2025,12 +2521,13 @@ function resolvePair(meAct,enAct){
 
     // 必殺 vs カウンター（120%返し: (STR + STY) * 1.2）
     if(oppAct === 'counter'){
-      var coDmg = applyTypeMod(Math.round((oppChar.st.strength + oppChar.st.style) * 1.2), oppChar.type, spChar.type);
+      var coDmg = applyTypeMod(Math.ceil((oppChar.st.strength + oppChar.st.style) * 1.2), oppChar.type, spChar.type);
       resetGauge(spChar, spS);
       showFullFx('counter', 1000); SFX.counter();
       dealDamage(spChar, spS, coDmg, {crit:true});
+      hitGauge(oppS);  // カウンター成功で+1
       var adv = typeAdvLog(oppChar.type, spChar.type, oppS); if(adv) lines.push(adv);
-      lines.push({h:tagOf(spS)+'の必殺技不発！ '+tagOf(oppS)+'のカウンターが120%返し <span class="dmg">'+coDmg+'</span>', c:'clash'});
+      lines.push({h:tagOf(spS)+'の必殺技不発！ '+tagOf(oppS)+'のカウンターが120%返し <span class="dmg">'+coDmg+'</span>（⚡+1）', c:'clash'});
       return lines;
     }
   }
@@ -2042,6 +2539,10 @@ function resolvePair(meAct,enAct){
 
 function startTurn(){
   G.meQueue=[];G.enQueue=enemyPlan();G.phase='select';
+  console.log('━━━━━━━━━━━━━━');
+  console.log('[ラウンド '+G.turn+' 開始]');
+  console.log('  敵の予定（plan）: ['+G.enQueue.join(', ')+']');
+  console.log('  状態: me.gauge='+G.me.gauge+', en.gauge='+G.en.gauge);
   el('#phase').innerHTML=T('phase_select_turn',{n:G.turn});
   el('#phase').className='phase';
   renderQueue();renderEnemyQueue(true,-1);
@@ -2061,12 +2562,27 @@ function renderEnemyQueue(hidden,active){
     else{var a=G.enQueue[i];d.className='ring-qslot en reveal'+(active===i?' active':'');
       d.innerHTML='<span class="ic">'+ICON[a]+'</span>'+ANAME[a];}
     q.appendChild(d);}}
+// 選択中のコマンドキューから「現在の予測ゲージ」を計算
+// ためる選択で+3、必殺技選択でゲージリセット（必殺技はMAX消費）
+function predictedGauge(){
+  if(!G || !G.me) return 0;
+  var g = G.me.gauge;
+  for(var i=0;i<G.meQueue.length;i++){
+    if(G.meQueue[i] === 'charge')  g = Math.min(GAUGE_MAX, g + 3);
+    if(G.meQueue[i] === 'special') g = 0; // 必殺技でゲージ全消費
+  }
+  return g;
+}
 function setCmd(on){document.querySelectorAll('.cmd').forEach(function(b){
   var act=b.dataset.act,dis=!on||G.phase!=='select'||G.meQueue.length>=3;
-  if(act==='special'&&G.me.gauge<1)dis=true;
+  if(act==='special' && predictedGauge() < GAUGE_MAX) dis=true;
   b.disabled=dis;});}
 function pickCmd(act){if(G.phase!=='select'||G.meQueue.length>=3)return;
-  if(act==='special'&&G.me.gauge<1)return;
+  if(act==='special' && predictedGauge() < GAUGE_MAX){
+    console.log('[pickCmd] 必殺技を選択したが予測ゲージ不足で却下 (predicted='+predictedGauge()+'/'+GAUGE_MAX+')');
+    return;
+  }
+  console.log('[pickCmd] 選択: '+act+' (queue長 '+G.meQueue.length+' -> '+(G.meQueue.length+1)+', 予測ゲージ '+predictedGauge()+')');
   SFX.click();
   G.meQueue.push(act);renderQueue();
   if(G.meQueue.length>=3)el('#fightBtn').disabled=false;setCmd(true);}
@@ -2100,15 +2616,15 @@ function doFight(){
   renderEnemyQueue(false,-1);
   log(T('turn_label',{n:G.turn}),'sys');
 
-  // ===== Ready → Fight! アナウンス =====
+  // ===== Ready → Fight! アナウンス（ボイス調SFX）=====
   // Ready（金色、1秒）
   showAnnounce('READY', 'ready', 1000);
-  SFX.click(); // 控えめなReady音
+  SFX.readyVoice(); // ボイス調Ready
   // 1秒後 → Fight!（ピンク、フラッシュ付き）
   setTimeout(function(){
     if(G.over) return;
     showAnnounce('FIGHT！', 'fight', 1000);
-    SFX.fight(); // 派手なFight音
+    SFX.fightVoice(); // ボイス調Fight
   }, 900);
 
   // 戦闘解決はアナウンス完了後に開始（1.7秒待つ）
@@ -2129,6 +2645,159 @@ function doFight(){
 function endTurn(){if(G.over)return;G.turn++;setTimeout(startTurn,900);}
 
 // バトル終了：リザルト画面に切り替え、ログだけ下に残す
+// スコア計算ロジック
+function calcScore(){
+  var win = G.me.hp > 0;
+  var dmgDealt = G.dmgDealt || 0;
+  var dmgTaken = G.dmgTaken || 0;
+  var remainHp = Math.max(0, G.me.hp);
+  var rounds = Math.max(1, G.turn - (G.over?1:0));
+
+  var base = dmgDealt * 10 - dmgTaken * 5 + remainHp * 5;
+  var winBonus = win ? (1000 - rounds * 50) : 0;
+  var loseBonus = win ? 0 : -500;
+  var total = base + winBonus + loseBonus;
+  return {
+    total: total, win: win,
+    dmgDealt: dmgDealt, dmgTaken: dmgTaken,
+    remainHp: remainHp, rounds: rounds,
+    base: base, winBonus: winBonus, loseBonus: loseBonus
+  };
+}
+
+// スコア表示の組み立て
+function renderScore(sc){
+  el('#scoreVal').textContent = (sc.total>=0?'+':'') + sc.total;
+  el('#scoreVal').style.color = sc.total>=0 ? 'var(--gold)' : 'var(--pink)';
+  el('#scoreVal').style.textShadow = sc.total>=0
+    ? '0 0 18px var(--gold),0 2px 6px #000'
+    : '0 0 18px var(--pink),0 2px 6px #000';
+
+  var lines = [];
+  lines.push('<b>'+T('sc_dmg_dealt')+'</b> '+sc.dmgDealt+' × 10 = +' + (sc.dmgDealt*10));
+  lines.push('<b>'+T('sc_dmg_taken')+'</b> '+sc.dmgTaken+' × 5 = ' + (-sc.dmgTaken*5));
+  lines.push('<b>'+T('sc_remain_hp')+'</b> '+sc.remainHp+' × 5 = +' + (sc.remainHp*5));
+  if(sc.win){
+    lines.push('<b>'+T('sc_win_bonus')+'</b> 1000 - ('+sc.rounds+' × 50) = ' + (sc.winBonus>=0?'+':'') + sc.winBonus);
+  } else {
+    lines.push('<b>'+T('sc_lose_penalty')+'</b> -500');
+  }
+  el('#scoreBreakdown').innerHTML = lines.join('<br>');
+}
+
+// 名前を保持（再戦時に再入力不要）
+function getStoredName(){
+  try{ return localStorage.getItem('0n1_player_name') || ''; }
+  catch(e){ return ''; }
+}
+function setStoredName(n){
+  try{ localStorage.setItem('0n1_player_name', n); }catch(e){}
+}
+
+// Firebase に登録
+function registerToRanking(){
+  var nameEl = el('#playerName');
+  var name = (nameEl.value || '').trim().slice(0,16);
+  if(!name){ alert(T('err_no_name')); nameEl.focus(); return; }
+  if(!window.FB || !window.FB.ready){
+    alert(T('err_fb_not_ready'));
+    return;
+  }
+  setStoredName(name);
+  var sc = calcScore();
+  var btn = el('#registerBtn');
+  btn.disabled = true;
+  btn.textContent = T('btn_registering');
+
+  window.FB.addDoc(window.FB.collection(window.FB.db, 'rankings'), {
+    name: name,
+    score: sc.total,
+    win: sc.win,
+    dmgDealt: sc.dmgDealt,
+    dmgTaken: sc.dmgTaken,
+    remainHp: sc.remainHp,
+    rounds: sc.rounds,
+    meType: G.me.type,
+    meId: G.me.id,
+    enId: G.en.id,
+    createdAt: window.FB.serverTimestamp()
+  }).then(function(){
+    btn.textContent = T('btn_registered');
+    btn.disabled = true;
+    setTimeout(function(){ showRanking(); }, 800);
+  }).catch(function(e){
+    console.error('[Firebase] 登録失敗', e);
+    alert(T('err_register_failed') + ': ' + e.message);
+    btn.disabled = false;
+    btn.textContent = T('btn_register');
+  });
+}
+
+// ランキング表示
+function showRanking(){
+  el('#result').style.display = 'none';
+  var r = el('#ranking');
+  r.style.display = 'block';
+  var status = el('#rankingStatus');
+  var listEl = el('#rankingList');
+  status.textContent = T('ranking_loading');
+  listEl.innerHTML = '';
+
+  if(!window.FB || !window.FB.ready){
+    status.textContent = T('err_fb_not_ready');
+    return;
+  }
+  var q = window.FB.query(
+    window.FB.collection(window.FB.db, 'rankings'),
+    window.FB.orderBy('score', 'desc'),
+    window.FB.limit(100)
+  );
+  window.FB.getDocs(q).then(function(snap){
+    var rank = 0;
+    var html = '';
+    snap.forEach(function(doc){
+      rank++;
+      var d = doc.data();
+      var rowCls = rank<=3 ? 'top'+rank : '';
+      var dateStr = '';
+      if(d.createdAt && d.createdAt.toDate){
+        var dt = d.createdAt.toDate();
+        var mm = (dt.getMonth()+1).toString().padStart(2,'0');
+        var dd = dt.getDate().toString().padStart(2,'0');
+        dateStr = mm+'/'+dd;
+      }
+      var winStr = d.win ? '🏆' : '☠';
+      html += '<div class="rankrow '+rowCls+'">'+
+        '<div class="rk">'+rank+'</div>'+
+        '<div class="nm">'+winStr+' '+escapeHtml(d.name||'?')+'</div>'+
+        '<div class="sc">'+(d.score>=0?'+':'')+d.score+'</div>'+
+        '<div class="meta">'+
+          '<span class="type-tag">'+(d.meType||'?')+'</span>'+
+          '#'+ (d.meId||'?') + ' vs #' + (d.enId||'?') +
+          ' / '+T('ranking_dmg_dealt')+': '+(d.dmgDealt||0)+
+          ' / '+T('ranking_dmg_taken')+': '+(d.dmgTaken||0)+
+          ' / '+(d.rounds||0)+'R'+
+          (dateStr ? ' / '+dateStr : '')+
+        '</div>'+
+      '</div>';
+    });
+    if(rank === 0){
+      listEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">'+T('ranking_empty')+'</div>';
+    } else {
+      listEl.innerHTML = html;
+    }
+    status.textContent = T('ranking_count',{n:rank});
+  }).catch(function(e){
+    console.error('[Firebase] 取得失敗', e);
+    status.textContent = T('err_load_failed') + ': ' + e.message;
+  });
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
 function finish(){
   if(G.over)return;
   G.over=true;
@@ -2160,17 +2829,26 @@ function finish(){
       ? T('win_desc',{me:G.me.id,type:G.me.type,arch:G.me.type,en:G.en.id,turn:G.turn-1})
       : T('lose_desc',{me:G.me.id,en:G.en.id,type:G.en.type,arch:G.en.type});
 
+    // スコア計算と表示
+    var sc = calcScore();
+    renderScore(sc);
+
+    // 名前入力フィールドに前回の名前を復元
+    var nameEl = el('#playerName');
+    nameEl.value = getStoredName();
+    // 登録ボタンを有効化（再戦時のリセット）
+    var rBtn = el('#registerBtn');
+    rBtn.disabled = false;
+    rBtn.textContent = T('btn_register');
+
     // ログだけリザルト画面の下に移動して残す
     var logEl = el('#log');
     if(logEl){
-      // ログタイトルを追加
       var logTitle = document.createElement('div');
       logTitle.className = 'log-title-after';
       logTitle.textContent = LANG==='ja' ? '— 戦闘ログ —' : '— BATTLE LOG —';
-      // ログをリザルト画面の中（result要素内）に移動
       r.appendChild(logTitle);
       r.appendChild(logEl);
-      // ログの高さを大きく
       logEl.style.height = '240px';
       logEl.style.textAlign = 'left';
       logEl.scrollTop = logEl.scrollHeight;
@@ -2192,7 +2870,8 @@ function startBattle(myId){
     logEl.style.textAlign = '';  // テキスト配置リセット
   }
   var enId;do{enId=1+Math.floor(Math.random()*7777);}while(enId===myId);
-  G={me:makeFighter(myId),en:makeFighter(enId),turn:1,phase:'select',meQueue:[],enQueue:[],over:false};
+  G={me:makeFighter(myId),en:makeFighter(enId),turn:1,phase:'select',meQueue:[],enQueue:[],over:false,
+     dmgDealt:0,dmgTaken:0};
   el('#start').style.display='none';el('#result').style.display='none';
   el('#battle').style.display='block';el('#log').innerHTML='';
   el('#meName').textContent='0N1 #'+myId;
@@ -2218,6 +2897,22 @@ el('#againBtn').addEventListener('click',function(){
   SFX.init();SFX.click();
   el('#result').style.display='none';el('#start').style.display='block';
   BGM.play('start');
+});
+el('#registerBtn').addEventListener('click', function(){
+  SFX.click();
+  registerToRanking();
+});
+el('#rankingBtn').addEventListener('click', function(){
+  SFX.click();
+  showRanking();
+});
+el('#closeRankingBtn').addEventListener('click', function(){
+  SFX.click();
+  el('#ranking').style.display = 'none';
+  el('#start').style.display = 'block';
+});
+el('#playerName').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); el('#registerBtn').click(); }
 });
 el('#fightBtn').addEventListener('click',doFight);
 el('#undoBtn').addEventListener('click',undo);
@@ -2266,5 +2961,6 @@ applyI18n();
 loadTraits();
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
