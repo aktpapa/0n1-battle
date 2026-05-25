@@ -4,6 +4,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ctext y=&#39;26&#39; font-size=&#39;28&#39;%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
 :root{
@@ -903,7 +904,7 @@ header{text-align:center;margin-bottom:14px}
   </div>
 
   <!-- ランキング画面 -->
-  <div class="panel" id="ranking" style="display:none;max-width:680px">
+  <div class="panel" id="ranking" style="display:none;max-width:680px;margin:30px auto">
     <div class="rt" style="color:var(--gold);background:linear-gradient(135deg,#3a2400,#1a1003);">
       🏆 RANKING TOP 100
     </div>
@@ -1097,17 +1098,18 @@ var SFX = (function(){
   var voiceMp3 = {ready:null, fight:null, round_complete:null};
   var voiceMp3Available = {ready:false, fight:false, round_complete:false};
   function tryLoadVoice(key, path){
-    var a = new Audio(path);
-    a.preload = 'auto';
-    a.volume = 0.9;
-    a.addEventListener('canplaythrough', function(){
-      voiceMp3Available[key] = true;
-      console.log("[SFX] "+path+" 利用可能（mp3）");
-    }, {once:true});
-    a.addEventListener('error', function(){
-      console.log("[SFX] "+path+" 未配置（合成音で代替）");
-    });
-    voiceMp3[key] = a;
+    fetch(path, {method:'HEAD'}).then(function(r){
+      if(!r.ok) return; // 404はサイレント
+      var a = new Audio(path);
+      a.preload = 'auto';
+      a.volume = 0.9;
+      a.addEventListener('canplaythrough', function(){
+        voiceMp3Available[key] = true;
+        console.log("[SFX] "+path+" 利用可能（mp3）");
+      }, {once:true});
+      a.addEventListener('error', function(){});
+      voiceMp3[key] = a;
+    }).catch(function(){});
   }
   // 起動時に試行
   tryLoadVoice('ready', 'ready.mp3');
@@ -1119,17 +1121,26 @@ var SFX = (function(){
   var customSE = {};
   var customSEAvailable = {};
   function tryLoadSE(key, path){
-    var a = new Audio(path);
-    a.preload = 'auto';
-    a.volume = 0.7;
-    a.addEventListener('canplaythrough', function(){
-      customSEAvailable[key] = true;
-      console.log("[SFX] "+path+" 利用可能（mp3）");
-    }, {once:true});
-    a.addEventListener('error', function(){
-      console.log("[SFX] "+path+" 未配置（合成音で代替）");
+    // 事前にfetchで存在確認 → あればAudio生成、なければ何もしない（404を抑制）
+    fetch(path, {method:'HEAD'}).then(function(r){
+      if(!r.ok) {
+        // 404等はサイレントに無視（合成音で代替）
+        return;
+      }
+      var a = new Audio(path);
+      a.preload = 'auto';
+      a.volume = 0.7;
+      a.addEventListener('canplaythrough', function(){
+        customSEAvailable[key] = true;
+        console.log("[SFX] "+path+" 利用可能（mp3）");
+      }, {once:true});
+      a.addEventListener('error', function(){
+        // ロード失敗時もサイレント
+      });
+      customSE[key] = a;
+    }).catch(function(){
+      // fetchエラーもサイレント
     });
-    customSE[key] = a;
   }
   // タイトル/メニュー系
   tryLoadSE('start_game', 'se_start_game.mp3');
@@ -1726,24 +1737,29 @@ var BGM = (function(){
   // mp3を読み込み試行（プレイリスト用）
   function tryLoadMp3(key, path){
     return new Promise(function(resolve){
-      var a = new Audio(path);
-      a.preload = 'auto';
-      a.volume = 0;
-      var loaded = false;
-      a.addEventListener('canplaythrough', function(){
-        if(loaded) return;
-        loaded = true;
-        playlist[key].push(a);
-        console.log("[BGM] "+path+" 利用可能（"+key+"プレイリスト: "+playlist[key].length+"曲）");
-        resolve(true);
-      }, {once:true});
-      a.addEventListener('error', function(){
+      // 事前にfetchで存在確認
+      fetch(path, {method:'HEAD'}).then(function(r){
+        if(!r.ok){ resolve(false); return; }
+        var a = new Audio(path);
+        a.preload = 'auto';
+        a.volume = 0;
+        var loaded = false;
+        a.addEventListener('canplaythrough', function(){
+          if(loaded) return;
+          loaded = true;
+          playlist[key].push(a);
+          console.log("[BGM] "+path+" 利用可能（"+key+"プレイリスト: "+playlist[key].length+"曲）");
+          resolve(true);
+        }, {once:true});
+        a.addEventListener('error', function(){
+          resolve(false);
+        });
+        setTimeout(function(){
+          if(!loaded){ resolve(false); }
+        }, 5000);
+      }).catch(function(){
         resolve(false);
       });
-      // 5秒でタイムアウト
-      setTimeout(function(){
-        if(!loaded){ resolve(false); }
-      }, 5000);
     });
   }
 
@@ -3551,10 +3567,6 @@ function finish(){
   BGM.play('title');
 
   var win = G.me.hp>0;
-
-  // 勝敗SE
-  if(win) SFX.win();
-  else SFX.lose();
 
   setTimeout(function(){
     // 最終ログメッセージ（強調）
