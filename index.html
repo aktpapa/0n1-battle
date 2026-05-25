@@ -865,10 +865,9 @@ header{text-align:center;margin-bottom:14px}
         <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
         <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
       </div>
-      <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ -->
+      <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
       <div class="cmd-overlay" id="ctrlTop" style="display:none">
         <div class="cmd-overlay-buttons">
-          <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">Undo</button>
           <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
         </div>
       </div>
@@ -3021,7 +3020,7 @@ function resolvePair(meAct,enAct){
     updateBars(ctrChar, ctrSide);
     floatTxt(ctrSide, '-'+penalty, '#ff1f6d');
     addGauge(ctrChar, ctrSide, -2);
-    shakeCard(ctrSide);
+    shake(ctrSide,true);
     SFX.defend(); if(actual>0) SFX.heal();
     showFullFx('defend', 900);
     lines.push({h:T('log_counter_miss_defend',{ctr:tagOf(ctrSide),def:tagOf(defSide),hp:actual}), c:'sys'});
@@ -3045,7 +3044,7 @@ function resolvePair(meAct,enAct){
     updateBars(ctChar, ctS);
     floatTxt(ctS, '-'+penalty2, '#ff1f6d');
     addGauge(ctChar, ctS, -2);
-    shakeCard(ctS);
+    shake(ctS,true);
     lines.push({h:T('log_counter_miss_charge',{ct:tagOf(ctS),cg:tagOf(cgS)}), c:'sys'});
     return lines;
   }
@@ -3126,20 +3125,20 @@ function resolvePair(meAct,enAct){
       return lines;
     }
 
-    // 必殺 vs カウンター（120%返し: (STR + STY) * 1.2）
+    // v7: 必殺技 vs カウンター → 必殺技が貫通して大ダメージ（カウンター側不発）
     if(oppAct === 'counter'){
-      var coDmg = applyTypeMod(Math.ceil(4 + oppChar.st.style * 0.6), oppChar.type, spChar.type); // v7: STY連動 4+STY*0.6
+      var spDmg2 = applyTypeMod(Math.max(1, Math.ceil(20 + (spChar.st.strength + spChar.st.style) * 0.5 - oppChar.st.spirit)), spChar.type, oppChar.type);
       resetGauge(spChar, spS);
-      showFullFx('counter', 1000); SFX.counter();
-      dealDamage(spChar, spS, coDmg, {crit:true});
-      hitGauge(oppS);  // カウンター成功で+1
-      var adv = typeAdvLog(oppChar.type, spChar.type, oppS); if(adv) lines.push(adv);
-      lines.push({h:T('log_special_countered',{sp:tagOf(spS),co:tagOf(oppS),dmg:coDmg}), c:'clash'});
+      showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
+      dealDamage(oppChar, oppS, spDmg2, {crit:true});
+      var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
+      lines.push({h:T('log_special_first',{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg2}), c:spS==='me'?'me-a':'en-a'});
       return lines;
     }
   }
 
   // 未定義の組み合わせ（フォールバック）
+  console.warn('[戦闘] 未定義のペア: '+pair);
   lines.push({h:T('log_no_action'), c:'sys'});
   return lines;
 }
@@ -3263,11 +3262,23 @@ function doFight(){
   setTimeout(function(){
     if(G.over) return;
     var step=0;
+    var watchdog = null;
     (function next(){
       if(G.over)return;
       if(step>=3){endTurn();return;}
+      // ウォッチドッグ：万一の止まりに備える（4秒後に強制進行）
+      if(watchdog) clearTimeout(watchdog);
+      watchdog = setTimeout(function(){
+        console.error('[ウォッチドッグ] step='+step+' で4秒以上停止。強制進行します');
+        if(G.over) return;
+        step++;
+        if(G.me.hp<=0||G.en.hp<=0){setTimeout(finish,800);return;}
+        if(step>=3){endTurn();return;}
+        setTimeout(next, 100);
+      }, 4000);
       try {
         renderQueue(step);renderEnemyQueue(false,step);
+        console.log('[戦闘解決] step='+step+', '+G.meQueue[step]+' vs '+G.enQueue[step]);
         var result = resolvePair(G.meQueue[step],G.enQueue[step]);
         if(result && result.forEach){
           result.forEach(function(l){log(l.h,l.c);});
@@ -3276,9 +3287,10 @@ function doFight(){
         }
       } catch(e){
         console.error('[戦闘エラー]', e, 'step=', step, 'pair=', G.meQueue[step], 'vs', G.enQueue[step]);
-        log('⚠ 戦闘処理でエラー（continueします）', 'sys');
+        log('⚠ 戦闘処理でエラー: '+(e.message||e), 'sys');
       }
       step++;
+      if(watchdog){ clearTimeout(watchdog); watchdog = null; }
       if(G.me.hp<=0||G.en.hp<=0){setTimeout(finish,800);return;}
       setTimeout(next,1500);
     })();
@@ -3432,9 +3444,15 @@ function formatDateTimeJSTUTC(date){
 }
 
 function showRanking(){
+  // 全ての画面を非表示にしてからランキングを表示
+  el('#title').style.display = 'none';
+  el('#start').style.display = 'none';
+  el('#howto').style.display = 'none';
+  el('#battle').style.display = 'none';
   el('#result').style.display = 'none';
   var r = el('#ranking');
   r.style.display = 'block';
+  updateGlobalTitleBtn();
   var status = el('#rankingStatus');
   var listEl = el('#rankingList');
   status.textContent = T('ranking_loading');
@@ -3845,7 +3863,9 @@ el('#playerName').addEventListener('keydown', function(e){
 });
 el('#fightBtn').addEventListener('click',doFight);
 el('#undoBtn').addEventListener('click',undo);
-el('#undoBtnTop').addEventListener('click',undo);
+// undoBtnTopは削除済み（下のundoBtnのみ使用）
+var ubt = el('#undoBtnTop');
+if(ubt) ubt.addEventListener('click',undo);
 document.querySelectorAll('.cmd').forEach(function(b){
   b.addEventListener('click',function(){pickCmd(b.dataset.act);});});
 
