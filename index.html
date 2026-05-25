@@ -50,6 +50,31 @@ header{text-align:center;margin-bottom:14px}
 .lang-btn:hover{border-color:var(--cyan);color:var(--cyan)}
 .lang-btn.active{background:linear-gradient(95deg,var(--cyan),var(--gold));color:#04030c;border-color:transparent}
 
+/* ホームボタン（左上）*/
+.home-btn{position:fixed;top:14px;left:14px;z-index:100;
+  font-size:16px;background:rgba(20,10,30,.85);color:var(--ink);
+  border:1px solid var(--violet);border-radius:8px;
+  width:44px;height:44px;cursor:pointer;transition:all .15s;
+  backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center}
+.home-btn:hover{border-color:var(--gold);color:var(--gold);transform:scale(1.05)}
+/* 右下のコントロールスタック（🔊と言語切替を縦並び）*/
+.ctrl-stack{position:fixed;bottom:18px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:100}
+.ctrl-btn{font-family:'Chakra Petch';font-size:13px;font-weight:700;letter-spacing:.1em;
+  background:rgba(20,10,30,.85);color:var(--ink);
+  border:1px solid var(--violet);border-radius:8px;
+  width:44px;height:44px;cursor:pointer;transition:all .15s;
+  backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center}
+.ctrl-btn:hover{border-color:var(--cyan);color:var(--cyan);transform:scale(1.05)}
+.ctrl-btn.lang-toggle{font-size:11px}
+@media(max-width:480px){
+  .home-btn{font-size:14px;width:38px;height:38px;top:10px;left:10px}
+  .ctrl-stack{bottom:12px;right:12px;gap:6px}
+  .ctrl-btn{width:38px;height:38px;font-size:12px}
+  .ctrl-btn.lang-toggle{font-size:10px}
+}
+
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;
   backdrop-filter:blur(7px);box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 20px 50px -28px rgba(155,60,255,.6)}
 
@@ -170,7 +195,7 @@ header{text-align:center;margin-bottom:14px}
   filter:blur(6px)}
 
 /* ===== 敵：奥のコーナー（右寄せ・自分より少し小さい） ===== */
-.corner.en{position:absolute;top:6%;left:72%;transform:translateX(-50%) scale(.78);z-index:6;
+.corner.en{position:absolute;top:6%;left:80%;transform:translateX(-50%) scale(.78);z-index:6;
   filter:drop-shadow(0 0 22px rgba(255,31,109,.6))}
 /* ===== 自分：左下（HPバーと被らない位置） ===== */
 .corner.me{position:absolute;bottom:13%;left:28%;transform:translateX(-50%);z-index:7;
@@ -276,23 +301,46 @@ header{text-align:center;margin-bottom:14px}
 .qslot.reveal{border-color:var(--pink);background:rgba(255,31,109,.12);color:var(--ink)}
 .qslot.active{transform:scale(1.18);box-shadow:0 0 22px var(--gold);border-color:var(--gold) !important;z-index:2}
 
-.commands{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:11px}
-@media(max-width:620px){.commands{grid-template-columns:repeat(3,1fr)}}
+.commands{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:11px}
+@media(max-width:620px){
+  .commands{gap:4px}
+  .cmd{padding:6px 2px !important;font-size:11px !important}
+  .cmd .ic{font-size:14px !important}
+  .cmd .sm{font-size:7px !important;line-height:1.1 !important}
+}
+@media(max-width:420px){
+  .cmd{padding:4px 1px !important;font-size:10px !important}
+  .cmd .ic{font-size:12px !important}
+  .cmd .sm{font-size:6.5px !important}
+}
 .cmd{font-family:'Chakra Petch';font-weight:700;font-size:12px;padding:13px 5px;border-radius:11px;
   cursor:pointer;background:rgba(18,8,38,.85);border:1px solid var(--line);color:var(--ink);
   transition:.15s;text-align:center;letter-spacing:.03em}
 .cmd .ic{display:block;font-size:19px;margin-bottom:3px}
 .cmd .sm{display:block;font-size:8px;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.3}
 .cmd:hover:not(:disabled){border-color:var(--cyan);transform:translateY(-2px);color:var(--cyan)}
-.cmd.counter{border-color:var(--violet)}.cmd.counter:hover:not(:disabled){color:var(--violet)}
+/* v8: コマンドエリアにFIGHT/取消を重ねる */
+.commands-wrap{position:relative;margin-bottom:11px}
+.cmd-overlay{position:absolute;inset:0;
+  background:rgba(10,5,20,0.7);backdrop-filter:blur(2px);
+  border-radius:10px;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  animation:overlayFadeIn 0.25s ease-out}
+.cmd-overlay-buttons{display:flex;gap:14px;align-items:center;
+  animation:popIn 0.3s ease-out}
+.cmd-overlay-buttons .btn{font-size:15px;padding:10px 28px;letter-spacing:.08em}
+.cmd-overlay-buttons .btn:not(.ghost){box-shadow:0 0 30px rgba(255,200,58,.5),0 0 60px rgba(255,31,109,.4)}
+@media(max-width:480px){
+  .cmd-overlay-buttons .btn{font-size:13px;padding:8px 18px}
+}
+/* v8: カウンターの紫枠を削除（他のコマンドと同じ見た目に） */
 .cmd.sp{border-color:var(--gold)}.cmd.sp:hover:not(:disabled){color:var(--gold)}
 .cmd.sp.ready{animation:rg 1s infinite;border-color:var(--gold)}
 .cmd:disabled{opacity:.3;cursor:not-allowed}
 
 .ctrlrow{display:flex;gap:10px;justify-content:center;margin-bottom:13px}
 /* コマンドの上に出るFIGHT/取消ボタン（3つ揃った時だけ表示） */
-.ctrlrow-top{margin:8px 0 14px;animation:popIn .3s ease-out}
-.ctrlrow-top .btn{font-size:15px;padding:10px 28px;letter-spacing:.08em}
+/* 古い ctrlrow-top は cmd-overlay に置き換え済み */
 @keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
 .log{padding:12px 15px;height:160px;overflow-y:auto;font-size:12px;line-height:1.85;scrollbar-width:thin}
 .log-title-after{font-family:'Zen Dots';font-size:11px;letter-spacing:.25em;color:var(--muted);
@@ -348,15 +396,19 @@ header{text-align:center;margin-bottom:14px}
   visibility:visible;
 }
 #title.powering-on .title-sub{
-  animation:fadeInDelayed 1.5s ease-out 1.8s forwards,
+  animation:fadeInOnly 1.5s ease-out 1.8s forwards,
             titlePulse 2.5s ease-in-out 3.3s infinite;
   opacity:0;
 }
 #title.powering-on .title-tag,
 #title.powering-on .title-buttons,
 #title.powering-on .title-credit{
-  animation:fadeInDelayed 1.2s ease-out 2.3s forwards;
+  animation:fadeInOnly 1.2s ease-out 2.3s forwards;
   opacity:0;
+}
+@keyframes fadeInOnly{
+  from{opacity:0}
+  to{opacity:1}
 }
 
 @keyframes neonPowerOn{
@@ -606,6 +658,37 @@ header{text-align:center;margin-bottom:14px}
 .win{color:var(--cyan);text-shadow:0 0 28px rgba(34,230,224,.5)}
 .lose{color:var(--pink);text-shadow:0 0 28px rgba(255,31,109,.5)}
 #result p{color:var(--muted);margin-bottom:22px;font-size:13px}
+/* ===== スマホ専用調整 ===== */
+@media(max-width:480px){
+  /* タイトル画面 */
+  #title{padding:35px 20px;margin:30px auto}
+  .title-main{font-size:42px !important}
+  .title-sub{font-size:20px !important}
+  .title-tag{font-size:11px !important;letter-spacing:.2em}
+  .title-buttons{max-width:240px;gap:10px}
+  .title-btn{font-size:14px !important;padding:11px 18px !important}
+  .title-credit{font-size:9px}
+  .click-to-play{font-size:14px !important;padding:11px 24px !important}
+
+  /* リング全体（バトル画面のレイアウトはvw基準で自動調整される） */
+  /* カードの位置を画面幅に合わせて広げる */
+  .corner.en{left:82% !important}
+  .corner.me{left:25% !important}
+
+  /* HPバー */
+  .bars.top{top:6px;left:18%;right:18%}
+  .bars.bot{bottom:6px;padding:0 10px}
+  .nameline{font-size:11px}
+  .hptxt{font-size:8px}
+
+  /* リングキューラベル */
+  .ring-queue.me .ring-qlabel{font-size:11px}
+  .ring-qslot{width:36px;height:38px}
+  .ring-qslot .ic{font-size:11px}
+
+  /* FIGHTオーバーレイのボタン（スマホ） */
+  .cmd-overlay-buttons .btn{font-size:13px;padding:8px 18px}
+}
 </style>
 <!-- Firebase (ESM) -->
 <script type="module">
@@ -639,11 +722,12 @@ header{text-align:center;margin-bottom:14px}
 <div class="scan"></div>
 
 <div class="wrap">
-  <div class="lang-switch">
-    <button class="lang-btn" id="globalTitleBtn" title="Return to Title" style="font-size:11px;display:none">🏠</button>
-    <button class="lang-btn active" id="bgmToggle" title="BGM ON/OFF" style="font-size:13px">🔊</button>
-    <button class="lang-btn" data-lang="ja">日本語</button>
-    <button class="lang-btn active" data-lang="en">EN</button>
+  <!-- 左上：ホームボタン -->
+  <button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
+  <!-- 右下：BGM/言語切替（縦並び） -->
+  <div class="ctrl-stack">
+    <button class="ctrl-btn" id="bgmToggle" title="BGM ON/OFF">🔊</button>
+    <button class="ctrl-btn lang-toggle" id="langToggle">EN</button>
   </div>
 
   <header>
@@ -678,7 +762,6 @@ header{text-align:center;margin-bottom:14px}
   </div>
 
   <div class="panel" id="start" style="display:none">
-    <button class="btn ghost back-to-title" id="startBackBtn" data-i18n="btn_back_title">← タイトル</button>
     <h2 data-i18n="summon_title">ファイターを召喚</h2>
     <p data-i18n="summon_desc"></p>
     <div class="irow">
@@ -773,18 +856,22 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
 
-    <!-- 3つ揃った時だけ表示するFIGHT/取消ボタン領域（コマンドの上） -->
-    <div class="ctrlrow ctrlrow-top" id="ctrlTop" style="display:none">
-      <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">取消</button>
-      <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
-    </div>
-
-    <div class="commands">
-      <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
-      <button class="cmd counter" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
-      <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
-      <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
-      <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
+    <!-- コマンドエリア（FIGHT/取消ボタンが上に重なる） -->
+    <div class="commands-wrap">
+      <div class="commands" id="commandsArea">
+        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
+        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
+        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
+        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
+      </div>
+      <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ -->
+      <div class="cmd-overlay" id="ctrlTop" style="display:none">
+        <div class="cmd-overlay-buttons">
+          <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">取消</button>
+          <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
+        </div>
+      </div>
     </div>
 
     <!-- 下は取消だけ -->
@@ -980,6 +1067,7 @@ function deriveStats(id){
       if(t._base) result._base = t._base;
       if(t._bonus_int) result._bonus_int = t._bonus_int;
       if(t._bonus_dec) result._bonus_dec = t._bonus_dec;
+      if(t._raw) result._raw = t._raw;
       return result;
     }
   }
@@ -2450,37 +2538,28 @@ function buildCard(side){
 
   // base値・整数ボーナス・小数ボーナスの三層表示
   // 例: 「4 (+3.08)」= base 4, +3点数化, +0.08ハッシュ
-  function statCell(cls, label, baseVal, intBonus, decBonus){
-    var baseStr = String(baseVal);
-    var bonusParts = [];
-    // 整数ボーナス
-    if(intBonus > 0)      bonusParts.push('+' + intBonus);
-    else if(intBonus < 0) bonusParts.push(String(intBonus));
-    // 小数ボーナス（常に表示、特徴的な数字なので）
-    if(decBonus > 0){
-      var fracVal = Math.round(decBonus * 100);
-      var fracStr = '.' + (fracVal<10?'0':'') + fracVal;
-      if(bonusParts.length === 0) bonusParts.push('+0' + fracStr);
-      else bonusParts[bonusParts.length-1] += fracStr;
-    }
-    var bonusHtml = '';
-    if(bonusParts.length > 0){
-      bonusHtml = ' <span class="b">(' + bonusParts.join('') + ')</span>';
-    }
+  function statCell(cls, label, rawVal, baseVal, intBonus){
+    // 左：元のCSV値、右：((フラット化補正) + (パーツバフ))
+    var leftStr = String(rawVal);
+    var extra = (baseVal - rawVal) + intBonus;
+    var bonusStr = '';
+    if(extra > 0)      bonusStr = ' <span class="b">(+' + extra + ')</span>';
+    else if(extra < 0) bonusStr = ' <span class="b">(' + extra + ')</span>';
+    // ボーナス0でも表示しない（綺麗に見せる）
     return '<div class="st '+cls+'"><div class="l">'+label+'</div>'+
-           '<div class="v">'+baseStr+bonusHtml+'</div></div>';
+           '<div class="v">'+leftStr+bonusStr+'</div></div>';
   }
+  var rawSt = f.st._raw || {spirit:Math.floor(f.st.spirit), strength:Math.floor(f.st.strength), style:Math.floor(f.st.style)};
   var base = f.st._base || {spirit:Math.floor(f.st.spirit), strength:Math.floor(f.st.strength), style:Math.floor(f.st.style)};
   var bInt = f.st._bonus_int || {spirit:0, strength:0, style:0};
-  var bDec = f.st._bonus_dec || {spirit:0, strength:0, style:0};
 
   c.innerHTML='<div class="tcg-head"><span class="nm">'+realBadge+'0N1 #'+f.id+'</span>'+
     '<span class="tcg-type" style="color:'+col+'">'+f.type+'</span></div>'+
     '<div class="tcg-art" id="'+side+'Art"><div class="tcg-fx" id="'+side+'Fx"></div></div>'+
     '<div class="tcg-stats">'+
-    statCell('sp',  'Spirit',   base.spirit,   bInt.spirit,   bDec.spirit) +
-    statCell('str', 'Strength', base.strength, bInt.strength, bDec.strength) +
-    statCell('sty', 'Style',    base.style,    bInt.style,    bDec.style) +
+    statCell('sp',  'Spirit',   rawSt.spirit,   base.spirit,   bInt.spirit) +
+    statCell('str', 'Strength', rawSt.strength, base.strength, bInt.strength) +
+    statCell('sty', 'Style',    rawSt.style,    base.style,    bInt.style) +
     '</div>'+
     '<div class="tcg-foot">'+f.type+' · '+f.special.kind+'</div>';
   loadPortrait(el('#'+side+'Art'),f.id,f.st);
@@ -2524,10 +2603,10 @@ function specialPower(att){return Math.max(1,Math.round(att.maxhp*att.special.ra
 // ===================== 敵AI（4Type仕様・v4バランス）=====================
 function enemyPlan(){
   var en=G.en, me=G.me, plan=[];
-  var predGauge = en.gauge; // 予測ゲージ
+  var predGauge = en.gauge; // 予測ゲージ（厳密：必殺技の-だけ確定、ためるは不確実なので予測しない）
   for(var i=0;i<3;i++){
     var s=en.st;
-    // ゲージMAXなら90%の確率で必殺技
+    // 厳密な必殺技判定：現在の予測ゲージがMAX以上の時のみ
     if(predGauge >= GAUGE_MAX && Math.random() < 0.9){
       plan.push('special');
       predGauge = 0;
@@ -2540,9 +2619,9 @@ function enemyPlan(){
     if(s.spirit >= 7) w.defend += 0.6;
     // HP少ない時は守り寄り
     if(en.hp/en.maxhp < 0.35){ w.defend += 0.8; w.attack *= 0.7; }
-    // ゲージ高い時はためるを減らす（既にためる必要が少ない）
-    if(predGauge >= 7) w.charge *= 0.3;
-    else if(predGauge >= 4) w.charge *= 0.6;
+    // ゲージ高い時はためるを減らす
+    if(predGauge >= GAUGE_MAX - 2) w.charge *= 0.3;
+    else if(predGauge >= Math.floor(GAUGE_MAX*0.5)) w.charge *= 0.6;
     var tot=w.attack+w.defend+w.charge+w.counter, pk=Math.random()*tot;
     var chosen;
     if((pk-=w.attack)<0) chosen='attack';
@@ -2550,7 +2629,8 @@ function enemyPlan(){
     else if((pk-=w.charge)<0) chosen='charge';
     else chosen='counter';
     plan.push(chosen);
-    if(chosen === 'charge') predGauge = Math.min(GAUGE_MAX, predGauge + 3);
+    // ためる成功は不確実なので予測ゲージに加算しない（v7修正）
+    // → これによって「ためる→必殺技」を1ラウンド内で連続選択できなくなる
   }
   return plan;
 }
@@ -3075,18 +3155,25 @@ function doFight(){
   renderEnemyQueue(false,-1);
   log(T('turn_label',{n:G.turn}),'sys');
 
-  // ===== Ready → Fight! アナウンス（ボイス調SFX）=====
-  // Ready（金色、1秒）
-  showAnnounce('READY', 'ready', 1000);
-  SFX.readyVoice(); // ボイス調Ready
-  // 1秒後 → Fight!（ピンク、フラッシュ付き）
-  setTimeout(function(){
-    if(G.over) return;
+  // ===== Ready → Fight! アナウンス（1ラウンド目のみREADY）=====
+  if(G.turn === 1){
+    // 1ラウンド目：Ready → Fight
+    showAnnounce('READY', 'ready', 1000);
+    SFX.readyVoice();
+    setTimeout(function(){
+      if(G.over) return;
+      showAnnounce('FIGHT！', 'fight', 1000);
+      SFX.fightVoice();
+    }, 900);
+  } else {
+    // 2ラウンド目以降：FIGHTのみ（READYスキップ）
     showAnnounce('FIGHT！', 'fight', 1000);
-    SFX.fightVoice(); // ボイス調Fight
-  }, 900);
+    SFX.fightVoice();
+  }
 
-  // 戦闘解決はアナウンス完了後に開始（1.7秒待つ）
+  // 戦闘解決はアナウンス完了後に開始
+  // 1ラウンド目は1.7秒、2ラウンド目以降は1秒待つ
+  var waitMs = (G.turn === 1) ? 1700 : 1000;
   setTimeout(function(){
     if(G.over) return;
     var step=0;
@@ -3099,7 +3186,7 @@ function doFight(){
       if(G.me.hp<=0||G.en.hp<=0){setTimeout(finish,800);return;}
       setTimeout(next,1500);
     })();
-  }, 1700);
+  }, waitMs);
 }
 function endTurn(){
   if(G.over)return;
@@ -3346,7 +3433,8 @@ function finish(){
   setCmd(false);
   el('#fightBtn').disabled=true;
   el('#undoBtn').disabled=true;
-  BGM.stop();
+  // 戦闘終了 → タイトルBGMに切り替え（リザルト画面で流れ続ける）
+  BGM.play('title');
 
   var win = G.me.hp>0;
 
@@ -3460,7 +3548,7 @@ function updateGlobalTitleBtn(){
   if(!btn) return;
   // タイトル画面でなければ表示
   var inTitle = el('#title') && el('#title').style.display !== 'none';
-  btn.style.display = inTitle ? 'none' : '';
+  btn.style.display = inTitle ? 'none' : 'flex';
 }
 // タイトル電源の初期化済みフラグ（一度ONにしたら以降は普通の表示）
 var titlePoweredOn = false;
@@ -3604,7 +3692,9 @@ el('#howBackBtn').addEventListener('click', function(){
   SFX.click();
   showTitle();
 });
-el('#startBackBtn').addEventListener('click', function(){
+// startBackBtnは削除済み（ホームボタン左上で代替）
+var sbb = el('#startBackBtn');
+if(sbb) sbb.addEventListener('click', function(){
   SFX.click();
   showTitle();
 });
@@ -3654,15 +3744,22 @@ el('#undoBtnTop').addEventListener('click',undo);
 document.querySelectorAll('.cmd').forEach(function(b){
   b.addEventListener('click',function(){pickCmd(b.dataset.act);});});
 
-// 言語切替（data-langを持つボタンのみ）
-document.querySelectorAll('.lang-btn[data-lang]').forEach(function(b){
-  b.addEventListener('click', function(){
-    LANG = b.dataset.lang;
-    document.querySelectorAll('.lang-btn[data-lang]').forEach(function(x){x.classList.toggle('active', x.dataset.lang===LANG);});
-    SFX.click();
-    applyI18n();
-  });
+// 言語切替（1個のトグルボタン）
+function updateLangToggleText(){
+  var btn = el('#langToggle');
+  if(btn){
+    // 現在の言語と逆を表示（押すと切り替わる先）
+    btn.textContent = (LANG === 'en') ? 'JP' : 'EN';
+    btn.title = (LANG === 'en') ? 'Switch to Japanese' : 'Switch to English';
+  }
+}
+el('#langToggle').addEventListener('click', function(){
+  LANG = (LANG === 'en') ? 'ja' : 'en';
+  updateLangToggleText();
+  SFX.click();
+  applyI18n();
 });
+updateLangToggleText();
 
 // BGM ON/OFFトグル
 el('#bgmToggle').addEventListener('click', function(){
