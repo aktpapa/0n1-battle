@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_9.html -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
 <style>
@@ -727,7 +727,7 @@ header{text-align:center;margin-bottom:14px}
   <!-- 右下：BGM/言語切替（縦並び） -->
   <div class="ctrl-stack">
     <button class="ctrl-btn" id="bgmToggle" title="BGM ON/OFF">🔊</button>
-    <button class="ctrl-btn lang-toggle" id="langToggle">EN</button>
+    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to Japanese">JP</button>
   </div>
 
   <header>
@@ -736,9 +736,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel" id="title">
+  <div class="panel power-off" id="title" style="display: block;">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay">
+    <div class="click-overlay" id="clickOverlay" style="display: flex;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -747,32 +747,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
     <div class="title-buttons">
-      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">ゲーム開始</button>
-      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">ランキング</button>
-      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">遊び方</button>
+      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
+      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
+      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
   <!-- ===== 遊び方画面 ===== -->
   <div class="panel" id="howto" style="display:none">
-    <h2 data-i18n="how_title">遊び方</h2>
+    <h2 data-i18n="how_title">How to Play</h2>
     <div class="howto-body" id="howtoBody"></div>
-    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← タイトルに戻る</button>
+    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
-    <h2 data-i18n="summon_title">ファイターを召喚</h2>
-    <p data-i18n="summon_desc"></p>
+    <h2 data-i18n="summon_title">Summon Your Fighter</h2>
+    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style determine your stats, <b>Background</b> determines type matchups.</p>
     <div class="irow">
-      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
-      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
     </div>
-    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
-    <div class="hint" data-i18n="hint"></div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
+    <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
   </div>
 
-  <div id="battle">
+  <div id="battle" style="display: none;">
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
       <div class="stand l"></div><div class="stand r"></div>
@@ -797,32 +797,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="ropes">
         <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <!-- 奥ロープ（左ポスト→右ポスト 横3本）-->
-          <line class="rope-line pink"   x1="184" y1="460" x2="816" y2="460" stroke-width="3"/>
-          <line class="rope-line gold"   x1="184" y1="510" x2="816" y2="510" stroke-width="3"/>
-          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"/>
+          <line class="rope-line pink" x1="184" y1="460" x2="816" y2="460" stroke-width="3"></line>
+          <line class="rope-line gold" x1="184" y1="510" x2="816" y2="510" stroke-width="3"></line>
+          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"></line>
           <!-- 手前ロープ（左手前→右手前 横3本）-->
-          <line class="rope-line pink"   x1="50"  y1="720" x2="950" y2="720" stroke-width="5"/>
-          <line class="rope-line gold"   x1="50"  y1="820" x2="950" y2="820" stroke-width="5"/>
-          <line class="rope-line violet" x1="50"  y1="920" x2="950" y2="920" stroke-width="5"/>
+          <line class="rope-line pink" x1="50" y1="720" x2="950" y2="720" stroke-width="5"></line>
+          <line class="rope-line gold" x1="50" y1="820" x2="950" y2="820" stroke-width="5"></line>
+          <line class="rope-line violet" x1="50" y1="920" x2="950" y2="920" stroke-width="5"></line>
           <!-- 左サイドロープ（奥左→手前左 斜め3本）-->
-          <line class="rope-line pink"   x1="184" y1="460" x2="50"  y2="720" stroke-width="3"/>
-          <line class="rope-line gold"   x1="184" y1="510" x2="50"  y2="820" stroke-width="3"/>
-          <line class="rope-line violet" x1="184" y1="560" x2="50"  y2="920" stroke-width="3"/>
+          <line class="rope-line pink" x1="184" y1="460" x2="50" y2="720" stroke-width="3"></line>
+          <line class="rope-line gold" x1="184" y1="510" x2="50" y2="820" stroke-width="3"></line>
+          <line class="rope-line violet" x1="184" y1="560" x2="50" y2="920" stroke-width="3"></line>
           <!-- 右サイドロープ（奥右→手前右 斜め3本）-->
-          <line class="rope-line pink"   x1="816" y1="460" x2="950" y2="720" stroke-width="3"/>
-          <line class="rope-line gold"   x1="816" y1="510" x2="950" y2="820" stroke-width="3"/>
-          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"/>
+          <line class="rope-line pink" x1="816" y1="460" x2="950" y2="720" stroke-width="3"></line>
+          <line class="rope-line gold" x1="816" y1="510" x2="950" y2="820" stroke-width="3"></line>
+          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"></line>
         </svg>
       </div>
       <div class="fog"></div>
 
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
-        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY CMD</div>
+        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
         <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
-        <div class="ring-qlabel" data-i18n="your_cmd">YOUR CMD</div>
+        <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
         <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
@@ -854,21 +854,21 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
+    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
 
     <!-- コマンドエリア（FIGHT/取消ボタンが上に重なる） -->
     <div class="commands-wrap">
       <div class="commands" id="commandsArea">
-        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
-        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
-        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
-        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
+        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
+        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
+        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
+        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ -->
       <div class="cmd-overlay" id="ctrlTop" style="display:none">
         <div class="cmd-overlay-buttons">
-          <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">取消</button>
+          <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">Undo</button>
           <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
         </div>
       </div>
@@ -876,30 +876,29 @@ header{text-align:center;margin-bottom:14px}
 
     <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
 
-  <div class="panel" id="result">
+  <div class="panel" id="result" style="display: none;">
     <div class="rt" id="rTitle">VICTORY</div>
     <p id="rDesc"></p>
     <!-- スコア表示 -->
     <div id="scorePanel" class="scorebox">
-      <div class="scoretitle" data-i18n="score_label">スコア</div>
+      <div class="scoretitle" data-i18n="score_label">SCORE</div>
       <div class="scoreval" id="scoreVal">0</div>
       <div class="scorebreakdown" id="scoreBreakdown"></div>
     </div>
     <!-- 名前入力＆登録 -->
     <div id="regForm" class="regbox">
-      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）"
-        style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
-        border-radius:8px;color:var(--ink);font-family:'Chakra Petch';font-size:14px;margin-bottom:10px">
+      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
+        border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
-        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
-        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
-        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← タイトル</button>
+        <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
+        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
       </div>
     </div>
   </div>
@@ -913,8 +912,8 @@ header{text-align:center;margin-bottom:14px}
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
-      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
-      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← タイトル</button>
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
+      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
     </div>
   </div>
 </div>
@@ -1116,6 +1115,72 @@ var SFX = (function(){
   tryLoadVoice('fight', 'fight.mp3');
   tryLoadVoice('round_complete', 'round_complete.mp3');
 
+  // ===== 追加SE管理（UIボタンSE）=====
+  // se_*.mp3ファイルを読み込んで、ボタン押下時に再生する
+  var customSE = {};
+  var customSEAvailable = {};
+  function tryLoadSE(key, path){
+    var a = new Audio(path);
+    a.preload = 'auto';
+    a.volume = 0.7;
+    a.addEventListener('canplaythrough', function(){
+      customSEAvailable[key] = true;
+      console.log("[SFX] "+path+" 利用可能（mp3）");
+    }, {once:true});
+    a.addEventListener('error', function(){
+      console.log("[SFX] "+path+" 未配置（合成音で代替）");
+    });
+    customSE[key] = a;
+  }
+  // タイトル/メニュー系
+  tryLoadSE('start_game', 'se_start_game.mp3');
+  tryLoadSE('ranking_btn', 'se_ranking_btn.mp3');
+  tryLoadSE('howto_btn', 'se_howto_btn.mp3');
+  // キャラ選択系
+  tryLoadSE('summon', 'se_summon.mp3');
+  tryLoadSE('random', 'se_random.mp3');
+  // コマンド選択共通
+  tryLoadSE('cmd_select', 'se_cmd_select.mp3');
+  // 戦闘アクション（個別の音）
+  tryLoadSE('attack', 'se_attack.mp3');
+  tryLoadSE('counter', 'se_counter.mp3');
+  tryLoadSE('defend', 'se_defend.mp3');
+  tryLoadSE('charge', 'se_charge.mp3');
+  // 必殺技4種（ランダム選択）
+  tryLoadSE('special_1', 'se_special_1.mp3');
+  tryLoadSE('special_2', 'se_special_2.mp3');
+  tryLoadSE('special_3', 'se_special_3.mp3');
+  tryLoadSE('special_4', 'se_special_4.mp3');
+  // リザルト
+  tryLoadSE('win', 'se_win.mp3');
+  tryLoadSE('lose', 'se_lose.mp3');
+  // リザルト後ボタン
+  tryLoadSE('register', 'se_register.mp3');
+  tryLoadSE('view_ranking', 'se_view_ranking.mp3');
+  tryLoadSE('rematch', 'se_rematch.mp3');
+  tryLoadSE('back_title', 'se_back_title.mp3');
+
+  function playCustomSE(key){
+    var a = customSE[key];
+    if(!a || !customSEAvailable[key]) return false;
+    try {
+      a.currentTime = 0;
+      var p = a.play();
+      if(p && p.catch) p.catch(function(){});
+      return true;
+    } catch(e){ return false; }
+  }
+  // 必殺技は1～4からランダム
+  function playSpecialSE(){
+    var pool = [];
+    for(var i=1;i<=4;i++){
+      if(customSEAvailable['special_'+i]) pool.push('special_'+i);
+    }
+    if(pool.length === 0) return false;
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    return playCustomSE(pick);
+  }
+
   function playVoiceMp3(key){
     var a = voiceMp3[key];
     if(!a || !voiceMp3Available[key]) return false;
@@ -1215,6 +1280,8 @@ var SFX = (function(){
     setVolume: function(v){ MASTER_VOLUME=v; if(master) master.gain.value=v; },
 
     attack: function(){
+      // MP3優先：あればMP3だけ、なければ合成音
+      if(playCustomSE('attack')) return;
       init();
       var t = ctx.currentTime;
       var out = bus(0.15);
@@ -1233,6 +1300,7 @@ var SFX = (function(){
     },
 
     counter: function(){
+      if(playCustomSE('counter')) return;
       init();
       var t = ctx.currentTime;
       var out = bus(0.35);
@@ -1248,6 +1316,7 @@ var SFX = (function(){
     },
 
     defend: function(){
+      if(playCustomSE('defend')) return;
       init();
       var t = ctx.currentTime;
       var out = bus(0.5);
@@ -1260,6 +1329,7 @@ var SFX = (function(){
     },
 
     charge: function(){
+      if(playCustomSE('charge')) return;
       init();
       var t = ctx.currentTime;
       var out = bus(0.4);
@@ -1276,6 +1346,8 @@ var SFX = (function(){
     },
 
     special: function(){
+      // 必殺技は4種からランダム
+      if(playSpecialSE()) return;
       init();
       var t = ctx.currentTime;
       var out = bus(0.6);
@@ -1338,6 +1410,20 @@ var SFX = (function(){
       osc(t, .03, 800, 1200, .15, 'square', out, .001);
       noiseBurst(t, .02, .1, 'highpass', 3000, 2, out);
     },
+
+    // ====== UIボタン用SE（MP3優先、無ければclick合成音）======
+    startGame: function(){ if(!playCustomSE('start_game')) this.click(); },
+    rankingBtn: function(){ if(!playCustomSE('ranking_btn')) this.click(); },
+    howtoBtn: function(){ if(!playCustomSE('howto_btn')) this.click(); },
+    summon: function(){ if(!playCustomSE('summon')) this.click(); },
+    random: function(){ if(!playCustomSE('random')) this.click(); },
+    cmdSelect: function(){ if(!playCustomSE('cmd_select')) this.click(); },
+    win: function(){ playCustomSE('win'); },
+    lose: function(){ playCustomSE('lose'); },
+    register: function(){ if(!playCustomSE('register')) this.click(); },
+    viewRanking: function(){ if(!playCustomSE('view_ranking')) this.click(); },
+    rematch: function(){ if(!playCustomSE('rematch')) this.click(); },
+    backTitle: function(){ if(!playCustomSE('back_title')) this.click(); },
 
     fight: function(){
       init();
@@ -3109,7 +3195,7 @@ function pickCmd(act){if(G.phase!=='select'||G.meQueue.length>=3)return;
     return;
   }
   console.log('[pickCmd] 選択: '+act+' (queue長 '+G.meQueue.length+' -> '+(G.meQueue.length+1)+', 予測ゲージ '+predictedGauge()+')');
-  SFX.click();
+  SFX.cmdSelect();
   G.meQueue.push(act);renderQueue();
   if(G.meQueue.length>=3){
     el('#fightBtn').disabled=false;
@@ -3438,6 +3524,10 @@ function finish(){
 
   var win = G.me.hp>0;
 
+  // 勝敗SE
+  if(win) SFX.win();
+  else SFX.lose();
+
   setTimeout(function(){
     // 最終ログメッセージ（強調）
     log('━━━━━━━━━━━━━━', 'sys');
@@ -3521,12 +3611,17 @@ el('#summonBtn').addEventListener('click',function(){
   SFX.init();
   var v=parseInt(el('#tokenId').value,10);
   if(!v||v<1||v>7777){el('#tokenId').focus();el('#tokenId').style.borderColor='var(--pink)';return;}
+  SFX.summon();
   BGM.play('battle');
   startBattle(v);});
 el('#tokenId').addEventListener('keydown',function(e){if(e.key==='Enter')el('#summonBtn').click();});
-el('#randBtn').addEventListener('click',function(){SFX.init();BGM.play('battle');startBattle(1+Math.floor(Math.random()*7777));});
+el('#randBtn').addEventListener('click',function(){
+  SFX.init(); SFX.random();
+  BGM.play('battle');
+  startBattle(1+Math.floor(Math.random()*7777));
+});
 el('#againBtn').addEventListener('click',function(){
-  SFX.init();SFX.click();
+  SFX.init();SFX.rematch();
   // 移動した戦闘ログを元の位置に戻す
   var logEl = el('#log');
   if(logEl){
@@ -3677,15 +3772,15 @@ el('#globalTitleBtn').addEventListener('click', function(){
 });
 
 el('#titleStartBtn').addEventListener('click', function(){
-  SFX.init(); SFX.click();
+  SFX.init(); SFX.startGame();
   showStart();
 });
 el('#titleRankingBtn').addEventListener('click', function(){
-  SFX.init(); SFX.click();
+  SFX.init(); SFX.rankingBtn();
   showRanking();
 });
 el('#titleHowBtn').addEventListener('click', function(){
-  SFX.init(); SFX.click();
+  SFX.init(); SFX.howtoBtn();
   showHowto();
 });
 el('#howBackBtn').addEventListener('click', function(){
@@ -3699,7 +3794,7 @@ if(sbb) sbb.addEventListener('click', function(){
   showTitle();
 });
 el('#resultTitleBtn').addEventListener('click', function(){
-  SFX.click();
+  SFX.backTitle();
   // 移動した戦闘ログを元の位置に戻す
   var logEl = el('#log');
   if(logEl){
@@ -3713,15 +3808,15 @@ el('#resultTitleBtn').addEventListener('click', function(){
   showTitle();
 });
 el('#rankingTitleBtn').addEventListener('click', function(){
-  SFX.click();
+  SFX.backTitle();
   showTitle();
 });
 el('#registerBtn').addEventListener('click', function(){
-  SFX.click();
+  SFX.register();
   registerToRanking();
 });
 el('#rankingBtn').addEventListener('click', function(){
-  SFX.click();
+  SFX.viewRanking();
   showRanking();
 });
 el('#closeRankingBtn').addEventListener('click', function(){
@@ -3833,5 +3928,6 @@ applyI18n();
 loadTraits();
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
