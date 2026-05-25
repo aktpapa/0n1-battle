@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_6.html -->
-<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
 <style>
@@ -652,9 +652,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel power-off" id="title" style="display: block;">
+  <div class="panel" id="title">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay" style="display: flex;">
+    <div class="click-overlay" id="clickOverlay">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -663,33 +663,33 @@ header{text-align:center;margin-bottom:14px}
       <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
     <div class="title-buttons">
-      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
-      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
-      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
+      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">ゲーム開始</button>
+      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">ランキング</button>
+      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">遊び方</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
   <!-- ===== 遊び方画面 ===== -->
   <div class="panel" id="howto" style="display:none">
-    <h2 data-i18n="how_title">How to Play</h2>
+    <h2 data-i18n="how_title">遊び方</h2>
     <div class="howto-body" id="howtoBody"></div>
-    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
+    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← タイトルに戻る</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
-    <button class="btn ghost back-to-title" id="startBackBtn" data-i18n="btn_back_title">← Title</button>
-    <h2 data-i18n="summon_title">Summon Your Fighter</h2>
-    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style determine your stats, <b>Background</b> determines type matchups.</p>
+    <button class="btn ghost back-to-title" id="startBackBtn" data-i18n="btn_back_title">← タイトル</button>
+    <h2 data-i18n="summon_title">ファイターを召喚</h2>
+    <p data-i18n="summon_desc"></p>
     <div class="irow">
-      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
-      <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
     </div>
-    <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
-    <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
+    <div class="hint" data-i18n="hint"></div>
   </div>
 
-  <div id="battle" style="display: none;">
+  <div id="battle">
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
       <div class="stand l"></div><div class="stand r"></div>
@@ -714,32 +714,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="ropes">
         <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <!-- 奥ロープ（左ポスト→右ポスト 横3本）-->
-          <line class="rope-line pink" x1="184" y1="460" x2="816" y2="460" stroke-width="3"></line>
-          <line class="rope-line gold" x1="184" y1="510" x2="816" y2="510" stroke-width="3"></line>
-          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="184" y1="460" x2="816" y2="460" stroke-width="3"/>
+          <line class="rope-line gold"   x1="184" y1="510" x2="816" y2="510" stroke-width="3"/>
+          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"/>
           <!-- 手前ロープ（左手前→右手前 横3本）-->
-          <line class="rope-line pink" x1="50" y1="720" x2="950" y2="720" stroke-width="5"></line>
-          <line class="rope-line gold" x1="50" y1="820" x2="950" y2="820" stroke-width="5"></line>
-          <line class="rope-line violet" x1="50" y1="920" x2="950" y2="920" stroke-width="5"></line>
+          <line class="rope-line pink"   x1="50"  y1="720" x2="950" y2="720" stroke-width="5"/>
+          <line class="rope-line gold"   x1="50"  y1="820" x2="950" y2="820" stroke-width="5"/>
+          <line class="rope-line violet" x1="50"  y1="920" x2="950" y2="920" stroke-width="5"/>
           <!-- 左サイドロープ（奥左→手前左 斜め3本）-->
-          <line class="rope-line pink" x1="184" y1="460" x2="50" y2="720" stroke-width="3"></line>
-          <line class="rope-line gold" x1="184" y1="510" x2="50" y2="820" stroke-width="3"></line>
-          <line class="rope-line violet" x1="184" y1="560" x2="50" y2="920" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="184" y1="460" x2="50"  y2="720" stroke-width="3"/>
+          <line class="rope-line gold"   x1="184" y1="510" x2="50"  y2="820" stroke-width="3"/>
+          <line class="rope-line violet" x1="184" y1="560" x2="50"  y2="920" stroke-width="3"/>
           <!-- 右サイドロープ（奥右→手前右 斜め3本）-->
-          <line class="rope-line pink" x1="816" y1="460" x2="950" y2="720" stroke-width="3"></line>
-          <line class="rope-line gold" x1="816" y1="510" x2="950" y2="820" stroke-width="3"></line>
-          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="816" y1="460" x2="950" y2="720" stroke-width="3"/>
+          <line class="rope-line gold"   x1="816" y1="510" x2="950" y2="820" stroke-width="3"/>
+          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"/>
         </svg>
       </div>
       <div class="fog"></div>
 
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
-        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
+        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY CMD</div>
         <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
-        <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
+        <div class="ring-qlabel" data-i18n="your_cmd">YOUR CMD</div>
         <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
@@ -771,47 +771,48 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
+    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
 
     <!-- 3つ揃った時だけ表示するFIGHT/取消ボタン領域（コマンドの上） -->
     <div class="ctrlrow ctrlrow-top" id="ctrlTop" style="display:none">
-      <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">Undo</button>
+      <button class="btn ghost" id="undoBtnTop" data-i18n="btn_undo">取消</button>
       <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
     </div>
 
     <div class="commands">
-      <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
-      <button class="cmd counter" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
-      <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
-      <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
-      <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
+      <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
+      <button class="cmd counter" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
+      <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
+      <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
+      <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
     </div>
 
     <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
 
-  <div class="panel" id="result" style="display: none;">
+  <div class="panel" id="result">
     <div class="rt" id="rTitle">VICTORY</div>
     <p id="rDesc"></p>
     <!-- スコア表示 -->
     <div id="scorePanel" class="scorebox">
-      <div class="scoretitle" data-i18n="score_label">SCORE</div>
+      <div class="scoretitle" data-i18n="score_label">スコア</div>
       <div class="scoreval" id="scoreVal">0</div>
       <div class="scorebreakdown" id="scoreBreakdown"></div>
     </div>
     <!-- 名前入力＆登録 -->
     <div id="regForm" class="regbox">
-      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
-        border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
+      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）"
+        style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
+        border-radius:8px;color:var(--ink);font-family:'Chakra Petch';font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
-        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
-        <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
-        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
+        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
+        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← タイトル</button>
       </div>
     </div>
   </div>
@@ -825,8 +826,8 @@ header{text-align:center;margin-bottom:14px}
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
-      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
-      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
+      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← タイトル</button>
     </div>
   </div>
 </div>
@@ -939,8 +940,8 @@ var ADV = {
 };
 // 属性相性で適用するダメージ倍率
 function typeMod(attackerType, defenderType){
-  if(ADV[attackerType] && ADV[attackerType].indexOf(defenderType) >= 0) return 1.30; // 有利
-  if(ADV[defenderType] && ADV[defenderType].indexOf(attackerType) >= 0) return 0.75; // 不利
+  if(ADV[attackerType] && ADV[attackerType].indexOf(defenderType) >= 0) return 1.15; // 有利(v7緩和)
+  if(ADV[defenderType] && ADV[defenderType].indexOf(attackerType) >= 0) return 0.85; // 不利(v7緩和)
   return 1.0;
 }
 function matchup(a, d){
@@ -950,7 +951,7 @@ function matchup(a, d){
 }
 
 // 実値1〜10ベースのため、HPは60に縮小
-var INITIAL_HP = 60;
+var INITIAL_HP = 80; // v7+HP80
 
 // Typeが不明な場合のデフォルトステータス
 var DEFAULT_STATS = {spirit:5, strength:5, style:5};
@@ -2426,7 +2427,7 @@ function applyI18n(){
   }
 }
 var ANAME={attack:'攻撃',counter:'反撃',defend:'防御',charge:'ためる',special:'必殺'};
-var GAUGE_MAX=10; // 必殺技ゲージ上限
+var GAUGE_MAX=8; // 必殺技ゲージ上限（v7+G8）
 var G=null;
 function el(q){return document.querySelector(q);}
 
@@ -2520,33 +2521,36 @@ function atkPower(att){var base=5+att.st.strength*0.65,v=Math.random()*3-1;
   var crit=Math.random()<(0.06+att.st.style*0.012);var d=base+v;if(crit)d*=1.7;
   return{dmg:Math.max(1,Math.round(d)),crit:crit};}
 function specialPower(att){return Math.max(1,Math.round(att.maxhp*att.special.ratio*(0.85+Math.random()*0.3)));}
-// ===================== 敵AI（4Type仕様）=====================
+// ===================== 敵AI（4Type仕様・v4バランス）=====================
 function enemyPlan(){
   var en=G.en, me=G.me, plan=[];
+  var predGauge = en.gauge; // 予測ゲージ
   for(var i=0;i<3;i++){
     var s=en.st;
-    var w={attack:0.9, defend:1.0, charge:1.3, counter:0.9}; // 攻撃を下げ、ためる/防御を上げる
-    // Strengthが高ければ攻撃寄り
-    if(s.strength >= 7) w.attack += 0.9;
-    // Styleが高ければカウンター寄り
-    if(s.style >= 7) w.counter += 1.0;
-    // Spiritが高ければ防御寄り
-    if(s.spirit >= 7) w.defend += 0.9;
+    // ゲージMAXなら90%の確率で必殺技
+    if(predGauge >= GAUGE_MAX && Math.random() < 0.9){
+      plan.push('special');
+      predGauge = 0;
+      continue;
+    }
+    // 重み付け：攻撃多め、ためる/カウンター少なめ
+    var w={attack:1.2, defend:0.7, charge:0.8, counter:0.6};
+    if(s.strength >= 7) w.attack += 0.7;
+    if(s.style >= 7) w.counter += 0.4;
+    if(s.spirit >= 7) w.defend += 0.6;
     // HP少ない時は守り寄り
-    if(en.hp/en.maxhp < 0.35){ w.defend+=1.5; w.attack*=0.6; }
-    // 必殺技ゲージあれば一定確率で
-    if(en.gauge >= 1 && Math.random() < 0.5){
-      plan.push('special'); continue;
-    }
-    // ゲージが0なら時々ためる（プレイヤーの溜め時間を作る）
-    if(en.gauge === 0 && Math.random() < 0.3){
-      plan.push('charge'); continue;
-    }
+    if(en.hp/en.maxhp < 0.35){ w.defend += 0.8; w.attack *= 0.7; }
+    // ゲージ高い時はためるを減らす（既にためる必要が少ない）
+    if(predGauge >= 7) w.charge *= 0.3;
+    else if(predGauge >= 4) w.charge *= 0.6;
     var tot=w.attack+w.defend+w.charge+w.counter, pk=Math.random()*tot;
-    if((pk-=w.attack)<0) plan.push('attack');
-    else if((pk-=w.defend)<0) plan.push('defend');
-    else if((pk-=w.charge)<0) plan.push('charge');
-    else plan.push('counter');
+    var chosen;
+    if((pk-=w.attack)<0) chosen='attack';
+    else if((pk-=w.defend)<0) chosen='defend';
+    else if((pk-=w.charge)<0) chosen='charge';
+    else chosen='counter';
+    plan.push(chosen);
+    if(chosen === 'charge') predGauge = Math.min(GAUGE_MAX, predGauge + 3);
   }
   return plan;
 }
@@ -2630,7 +2634,7 @@ function resolvePair(meAct,enAct){
   }
   function nameOf(side){ return side==='me' ? T('you_kanji') : T('enemy_kanji'); }
 
-  // -------- 数値式（実値1〜10ベース／HP60）--------
+  // -------- 数値式（実値1〜10ベース／HP80）--------
   // 通常攻撃 = Strength（1〜10）
   // カウンター反撃 = Strength + Style（2〜20）
   // 必殺技 vs 攻撃   = 20 + Strength（21〜30）
@@ -2671,7 +2675,7 @@ function resolvePair(meAct,enAct){
       showFullFx('attack', 800); SFX.attack();
       var firstTarget = f==='me' ? 'en' : 'me';
       var attChar1 = f==='me'?me:en, defChar1 = f==='me'?en:me;
-      var d1 = applyTypeMod(attChar1.st.strength, attChar1.type, defChar1.type);
+      var d1 = applyTypeMod(Math.ceil(4 + attChar1.st.strength * 0.6), attChar1.type, defChar1.type); // v7: 4+STR*0.6
       dealDamage(defChar1, firstTarget, d1);
       hitGauge(f);  // 攻撃ヒットで攻撃側+1
       var adv1 = typeAdvLog(attChar1.type, defChar1.type, f); if(adv1) lines.push(adv1);
@@ -2680,7 +2684,7 @@ function resolvePair(meAct,enAct){
         // 後発反撃
         var secondSide = f==='me'?'en':'me';
         var attChar2 = secondSide==='me'?me:en, defChar2 = secondSide==='me'?en:me;
-        var d2 = applyTypeMod(attChar2.st.strength, attChar2.type, defChar2.type);
+        var d2 = applyTypeMod(Math.ceil(4 + attChar2.st.strength * 0.6), attChar2.type, defChar2.type); // v7: 4+STR*0.6
         setTimeout(function(){
           if(G.over) return;
           showFullFx('attack', 800); SFX.attack();
@@ -2695,9 +2699,9 @@ function resolvePair(meAct,enAct){
       return lines;
     }
     if(meAct === 'defend'){
-      // 防御同士：両者がSpiritで回復（HP60ベース）
+      // 防御同士：両者がSpiritで回復（HP80ベース）
       function healDefender(f, side){
-        var heal = Math.max(2, Math.round(2 + f.st.spirit * 0.3));
+        var heal = Math.max(2, Math.round(1 + f.st.spirit * 0.4)); // v7: max(2, 1+SPI*0.4)
         if(f.hp >= f.maxhp) { return 0; }
         var actual = Math.min(heal, f.maxhp - f.hp);
         f.hp += actual;
@@ -2713,19 +2717,26 @@ function resolvePair(meAct,enAct){
       return lines;
     }
     if(meAct === 'charge'){
-      addGauge(me, 'me', 3); addGauge(en, 'en', 3);
-      floatTxt('me','+3','#ffc83a'); floatTxt('en','+3','#ffc83a');
+      // v7: ためる獲得量 = 2 + floor(SPI*0.15)
+      var meCharge = 2 + Math.floor(me.st.spirit * 0.15);
+      var enCharge = 2 + Math.floor(en.st.spirit * 0.15);
+      addGauge(me, 'me', meCharge); addGauge(en, 'en', enCharge);
+      floatTxt('me','+'+meCharge,'#ffc83a'); floatTxt('en','+'+enCharge,'#ffc83a');
       lines.push({h:T('log_both_charge'), c:'sys'});
       return lines;
     }
     if(meAct === 'counter'){
+      // v4: 両者カウンターで両者-3ダメ（撃ち合い）
+      var clash = 3;
+      dealDamage(me, 'me', clash, {});
+      dealDamage(en, 'en', clash, {});
       lines.push({h:T('log_both_counter'), c:'sys'});
       return lines;
     }
     if(meAct === 'special'){
       // 必殺技同士＝相討ち（20 + 互いのStrength）に相性適用
-      var dm = applyTypeMod(20 + me.st.strength, me.type, en.type);
-      var de = applyTypeMod(20 + en.st.strength, en.type, me.type);
+      var dm = applyTypeMod(Math.max(1, Math.ceil(20 + (me.st.strength + me.st.style) * 0.5 - en.st.spirit)), me.type, en.type); // v7
+      var de = applyTypeMod(Math.max(1, Math.ceil(20 + (en.st.strength + en.st.style) * 0.5 - me.st.spirit)), en.type, me.type); // v7
       resetGauge(me,'me'); resetGauge(en,'en');
       showFullFx(specialFxKind(me.special.kind), 1200); SFX.special();
       dealDamage(en,'en',dm,{crit:true});
@@ -2739,18 +2750,38 @@ function resolvePair(meAct,enAct){
 
   // ========== 攻撃 vs 防御 ==========
   if(pair === 'attack:defend' || pair === 'defend:attack'){
-    console.log('  [case] 攻撃 vs 防御');
     var atkSide = (pair==='attack:defend')?'me':'en';
     var defSide = atkSide==='me'?'en':'me';
-    // 攻撃エフェクト + 攻撃音
+    var atkChar = atkSide==='me'?me:en;
+    var defChar2 = defSide==='me'?me:en;
+    // v7: 完封ではなく軽減処理
+    // 攻撃ダメ = ceil(4 + STR*0.6) × Type補正
+    // 軽減後 = max(1, ceil(攻撃ダメ - SPI*0.4))
+    var atkDmgBase = applyTypeMod(Math.ceil(4 + atkChar.st.strength * 0.6), atkChar.type, defChar2.type);
+    var reduced = Math.max(1, Math.ceil(atkDmgBase - defChar2.st.spirit * 0.4));
+    console.log('  [case] 攻撃 vs 防御 (v7軽減: '+atkDmgBase+'→'+reduced+')');
+    // 攻撃エフェクト
     showFullFx('attack', 700); SFX.attack();
-    // 少し遅れて防御エフェクト＋防御音（バリアで止めた感）
     setTimeout(function(){
       if(G.over) return;
       showFullFx('defend', 700); SFX.defend();
-      // BLOCKED表示
-      floatTxt(defSide, 'BLOCKED!', '#22e6e0');
+      floatTxt(defSide, 'GUARD!', '#22e6e0');
     }, 250);
+    // 軽減ダメージ適用
+    dealDamage(defChar2, defSide, reduced, {});
+    // 攻撃側ゲージ+1
+    addGauge(atkChar, atkSide, 1);
+    // 防御側に SPI*0.2 追加回復
+    var addHeal = Math.ceil(defChar2.st.spirit * 0.2);
+    if(defChar2.hp > 0 && defChar2.hp < defChar2.maxhp){
+      var realHeal = Math.min(addHeal, defChar2.maxhp - defChar2.hp);
+      defChar2.hp += realHeal;
+      updateBars(defChar2, defSide);
+      setTimeout(function(){
+        if(G.over) return;
+        floatTxt(defSide, '+'+realHeal, '#22e6e0');
+      }, 500);
+    }
     lines.push({h:T('log_defend_block',{def:tagOf(defSide),att:tagOf(atkSide)}), c:'sys'});
     return lines;
   }
@@ -2763,7 +2794,7 @@ function resolvePair(meAct,enAct){
     var attChar = aS==='me'?me:en;
     var chgChar = cS==='me'?me:en;
     showFullFx('attack', 800); SFX.attack();
-    var dmg = applyTypeMod(attChar.st.strength, attChar.type, chgChar.type);
+    var dmg = applyTypeMod(Math.ceil(4 + attChar.st.strength * 0.6) + 2, attChar.type, chgChar.type); // v7: (4+STR*0.6)+2
     resetGauge(chgChar, cS);
     dealDamage(chgChar, cS, dmg);
     hitGauge(aS);  // 攻撃ヒットで+1
@@ -2781,7 +2812,7 @@ function resolvePair(meAct,enAct){
     var atChar = atS==='me'?me:en;
     showFullFx('counter', 1000); SFX.counter();
     // カウンター反撃 = Strength + Style（相性適用）
-    var ctr = applyTypeMod(coChar.st.strength + coChar.st.style, coChar.type, atChar.type);
+    var ctr = applyTypeMod(Math.ceil(4 + coChar.st.style * 0.6), coChar.type, atChar.type); // v7: STY連動 4+STY*0.6
     dealDamage(atChar, atS, ctr, {crit:true});
     hitGauge(coS);  // カウンター成功で+1
     var adv = typeAdvLog(coChar.type, atChar.type, coS); if(adv) lines.push(adv);
@@ -2791,10 +2822,13 @@ function resolvePair(meAct,enAct){
 
   // ========== 防御 vs ためる ==========
   if(pair === 'defend:charge' || pair === 'charge:defend'){
-    console.log('  [case] 防御 vs ためる (ためる側 ⚡+3)');
     var chS = (pair==='defend:charge')?'en':'me';
-    addGauge(chS==='me'?me:en, chS, 3);
-    floatTxt(chS,'+3','#ffc83a');
+    var chChar = chS==='me'?me:en;
+    // v7: ためる獲得量 = 2 + floor(SPI*0.15)
+    var cAmt = 2 + Math.floor(chChar.st.spirit * 0.15);
+    console.log('  [case] 防御 vs ためる (ためる側 ⚡+'+cAmt+')');
+    addGauge(chChar, chS, cAmt);
+    floatTxt(chS,'+'+cAmt,'#ffc83a');
     lines.push({h:T('log_charge_gap',{tag:tagOf(chS)}), c:'sys'});
     return lines;
   }
@@ -2805,8 +2839,9 @@ function resolvePair(meAct,enAct){
     var defSide = (pair === 'defend:counter') ? 'me' : 'en';
     var defChar = defSide === 'me' ? me : en;
     var ctrSide = defSide === 'me' ? 'en' : 'me';
-    // 防御側が回復、カウンター側は空振り（不発）
-    var heal = Math.max(2, Math.round(2 + defChar.st.spirit * 0.3));
+    var ctrChar = ctrSide === 'me' ? me : en;
+    // 防御側が回復、カウンター側は空振り（不発）+ ペナルティ
+    var heal = Math.max(2, Math.round(1 + defChar.st.spirit * 0.4)); // v7: 1+SPI*0.4
     var actual = 0;
     if(defChar.hp < defChar.maxhp){
       actual = Math.min(heal, defChar.maxhp - defChar.hp);
@@ -2814,6 +2849,13 @@ function resolvePair(meAct,enAct){
       updateBars(defChar, defSide);
       floatTxt(defSide, '+'+actual, '#22e6e0');
     }
+    // v7: カウンター空振りで -4 HP + ゲージ-2
+    var penalty = 4;
+    ctrChar.hp = Math.max(0, ctrChar.hp - penalty);
+    updateBars(ctrChar, ctrSide);
+    floatTxt(ctrSide, '-'+penalty, '#ff1f6d');
+    addGauge(ctrChar, ctrSide, -2);
+    shakeCard(ctrSide);
     SFX.defend(); if(actual>0) SFX.heal();
     showFullFx('defend', 900);
     lines.push({h:T('log_counter_miss_defend',{ctr:tagOf(ctrSide),def:tagOf(defSide),hp:actual}), c:'sys'});
@@ -2822,11 +2864,22 @@ function resolvePair(meAct,enAct){
 
   // ========== ためる vs カウンター ==========
   if(pair === 'charge:counter' || pair === 'counter:charge'){
-    console.log('  [case] ためる vs カウンター (ためる側 ⚡+3)');
     var cgS = (pair==='charge:counter')?'me':'en';
-    addGauge(cgS==='me'?me:en, cgS, 3);
-    floatTxt(cgS,'+3','#ffc83a');
     var ctS = cgS==='me'?'en':'me';
+    var cgChar = cgS==='me'?me:en;
+    var ctChar = ctS==='me'?me:en;
+    // v7: ためる獲得量 = 2 + floor(SPI*0.15)
+    var cAmt2 = 2 + Math.floor(cgChar.st.spirit * 0.15);
+    console.log('  [case] ためる vs カウンター (ためる側 ⚡+'+cAmt2+', カウンター側 -4HP+ゲージ-2)');
+    addGauge(cgChar, cgS, cAmt2);
+    floatTxt(cgS,'+'+cAmt2,'#ffc83a');
+    // v7: カウンター空振り -4 HP + ゲージ-2
+    var penalty2 = 4;
+    ctChar.hp = Math.max(0, ctChar.hp - penalty2);
+    updateBars(ctChar, ctS);
+    floatTxt(ctS, '-'+penalty2, '#ff1f6d');
+    addGauge(ctChar, ctS, -2);
+    shakeCard(ctS);
     lines.push({h:T('log_counter_miss_charge',{ct:tagOf(ctS),cg:tagOf(cgS)}), c:'sys'});
     return lines;
   }
@@ -2841,8 +2894,8 @@ function resolvePair(meAct,enAct){
     // 必殺 vs 攻撃
     if(oppAct === 'attack'){
       var first = whoFirst();
-      var spDmg = applyTypeMod(20 + spChar.st.strength, spChar.type, oppChar.type);
-      var atkDmg = applyTypeMod(oppChar.st.strength, oppChar.type, spChar.type);
+      var spDmg = applyTypeMod(Math.max(1, Math.ceil(20 + (spChar.st.strength + spChar.st.style) * 0.5 - oppChar.st.spirit)), spChar.type, oppChar.type); // v7
+      var atkDmg = applyTypeMod(Math.ceil(4 + oppChar.st.strength * 0.6), oppChar.type, spChar.type); // v7: 4+STR*0.6
       resetGauge(spChar, spS);
       var advSp = typeAdvLog(spChar.type, oppChar.type, spS);
       var advAt = typeAdvLog(oppChar.type, spChar.type, oppS);
@@ -2882,10 +2935,12 @@ function resolvePair(meAct,enAct){
       return lines;
     }
 
-    // 必殺 vs 防御（15 - 相手Spirit、最低3）
+    // 必殺 vs 防御（v7: 不発救済でゲージ2残す）
     if(oppAct === 'defend'){
-      var redDmg = applyTypeMod(Math.max(3, 15 - oppChar.st.spirit), spChar.type, oppChar.type);
-      resetGauge(spChar, spS);
+      var redDmg = applyTypeMod(Math.max(1, Math.ceil(20 + (spChar.st.strength + spChar.st.style) * 0.5 - oppChar.st.spirit)), spChar.type, oppChar.type); // v7: 標準必殺ダメ
+      // v7: ゲージ全消費ではなく2残す（救済措置）
+      spChar.gauge = 2;
+      updateBars(spChar, spS);
       showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
       dealDamage(oppChar, oppS, redDmg, {crit:true});
       var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
@@ -2907,7 +2962,7 @@ function resolvePair(meAct,enAct){
 
     // 必殺 vs カウンター（120%返し: (STR + STY) * 1.2）
     if(oppAct === 'counter'){
-      var coDmg = applyTypeMod(Math.ceil((oppChar.st.strength + oppChar.st.style) * 1.2), oppChar.type, spChar.type);
+      var coDmg = applyTypeMod(Math.ceil(4 + oppChar.st.style * 0.6), oppChar.type, spChar.type); // v7: STY連動 4+STY*0.6
       resetGauge(spChar, spS);
       showFullFx('counter', 1000); SFX.counter();
       dealDamage(spChar, spS, coDmg, {crit:true});
@@ -3476,7 +3531,7 @@ function renderHowto(){
   if(ja){
     body.innerHTML =
       '<h3>基本ルール</h3>'+
-      '<p>HP 60で対戦。1ラウンドに3コマンドをセットし、相手の3手と1手ずつ突き合わせ解決。先にHPが0になった方が負け。</p>'+
+      '<p>HP 80で対戦。1ラウンドに3コマンドをセットし、相手の3手と1手ずつ突き合わせ解決。先にHPが0になった方が負け。</p>'+
       '<h3>5つのコマンド</h3>'+
       '<table>'+
         '<tr><th>コマンド</th><th>効果</th></tr>'+
@@ -3495,7 +3550,7 @@ function renderHowto(){
   } else {
     body.innerHTML =
       '<h3>Basic Rules</h3>'+
-      '<p>Fight with HP 60. Each round, select 3 commands and resolve them one by one against the opponent\'s 3 commands. The first to reach 0 HP loses.</p>'+
+      '<p>Fight with HP 80. Each round, select 3 commands and resolve them one by one against the opponent\'s 3 commands. The first to reach 0 HP loses.</p>'+
       '<h3>5 Commands</h3>'+
       '<table>'+
         '<tr><th>Command</th><th>Effect</th></tr>'+
@@ -3681,6 +3736,5 @@ applyI18n();
 loadTraits();
 })();
 </script>
-
-
-</body></html>
+</body>
+</html>
