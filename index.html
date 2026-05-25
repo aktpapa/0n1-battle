@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///C:/Users/townc/Downloads/index_9.html -->
+<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -1412,18 +1412,18 @@ var SFX = (function(){
     },
 
     // ====== UIボタン用SE（MP3優先、無ければclick合成音）======
-    startGame: function(){ if(!playCustomSE('start_game')) this.click(); },
-    rankingBtn: function(){ if(!playCustomSE('ranking_btn')) this.click(); },
-    howtoBtn: function(){ if(!playCustomSE('howto_btn')) this.click(); },
-    summon: function(){ if(!playCustomSE('summon')) this.click(); },
-    random: function(){ if(!playCustomSE('random')) this.click(); },
-    cmdSelect: function(){ if(!playCustomSE('cmd_select')) this.click(); },
+    startGame: function(){ if(!playCustomSE('start_game')) SFX.click(); },
+    rankingBtn: function(){ if(!playCustomSE('ranking_btn')) SFX.click(); },
+    howtoBtn: function(){ if(!playCustomSE('howto_btn')) SFX.click(); },
+    summon: function(){ if(!playCustomSE('summon')) SFX.click(); },
+    random: function(){ if(!playCustomSE('random')) SFX.click(); },
+    cmdSelect: function(){ if(!playCustomSE('cmd_select')) SFX.click(); },
     win: function(){ playCustomSE('win'); },
     lose: function(){ playCustomSE('lose'); },
-    register: function(){ if(!playCustomSE('register')) this.click(); },
-    viewRanking: function(){ if(!playCustomSE('view_ranking')) this.click(); },
-    rematch: function(){ if(!playCustomSE('rematch')) this.click(); },
-    backTitle: function(){ if(!playCustomSE('back_title')) this.click(); },
+    register: function(){ if(!playCustomSE('register')) SFX.click(); },
+    viewRanking: function(){ if(!playCustomSE('view_ranking')) SFX.click(); },
+    rematch: function(){ if(!playCustomSE('rematch')) SFX.click(); },
+    backTitle: function(){ if(!playCustomSE('back_title')) SFX.click(); },
 
     fight: function(){
       init();
@@ -3266,8 +3266,18 @@ function doFight(){
     (function next(){
       if(G.over)return;
       if(step>=3){endTurn();return;}
-      renderQueue(step);renderEnemyQueue(false,step);
-      resolvePair(G.meQueue[step],G.enQueue[step]).forEach(function(l){log(l.h,l.c);});
+      try {
+        renderQueue(step);renderEnemyQueue(false,step);
+        var result = resolvePair(G.meQueue[step],G.enQueue[step]);
+        if(result && result.forEach){
+          result.forEach(function(l){log(l.h,l.c);});
+        } else {
+          console.warn('[戦闘] resolvePair が空を返した:', G.meQueue[step], 'vs', G.enQueue[step]);
+        }
+      } catch(e){
+        console.error('[戦闘エラー]', e, 'step=', step, 'pair=', G.meQueue[step], 'vs', G.enQueue[step]);
+        log('⚠ 戦闘処理でエラー（continueします）', 'sys');
+      }
       step++;
       if(G.me.hp<=0||G.en.hp<=0){setTimeout(finish,800);return;}
       setTimeout(next,1500);
