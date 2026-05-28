@@ -1098,18 +1098,15 @@ var SFX = (function(){
   var voiceMp3 = {ready:null, fight:null, round_complete:null};
   var voiceMp3Available = {ready:false, fight:false, round_complete:false};
   function tryLoadVoice(key, path){
-    fetch(path, {method:'HEAD'}).then(function(r){
-      if(!r.ok) return; // 404はサイレント
-      var a = new Audio(path);
-      a.preload = 'auto';
-      a.volume = 0.9;
-      a.addEventListener('canplaythrough', function(){
-        voiceMp3Available[key] = true;
-        console.log("[SFX] "+path+" 利用可能（mp3）");
-      }, {once:true});
-      a.addEventListener('error', function(){});
-      voiceMp3[key] = a;
-    }).catch(function(){});
+    var a = new Audio(path);
+    a.preload = 'auto';
+    a.volume = 0.9;
+    a.addEventListener('canplaythrough', function(){
+      voiceMp3Available[key] = true;
+      console.log("[SFX] "+path+" 利用可能（mp3）");
+    }, {once:true});
+    a.addEventListener('error', function(){}); // 404はサイレント
+    voiceMp3[key] = a;
   }
   // 起動時に試行
   tryLoadVoice('ready', 'ready.mp3');
@@ -1121,26 +1118,15 @@ var SFX = (function(){
   var customSE = {};
   var customSEAvailable = {};
   function tryLoadSE(key, path){
-    // 事前にfetchで存在確認 → あればAudio生成、なければ何もしない（404を抑制）
-    fetch(path, {method:'HEAD'}).then(function(r){
-      if(!r.ok) {
-        // 404等はサイレントに無視（合成音で代替）
-        return;
-      }
-      var a = new Audio(path);
-      a.preload = 'auto';
-      a.volume = 0.7;
-      a.addEventListener('canplaythrough', function(){
-        customSEAvailable[key] = true;
-        console.log("[SFX] "+path+" 利用可能（mp3）");
-      }, {once:true});
-      a.addEventListener('error', function(){
-        // ロード失敗時もサイレント
-      });
-      customSE[key] = a;
-    }).catch(function(){
-      // fetchエラーもサイレント
-    });
+    var a = new Audio(path);
+    a.preload = 'auto';
+    a.volume = 0.7;
+    a.addEventListener('canplaythrough', function(){
+      customSEAvailable[key] = true;
+      console.log("[SFX] "+path+" 利用可能（mp3）");
+    }, {once:true});
+    a.addEventListener('error', function(){}); // 404はサイレント
+    customSE[key] = a;
   }
   // タイトル/メニュー系
   tryLoadSE('start_game', 'se_start_game.mp3');
@@ -1737,29 +1723,25 @@ var BGM = (function(){
   // mp3を読み込み試行（プレイリスト用）
   function tryLoadMp3(key, path){
     return new Promise(function(resolve){
-      // 事前にfetchで存在確認
-      fetch(path, {method:'HEAD'}).then(function(r){
-        if(!r.ok){ resolve(false); return; }
-        var a = new Audio(path);
-        a.preload = 'auto';
-        a.volume = 0;
-        var loaded = false;
-        a.addEventListener('canplaythrough', function(){
-          if(loaded) return;
-          loaded = true;
-          playlist[key].push(a);
-          console.log("[BGM] "+path+" 利用可能（"+key+"プレイリスト: "+playlist[key].length+"曲）");
-          resolve(true);
-        }, {once:true});
-        a.addEventListener('error', function(){
-          resolve(false);
-        });
-        setTimeout(function(){
-          if(!loaded){ resolve(false); }
-        }, 5000);
-      }).catch(function(){
+      var a = new Audio(path);
+      a.preload = 'auto';
+      a.volume = 0;
+      var loaded = false;
+      a.addEventListener('canplaythrough', function(){
+        if(loaded) return;
+        loaded = true;
+        playlist[key].push(a);
+        console.log("[BGM] "+path+" 利用可能（"+key+"プレイリスト: "+playlist[key].length+"曲）");
+        resolve(true);
+      }, {once:true});
+      a.addEventListener('error', function(){
+        // 404等はサイレント（ログ出さない）
         resolve(false);
       });
+      // 5秒でタイムアウト
+      setTimeout(function(){
+        if(!loaded){ resolve(false); }
+      }, 5000);
     });
   }
 
