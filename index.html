@@ -636,6 +636,15 @@ header{text-align:center;margin-bottom:14px}
   background:linear-gradient(95deg,rgba(155,60,255,.08),rgba(34,230,224,.08));
   border:1px solid rgba(155,60,255,.3);border-radius:10px}
 .season-info:empty{display:none}
+.ranking-godkills{text-align:center;padding:10px;margin:4px 0 8px;
+  background:linear-gradient(95deg,rgba(255,200,58,.1),rgba(255,138,31,.08));
+  border:1px solid rgba(255,200,58,.4);border-radius:10px;
+  font-family:'Zen Dots';font-size:13px;color:#ffd76a;letter-spacing:.05em}
+.ranking-godkills:empty{display:none}
+.ranking-godkills b{font-size:18px;color:#ff8a1f}
+.god-kill-tag{display:inline-block;font-family:'Chakra Petch';font-size:11px;
+  color:#ffd76a;background:rgba(255,138,31,.2);border:1px solid rgba(255,200,58,.5);
+  border-radius:6px;padding:0 5px;margin-left:4px;font-weight:700}
 .season-info .season-remain{font-family:'Zen Dots';font-size:13px;color:var(--gold);
   text-shadow:0 0 12px rgba(255,200,58,.5);margin-bottom:4px;letter-spacing:.05em}
 .season-info .season-remain b{font-size:16px;color:var(--cyan)}
@@ -973,6 +982,7 @@ header{text-align:center;margin-bottom:14px}
       🏆 RANKING TOP 100
     </div>
     <div id="rankingSeasonInfo" class="season-info"></div>
+    <div id="rankingGodKills" class="ranking-godkills"></div>
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
@@ -2724,7 +2734,8 @@ function newCampaign(playerId){
     totalScore: 0,  // 累計スコア
     setsCleared: 0, // クリアしたセット数（神戦カウント用）
     inGodBattle: false,
-    wins: 0, losses: 0
+    wins: 0, losses: 0,
+    godKills: 0     // ★神(K4M-1)を倒した回数
   };
 }
 
@@ -3660,6 +3671,7 @@ function registerToRanking(){
     meType: G.me.type,
     meId: G.me.id,
     enId: G.en.id,
+    godKills: (CAMPAIGN ? CAMPAIGN.godKills : 0), // ★神討伐回数
     createdAt: window.FB.serverTimestamp()
   }).then(function(){
     btn.textContent = T('btn_registered');
@@ -3678,18 +3690,13 @@ function registerToRanking(){
 // 例: 2026/5/18(月) 0:00 UTC 〜 2026/5/24(日) 23:59 UTC が1シーズン
 function getCurrentSeason(){
   var now = new Date();
-  // UTC基準の現在時刻
-  var utcDay = now.getUTCDay(); // 0:日, 1:月, ..., 6:土
-  // 直近の月曜0時UTCを計算
-  var daysSinceMonday = (utcDay + 6) % 7; // 月曜=0, 火曜=1, ..., 日曜=6
-  var seasonStart = new Date(Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate() - daysSinceMonday,
-    0, 0, 0
-  ));
-  // シーズン終了は7日後（次の月曜0時UTC）
-  var seasonEnd = new Date(seasonStart.getTime() + 7*24*60*60*1000);
+  // 固定基準日（2026-01-05 月曜 0時UTC）から2週間(14日)単位で区切る
+  var anchor = Date.UTC(2026, 0, 5, 0, 0, 0); // 2026/01/05 00:00 UTC（月曜）
+  var period = 14*24*60*60*1000; // 2週間
+  var elapsed = now.getTime() - anchor;
+  var idx = Math.floor(elapsed / period);
+  var seasonStart = new Date(anchor + idx*period);
+  var seasonEnd = new Date(seasonStart.getTime() + period);
   var remainMs = seasonEnd.getTime() - now.getTime();
   var remainDays = Math.floor(remainMs / (24*60*60*1000));
   var remainHours = Math.floor((remainMs % (24*60*60*1000)) / (60*60*1000));
@@ -3739,7 +3746,7 @@ function showRanking(){
   var season = getCurrentSeason();
   var seasonInfoEl = el('#rankingSeasonInfo');
   if(seasonInfoEl){
-    var endsLabel = (LANG === 'ja') ? '今週のランキング 終了まで' : 'Weekly Ranking ends in';
+    var endsLabel = (LANG === 'ja') ? '今期（2週間）のランキング 終了まで' : 'This season (2 weeks) ends in';
     var daysLabel = (LANG === 'ja') ? '日' : 'd';
     var hoursLabel = (LANG === 'ja') ? '時間' : 'h';
     var resetLabel = (LANG === 'ja') ? 'リセット' : 'Reset';
@@ -3761,9 +3768,10 @@ function showRanking(){
     var rank = 0;
     var html = '';
     var filteredCount = 0;
+    var totalGodKills = 0; // ★全体の神討伐回数（期間内）
     snap.forEach(function(doc){
       var d = doc.data();
-      // 7日以内のエントリのみ採用
+      // 期間内のエントリのみ採用
       if(d.createdAt && d.createdAt.toDate){
         var dt = d.createdAt.toDate();
         if(dt.getTime() < season.start.getTime()){
@@ -3771,13 +3779,13 @@ function showRanking(){
           return; // 期間外は除外
         }
       }
+      totalGodKills += (d.godKills || 0); // ★全体集計（TOP100外も含む）
       if(rank >= 100) return; // TOP100まで
       rank++;
       var rowCls = rank<=3 ? 'top'+rank : '';
       var dateStr = '';
       if(d.createdAt && d.createdAt.toDate){
         var dt = d.createdAt.toDate();
-        // JSTに変換
         var jst = new Date(dt.getTime() + 9*60*60*1000);
         var mm = (jst.getUTCMonth()+1).toString().padStart(2,'0');
         var dd = jst.getUTCDate().toString().padStart(2,'0');
@@ -3786,21 +3794,28 @@ function showRanking(){
         dateStr = mm+'/'+dd+' '+hh+':'+mi;
       }
       var winStr = d.win ? '🏆' : '☠';
+      var gk = d.godKills || 0;
+      var godStr = gk>0 ? ' <span class="god-kill-tag" title="神討伐">⛩'+gk+'</span>' : '';
       html += '<div class="rankrow '+rowCls+'">'+
         '<div class="rk">'+rank+'</div>'+
-        '<div class="nm">'+winStr+' '+escapeHtml(d.name||'?')+'</div>'+
+        '<div class="nm">'+winStr+' '+escapeHtml(d.name||'?')+godStr+'</div>'+
         '<div class="sc">'+(d.score>=0?'+':'')+d.score+'</div>'+
         '<div class="meta">'+
           '<span class="type-tag">'+(d.meType||'?')+'</span>'+
-          '#'+ (d.meId||'?') + ' vs #' + (d.enId||'?') +
+          '#'+ (d.meId||'?') +
+          (gk>0 ? ' / '+(LANG==='ja'?'神討伐':'Kami slain')+': '+gk : '')+
           ' / '+T('ranking_dmg_dealt')+': '+(d.dmgDealt||0)+
-          ' / '+T('ranking_dmg_taken')+': '+(d.dmgTaken||0)+
           ' / '+(d.rounds||0)+'R'+
           (dateStr ? ' / '+dateStr+' JST' : '')+
         '</div>'+
       '</div>';
     });
     dlog('[ranking] 取得: '+snap.size+'件, 期間内: '+rank+'件, 期間外除外: '+filteredCount+'件');
+    // ★全体の神討伐回数を表示
+    var gkEl = el('#rankingGodKills');
+    if(gkEl){
+      gkEl.innerHTML = '⛩ ' + (LANG==='ja'?'今期の全体 神討伐回数':'Total Kami slain this season') + ': <b>' + totalGodKills + '</b>';
+    }
     if(rank === 0){
       listEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">'+T('ranking_empty')+'</div>';
     } else {
@@ -3860,6 +3875,7 @@ function finish(){
       if(win) CAMPAIGN.wins++; else CAMPAIGN.losses++;
       if(CAMPAIGN.inGodBattle){
         // 神戦が終わった → 神戦解除、次の周回へ（セットリセット）
+        if(win) CAMPAIGN.godKills++; // ★神を倒した
         CAMPAIGN.inGodBattle = false;
         CAMPAIGN.setIndex = 0;
         CAMPAIGN.stageIndex = 0;
@@ -3936,25 +3952,19 @@ function startBattle(myId, keepCampaign){
   G={me:makeFighter(myId),en:makeFighter(enId),turn:1,phase:'select',meQueue:[],enQueue:[],over:false,
      dmgDealt:0,dmgTaken:0, isGod:isGod};
 
-  // ★神戦の特殊強化：ステ合計50, HP120, 初期SP2, SP2倍速, 必殺=即死
+  // ★神戦の特殊強化：HP120, 2段ゲージ, 必殺=即死
   if(isGod){
-    // ステータスを合計50に底上げ（配分は神の覚醒後ステの比率を保つ）
+    // ステータス底上げ：最終値(spirit/strength/style)だけ整数で底上げ。
+    // _base/_raw/_bonus_intは触らない（カードの(+N)表示の誤差を防ぐため）
     var gs = G.en.st;
-    var cur = gs.spirit + gs.strength + gs.style;
+    var cur = Math.round(gs.spirit) + Math.round(gs.strength) + Math.round(gs.style);
     if(cur > 0 && cur < 50){
-      var scale = 50 / cur;
-      var newSp = Math.round(gs.spirit * scale);
-      var newSt = Math.round(gs.strength * scale);
-      var newSy = 50 - newSp - newSt;
-      // 増えた分を_baseにも反映（カードの(+N)表示を正しく保つ）
-      if(gs._base){
-        gs._base = {
-          spirit: gs._base.spirit + (newSp - gs.spirit),
-          strength: gs._base.strength + (newSt - gs.strength),
-          style: gs._base.style + (newSy - gs.style)
-        };
-      }
-      gs.spirit = newSp; gs.strength = newSt; gs.style = newSy;
+      var add = 50 - cur; // 不足分を整数で配る
+      // STR→SPI→STYの順に多めに加算
+      var addSt = Math.ceil(add/3), addSp = Math.round(add/3), addSy = add - addSt - addSp;
+      gs.strength = Math.round(gs.strength) + addSt;
+      gs.spirit   = Math.round(gs.spirit)   + addSp;
+      gs.style    = Math.round(gs.style)    + addSy;
     }
     G.en.hp = 120; G.en.maxhp = 120;
     G.en.gauge = 0;        // 0スタート（自然に溜める）
