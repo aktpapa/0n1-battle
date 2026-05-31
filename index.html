@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
+<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_14.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -1605,6 +1605,51 @@ var SFX = (function(){
     },
 
     // ボクシングのゴング「カーン！」（mp3があればそちらを使う）
+    // 神降臨：パイプオルガン風の荘厳な讃美歌コード（約2.6秒）
+    godHymn: function(){
+      init();
+      var t0 = ctx.currentTime;
+      var out = bus(0.85); // リバーブ多めで荘厳に（聖堂の残響）
+      // パイプオルガンの音色を作る関数（基音＋倍音を重ねる）
+      function organChord(freqs, startT, dur, vol){
+        freqs.forEach(function(base){
+          // パイプオルガンらしい倍音構成（基音, オクターブ, 5度, 2オクターブ）
+          var partials = [
+            {mul:1.0,  v:1.0},
+            {mul:2.0,  v:0.5},
+            {mul:3.0,  v:0.3},
+            {mul:4.0,  v:0.18},
+            {mul:0.5,  v:0.4}  // 下のオクターブ（重厚さ）
+          ];
+          partials.forEach(function(p){
+            var o = ctx.createOscillator();
+            o.type = 'sine';
+            o.frequency.value = base * p.mul;
+            var g = ctx.createGain();
+            // ゆっくり立ち上がり、ゆっくり消える（オルガンらしい）
+            g.gain.setValueAtTime(0.0001, startT);
+            g.gain.exponentialRampToValueAtTime(vol*p.v, startT+0.25);
+            g.gain.setValueAtTime(vol*p.v, startT+dur-0.4);
+            g.gain.exponentialRampToValueAtTime(0.0001, startT+dur);
+            // わずかなビブラート（パイプの揺らぎ）
+            var lfo = ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=5;
+            var lfoG = ctx.createGain(); lfoG.gain.value = base*p.mul*0.004;
+            lfo.connect(lfoG).connect(o.frequency);
+            o.connect(g).connect(out);
+            o.start(startT); o.stop(startT+dur+0.1);
+            lfo.start(startT); lfo.stop(startT+dur+0.1);
+          });
+        });
+      }
+      // 讃美歌的なコード進行（荘厳に上昇）：C → F → G → C（の周波数）
+      // 低めの音域で厳かに
+      var C3=130.81, E3=164.81, G3=196.00, C4=261.63, F3=174.61, A3=220.00, D4=293.66, B3=246.94;
+      organChord([C3,E3,G3,C4],       t0,      0.9, 0.16); // I（C）
+      organChord([F3,A3,C4,F3*2],     t0+0.85, 0.9, 0.16); // IV（F）
+      organChord([G3,B3,D4,G3*2],     t0+1.7,  0.9, 0.16); // V（G）
+      organChord([C3,E3,G3,C4,C4*2],  t0+2.55, 1.2, 0.20); // I（C・終止・荘厳に厚く）
+    },
+
     fightVoice: function(){
       // mp3ボイスがあればそれを優先
       if(playVoiceMp3('fight')) return;
@@ -2886,9 +2931,10 @@ function enemyPlan(){
     if(s.spirit >= 15) w.defend += 0.3;
     // HP少ない時は守り寄り
     if(en.hp/en.maxhp < 0.35){ w.defend += 0.8; w.attack *= 0.7; }
-    // ゲージ高い時はためるを減らす
-    if(predGauge >= GAUGE_MAX - 2) w.charge *= 0.3;
-    else if(predGauge >= Math.floor(GAUGE_MAX*0.5)) w.charge *= 0.6;
+    // ゲージ高い時はためるを減らす（神は16基準、通常敵は8基準）
+    var chargeCap = (G.isGod && G.godGaugeMax) ? G.godGaugeMax : GAUGE_MAX;
+    if(predGauge >= chargeCap - 2) w.charge *= 0.3;
+    else if(predGauge >= Math.floor(chargeCap*0.5)) w.charge *= 0.6;
     // ★同じ行動の繰り返しを抑制（直前と同じ手は重みを下げる、3連続はさらに）
     var prev = plan.length>0 ? plan[plan.length-1] : null;
     var prev2 = plan.length>1 ? plan[plan.length-2] : null;
@@ -2932,10 +2978,13 @@ function resolvePair(meAct,enAct){
     lines.push({h:T('log_demote_me'), c:'sys'});
     meAct='attack';
   }
-  if(enAct==='special' && en.gauge<GAUGE_MAX){
-    dlog('  [降格] enはゲージMAX未満で必殺→攻撃 (gauge='+en.gauge+'/'+GAUGE_MAX+')');
-    lines.push({h:T('log_demote_en'), c:'sys'});
-    enAct='attack';
+  if(enAct==='special'){
+    var enCap = (G.isGod && G.godGaugeMax) ? G.godGaugeMax : GAUGE_MAX;
+    if(en.gauge < enCap){
+      dlog('  [降格] enはゲージMAX未満で必殺→攻撃 (gauge='+en.gauge+'/'+enCap+')');
+      lines.push({h:T('log_demote_en'), c:'sys'});
+      enAct='attack';
+    }
   }
   dlog('  pair = "'+meAct+':'+enAct+'"');
 
@@ -2976,7 +3025,9 @@ function resolvePair(meAct,enAct){
   }
   function addGauge(f, side, n){
     var before = f.gauge;
-    f.gauge = Math.min(GAUGE_MAX, Math.max(0, f.gauge + n));
+    // 神（敵・2段ゲージ）は上限16、それ以外は8
+    var cap = (side==='en' && G.isGod && G.godGaugeMax) ? G.godGaugeMax : GAUGE_MAX;
+    f.gauge = Math.min(cap, Math.max(0, f.gauge + n));
     if(typeof console !== 'undefined'){
       dlog('[gauge] '+side+': '+before+' -> '+f.gauge+' (+'+n+')');
     }
@@ -3077,11 +3128,11 @@ function resolvePair(meAct,enAct){
       return lines;
     }
     if(meAct === 'counter'){
-      // v8変更: 両者カウンターは「空振り」→ HP変化なし、両者ゲージ-2
+      // v8変更: 両者カウンターは「空振り」→ HP変化なし、両者ゲージ-1
       SFX.counter();
-      addGauge(me, 'me', -2);
-      addGauge(en, 'en', -2);
-      floatTxt('me','⚡-2','#9b3cff'); floatTxt('en','⚡-2','#9b3cff');
+      addGauge(me, 'me', -1);
+      addGauge(en, 'en', -1);
+      floatTxt('me','⚡-1','#9b3cff'); floatTxt('en','⚡-1','#9b3cff');
       lines.push({h:T('log_both_counter'), c:'sys'});
       return lines;
     }
@@ -3140,14 +3191,14 @@ function resolvePair(meAct,enAct){
 
   // ========== 攻撃 vs ためる ==========
   if(pair === 'attack:charge' || pair === 'charge:attack'){
-    dlog('  [case] 攻撃 vs ためる (ためる側はゲージリセット)');
+    dlog('  [case] 攻撃 vs ためる (ためるはキャンセル＝増えないだけ)');
     var aS = (pair==='attack:charge')?'me':'en';
     var cS = aS==='me'?'en':'me';
     var attChar = aS==='me'?me:en;
     var chgChar = cS==='me'?me:en;
     showFullFx('attack', 800); SFX.attack();
     var dmg = applyTypeMod(Math.ceil(4 + attChar.st.strength * 0.6) + 2, attChar.type, chgChar.type); // v7: (4+STR*0.6)+2
-    resetGauge(chgChar, cS);
+    // v10変更: ためるはキャンセルされるだけ（SPは増えない・減りもしない）
     dealDamage(chgChar, cS, dmg);
     hitGauge(aS);  // 攻撃ヒットで+1
     var adv = typeAdvLog(attChar.type, chgChar.type, aS); if(adv) lines.push(adv);
@@ -3201,12 +3252,12 @@ function resolvePair(meAct,enAct){
       updateBars(defChar, defSide);
       floatTxt(defSide, '+'+actual, '#22e6e0');
     }
-    // v7: カウンター空振りで -4 HP + ゲージ-2
+    // v7: カウンター空振りで -4 HP + ゲージ-1
     var penalty = 4;
     ctrChar.hp = Math.max(0, ctrChar.hp - penalty);
     updateBars(ctrChar, ctrSide);
     floatTxt(ctrSide, '-'+penalty, '#ff1f6d');
-    addGauge(ctrChar, ctrSide, -2);
+    addGauge(ctrChar, ctrSide, -1);
     shake(ctrSide,true);
     SFX.defend(); if(actual>0) SFX.heal();
     showFullFx('defend', 900);
@@ -3225,12 +3276,12 @@ function resolvePair(meAct,enAct){
     dlog('  [case] ためる vs カウンター (ためる側 ⚡+'+cAmt2+', カウンター側 -4HP+ゲージ-2)');
     addGauge(cgChar, cgS, cAmt2);
     floatTxt(cgS,'+'+cAmt2,'#ffc83a');
-    // v7: カウンター空振り -4 HP + ゲージ-2
+    // v7: カウンター空振り -4 HP + ゲージ-1
     var penalty2 = 4;
     ctChar.hp = Math.max(0, ctChar.hp - penalty2);
     updateBars(ctChar, ctS);
     floatTxt(ctS, '-'+penalty2, '#ff1f6d');
-    addGauge(ctChar, ctS, -2);
+    addGauge(ctChar, ctS, -1);
     shake(ctS,true);
     lines.push({h:T('log_counter_miss_charge',{ct:tagOf(ctS),cg:tagOf(cgS)}), c:'sys'});
     return lines;
@@ -3354,6 +3405,12 @@ function startTurn(){
   } else if(!G.isGod && G.enQueue.indexOf('special') >= 0){
     // ★通常敵：このターン必殺技を撃つ予告（SP満タン）
     log(T('enemy_special_warning',{}), 'clash');
+  }
+  // ★神戦：神の現在SPをログ表示（何本目か分かるように）
+  if(G.isGod && G.godGaugeMax){
+    var gg = G.en.gauge;
+    var bars = gg<=8 ? ('1本目 '+gg+'/8') : ('2本目 '+(gg-8)+'/8（計'+gg+'/16）');
+    log((LANG==='ja'?'神のSP: ':'Kami SP: ')+bars, 'sys');
   }
   el('#phase').innerHTML=T('phase_select_turn',{n:G.turn});
   el('#phase').className='phase';
@@ -3500,13 +3557,16 @@ function doFight(){
             setTimeout(finish,1000); return;
           }
         }
-        // ★神戦：神の「ためる」を攻撃で潰すと、溜めている1本分が0に（8の倍数へ切り下げ）
+        // ★神戦：神が「力を高めている」予告中(2本目を溜め中)に、その「ためる」を
+        //   攻撃/必殺で潰すと、2本目だけが0に戻る（1本目=8は残す）。
+        //   1本目を溜めてる最中(予告なし)は普通のキャンセル＝SP維持（0にしない）。
         var godChargeBroken = false;
-        if(G.isGod && G.enQueue[step]==='charge' &&
+        if(G.isGod && G.godChargingThisTurn && G.enQueue[step]==='charge' &&
            (G.meQueue[step]==='attack' || G.meQueue[step]==='special')){
           var before = G.en.gauge;
-          G.en.gauge = Math.floor(G.en.gauge/8)*8; // 今溜めてる1本を捨てる
-          if(G.en.gauge !== before){
+          // 2本目を捨てる＝最低8（1本目）まで戻す。8未満なら何もしない
+          if(G.en.gauge > 8){
+            G.en.gauge = 8;
             godChargeBroken = true;
           }
         }
@@ -4025,7 +4085,7 @@ function showGodEntrance(){
     '<div class="ge-sub">'+(LANG==='ja'?'— 降 臨 —':'— DESCENT —')+'</div>'+
     '<div class="ge-name">K4M-1 · ONE SOURCE</div>';
   document.body.appendChild(ov);
-  try{ SFX.init(); showFullFx('god', 2400); }catch(e){}
+  try{ SFX.init(); SFX.godHymn(); showFullFx('god', 2400); }catch(e){}
   setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }, 2500);
 }
 
