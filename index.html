@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
-<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ctext y=&#39;26&#39; font-size=&#39;28&#39;%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='28'%3E⚔%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
 :root{
@@ -52,11 +52,11 @@ header{text-align:center;margin-bottom:14px}
 .lang-btn.active{background:linear-gradient(95deg,var(--cyan),var(--gold));color:#04030c;border-color:transparent}
 
 /* ホームボタン（左上）*/
-.home-btn{position:fixed;top:14px;left:14px;z-index:100;
+.home-btn{position:fixed;top:14px;left:14px;z-index:9999;
   font-size:16px;background:rgba(20,10,30,.85);color:var(--ink);
   border:1px solid var(--violet);border-radius:8px;
   width:44px;height:44px;cursor:pointer;transition:all .15s;
-  backdrop-filter:blur(4px);
+  backdrop-filter:blur(4px);pointer-events:auto;
   display:flex;align-items:center;justify-content:center}
 .home-btn:hover{border-color:var(--gold);color:var(--gold);transform:scale(1.05)}
 /* 右下のコントロールスタック（🔊と言語切替を縦並び）*/
@@ -268,9 +268,11 @@ header{text-align:center;margin-bottom:14px}
     rgba(255,200,58,.35) calc(10% - 1px),
     rgba(255,200,58,.35) 10%
   );z-index:2}
-.ragefill{height:100%;width:0;background:linear-gradient(90deg,#7a5400,var(--gold));transition:width .4s;border-radius:4px;position:relative;z-index:1}
-.ragefill.full{animation:rg .8s infinite}
-@keyframes rg{0%,100%{box-shadow:0 0 4px var(--gold)}50%{box-shadow:0 0 16px var(--gold)}}
+.ragefill{height:100%;width:0;background:linear-gradient(90deg,#7a5400,var(--gold));transition:width .4s,background .3s;border-radius:4px;position:relative;z-index:1}
+.ragefill.full{animation:rgfull .8s infinite}
+.ragefill.god2{background:linear-gradient(90deg,#ff8a1f,#ffb347)}
+.ragefill.god2.full{background:linear-gradient(90deg,#ff8a1f,#ff1f6d)}
+@keyframes rgfull{0%,100%{box-shadow:0 0 4px var(--gold)}50%{box-shadow:0 0 16px var(--gold)}}
 .hptxt{font-size:9px;color:var(--muted)}
 .bars.me .hptxt{color:var(--cyan)}
 .bars.en .hptxt{color:var(--pink)}
@@ -551,7 +553,7 @@ header{text-align:center;margin-bottom:14px}
 .back-to-title{position:absolute;top:12px;left:12px;font-size:11px !important;padding:6px 12px !important}
 .panel{position:relative}
 /* 遊び方画面 */
-.howto-body{text-align:left;font-size:13px;line-height:1.9;color:var(--ink);padding:0 10px;max-height:60vh;overflow-y:auto}
+.howto-body{text-align:left;font-size:13px;line-height:1.9;color:var(--ink);padding:0 24px;max-height:60vh;overflow-y:auto}
 .howto-body h3{font-family:'Zen Dots';font-size:15px;color:var(--gold);margin:18px 0 8px;letter-spacing:.05em}
 .howto-body table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px}
 .howto-body th{background:rgba(155,60,255,.15);padding:6px;border:1px solid rgba(155,60,255,.3);color:var(--violet)}
@@ -562,6 +564,29 @@ header{text-align:center;margin-bottom:14px}
 .scorebox{margin:14px 0;padding:14px 18px;text-align:center;
   border:1px solid var(--gold);border-radius:14px;
   background:linear-gradient(95deg,rgba(255,200,58,.08),rgba(155,60,255,.08))}
+.campaignbox{margin:14px 0;padding:12px 16px;text-align:center;
+  border:1px solid var(--cyan);border-radius:14px;
+  background:linear-gradient(95deg,rgba(34,230,224,.08),rgba(155,60,255,.06));
+  font-family:'Chakra Petch'}
+.campaignbox .cp-stages{display:flex;gap:6px;justify-content:center;margin:8px 0;flex-wrap:wrap}
+.campaignbox .cp-stage{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.2)}
+.campaignbox .cp-stage.done{background:rgba(34,230,224,.25);border-color:var(--cyan)}
+.campaignbox .cp-stage.lost{background:rgba(255,31,109,.2);border-color:var(--pink)}
+.campaignbox .cp-stage.current{background:rgba(255,200,58,.3);border-color:var(--gold);box-shadow:0 0 10px var(--gold)}
+.campaignbox .cp-total{font-family:'Zen Dots';font-size:24px;color:var(--cyan);margin:4px 0}
+.campaignbox .cp-label{font-size:11px;color:var(--gold);letter-spacing:.15em}
+.campaignbox .cp-god{font-family:'Zen Dots';font-size:14px;color:var(--pink);margin-top:8px;
+  text-shadow:0 0 12px var(--pink);animation:godpulse 1.2s infinite}
+@keyframes godpulse{0%,100%{opacity:1}50%{opacity:.5}}
+/* 神カードの金色オーラ */
+.god-aura{position:relative;
+  box-shadow:0 0 18px 4px rgba(255,200,58,.7),0 0 40px 10px rgba(255,138,31,.35) !important;
+  border-color:var(--gold) !important;
+  animation:goldaura 1.8s ease-in-out infinite}
+@keyframes goldaura{
+  0%,100%{box-shadow:0 0 18px 4px rgba(255,200,58,.6),0 0 40px 10px rgba(255,138,31,.3)}
+  50%{box-shadow:0 0 28px 8px rgba(255,200,58,.95),0 0 60px 18px rgba(255,138,31,.5)}}
 .scoretitle{font-family:'Zen Dots';font-size:11px;color:var(--gold);letter-spacing:.2em;margin-bottom:8px}
 .scoreval{font-family:'Zen Dots';font-size:42px;color:var(--gold);line-height:1;
   text-shadow:0 0 18px var(--gold),0 2px 6px #000;letter-spacing:.03em}
@@ -722,13 +747,14 @@ header{text-align:center;margin-bottom:14px}
 <div class="scene"><div class="city"></div><div class="floor"></div></div>
 <div class="scan"></div>
 
+<!-- 左上：ホームボタン（wrapの外に置いて重なり順の問題を回避） -->
+<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
+
 <div class="wrap">
-  <!-- 左上：ホームボタン -->
-  <button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
   <!-- 右下：BGM/言語切替（縦並び） -->
   <div class="ctrl-stack">
-    <button class="ctrl-btn" id="bgmToggle" title="BGM ON/OFF">🔊</button>
-    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to Japanese">JP</button>
+    <button class="ctrl-btn" id="bgmToggle" title="音 ON/OFF（BGM・効果音）">🔊</button>
+    <button class="ctrl-btn lang-toggle" id="langToggle">EN</button>
   </div>
 
   <header>
@@ -737,9 +763,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel power-off" id="title" style="display: block;">
+  <div class="panel" id="title">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay" style="display: flex;">
+    <div class="click-overlay" id="clickOverlay">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -748,32 +774,42 @@ header{text-align:center;margin-bottom:14px}
       <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
     <div class="title-buttons">
-      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
-      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
-      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
+      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">ゲーム開始</button>
+      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">ランキング</button>
+      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">遊び方</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
   <!-- ===== 遊び方画面 ===== -->
   <div class="panel" id="howto" style="display:none">
-    <h2 data-i18n="how_title">How to Play</h2>
+    <h2 data-i18n="how_title">遊び方</h2>
     <div class="howto-body" id="howtoBody"></div>
-    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
+    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← タイトルに戻る</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
-    <h2 data-i18n="summon_title">Summon Your Fighter</h2>
-    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style determine your stats, <b>Background</b> determines type matchups.</p>
+    <h2 data-i18n="summon_title">ファイターを召喚</h2>
+    <p data-i18n="summon_desc"></p>
     <div class="irow">
-      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
-      <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
     </div>
-    <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
-    <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
+    <div class="hint" data-i18n="hint"></div>
+    <!-- ▼▼▼ DEBUG（確認用・あとで削除） ▼▼▼ -->
+    <div id="debugPanel" style="margin-top:18px;padding:12px;border:1px dashed #ff1f6d;border-radius:10px;background:rgba(255,31,109,.06)">
+      <div style="font-family:'Zen Dots';font-size:10px;color:#ff1f6d;letter-spacing:.1em;margin-bottom:8px">⚠ DEBUG（テスト用）</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+        <button class="btn ghost" id="dbgGodBtn" style="font-size:12px">神戦をすぐ試す</button>
+        <button class="btn ghost" id="dbgLastSetBtn" style="font-size:12px">最終セット5戦目から</button>
+        <button class="btn ghost" id="dbgInvincibleBtn" style="font-size:12px">無敵：OFF</button>
+      </div>
+    </div>
+    <!-- ▲▲▲ DEBUG ▲▲▲ -->
   </div>
 
-  <div id="battle" style="display: none;">
+  <div id="battle">
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
       <div class="stand l"></div><div class="stand r"></div>
@@ -798,32 +834,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="ropes">
         <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <!-- 奥ロープ（左ポスト→右ポスト 横3本）-->
-          <line class="rope-line pink" x1="184" y1="460" x2="816" y2="460" stroke-width="3"></line>
-          <line class="rope-line gold" x1="184" y1="510" x2="816" y2="510" stroke-width="3"></line>
-          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="184" y1="460" x2="816" y2="460" stroke-width="3"/>
+          <line class="rope-line gold"   x1="184" y1="510" x2="816" y2="510" stroke-width="3"/>
+          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"/>
           <!-- 手前ロープ（左手前→右手前 横3本）-->
-          <line class="rope-line pink" x1="50" y1="720" x2="950" y2="720" stroke-width="5"></line>
-          <line class="rope-line gold" x1="50" y1="820" x2="950" y2="820" stroke-width="5"></line>
-          <line class="rope-line violet" x1="50" y1="920" x2="950" y2="920" stroke-width="5"></line>
+          <line class="rope-line pink"   x1="50"  y1="720" x2="950" y2="720" stroke-width="5"/>
+          <line class="rope-line gold"   x1="50"  y1="820" x2="950" y2="820" stroke-width="5"/>
+          <line class="rope-line violet" x1="50"  y1="920" x2="950" y2="920" stroke-width="5"/>
           <!-- 左サイドロープ（奥左→手前左 斜め3本）-->
-          <line class="rope-line pink" x1="184" y1="460" x2="50" y2="720" stroke-width="3"></line>
-          <line class="rope-line gold" x1="184" y1="510" x2="50" y2="820" stroke-width="3"></line>
-          <line class="rope-line violet" x1="184" y1="560" x2="50" y2="920" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="184" y1="460" x2="50"  y2="720" stroke-width="3"/>
+          <line class="rope-line gold"   x1="184" y1="510" x2="50"  y2="820" stroke-width="3"/>
+          <line class="rope-line violet" x1="184" y1="560" x2="50"  y2="920" stroke-width="3"/>
           <!-- 右サイドロープ（奥右→手前右 斜め3本）-->
-          <line class="rope-line pink" x1="816" y1="460" x2="950" y2="720" stroke-width="3"></line>
-          <line class="rope-line gold" x1="816" y1="510" x2="950" y2="820" stroke-width="3"></line>
-          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="816" y1="460" x2="950" y2="720" stroke-width="3"/>
+          <line class="rope-line gold"   x1="816" y1="510" x2="950" y2="820" stroke-width="3"/>
+          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"/>
         </svg>
       </div>
       <div class="fog"></div>
 
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
-        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
+        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY CMD</div>
         <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
-        <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
+        <div class="ring-qlabel" data-i18n="your_cmd">YOUR CMD</div>
         <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
@@ -855,16 +891,16 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
+    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
 
     <!-- コマンドエリア（FIGHT/取消ボタンが上に重なる） -->
     <div class="commands-wrap">
       <div class="commands" id="commandsArea">
-        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
-        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
-        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
-        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
+        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
+        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
+        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
+        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
       <div class="cmd-overlay" id="ctrlTop" style="display:none">
@@ -876,29 +912,33 @@ header{text-align:center;margin-bottom:14px}
 
     <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
 
-  <div class="panel" id="result" style="display: none;">
+  <div class="panel" id="result">
     <div class="rt" id="rTitle">VICTORY</div>
     <p id="rDesc"></p>
+    <!-- キャンペーン進行表示 -->
+    <div id="campaignProgress" class="campaignbox" style="display:none"></div>
     <!-- スコア表示 -->
     <div id="scorePanel" class="scorebox">
-      <div class="scoretitle" data-i18n="score_label">SCORE</div>
+      <div class="scoretitle" data-i18n="score_label">スコア</div>
       <div class="scoreval" id="scoreVal">0</div>
       <div class="scorebreakdown" id="scoreBreakdown"></div>
     </div>
     <!-- 名前入力＆登録 -->
     <div id="regForm" class="regbox">
-      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
-        border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
+      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）"
+        style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
+        border-radius:8px;color:var(--ink);font-family:'Chakra Petch';font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
-        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
-        <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
-        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
+        <button class="btn" id="nextBattleBtn" style="display:none">次の戦へ →</button>
+        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
+        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← タイトル</button>
       </div>
     </div>
   </div>
@@ -912,8 +952,8 @@ header{text-align:center;margin-bottom:14px}
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
-      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
-      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
+      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← タイトル</button>
     </div>
   </div>
 </div>
@@ -921,6 +961,14 @@ header{text-align:center;margin-bottom:14px}
 <script>
 (function(){
 "use strict";
+// =========================================================
+// ★ デバッグログ制御
+//   開発時にログを見たい場合は DEBUG を true に変更する。
+//   本番では false（プレイヤーのコンソールにログを出さない）。
+//   ※ console.error / console.warn は DEBUG に関係なく常に出る（本当のエラー検知用）。
+// =========================================================
+var DEBUG = false;
+function dlog(){ if(DEBUG){ try{ console.log.apply(console, arguments); }catch(e){} } }
 function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
 
 // =========================================================
@@ -995,15 +1043,15 @@ function loadTraits(callback){
       .then(function(r){ if(!r.ok) throw new Error("status "+r.status); return r.json(); })
       .then(function(json){
         TRAITS_DATA = json;
-        console.log("[0N1] traits 読み込み成功:", Object.keys(json).length, "件");
+        dlog("[0N1] traits 読み込み成功:", Object.keys(json).length, "件");
         if(callback) callback();
       })
       .catch(function(e){
-        console.log("[0N1] traits 未読み込み（疑似乱数で動作）:", e.message);
+        dlog("[0N1] traits 未読み込み（疑似乱数で動作）:", e.message);
         if(callback) callback();
       });
   } catch(e){
-    console.log("[0N1] traits 読み込み不可:", e.message);
+    dlog("[0N1] traits 読み込み不可:", e.message);
     if(callback) callback();
   }
 }
@@ -1026,13 +1074,11 @@ var ADV = {
 };
 // 属性相性で適用するダメージ倍率
 function typeMod(attackerType, defenderType){
-  if(ADV[attackerType] && ADV[attackerType].indexOf(defenderType) >= 0) return 1.15; // 有利(v7緩和)
-  if(ADV[defenderType] && ADV[defenderType].indexOf(attackerType) >= 0) return 0.85; // 不利(v7緩和)
+  // v9: 相性ループ廃止。ステータスと読み合いだけの勝負に。常に等倍。
   return 1.0;
 }
 function matchup(a, d){
-  if(ADV[a] && ADV[a].indexOf(d) >= 0) return 1;
-  if(ADV[d] && ADV[d].indexOf(a) >= 0) return -1;
+  // v9: 相性ループ廃止。常に互角(0)。
   return 0;
 }
 
@@ -1091,6 +1137,7 @@ function specialInfo(stats, type){
 var SFX = (function(){
   var ctx = null, master = null, dry = null, wet = null, reverb = null;
   var MASTER_VOLUME = 1.8;
+  var sfxEnabled = true; // ★効果音ON/OFF
 
   // ===== ボイスmp3管理 =====
   // ready.mp3 / fight.mp3 / round_complete.mp3 を起動時に読み込み試行
@@ -1103,7 +1150,7 @@ var SFX = (function(){
     a.volume = 0.9;
     a.addEventListener('canplaythrough', function(){
       voiceMp3Available[key] = true;
-      console.log("[SFX] "+path+" 利用可能（mp3）");
+      dlog("[SFX] "+path+" 利用可能（mp3）");
     }, {once:true});
     a.addEventListener('error', function(){}); // 404はサイレント
     voiceMp3[key] = a;
@@ -1123,7 +1170,7 @@ var SFX = (function(){
     a.volume = 0.7;
     a.addEventListener('canplaythrough', function(){
       customSEAvailable[key] = true;
-      console.log("[SFX] "+path+" 利用可能（mp3）");
+      dlog("[SFX] "+path+" 利用可能（mp3）");
     }, {once:true});
     a.addEventListener('error', function(){}); // 404はサイレント
     customSE[key] = a;
@@ -1157,6 +1204,7 @@ var SFX = (function(){
   tryLoadSE('back_title', 'se_back_title.mp3');
 
   function playCustomSE(key){
+    if(!sfxEnabled) return true; // ★ミュート中は再生せず、合成音フォールバックも防ぐ(trueを返す)
     var a = customSE[key];
     if(!a || !customSEAvailable[key]) return false;
     try {
@@ -1178,6 +1226,7 @@ var SFX = (function(){
   }
 
   function playVoiceMp3(key){
+    if(!sfxEnabled) return true; // ★ミュート中は再生しない（合成音フォールバックも防ぐ）
     var a = voiceMp3[key];
     if(!a || !voiceMp3Available[key]) return false;
     try {
@@ -1208,14 +1257,14 @@ var SFX = (function(){
     try {
       ctx = new (window.AudioContext || window.webkitAudioContext)();
       master = ctx.createGain();
-      master.gain.value = MASTER_VOLUME;
+      master.gain.value = sfxEnabled ? MASTER_VOLUME : 0;
       dry = ctx.createGain(); dry.gain.value = 0.85;
       wet = ctx.createGain(); wet.gain.value = 0.35;
       reverb = makeReverb(2.0, 2.4);
       dry.connect(master);
       wet.connect(reverb).connect(master);
       master.connect(ctx.destination);
-    } catch(e){ console.log("[SFX] AudioContext unavailable"); }
+    } catch(e){ dlog("[SFX] AudioContext unavailable"); }
     return ctx;
   }
 
@@ -1274,6 +1323,12 @@ var SFX = (function(){
   return {
     init: init,
     setVolume: function(v){ MASTER_VOLUME=v; if(master) master.gain.value=v; },
+    setEnabled: function(on){
+      sfxEnabled = !!on;
+      // 合成音はmasterゲインで制御（mp3はplayCustomSE/playVoiceMp3側でチェック）
+      if(master) master.gain.value = sfxEnabled ? MASTER_VOLUME : 0;
+    },
+    isEnabled: function(){ return sfxEnabled; },
 
     attack: function(){
       // MP3優先：あればMP3だけ、なければ合成音
@@ -1521,84 +1576,28 @@ var SFX = (function(){
       if(playVoiceMp3('fight')) return;
       init();
       var t = ctx.currentTime;
-      var out = bus(0.8);  // 長い余韻のためリバーブ多め
-
-      // ===== 1. 打音の瞬間「カッ！」（金属を叩いた瞬間の鋭い高音）=====
-      var hit = ctx.createBufferSource();
-      var hn = Math.floor(ctx.sampleRate*0.025);
-      var hbuf = ctx.createBuffer(1, hn, ctx.sampleRate);
-      var hd = hbuf.getChannelData(0);
-      for(var i=0;i<hn;i++) hd[i] = (Math.random()*2-1) * Math.pow(1-i/hn, 0.3);
-      hit.buffer = hbuf;
-      var hf = ctx.createBiquadFilter();
-      hf.type='bandpass'; hf.frequency.value=4500; hf.Q.value=3;
-      var hg = ctx.createGain(); hg.gain.value=0.55;
-      hit.connect(hf).connect(hg).connect(out);
-      hit.start(t);
-
-      // ===== 2. メインの金属共鳴音（複数の倍音を重ねる）=====
-      // 金属物の特徴：基音と非調和倍音（2.4倍, 4.8倍など整数倍ではない）
-      var fundamentals = [
-        {f: 420,  vol: 0.5,  decay: 2.5},   // 基音（カーンの「カ」）
-        {f: 850,  vol: 0.4,  decay: 2.2},   // 2倍に近い（金属の鳴り）
-        {f: 1320, vol: 0.35, decay: 1.8},   // 3.1倍
-        {f: 2200, vol: 0.25, decay: 1.2},   // 5.2倍
-        {f: 3300, vol: 0.18, decay: 0.9},   // 7.8倍
-        {f: 180,  vol: 0.45, decay: 3.5},   // 低音域（ゴングの重みづけ）
-      ];
-
-      fundamentals.forEach(function(p){
-        var o = ctx.createOscillator();
-        o.type = 'sine';
-        o.frequency.setValueAtTime(p.f, t);
-        // 金属らしい微妙なピッチダウン（実物の余韻に似せる）
-        o.frequency.exponentialRampToValueAtTime(p.f*0.95, t+p.decay);
-
-        // FM変調（金属の震え）
-        var fmOsc = ctx.createOscillator();
-        fmOsc.type='sine';
-        fmOsc.frequency.value = 7 + Math.random()*3;
-        var fmGain = ctx.createGain();
-        fmGain.gain.value = p.f*0.008;
-        fmOsc.connect(fmGain).connect(o.frequency);
-
-        // エンベロープ
-        var g = ctx.createGain();
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(p.vol, t+0.005);  // 瞬時に立ち上がり
-        g.gain.exponentialRampToValueAtTime(0.001, t+p.decay);
-
-        o.connect(g).connect(out);
-        o.start(t); o.stop(t+p.decay+0.1);
-        fmOsc.start(t); fmOsc.stop(t+p.decay+0.1);
-      });
-
-      // ===== 3. 中盤の「ーン」の伸び（持続音で金属の鳴りを補強）=====
-      var sustain = ctx.createOscillator();
-      sustain.type = 'triangle';
-      sustain.frequency.setValueAtTime(440, t);
-      sustain.frequency.exponentialRampToValueAtTime(430, t+2.0);
-      var sg = ctx.createGain();
-      sg.gain.setValueAtTime(0, t);
-      sg.gain.linearRampToValueAtTime(0.18, t+0.05);
-      sg.gain.setValueAtTime(0.18, t+0.5);
-      sg.gain.exponentialRampToValueAtTime(0.001, t+2.5);
-
-      // バンドパスでメタリックな質感
-      var sBp = ctx.createBiquadFilter();
-      sBp.type='bandpass'; sBp.frequency.value=1200; sBp.Q.value=2;
-      sustain.connect(sBp).connect(sg).connect(out);
-      sustain.start(t); sustain.stop(t+2.7);
-
-      // ===== 4. 重低音インパクト（打撃の衝撃感）=====
-      var kick = ctx.createOscillator(), kg = ctx.createGain();
-      kick.type='sine';
-      kick.frequency.setValueAtTime(120, t);
-      kick.frequency.exponentialRampToValueAtTime(35, t+0.15);
-      kg.gain.setValueAtTime(0.7, t);
-      kg.gain.exponentialRampToValueAtTime(0.001, t+0.3);
-      kick.connect(kg).connect(out);
-      kick.start(t); kick.stop(t+0.35);
+      var out = bus(0.3);
+      // 軽い電子音「ピンッ！」（高音の上昇＋短い余韻）控えめ音量
+      var o = ctx.createOscillator();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(660, t);
+      o.frequency.exponentialRampToValueAtTime(1320, t+0.08);
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.22, t+0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t+0.35);
+      o.connect(g).connect(out);
+      o.start(t); o.stop(t+0.4);
+      // きらめきの倍音（軽く）
+      var o2 = ctx.createOscillator();
+      o2.type='sine';
+      o2.frequency.setValueAtTime(1980, t+0.02);
+      var g2 = ctx.createGain();
+      g2.gain.setValueAtTime(0.0001, t+0.02);
+      g2.gain.exponentialRampToValueAtTime(0.10, t+0.04);
+      g2.gain.exponentialRampToValueAtTime(0.0001, t+0.3);
+      o2.connect(g2).connect(out);
+      o2.start(t+0.02); o2.stop(t+0.35);
     },
 
     // ラウンド完了：上昇する爽快な和音アルペジオ（mp3があれば優先）
@@ -1731,7 +1730,7 @@ var BGM = (function(){
         if(loaded) return;
         loaded = true;
         playlist[key].push(a);
-        console.log("[BGM] "+path+" 利用可能（"+key+"プレイリスト: "+playlist[key].length+"曲）");
+        dlog("[BGM] "+path+" 利用可能（"+key+"プレイリスト: "+playlist[key].length+"曲）");
         resolve(true);
       }, {once:true});
       a.addEventListener('error', function(){
@@ -2035,7 +2034,7 @@ var BGM = (function(){
       var p = a.play();
       if(p && p.catch) p.catch(function(){});
       fadeMp3(a, masterVol, 1.0);
-      console.log('[BGM] '+key+' 再生開始（1曲ループ）');
+      dlog('[BGM] '+key+' 再生開始（1曲ループ）');
       return true;
     } catch(e){ return false; }
   }
@@ -2078,7 +2077,7 @@ var BGM = (function(){
         var a = currentAudio[kind];
         if(a && !a.paused) return; // 本当に再生中ならスキップ
         // 同じkindだが実は鳴っていない → 続行して再生試行
-        console.log('[BGM] '+kind+' 状態は再生中だが実は止まっている → 再起動');
+        dlog('[BGM] '+kind+' 状態は再生中だが実は止まっている → 再起動');
       }
       // 前のトラックをフェードアウト
       ['title','start','battle'].forEach(function(k){
@@ -2091,7 +2090,7 @@ var BGM = (function(){
         playMp3(kind);
       } else if(kind === 'title' && playlist.start.length > 0){
         // titleが無ければstart BGMで代替（タイトル画面で「ゲーム開始」までstartを流す）
-        console.log('[BGM] title BGM未配置 → start BGMで代替');
+        dlog('[BGM] title BGM未配置 → start BGMで代替');
         playMp3('start');
       } else {
         // 合成BGMで代替（titleの場合はstart用の合成を使う）
@@ -2165,7 +2164,7 @@ function loadPortrait(box,id,s){
   var i=0;
   (function tn(){
     if(i>=cand.length){
-      console.log("[0N1] #"+id+" の画像が見つかりません。アバターを表示します。期待パス:", cand[0]);
+      dlog("[0N1] #"+id+" の画像が見つかりません。アバターを表示します。期待パス:", cand[0]);
       return;
     }
     var im=new Image();
@@ -2175,10 +2174,10 @@ function loadPortrait(box,id,s){
     im.onload=function(){if(done)return;done=true;
       box.querySelectorAll('canvas,img,.loading').forEach(function(n){n.remove();});
       im.style.width="100%";im.style.height="100%";im.style.objectFit="cover";box.appendChild(im);
-      if(i===0) console.log("[0N1] #"+id+" ローカル画像 OK:", cand[0]);
+      if(i===0) dlog("[0N1] #"+id+" ローカル画像 OK:", cand[0]);
     };
     im.onerror=function(){if(done)return;done=true;
-      if(i===0) console.log("[0N1] #"+id+" ローカル画像なし → 外部を試行:", cand[0]);
+      if(i===0) dlog("[0N1] #"+id+" ローカル画像なし → 外部を試行:", cand[0]);
       i++;tn();
     };
     im.src=cand[i];
@@ -2293,6 +2292,42 @@ function fxVoidCrash(){var u=++FX_ID;
       <animate attributeName="opacity" values="0;1;.5" dur=".7s" begin=".4s" fill="freeze"/>
     </text>
   </svg>`;}
+function fxGodEnd(){var u=++FX_ID;
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <filter id="gGE${u}"><feGaussianBlur stdDeviation="4"/></filter>
+      <radialGradient id="geCore${u}"><stop offset="0%" stop-color="#fff" stop-opacity="1"/><stop offset="30%" stop-color="#ffd76a" stop-opacity=".9"/><stop offset="70%" stop-color="#ff8a1f" stop-opacity=".5"/><stop offset="100%" stop-color="#3a1a00" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- 暗転背景 -->
+    <rect x="0" y="0" width="400" height="400" fill="#000" opacity="0">
+      <animate attributeName="opacity" values="0;.85;.7" dur="1.4s" fill="freeze"/>
+    </rect>
+    <!-- 中央から膨張する金色の光球 -->
+    <circle cx="200" cy="200" r="10" fill="url(#geCore${u})" opacity="0">
+      <animate attributeName="r" values="10;260" dur="1.6s" fill="freeze"/>
+      <animate attributeName="opacity" values="0;1;.8" dur="1.6s" fill="freeze"/>
+    </circle>
+    <!-- 放射状の光線 -->
+    ${Array.from({length:16}).map(function(_,i){var deg=i*22.5;
+      return `<g transform="rotate(${deg} 200 200)" opacity="0">
+        <animate attributeName="opacity" values="0;.95;0" dur="1.4s" begin="${.2+i*.02}s" fill="freeze"/>
+        <polygon points="200,200 192,-40 208,-40" fill="#ffd76a" filter="url(#gGE${u})"/>
+      </g>`;}).join('')}
+    <!-- 降り注ぐ金の粒子 -->
+    ${Array.from({length:14}).map(function(_,i){var x=30+i*26;
+      return `<circle cx="${x}" cy="-10" r="3" fill="#fff" opacity="0">
+        <animate attributeName="cy" from="-10" to="410" dur="${1+(i%5)*.15}s" begin="${.3+i*.05}s" fill="freeze"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="${1+(i%5)*.15}s" begin="${.3+i*.05}s" fill="freeze"/>
+      </circle>`;}).join('')}
+    <!-- 神の漢字 -->
+    <text x="200" y="248" font-family="Zen Dots,sans-serif" font-size="170" fill="#ffd76a" text-anchor="middle" opacity="0" filter="url(#gGE${u})" stroke="#7a4a00" stroke-width="3">神
+      <animate attributeName="opacity" values="0;1;.85" dur="1s" begin=".5s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="scale" from="1.5" to="1" additive="sum" dur="1s" begin=".5s" fill="freeze"/>
+    </text>
+    <text x="200" y="320" font-family="Zen Dots,sans-serif" font-size="20" fill="#fff" text-anchor="middle" opacity="0">ONE SOURCE
+      <animate attributeName="opacity" values="0;1;.6" dur=".8s" begin="1s" fill="freeze"/>
+    </text>
+  </svg>`;}
 function fxDefend(){var u=++FX_ID;
   return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
     <defs><filter id="gD${u}"><feGaussianBlur stdDeviation="4"/></filter></defs>
@@ -2344,14 +2379,17 @@ function fxCharge(){var u=++FX_ID;
 
 var FX={attack:fxAttack,overdrive:fxOverdrive,spirit:fxSpiritNova,phantom:fxPhantomSlash,
   void:fxVoidCrash,
-  defend:fxDefend,counter:fxCounter,miss:fxMiss,charge:fxCharge};
+  defend:fxDefend,counter:fxCounter,miss:fxMiss,charge:fxCharge,
+  special:fxOverdrive, god:fxGodEnd};
 
 // エフェクトを画面中央に大きく表示
 function showFullFx(kind,dur){
   var box=document.getElementById('fullfx');
+  if(!box) return;
+  var fn = FX[kind] || FX.attack; // 未定義kindでも落ちないよう保険
   var wrap=document.createElement('div');
   wrap.style.cssText='position:absolute;inset:0';
-  wrap.innerHTML=FX[kind]();
+  try { wrap.innerHTML=fn(); } catch(e){ return; }
   box.appendChild(wrap);
   setTimeout(function(){if(wrap.parentNode)wrap.parentNode.removeChild(wrap);},dur||1200);
 }
@@ -2364,7 +2402,7 @@ var I18N = {
   ja: {
     // スタート画面
     summon_title: "ファイターを召喚",
-    summon_desc: "0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style が能力を、<b>Background属性</b>がタイプ相性を決める。",
+    summon_desc: "0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style と Type（妖怪/化け物/鬼/神）が能力を決める。",
     ph_token: "例: 4718",
     btn_summon: "召喚",
     btn_random: "ランダムで選ぶ",
@@ -2414,9 +2452,9 @@ var I18N = {
     log_attack_first: "{tag}が先制攻撃！ {target}に → <span class=\"dmg\">{dmg}</span> ダメージ（⚡+1）",
     log_attack_counter: "{tag}も反撃！ {target}に → <span class=\"dmg\">{dmg}</span> ダメージ（⚡+1）",
     log_fall_no_counter: "{target}は倒れて反撃できなかった",
-    log_both_defend: "両者防御で体勢を立て直した！ YOU HP+<span style=\"color:var(--cyan)\">{hMe}</span> / ENEMY HP+<span style=\"color:var(--pink)\">{hEn}</span>",
+    log_both_defend: "両者防御…互いに隙がなく、にらみ合い（両者 ⚡-1）",
     log_both_charge: "両者ため！ 互いに ⚡+3",
-    log_both_counter: "両者カウンター態勢。動かず…",
+    log_both_counter: "両者カウンター…どちらも空振り！（両者 ⚡-2）",
     log_special_clash: "必殺技同士の激突！ 相討ち（YOU→ <span class=\"dmg\">{dm}</span> ダメージ / ENEMY→ <span class=\"dmg\">{de}</span> ダメージ）",
     log_defend_block: "{def}は防御！ {att}の攻撃を完全に防いだ",
     log_charge_break: "{cS}のため解除！ {aS}の攻撃 → <span class=\"dmg\">{dmg}</span> ダメージ（⚡+1）",
@@ -2441,6 +2479,17 @@ var I18N = {
     matchup_adv: "YOU 有利 ▲", matchup_dis: "YOU 不利 ▼", matchup_neu: "互角 =",
     entry_me: "⚔ 0N1 #{id} [{type}/{arch}] 入場！",
     entry_en: "☠ 敵 0N1 #{id} [{type}/{arch}] 選出！",
+    blessing_yokai: "{tag} 妖怪の覚醒 — M0R1Aの加護が発動！（種族数に応じてステータスが向上する）",
+    blessing_bakemono: "{tag} 化け物の覚醒 — D34THが能力を解放する！（種族数に応じてステータスが向上する）",
+    blessing_oni: "{tag} 鬼の覚醒 — M33KASAの守護が体を覆う！（種族数に応じてステータスが向上する）",
+    blessing_kami: "{tag} 神の覚醒 — One Sourceから力を吸い上げる！（全ステータスが上昇する）",
+    archetype_str: "{tag} 性格：武闘派（STR最高 — 攻撃を好む）",
+    archetype_spi: "{tag} 性格：守護型（SPI最高 — 防御で粘る）",
+    archetype_sty: "{tag} 性格：技巧派（STY最高 — カウンターで翻弄）",
+    god_instakill: "☠☠☠ 神の必殺技が炸裂！ One Sourceの力の前に、あなたの魂は砕け散った…",
+    god_charge_warning: "⚡⚡ 神が力を高めようとしている…！ このターン「ためる」を攻撃で潰せ！（阻止できねば必殺で即死）",
+    god_charge_broken: "💥 神の蓄積を打ち砕いた！ SPゲージ1本分を破壊（必殺を阻止）",
+    enemy_special_warning: "⚡ 敵のSPが満タン！ このターン必殺技を放ってくる！",
     matchup_log_adv: "⚡ 属性相性は YOU 有利！",
     matchup_log_dis: "属性相性は YOU 不利…",
     matchup_log_neu: "属性相性は互角",
@@ -2465,7 +2514,7 @@ var I18N = {
   },
   en: {
     summon_title: "Summon Your Fighter",
-    summon_desc: "Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style determine your stats, <b>Background</b> determines type matchups.",
+    summon_desc: "Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Yokai/Bakemono/Oni/Kami) determine your power.",
     ph_token: "e.g. 4718",
     btn_summon: "Summon",
     btn_random: "Pick at Random",
@@ -2514,9 +2563,9 @@ var I18N = {
     log_attack_first: "{tag} strikes first! {target} → <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
     log_attack_counter: "{tag} counters! {target} → <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
     log_fall_no_counter: "{target} fell, no counterattack",
-    log_both_defend: "Both defended and recovered! YOU HP+<span style=\"color:var(--cyan)\">{hMe}</span> / ENEMY HP+<span style=\"color:var(--pink)\">{hEn}</span>",
+    log_both_defend: "Both defend... no opening, a standoff (both ⚡-1)",
     log_both_charge: "Both charge! Each gains ⚡+3",
-    log_both_counter: "Both in counter stance. No movement…",
+    log_both_counter: "Both counter... both miss! (both ⚡-2)",
     log_special_clash: "Special clash! Mutual destruction (YOU→ <span class=\"dmg\">{dm}</span> dmg / ENEMY→ <span class=\"dmg\">{de}</span> dmg)",
     log_defend_block: "{def} defends! {att}'s attack completely blocked",
     log_charge_break: "{cS}'s charge broken! {aS}'s attack → <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
@@ -2539,6 +2588,17 @@ var I18N = {
     matchup_adv: "YOU Advantage ▲", matchup_dis: "YOU Disadvantage ▼", matchup_neu: "Even =",
     entry_me: "⚔ 0N1 #{id} [{type}/{arch}] enters the ring!",
     entry_en: "☠ Enemy 0N1 #{id} [{type}/{arch}] appears!",
+    blessing_yokai: "{tag} Yokai Awakening — M0R1A's blessing activates! (Stats rise based on race population)",
+    blessing_bakemono: "{tag} Bakemono Awakening — D34TH unleashes power! (Stats rise based on race population)",
+    blessing_oni: "{tag} Oni Awakening — M33KASA's protection envelops the body! (Stats rise based on race population)",
+    blessing_kami: "{tag} Kami Awakening — Drawing power from the One Source! (All stats rise)",
+    archetype_str: "{tag} Nature: Brawler (STR highest — favors attacks)",
+    archetype_spi: "{tag} Nature: Guardian (SPI highest — endures with defense)",
+    archetype_sty: "{tag} Nature: Trickster (STY highest — toys with counters)",
+    god_instakill: "☠☠☠ The Kami's special erupts! Before the One Source's might, your soul is shattered…",
+    god_charge_warning: "⚡⚡ The Kami is gathering power…! Crush its CHARGE with an attack this turn! (Fail = instant death by special)",
+    god_charge_broken: "💥 You shattered the Kami's buildup! Destroyed one SP bar (special prevented)",
+    enemy_special_warning: "⚡ Enemy SP is full! It will unleash its special this turn!",
     matchup_log_adv: "⚡ Type matchup: YOU Advantage!",
     matchup_log_dis: "Type matchup: YOU Disadvantage...",
     matchup_log_neu: "Type matchup is even",
@@ -2602,6 +2662,46 @@ var GAUGE_MAX=8; // 必殺技ゲージ上限（v7+G8）
 var G=null;
 function el(q){return document.querySelector(q);}
 
+// ===== キャンペーン（5連戦×4セット＋神戦）の管理 =====
+// 1セット = 5連戦（妖怪/妖怪/化け物/化け物/鬼）
+// 4セット完了で神戦
+var CAMPAIGN = null;
+var SET_ENEMIES = ['Y0K-A1','Y0K-A1','B4K3M0-N0','B4K3M0-N0','0N1']; // 5連戦の敵Type順
+var STAGE_SCORE = [100,150,300,400,600]; // 各戦の基本スコア
+var GOD_SCORE = 2500; // 神撃破スコア
+var SETS_PER_GOD = 4; // 何セットで神戦か
+
+// Type別のトークンIDリスト（キャッシュ）
+var _typePool = null;
+function buildTypePool(){
+  if(_typePool) return _typePool;
+  _typePool = {'Y0K-A1':[],'B4K3M0-N0':[],'0N1':[],'K4M-1':[]};
+  if(TRAITS_DATA){
+    for(var id in TRAITS_DATA){
+      var t = normalizeTraits(TRAITS_DATA[id]);
+      if(t && t.Type && _typePool[t.Type]) _typePool[t.Type].push(parseInt(id,10));
+    }
+  }
+  // 万一空なら全番号からランダムでフォールバック
+  return _typePool;
+}
+function randomEnemyOfType(type){
+  var pool = buildTypePool()[type];
+  if(pool && pool.length) return pool[Math.floor(Math.random()*pool.length)];
+  return 1+Math.floor(Math.random()*7777); // フォールバック
+}
+function newCampaign(playerId){
+  CAMPAIGN = {
+    playerId: playerId,
+    setIndex: 0,    // 現在のセット番号(0-3)
+    stageIndex: 0,  // セット内の戦目(0-4)
+    totalScore: 0,  // 累計スコア
+    setsCleared: 0, // クリアしたセット数（神戦カウント用）
+    inGodBattle: false,
+    wins: 0, losses: 0
+  };
+}
+
 function makeFighter(id){
   var ty=typeOf(id);
   var s=deriveStats(id);
@@ -2646,26 +2746,57 @@ function buildCard(side){
     '</div>'+
     '<div class="tcg-foot">'+f.type+' · '+f.special.kind+'</div>';
   loadPortrait(el('#'+side+'Art'),f.id,f.st);
+  // ★神（神戦の敵）には金色オーラを付与
+  if(side==='en' && G.isGod && f.type==='K4M-1'){
+    c.classList.add('god-aura');
+  } else {
+    c.classList.remove('god-aura');
+  }
 }
 function renderTypebar(){
   // 4Typeシステムでは属性じゃんけんが無いので、代わりに両者のType名とゲージを表示
   var me=G.me, en=G.en;
   var cM=TYPE_COLOR[me.type], cE=TYPE_COLOR[en.type];
+  // 神は2段ゲージ表示（例: ⚡8+3）
+  var enGaugeStr;
+  if(G.isGod && G.godGaugeMax){
+    var g=en.gauge;
+    if(g<=8) enGaugeStr='⚡'+g+'/16';
+    else enGaugeStr='⚡<span style="color:#ff8a1f">'+g+'/16</span>';
+  } else {
+    enGaugeStr='⚡'+en.gauge;
+  }
   el('#typebar').innerHTML =
     '<span class="typechip" style="color:'+cM+'">'+me.type+'</span>'+
     '<span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡'+me.gauge+'</span>'+
     '<span class="vsmark">VS</span>'+
-    '<span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡'+en.gauge+'</span>'+
+    '<span style="color:var(--gold);font-family:Zen Dots;font-size:11px">'+enGaugeStr+'</span>'+
     '<span class="typechip" style="color:'+cE+'">'+en.type+'</span>';
 }
 function updateBars(f,side){
   var p=side==='me'?'#me':'#en';
   el(p+'Hp').style.width=Math.max(0,f.hp)/f.maxhp*100+'%';
   el(p+'HpTxt').textContent=Math.max(0,Math.round(f.hp))+'/'+f.maxhp;
-  // 必殺技ゲージ表示（0〜GAUGE_MAX、満タンでなく1以上で必殺可）
+  // 必殺技ゲージ表示
   var rf=el(p+'Rage');
-  rf.style.width=Math.min(100, (f.gauge/GAUGE_MAX*100))+'%';
-  if(f.gauge>=1)rf.classList.add('full');else rf.classList.remove('full');
+  // ★神（敵・2段ゲージ）の表示：1本目=黄色、2本目=オレンジ
+  if(side==='en' && G && G.isGod && G.godGaugeMax){
+    var g = f.gauge;
+    if(g <= 8){
+      // 1本目（黄色）が溜まり中
+      rf.style.width = Math.min(100, g/8*100)+'%';
+      rf.classList.remove('full','god2');
+    } else {
+      // 2本目（オレンジ）が溜まり中。バーはオレンジで2本目の量を表示
+      rf.style.width = Math.min(100, (g-8)/8*100)+'%';
+      rf.classList.add('god2');
+      if(g >= G.godGaugeMax) rf.classList.add('full'); else rf.classList.remove('full');
+    }
+  } else {
+    rf.style.width=Math.min(100, (f.gauge/GAUGE_MAX*100))+'%';
+    rf.classList.remove('god2');
+    if(f.gauge>=GAUGE_MAX)rf.classList.add('full');else rf.classList.remove('full');
+  }
   if(side==='me')el('#spBtn').classList.toggle('ready',f.gauge>=GAUGE_MAX);
   // 上のtypebarも更新（ゲージ数値表示のため）
   if(G && !G.over){ renderTypebar(); }
@@ -2686,25 +2817,48 @@ function specialPower(att){return Math.max(1,Math.round(att.maxhp*att.special.ra
 // ===================== 敵AI（4Type仕様・v4バランス）=====================
 function enemyPlan(){
   var en=G.en, me=G.me, plan=[];
+  var gmax = (G.isGod && G.godGaugeMax) ? G.godGaugeMax : GAUGE_MAX; // 神は16
   var predGauge = en.gauge; // 予測ゲージ（厳密：必殺技の-だけ確定、ためるは不確実なので予測しない）
   for(var i=0;i<3;i++){
     var s=en.st;
     // 厳密な必殺技判定：現在の予測ゲージがMAX以上の時のみ
-    if(predGauge >= GAUGE_MAX && Math.random() < 0.9){
+    // ★神は必ず撃つ（即死級）。通常敵は90%
+    var spProb = (G.isGod ? 1.0 : 0.9);
+    if(predGauge >= gmax && Math.random() < spProb){
       plan.push('special');
       predGauge = 0;
       continue;
     }
-    // 重み付け：攻撃多め、ためる/カウンター少なめ
-    var w={attack:1.2, defend:0.7, charge:0.8, counter:0.6};
-    if(s.strength >= 7) w.attack += 0.7;
-    if(s.style >= 7) w.counter += 0.4;
-    if(s.spirit >= 7) w.defend += 0.6;
+    // 重み付け：基本値
+    var w={attack:1.0, defend:0.7, charge:0.8, counter:0.6};
+    // ★行動特性：一番高いステで「性格」が決まる
+    var hi = Math.max(s.strength, s.spirit, s.style);
+    if(s.strength === hi){
+      // 武闘派：攻撃的、必殺も積極
+      w.attack += 1.0; w.charge += 0.3;
+    } else if(s.spirit === hi){
+      // 守護型：守って粘る
+      w.defend += 0.9; w.charge += 0.4; w.attack += 0.2;
+    } else {
+      // 技巧派（STY最高）：カウンター・先制で翻弄
+      w.counter += 0.8; w.attack += 0.4;
+    }
+    // 補助：各ステが高ければさらに微増
+    if(s.strength >= 15) w.attack += 0.3;
+    if(s.style >= 15) w.counter += 0.3;
+    if(s.spirit >= 15) w.defend += 0.3;
     // HP少ない時は守り寄り
     if(en.hp/en.maxhp < 0.35){ w.defend += 0.8; w.attack *= 0.7; }
     // ゲージ高い時はためるを減らす
     if(predGauge >= GAUGE_MAX - 2) w.charge *= 0.3;
     else if(predGauge >= Math.floor(GAUGE_MAX*0.5)) w.charge *= 0.6;
+    // ★同じ行動の繰り返しを抑制（直前と同じ手は重みを下げる、3連続はさらに）
+    var prev = plan.length>0 ? plan[plan.length-1] : null;
+    var prev2 = plan.length>1 ? plan[plan.length-2] : null;
+    if(prev && w[prev] !== undefined){
+      w[prev] *= 0.45; // 直前と同じ手は出にくく
+      if(prev2 === prev && w[prev] !== undefined) w[prev] *= 0.3; // 2連続続いたら更に強く抑制
+    }
     var tot=w.attack+w.defend+w.charge+w.counter, pk=Math.random()*tot;
     var chosen;
     if((pk-=w.attack)<0) chosen='attack';
@@ -2729,24 +2883,24 @@ function resolvePair(meAct,enAct){
   var me=G.me, en=G.en, lines=[];
 
   // ===== デバッグログ =====
-  console.log('━━━━━━━━━━━━━━');
-  console.log('[resolvePair] 開始');
-  console.log('  meAct = ' + meAct + ', enAct = ' + enAct);
-  console.log('  before: me.gauge='+me.gauge+', en.gauge='+en.gauge);
-  console.log('  before: me.hp='+me.hp+'/'+me.maxhp+', en.hp='+en.hp+'/'+en.maxhp);
+  dlog('━━━━━━━━━━━━━━');
+  dlog('[resolvePair] 開始');
+  dlog('  meAct = ' + meAct + ', enAct = ' + enAct);
+  dlog('  before: me.gauge='+me.gauge+', en.gauge='+en.gauge);
+  dlog('  before: me.hp='+me.hp+'/'+me.maxhp+', en.hp='+en.hp+'/'+en.maxhp);
 
   // 必殺技はゲージMAXが必要（条件を満たさない場合は攻撃に降格）
   if(meAct==='special' && me.gauge<GAUGE_MAX){
-    console.log('  [降格] meはゲージMAX未満で必殺→攻撃 (gauge='+me.gauge+'/'+GAUGE_MAX+')');
+    dlog('  [降格] meはゲージMAX未満で必殺→攻撃 (gauge='+me.gauge+'/'+GAUGE_MAX+')');
     lines.push({h:T('log_demote_me'), c:'sys'});
     meAct='attack';
   }
   if(enAct==='special' && en.gauge<GAUGE_MAX){
-    console.log('  [降格] enはゲージMAX未満で必殺→攻撃 (gauge='+en.gauge+'/'+GAUGE_MAX+')');
+    dlog('  [降格] enはゲージMAX未満で必殺→攻撃 (gauge='+en.gauge+'/'+GAUGE_MAX+')');
     lines.push({h:T('log_demote_en'), c:'sys'});
     enAct='attack';
   }
-  console.log('  pair = "'+meAct+':'+enAct+'"');
+  dlog('  pair = "'+meAct+':'+enAct+'"');
 
   lines.push({h:T('pair_label',{me:ANAME[meAct],en:ANAME[enAct]}),c:'clash'});
 
@@ -2759,6 +2913,11 @@ function resolvePair(meAct,enAct){
   function dealDamage(target, side, dmg, opts){
     opts = opts||{};
     dmg = Math.max(0, Math.ceil(dmg));
+    // ★デバッグ無敵：プレイヤー(me)はダメージを受けない
+    if(side === 'me' && window.DBG_INVINCIBLE){
+      floatTxt(side, 'GUARD', '#22e6e0');
+      return 0;
+    }
     target.hp = Math.max(0, target.hp - dmg);
     // スコア集計：sideは「ダメージを受ける側」なので、enならYOU与ダメ、meならYOU被ダメ
     if(dmg > 0 && G){
@@ -2782,13 +2941,13 @@ function resolvePair(meAct,enAct){
     var before = f.gauge;
     f.gauge = Math.min(GAUGE_MAX, Math.max(0, f.gauge + n));
     if(typeof console !== 'undefined'){
-      console.log('[gauge] '+side+': '+before+' -> '+f.gauge+' (+'+n+')');
+      dlog('[gauge] '+side+': '+before+' -> '+f.gauge+' (+'+n+')');
     }
     updateBars(f, side);
   }
   function resetGauge(f, side){
     if(f.gauge !== 0){
-      console.log('[gauge RESET] '+side+': '+f.gauge+' -> 0');
+      dlog('[gauge RESET] '+side+': '+f.gauge+' -> 0');
     }
     f.gauge = 0; updateBars(f, side);
   }
@@ -2831,7 +2990,7 @@ function resolvePair(meAct,enAct){
 
   // ========== 同じコマンド ==========
   if(meAct === enAct){
-    console.log('  [case] 同じコマンド同士: '+meAct);
+    dlog('  [case] 同じコマンド同士: '+meAct);
     if(meAct === 'attack'){
       // Style先制 → トドメ判定
       var f = whoFirst();
@@ -2862,21 +3021,13 @@ function resolvePair(meAct,enAct){
       return lines;
     }
     if(meAct === 'defend'){
-      // 防御同士：両者がSpiritで回復（HP80ベース）
-      function healDefender(f, side){
-        var heal = Math.max(2, Math.round(1 + f.st.spirit * 0.4)); // v7: max(2, 1+SPI*0.4)
-        if(f.hp >= f.maxhp) { return 0; }
-        var actual = Math.min(heal, f.maxhp - f.hp);
-        f.hp += actual;
-        updateBars(f, side);
-        floatTxt(side, '+'+actual, '#22e6e0');
-        return actual;
-      }
-      SFX.defend(); SFX.heal();
-      showFullFx('defend', 900);
-      var hMe = healDefender(me, 'me');
-      var hEn = healDefender(en, 'en');
-      lines.push({h:T('log_both_defend',{hMe:hMe,hEn:hEn}), c:'sys'});
+      // v8変更: 両者防御は「相手に隙がない」→ 回復なし、両者ゲージ-1
+      SFX.defend();
+      showFullFx('defend', 700);
+      addGauge(me, 'me', -1);
+      addGauge(en, 'en', -1);
+      floatTxt('me','⚡-1','#9b3cff'); floatTxt('en','⚡-1','#9b3cff');
+      lines.push({h:T('log_both_defend'), c:'sys'});
       return lines;
     }
     if(meAct === 'charge'){
@@ -2889,10 +3040,11 @@ function resolvePair(meAct,enAct){
       return lines;
     }
     if(meAct === 'counter'){
-      // v4: 両者カウンターで両者-3ダメ（撃ち合い）
-      var clash = 3;
-      dealDamage(me, 'me', clash, {});
-      dealDamage(en, 'en', clash, {});
+      // v8変更: 両者カウンターは「空振り」→ HP変化なし、両者ゲージ-2
+      SFX.counter();
+      addGauge(me, 'me', -2);
+      addGauge(en, 'en', -2);
+      floatTxt('me','⚡-2','#9b3cff'); floatTxt('en','⚡-2','#9b3cff');
       lines.push({h:T('log_both_counter'), c:'sys'});
       return lines;
     }
@@ -2922,7 +3074,7 @@ function resolvePair(meAct,enAct){
     // 軽減後 = max(1, ceil(攻撃ダメ - SPI*0.4))
     var atkDmgBase = applyTypeMod(Math.ceil(4 + atkChar.st.strength * 0.6), atkChar.type, defChar2.type);
     var reduced = Math.max(1, Math.ceil(atkDmgBase - defChar2.st.spirit * 0.4));
-    console.log('  [case] 攻撃 vs 防御 (v7軽減: '+atkDmgBase+'→'+reduced+')');
+    dlog('  [case] 攻撃 vs 防御 (v7軽減: '+atkDmgBase+'→'+reduced+')');
     // 攻撃エフェクト
     showFullFx('attack', 700); SFX.attack();
     setTimeout(function(){
@@ -2932,8 +3084,8 @@ function resolvePair(meAct,enAct){
     }, 250);
     // 軽減ダメージ適用
     dealDamage(defChar2, defSide, reduced, {});
-    // 攻撃側ゲージ+1
-    addGauge(atkChar, atkSide, 1);
+    // v8変更: ゲージは防御側+1（攻撃を受け止めた防御側が気を溜める）
+    addGauge(defChar2, defSide, 1);
     // 防御側に SPI*0.2 追加回復
     var addHeal = Math.ceil(defChar2.st.spirit * 0.2);
     if(defChar2.hp > 0 && defChar2.hp < defChar2.maxhp){
@@ -2951,7 +3103,7 @@ function resolvePair(meAct,enAct){
 
   // ========== 攻撃 vs ためる ==========
   if(pair === 'attack:charge' || pair === 'charge:attack'){
-    console.log('  [case] 攻撃 vs ためる (ためる側はゲージリセット)');
+    dlog('  [case] 攻撃 vs ためる (ためる側はゲージリセット)');
     var aS = (pair==='attack:charge')?'me':'en';
     var cS = aS==='me'?'en':'me';
     var attChar = aS==='me'?me:en;
@@ -2968,7 +3120,7 @@ function resolvePair(meAct,enAct){
 
   // ========== 攻撃 vs カウンター ==========
   if(pair === 'attack:counter' || pair === 'counter:attack'){
-    console.log('  [case] 攻撃 vs カウンター');
+    dlog('  [case] 攻撃 vs カウンター');
     var atS = (pair==='attack:counter')?'me':'en';
     var coS = atS==='me'?'en':'me';
     var coChar = coS==='me'?me:en;
@@ -2989,7 +3141,7 @@ function resolvePair(meAct,enAct){
     var chChar = chS==='me'?me:en;
     // v7: ためる獲得量 = 2 + floor(SPI*0.15)
     var cAmt = 2 + Math.floor(chChar.st.spirit * 0.15);
-    console.log('  [case] 防御 vs ためる (ためる側 ⚡+'+cAmt+')');
+    dlog('  [case] 防御 vs ためる (ためる側 ⚡+'+cAmt+')');
     addGauge(chChar, chS, cAmt);
     floatTxt(chS,'+'+cAmt,'#ffc83a');
     lines.push({h:T('log_charge_gap',{tag:tagOf(chS)}), c:'sys'});
@@ -2998,7 +3150,7 @@ function resolvePair(meAct,enAct){
 
   // ========== 防御 vs カウンター ==========
   if(pair === 'defend:counter' || pair === 'counter:defend'){
-    console.log('  [case] 防御 vs カウンター');
+    dlog('  [case] 防御 vs カウンター');
     var defSide = (pair === 'defend:counter') ? 'me' : 'en';
     var defChar = defSide === 'me' ? me : en;
     var ctrSide = defSide === 'me' ? 'en' : 'me';
@@ -3033,7 +3185,7 @@ function resolvePair(meAct,enAct){
     var ctChar = ctS==='me'?me:en;
     // v7: ためる獲得量 = 2 + floor(SPI*0.15)
     var cAmt2 = 2 + Math.floor(cgChar.st.spirit * 0.15);
-    console.log('  [case] ためる vs カウンター (ためる側 ⚡+'+cAmt2+', カウンター側 -4HP+ゲージ-2)');
+    dlog('  [case] ためる vs カウンター (ためる側 ⚡+'+cAmt2+', カウンター側 -4HP+ゲージ-2)');
     addGauge(cgChar, cgS, cAmt2);
     floatTxt(cgS,'+'+cAmt2,'#ffc83a');
     // v7: カウンター空振り -4 HP + ゲージ-2
@@ -3049,7 +3201,7 @@ function resolvePair(meAct,enAct){
 
   // ========== 必殺技 vs * ==========
   if(meAct === 'special' || enAct === 'special'){
-    console.log('  [case] 必殺技あり');
+    dlog('  [case] 必殺技あり');
     var spS, oppS, spChar, oppChar, oppAct;
     if(meAct === 'special'){ spS='me'; oppS='en'; spChar=me; oppChar=en; oppAct=enAct; }
     else { spS='en'; oppS='me'; spChar=en; oppChar=me; oppAct=meAct; }
@@ -3142,11 +3294,30 @@ function resolvePair(meAct,enAct){
 }
 
 function startTurn(){
-  G.meQueue=[];G.enQueue=enemyPlan();G.phase='select';
-  console.log('━━━━━━━━━━━━━━');
-  console.log('[ラウンド '+G.turn+' 開始]');
-  console.log('  敵の予定（plan）: ['+G.enQueue.join(', ')+']');
-  console.log('  状態: me.gauge='+G.me.gauge+', en.gauge='+G.en.gauge);
+  G.meQueue=[];
+  G.enQueue=enemyPlan();
+  G.godChargingThisTurn = false;
+  // ★神戦：2本目(SP10以上=オレンジ途中)で必殺モード。次の手のどこか1つで「ためる」して2本目満タン狙い
+  if(G.isGod && G.godGaugeMax && G.en.gauge>=10 && G.en.gauge<G.godGaugeMax){
+    G.godChargingThisTurn = true;
+    var chargePos = Math.floor(Math.random()*3); // ためる位置（プレイヤーには見えない）
+    G.godChargePos = chargePos;
+    for(var i=0;i<3;i++){
+      G.enQueue[i] = (i===chargePos) ? 'charge' : (Math.random()<0.6?'attack':'defend');
+    }
+  }
+  G.phase='select';
+  dlog('━━━━━━━━━━━━━━');
+  dlog('[ラウンド '+G.turn+' 開始]');
+  dlog('  敵の予定（plan）: ['+G.enQueue.join(', ')+']');
+  dlog('  状態: me.gauge='+G.me.gauge+', en.gauge='+G.en.gauge);
+  // ★神の必殺予告
+  if(G.godChargingThisTurn){
+    log(T('god_charge_warning',{}), 'clash');
+  } else if(!G.isGod && G.enQueue.indexOf('special') >= 0){
+    // ★通常敵：このターン必殺技を撃つ予告（SP満タン）
+    log(T('enemy_special_warning',{}), 'clash');
+  }
   el('#phase').innerHTML=T('phase_select_turn',{n:G.turn});
   el('#phase').className='phase';
   renderQueue();renderEnemyQueue(true,-1);
@@ -3188,10 +3359,10 @@ function setCmd(on){document.querySelectorAll('.cmd').forEach(function(b){
   b.disabled=dis;});}
 function pickCmd(act){if(G.phase!=='select'||G.meQueue.length>=3)return;
   if(act==='special' && predictedGauge() < GAUGE_MAX){
-    console.log('[pickCmd] 必殺技を選択したが予測ゲージ不足で却下 (predicted='+predictedGauge()+'/'+GAUGE_MAX+')');
+    dlog('[pickCmd] 必殺技を選択したが予測ゲージ不足で却下 (predicted='+predictedGauge()+'/'+GAUGE_MAX+')');
     return;
   }
-  console.log('[pickCmd] 選択: '+act+' (queue長 '+G.meQueue.length+' -> '+(G.meQueue.length+1)+', 予測ゲージ '+predictedGauge()+')');
+  dlog('[pickCmd] 選択: '+act+' (queue長 '+G.meQueue.length+' -> '+(G.meQueue.length+1)+', 予測ゲージ '+predictedGauge()+')');
   SFX.cmdSelect();
   G.meQueue.push(act);renderQueue();
   if(G.meQueue.length>=3){
@@ -3276,12 +3447,41 @@ function doFight(){
       }, 4000);
       try {
         renderQueue(step);renderEnemyQueue(false,step);
-        console.log('[戦闘解決] step='+step+', '+G.meQueue[step]+' vs '+G.enQueue[step]);
+        dlog('[戦闘解決] step='+step+', '+G.meQueue[step]+' vs '+G.enQueue[step]);
+        var godMax = (G.godGaugeMax || GAUGE_MAX);
+        // ★神戦：神が必殺技を出したらプレイヤー即死（2本=16必要）
+        if(G.godInstakill && G.enQueue[step]==='special' && G.en.gauge>=godMax){
+          if(window.DBG_INVINCIBLE){
+            log('🛡 [DEBUG] 無敵で神の必殺を耐えた！', 'adv');
+            G.en.gauge = 0; updateBars(G.en,'en');
+          } else {
+            log(T('god_instakill',{}), 'clash');
+            showFullFx('god', 2000); SFX.special();
+            G.me.hp = 0; updateBars(G.me,'me');
+            step=3;
+            if(watchdog){ clearTimeout(watchdog); watchdog=null; }
+            setTimeout(finish,1000); return;
+          }
+        }
+        // ★神戦：神の「ためる」を攻撃で潰すと、溜めている1本分が0に（8の倍数へ切り下げ）
+        var godChargeBroken = false;
+        if(G.isGod && G.enQueue[step]==='charge' &&
+           (G.meQueue[step]==='attack' || G.meQueue[step]==='special')){
+          var before = G.en.gauge;
+          G.en.gauge = Math.floor(G.en.gauge/8)*8; // 今溜めてる1本を捨てる
+          if(G.en.gauge !== before){
+            godChargeBroken = true;
+          }
+        }
         var result = resolvePair(G.meQueue[step],G.enQueue[step]);
         if(result && result.forEach){
           result.forEach(function(l){log(l.h,l.c);});
         } else {
           console.warn('[戦闘] resolvePair が空を返した:', G.meQueue[step], 'vs', G.enQueue[step]);
+        }
+        if(godChargeBroken){
+          log(T('god_charge_broken',{}), 'adv');
+          updateBars(G.en,'en');
         }
       } catch(e){
         console.error('[戦闘エラー]', e, 'step=', step, 'pair=', G.meQueue[step], 'vs', G.enQueue[step]);
@@ -3314,15 +3514,24 @@ function calcScore(){
   var remainHp = Math.max(0, G.me.hp);
   var rounds = Math.max(1, G.turn - (G.over?1:0));
 
-  var base = dmgDealt * 10 - dmgTaken * 5 + remainHp * 5;
-  var winBonus = win ? (1000 - rounds * 50) : 0;
-  var loseBonus = win ? 0 : -500;
-  var total = base + winBonus + loseBonus;
+  // 敵別の基本スコア（神 or 各ステージ）
+  var enemyBase;
+  if(G.isGod){
+    enemyBase = GOD_SCORE; // 2500
+  } else if(CAMPAIGN){
+    enemyBase = STAGE_SCORE[CAMPAIGN.stageIndex] || 100;
+  } else {
+    enemyBase = 100;
+  }
+  // 鮮やかさ（今の式を約1/5に縮小）
+  var sharp = dmgDealt * 2 - dmgTaken * 1 + remainHp * 1 + Math.max(0, 100 - rounds * 10);
+  // 勝った戦だけスコア。負けは0。
+  var total = win ? (enemyBase + sharp) : 0;
   return {
     total: total, win: win,
     dmgDealt: dmgDealt, dmgTaken: dmgTaken,
     remainHp: remainHp, rounds: rounds,
-    base: base, winBonus: winBonus, loseBonus: loseBonus
+    enemyBase: enemyBase, sharp: sharp, isGod: G.isGod
   };
 }
 
@@ -3335,15 +3544,57 @@ function renderScore(sc){
     : '0 0 18px var(--pink),0 2px 6px #000';
 
   var lines = [];
-  lines.push('<b>'+T('sc_dmg_dealt')+'</b> '+sc.dmgDealt+' × 10 = +' + (sc.dmgDealt*10));
-  lines.push('<b>'+T('sc_dmg_taken')+'</b> '+sc.dmgTaken+' × 5 = ' + (-sc.dmgTaken*5));
-  lines.push('<b>'+T('sc_remain_hp')+'</b> '+sc.remainHp+' × 5 = +' + (sc.remainHp*5));
   if(sc.win){
-    lines.push('<b>'+T('sc_win_bonus')+'</b> 1000 - ('+sc.rounds+' × 50) = ' + (sc.winBonus>=0?'+':'') + sc.winBonus);
+    lines.push('<b>'+(LANG==='ja'?'撃破ボーナス':'Defeat Bonus')+'</b> +' + sc.enemyBase + (sc.isGod?(LANG==='ja'?'（神！）':' (Kami!)'):''));
+    lines.push('<b>'+(LANG==='ja'?'鮮やかさ':'Brilliance')+'</b> '+(sc.sharp>=0?'+':'') + sc.sharp);
+    lines.push('<span style="font-size:11px;opacity:.7">'+(LANG==='ja'?'（与ダメ×2 − 被ダメ×1 + 残HP + 速攻ボーナス）':'(Dealt×2 − Taken×1 + HP + Speed bonus)')+'</span>');
   } else {
-    lines.push('<b>'+T('sc_lose_penalty')+'</b> -500');
+    lines.push('<b>'+(LANG==='ja'?'敗北 — スコアなし':'Defeat — No score')+'</b>');
+    lines.push('<span style="font-size:11px;opacity:.7">'+(LANG==='ja'?'勝った戦だけスコアが入る':'Only won battles score')+'</span>');
   }
   el('#scoreBreakdown').innerHTML = lines.join('<br>');
+}
+
+// キャンペーン進行表示
+function renderCampaignProgress(sc){
+  var box = el('#campaignProgress');
+  if(!box || !CAMPAIGN){ if(box) box.style.display='none'; return; }
+  box.style.display='block';
+  var ja = (LANG==='ja');
+  var typeJa = {'Y0K-A1':'妖怪','B4K3M0-N0':'化け物','0N1':'鬼','K4M-1':'神'};
+  // たった今終わった戦の結果を反映するため、進行は「次の戦」を指している
+  // ステージ5マスを描画（現在のセットの進捗）
+  var stagesHtml = '';
+  for(var i=0;i<5;i++){
+    var cls = 'cp-stage';
+    var label = typeJa[SET_ENEMIES[i]] || '?';
+    if(i < CAMPAIGN.stageIndex) cls += ' done';
+    else if(i === CAMPAIGN.stageIndex && !CAMPAIGN.inGodBattle) cls += ' current';
+    stagesHtml += '<div class="'+cls+'">'+label+'</div>';
+  }
+  var setLabel = ja
+    ? ('第 '+(CAMPAIGN.setIndex+1)+' / '+SETS_PER_GOD+' セット')
+    : ('Set '+(CAMPAIGN.setIndex+1)+' / '+SETS_PER_GOD);
+  var html = '<div class="cp-label">'+setLabel+'</div>';
+  html += '<div class="cp-stages">'+stagesHtml+'</div>';
+  html += '<div class="cp-label">'+(ja?'累計スコア':'TOTAL SCORE')+'</div>';
+  html += '<div class="cp-total">'+CAMPAIGN.totalScore+'</div>';
+  if(CAMPAIGN.inGodBattle){
+    html += '<div class="cp-god">'+(ja?'⚡ 次は神（K4M-1）との決戦！ ⚡':'⚡ Next: Battle vs the Kami (K4M-1)! ⚡')+'</div>';
+  } else {
+    var remain = SETS_PER_GOD - CAMPAIGN.setsCleared;
+    html += '<div class="cp-label" style="margin-top:6px;opacity:.8">'+(ja?('神まであと '+remain+' セット'):('Kami in '+remain+' set(s)'))+'</div>';
+  }
+  box.innerHTML = html;
+
+  // 「次の戦へ」ボタンを表示
+  var nb = el('#nextBattleBtn');
+  if(nb){
+    nb.style.display = '';
+    nb.textContent = CAMPAIGN.inGodBattle
+      ? (ja?'神に挑む →':'Face the Kami →')
+      : (ja?'次の戦へ →':'Next Battle →');
+  }
 }
 
 // 名前を保持（再戦時に再入力不要）
@@ -3366,13 +3617,15 @@ function registerToRanking(){
   }
   setStoredName(name);
   var sc = calcScore();
+  // キャンペーンの累計スコアを登録（周回で貯めた合計を競う）
+  var regScore = (CAMPAIGN ? CAMPAIGN.totalScore : sc.total);
   var btn = el('#registerBtn');
   btn.disabled = true;
   btn.textContent = T('btn_registering');
 
   window.FB.addDoc(window.FB.collection(window.FB.db, 'rankings'), {
     name: name,
-    score: sc.total,
+    score: regScore,
     win: sc.win,
     dmgDealt: sc.dmgDealt,
     dmgTaken: sc.dmgTaken,
@@ -3521,7 +3774,7 @@ function showRanking(){
         '</div>'+
       '</div>';
     });
-    console.log('[ranking] 取得: '+snap.size+'件, 期間内: '+rank+'件, 期間外除外: '+filteredCount+'件');
+    dlog('[ranking] 取得: '+snap.size+'件, 期間内: '+rank+'件, 期間外除外: '+filteredCount+'件');
     if(rank === 0){
       listEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">'+T('ranking_empty')+'</div>';
     } else {
@@ -3575,6 +3828,33 @@ function finish(){
     var sc = calcScore();
     renderScore(sc);
 
+    // ★キャンペーン進行処理
+    if(CAMPAIGN){
+      CAMPAIGN.totalScore += sc.total;
+      if(win) CAMPAIGN.wins++; else CAMPAIGN.losses++;
+      if(CAMPAIGN.inGodBattle){
+        // 神戦が終わった → 神戦解除、次の周回へ（セットリセット）
+        CAMPAIGN.inGodBattle = false;
+        CAMPAIGN.setIndex = 0;
+        CAMPAIGN.stageIndex = 0;
+        CAMPAIGN.setsCleared = 0;
+      } else {
+        // 通常の5連戦：次のステージへ
+        CAMPAIGN.stageIndex++;
+        if(CAMPAIGN.stageIndex >= 5){
+          // 1セット完了
+          CAMPAIGN.stageIndex = 0;
+          CAMPAIGN.setIndex++;
+          CAMPAIGN.setsCleared++;
+          if(CAMPAIGN.setsCleared >= SETS_PER_GOD){
+            // 4セット完了 → 次は神戦
+            CAMPAIGN.inGodBattle = true;
+          }
+        }
+      }
+      renderCampaignProgress(sc);
+    }
+
     // 名前入力フィールドに前回の名前を復元
     var nameEl = el('#playerName');
     nameEl.value = getStoredName();
@@ -3598,7 +3878,7 @@ function finish(){
   },900);
 }
 
-function startBattle(myId){
+function startBattle(myId, keepCampaign){
   // 前回の終了表示や移動したログタイトルを掃除
   document.querySelectorAll('.endbanner, .endpanel, .log-title-after').forEach(function(n){
     if(n.parentNode) n.parentNode.removeChild(n);
@@ -3611,9 +3891,43 @@ function startBattle(myId){
     logEl.style.height = '';     // 高さリセット
     logEl.style.textAlign = '';  // テキスト配置リセット
   }
-  var enId;do{enId=1+Math.floor(Math.random()*7777);}while(enId===myId);
+  // キャンペーン未開始なら新規作成（keepCampaign=trueなら既存を維持＝デバッグ用）
+  if(!keepCampaign && (!CAMPAIGN || CAMPAIGN.playerId !== myId)){
+    newCampaign(myId);
+  }
+  // 現在のステージに応じて敵Typeを決定
+  var isGod = CAMPAIGN.inGodBattle;
+  var enId, enType;
+  if(isGod){
+    enType = 'K4M-1';
+    enId = randomEnemyOfType('K4M-1');
+  } else {
+    enType = SET_ENEMIES[CAMPAIGN.stageIndex];
+    enId = randomEnemyOfType(enType);
+  }
+  if(enId === myId){ enId = randomEnemyOfType(enType); }
+
   G={me:makeFighter(myId),en:makeFighter(enId),turn:1,phase:'select',meQueue:[],enQueue:[],over:false,
-     dmgDealt:0,dmgTaken:0};
+     dmgDealt:0,dmgTaken:0, isGod:isGod};
+
+  // ★神戦の特殊強化：ステ合計50, HP120, 初期SP2, SP2倍速, 必殺=即死
+  if(isGod){
+    // ステータスを合計50に底上げ（配分は神の覚醒後ステの比率を保つ）
+    var gs = G.en.st;
+    var cur = gs.spirit + gs.strength + gs.style;
+    if(cur > 0 && cur < 50){
+      var scale = 50 / cur;
+      gs.spirit  = Math.round(gs.spirit * scale);
+      gs.strength= Math.round(gs.strength * scale);
+      gs.style   = 50 - gs.spirit - gs.strength; // 端数はstyleで合計50ぴったりに
+    }
+    G.en.hp = 120; G.en.maxhp = 120;
+    G.en.gauge = 0;        // 0スタート（自然に溜める）
+    G.godGaugeMax = 16;    // ★神は2本分(16)で必殺
+    G.godSpMult = 1;       // SP獲得は普通(1倍)
+    G.godInstakill = true; // 神の必殺技で即死
+  }
+  G.startHp = G.me.hp;  // スコア計算用に開始HP記録
   el('#start').style.display='none';el('#result').style.display='none';
   el('#title').style.display='none';el('#howto').style.display='none';el('#ranking').style.display='none';
   el('#battle').style.display='block';el('#log').innerHTML='';
@@ -3626,6 +3940,25 @@ function startBattle(myId){
   updateBars(G.me,'me');updateBars(G.en,'en');
   log(T('entry_me',{id:myId,type:G.me.type,arch:G.me.type}),'me-a');
   log(T('entry_en',{id:enId,type:G.en.type,arch:G.en.type}),'en-a');
+  // 覚醒（加護）演出ログ：Type別に表示
+  function blessingKey(type){
+    if(type==='Y0K-A1') return 'blessing_yokai';
+    if(type==='B4K3M0-N0') return 'blessing_bakemono';
+    if(type==='0N1') return 'blessing_oni';
+    if(type==='K4M-1') return 'blessing_kami';
+    return 'blessing_yokai';
+  }
+  log(T(blessingKey(G.me.type),{tag:'<span class="me-a">YOU</span>'}),'sys');
+  log(T(blessingKey(G.en.type),{tag:'<span class="en-a">ENEMY</span>'}),'sys');
+  // 行動特性：一番高いステで性格を表示
+  function archetypeKey(st){
+    var hi = Math.max(st.strength, st.spirit, st.style);
+    if(st.strength === hi) return 'archetype_str';
+    if(st.spirit === hi) return 'archetype_spi';
+    return 'archetype_sty';
+  }
+  log(T(archetypeKey(G.me.st),{tag:'<span class="me-a">YOU</span>'}),'sys');
+  log(T(archetypeKey(G.en.st),{tag:'<span class="en-a">ENEMY</span>'}),'sys');
   startTurn();
 }
 
@@ -3640,8 +3973,64 @@ el('#tokenId').addEventListener('keydown',function(e){if(e.key==='Enter')el('#su
 el('#randBtn').addEventListener('click',function(){
   SFX.init(); SFX.random();
   BGM.play('battle');
-  startBattle(1+Math.floor(Math.random()*7777));
+  // 神(K4M-1)以外からランダムに選ぶ（神は直接入力でのみ使える）
+  var pools = buildTypePool();
+  var nonGod = [].concat(pools['Y0K-A1']||[], pools['B4K3M0-N0']||[], pools['0N1']||[]);
+  var myId;
+  if(nonGod.length){
+    myId = nonGod[Math.floor(Math.random()*nonGod.length)];
+  } else {
+    do { myId = 1+Math.floor(Math.random()*7777); } while(typeOf(myId)==='K4M-1');
+  }
+  startBattle(myId);
 });
+
+// ▼▼▼ DEBUG ハンドラ（確認用・あとで削除） ▼▼▼
+el('#dbgGodBtn').addEventListener('click',function(){
+  SFX.init(); BGM.play('battle');
+  // 自分は妖怪を固定で選ぶ（自分が神にならないように）
+  var pool = buildTypePool()['Y0K-A1'];
+  var myId = (pool && pool.length) ? pool[Math.floor(Math.random()*pool.length)] : 1;
+  newCampaign(myId);
+  CAMPAIGN.setsCleared = SETS_PER_GOD;
+  CAMPAIGN.inGodBattle = true;
+  startBattle(myId, true);
+});
+el('#dbgLastSetBtn').addEventListener('click',function(){
+  SFX.init(); BGM.play('battle');
+  var pool = buildTypePool()['Y0K-A1'];
+  var myId = (pool && pool.length) ? pool[Math.floor(Math.random()*pool.length)] : 1;
+  newCampaign(myId);
+  CAMPAIGN.setIndex = 3;
+  CAMPAIGN.stageIndex = 4;
+  CAMPAIGN.setsCleared = 3;
+  startBattle(myId, true);
+});
+el('#dbgInvincibleBtn').addEventListener('click',function(){
+  window.DBG_INVINCIBLE = !window.DBG_INVINCIBLE;
+  this.textContent = '無敵：' + (window.DBG_INVINCIBLE ? 'ON' : 'OFF');
+  this.style.color = window.DBG_INVINCIBLE ? '#22e6e0' : '';
+  this.style.borderColor = window.DBG_INVINCIBLE ? '#22e6e0' : '';
+});
+// ▲▲▲ DEBUG ▲▲▲
+
+// 「次の戦へ」：同じキャンペーンを継続（プレイヤーIDそのまま、次の敵へ）
+el('#nextBattleBtn').addEventListener('click',function(){
+  SFX.init();SFX.rematch();
+  var logEl = el('#log');
+  if(logEl){
+    var battleBox = el('#battle');
+    if(battleBox && logEl.parentNode !== battleBox){
+      battleBox.appendChild(logEl);
+      logEl.style.height = ''; logEl.style.textAlign = '';
+    }
+  }
+  el('#nextBattleBtn').style.display='none';
+  BGM.play(CAMPAIGN && CAMPAIGN.inGodBattle ? 'battle' : 'battle');
+  // 同じプレイヤーIDで次の戦闘（CAMPAIGNが進行状態を保持）
+  startBattle(CAMPAIGN.playerId);
+});
+
 el('#againBtn').addEventListener('click',function(){
   SFX.init();SFX.rematch();
   // 移動した戦闘ログを元の位置に戻す
@@ -3654,6 +4043,9 @@ el('#againBtn').addEventListener('click',function(){
       logEl.style.textAlign = '';
     }
   }
+  // 「再戦」= キャンペーンを最初からやり直す（新しいファイター選択へ）
+  CAMPAIGN = null;
+  el('#nextBattleBtn').style.display='none';
   el('#result').style.display='none';el('#start').style.display='block';
   BGM.play('start');
 });
@@ -3682,6 +4074,9 @@ function showTitle(){
   }
   // 戦闘中フラグをリセット
   if(G){ G.over = true; }
+  // キャンペーンもリセット（タイトルに戻ったら最初から）
+  CAMPAIGN = null;
+  var nb = el('#nextBattleBtn'); if(nb) nb.style.display='none';
   // すべての画面を隠す
   ['#title','#howto','#start','#battle','#result','#ranking'].forEach(function(sel){
     var e = el(sel); if(e) e.style.display = 'none';
@@ -3746,12 +4141,38 @@ function renderHowto(){
         '<tr><td class="cmd-name">ためる</td><td>ゲージ+3。攻撃と必殺技に弱い</td></tr>'+
         '<tr><td class="cmd-name">必殺技</td><td>ゲージ満タン(⚡10)必要。大ダメージ</td></tr>'+
       '</table>'+
-      '<h3>4Typeの相性</h3>'+
-      '<p>Y0K-A1 → K4M-1 → 0N1 → B4K3M0-N0 → Y0K-A1（弱者有利の循環）<br>有利時+30%、不利時-25%のダメージ補正。</p>'+
+      '<h3>4つのType（覚醒の段階）</h3>'+
+      '<p>妖怪 Y0K-A1 → 化け物 B4K3M0-N0 → 鬼 0N1 → 神 K4M-1 の順に希少で強い。<br>希少なTypeほど戦闘ステータスが高い（相性による有利不利は無し。ステータスと読み合いだけの勝負）。</p>'+
       '<h3>ステータス</h3>'+
       '<p><b>Spirit</b>：防御回復量、必殺技軽減<br><b>Strength</b>：通常攻撃・必殺技のダメージ<br><b>Style</b>：先制判定、カウンター反撃量</p>'+
-      '<h3>スコア計算</h3>'+
-      '<p>与ダメ×10 − 被ダメ×5 + 残HP×5 + 勝利時(1000−ラウンド数×50) または 敗北時(−500)</p>';
+      '<h3>ステータスの覚醒（重要）</h3>'+
+      '<p>0N1は肉体ではなく<b>魂</b>で戦う。カードに表示される数字は「現世の肉体」の強さだが、リングに立つと<b>覚醒</b>し、魂の力で戦う。<br>'+
+      'そのため戦闘ステータスは「元の数字 <b>(+覚醒分)</b>」で表示される。元が弱いキャラほど、覚醒で大きく引き上げられる。</p>'+
+      '<table>'+
+        '<tr><th>種族</th><th>覚醒</th></tr>'+
+        '<tr><td class="cmd-name">妖怪 Y0K-A1</td><td>M0R1Aの加護が発動！（種族数に応じてステータスが向上する）</td></tr>'+
+        '<tr><td class="cmd-name">化け物 B4K3M0-N0</td><td>D34THが能力を解放する！（種族数に応じてステータスが向上する）</td></tr>'+
+        '<tr><td class="cmd-name">鬼 0N1</td><td>M33KASAの守護が体を覆う！（種族数に応じてステータスが向上する）</td></tr>'+
+        '<tr><td class="cmd-name">神 K4M-1</td><td>One Sourceから力を吸い上げる！（全ステータスが上昇する）</td></tr>'+
+      '</table>'+
+      '<p>さらに、身につけた<b>パーツ（装備）</b>はワン・ソースの断片。剛なパーツは攻撃を、柔なパーツはスタイルを、断なパーツは精神を高める。</p>'+
+      '<h3>行動特性（性格）</h3>'+
+      '<p>一番高いステータスによって、戦い方のクセ（性格）が決まる。敵はこの性格に沿って行動する。</p>'+
+      '<table>'+
+        '<tr><th>最高ステ</th><th>性格</th><th>傾向</th></tr>'+
+        '<tr><td class="cmd-name">Strength</td><td>武闘派</td><td>攻撃を好む。必殺技も積極的</td></tr>'+
+        '<tr><td class="cmd-name">Spirit</td><td>守護型</td><td>防御・ためるで粘り強く戦う</td></tr>'+
+        '<tr><td class="cmd-name">Style</td><td>技巧派</td><td>カウンター・先制で翻弄する</td></tr>'+
+      '</table>'+
+      '<h3>キャンペーン（5連戦×4セット）</h3>'+
+      '<p>1セット＝5連戦（妖怪→妖怪→化け物→化け物→鬼）。各戦HP全回復、負けても次へ進む。<br>'+
+      '4セット（20戦）を終えると<b>神（K4M-1）との決戦</b >！ 神を倒すか敗れるか、その後また周回が続く。</p>'+
+      '<h3>神（K4M-1）との決戦</h3>'+
+      '<p>神は別格。HPが多く、必殺ゲージが2倍速で溜まる。<b>神の必殺技を食らうと即死</b>。<br>'+
+      '神が力を高め始めたら（予告が出る）、そのターンの「ためる」を<b>攻撃で潰せ</b>。位置を読んで攻撃を合わせられないと、必殺で沈む。</p>'+
+      '<h3>スコア（累計で競う）</h3>'+
+      '<p>勝った戦だけ加点：妖怪+100/+150、化け物+300/+400、鬼+600、<b>神+2500</b>。<br>'+
+      'さらに鮮やかさ（与ダメ×2−被ダメ＋残HP＋速攻ボーナス）が上乗せ。負けた戦は0点。累計スコアでランキングを競う。</p>';
   } else {
     body.innerHTML =
       '<h3>Basic Rules</h3>'+
@@ -3765,12 +4186,38 @@ function renderHowto(){
         '<tr><td class="cmd-name">Charge</td><td>Gauge +3. Weak to attack/special</td></tr>'+
         '<tr><td class="cmd-name">Special</td><td>Requires full gauge (⚡10). Big damage</td></tr>'+
       '</table>'+
-      '<h3>4 Type Matchups</h3>'+
-      '<p>Y0K-A1 → K4M-1 → 0N1 → B4K3M0-N0 → Y0K-A1 (cycle: underdog wins)<br>+30% damage when advantageous, -25% when disadvantageous.</p>'+
+      '<h3>4 Types (Awakening Stages)</h3>'+
+      '<p>Yokai Y0K-A1 → Bakemono B4K3M0-N0 → Oni 0N1 → Kami K4M-1: rarer and stronger in this order.<br>Rarer types have higher battle stats (no type advantage/disadvantage — pure stats and mind games).</p>'+
       '<h3>Stats</h3>'+
       '<p><b>Spirit</b>: Defense recovery, special reduction<br><b>Strength</b>: Attack/special damage<br><b>Style</b>: Speed, counter strength</p>'+
-      '<h3>Score Calculation</h3>'+
-      '<p>Dealt×10 − Taken×5 + RemainHP×5 + Win(1000−Rounds×50) or Loss(−500)</p>';
+      '<h3>Stat Awakening (Important)</h3>'+
+      '<p>0N1 fight with their <b>soul</b>, not their body. The numbers on the card show the strength of the "physical form," but upon entering the ring they <b>awaken</b> and fight with soul power.<br>'+
+      'So battle stats are shown as "base number <b>(+awakening)</b>". The weaker the original, the greater the boost from awakening.</p>'+
+      '<table>'+
+        '<tr><th>Race</th><th>Awakening</th></tr>'+
+        '<tr><td class="cmd-name">Yokai Y0K-A1</td><td>M0R1A\'s blessing activates! (Stats rise based on race population)</td></tr>'+
+        '<tr><td class="cmd-name">Bakemono B4K3M0-N0</td><td>D34TH unleashes power! (Stats rise based on race population)</td></tr>'+
+        '<tr><td class="cmd-name">Oni 0N1</td><td>M33KASA\'s protection envelops the body! (Stats rise based on race population)</td></tr>'+
+        '<tr><td class="cmd-name">Kami K4M-1</td><td>Draws power from the One Source! (All stats rise)</td></tr>'+
+      '</table>'+
+      '<p>Also, equipped <b>parts</b> are fragments of the One Source. Fierce parts raise Attack, supple parts raise Style, serene parts raise Spirit.</p>'+
+      '<h3>Battle Nature</h3>'+
+      '<p>The highest stat determines fighting style (nature). Enemies act according to this nature.</p>'+
+      '<table>'+
+        '<tr><th>Highest Stat</th><th>Nature</th><th>Tendency</th></tr>'+
+        '<tr><td class="cmd-name">Strength</td><td>Brawler</td><td>Favors attacks and specials</td></tr>'+
+        '<tr><td class="cmd-name">Spirit</td><td>Guardian</td><td>Endures with defense and charge</td></tr>'+
+        '<tr><td class="cmd-name">Style</td><td>Trickster</td><td>Toys with counters and first strikes</td></tr>'+
+      '</table>'+
+      '<h3>Campaign (5 battles × 4 sets)</h3>'+
+      '<p>1 set = 5 battles (Yokai→Yokai→Bakemono→Bakemono→Oni). Full HP each battle; you proceed even if you lose.<br>'+
+      'After 4 sets (20 battles), face the <b>Kami (K4M-1)</b>! Win or lose, the cycle then continues.</p>'+
+      '<h3>Battle vs the Kami (K4M-1)</h3>'+
+      '<p>The Kami is in a league of its own: high HP, and its special gauge fills twice as fast. <b>Its special is an instant kill</b>.<br>'+
+      'When it starts gathering power (a warning appears), <b>crush its CHARGE with an attack</b> that turn. Read the position and land your strike, or be wiped out.</p>'+
+      '<h3>Score (compete by total)</h3>'+
+      '<p>Only won battles score: Yokai +100/+150, Bakemono +300/+400, Oni +600, <b>Kami +2500</b>.<br>'+
+      'Plus brilliance (Dealt×2 − Taken + HP + Speed bonus). Lost battles = 0. Compete on the ranking by total score.</p>';
   }
 }
 
@@ -3779,13 +4226,13 @@ el('#globalTitleBtn').addEventListener('click', function(){
   SFX.click();
   // 戦闘中なら確認（Gが存在してまだ終わってない=戦闘中）
   var inBattle = (typeof G !== 'undefined') && G && G.over === false;
-  console.log('[globalTitleBtn] inBattle=' + inBattle + ', G=' + (G?'exists':'null') + ', G.over=' + (G?G.over:'?'));
+  dlog('[globalTitleBtn] inBattle=' + inBattle + ', G=' + (G?'exists':'null') + ', G.over=' + (G?G.over:'?'));
   if(inBattle){
     var msg = (LANG === 'ja')
       ? '戦闘中です。タイトルに戻りますか？\n（現在のバトルは記録されません）'
       : 'Battle in progress. Return to title?\n(Current battle will not be saved)';
     if(!confirm(msg)){
-      console.log('[globalTitleBtn] キャンセル選択');
+      dlog('[globalTitleBtn] キャンセル選択');
       return;
     }
     BGM.stop();
@@ -3880,11 +4327,12 @@ el('#langToggle').addEventListener('click', function(){
 });
 updateLangToggleText();
 
-// BGM ON/OFFトグル
+// 音 ON/OFFトグル（BGMと効果音の両方）
 el('#bgmToggle').addEventListener('click', function(){
   SFX.init();
   var on = !BGM.isEnabled();
   BGM.setEnabled(on);
+  SFX.setEnabled(on);  // ★効果音も一緒にON/OFF
   el('#bgmToggle').textContent = on ? '🔊' : '🔇';
   el('#bgmToggle').classList.toggle('active', on);
   // スタート画面表示中なら開始BGMを鳴らす
@@ -3898,7 +4346,7 @@ el('#clickToPlayBtn').addEventListener('click', function(e){
   e.stopPropagation(); // 親へのバブリングを止めて二重起動を防ぐ
   if(titlePoweredOn) return;
   titlePoweredOn = true;
-  console.log('[Title] CLICK TO PLAY 押下 → 電源ON');
+  dlog('[Title] CLICK TO PLAY 押下 → 電源ON');
   SFX.init();
   // オーバーレイをフェードアウト
   var overlay = el('#clickOverlay');
@@ -3926,7 +4374,7 @@ function tryStartBgm(){
   // タイトル画面の初回起動時は CLICK TO PLAY からのみ起動
   if(!titlePoweredOn && el('#title') && el('#title').style.display !== 'none') return;
   bgmStarted = true;
-  console.log('[BGM] 初回ユーザー操作検知 → BGM開始');
+  dlog('[BGM] 初回ユーザー操作検知 → BGM開始');
   // 現在表示中の画面に応じて適切なBGMを再生
   if(el('#title') && el('#title').style.display !== 'none'){
     BGM.play('title');
@@ -3952,6 +4400,5 @@ applyI18n();
 loadTraits();
 })();
 </script>
-
-
-</body></html>
+</body>
+</html>
