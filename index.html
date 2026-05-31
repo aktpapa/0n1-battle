@@ -1000,7 +1000,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // }
 // 両方とも自動で解釈する。Typeのみの指定でもOK（その場合はTypeデフォルトのステータスが使われる）。
 // =========================================================
-var TRAITS_FILE = "0n1_traits.json";
+var TRAITS_FILE = "0n1_traits.json?v=20260531b";
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
 // 文字列値（"High" "Common" 等）を数値1〜10に換算する辞書
@@ -3917,9 +3917,18 @@ function startBattle(myId, keepCampaign){
     var cur = gs.spirit + gs.strength + gs.style;
     if(cur > 0 && cur < 50){
       var scale = 50 / cur;
-      gs.spirit  = Math.round(gs.spirit * scale);
-      gs.strength= Math.round(gs.strength * scale);
-      gs.style   = 50 - gs.spirit - gs.strength; // 端数はstyleで合計50ぴったりに
+      var newSp = Math.round(gs.spirit * scale);
+      var newSt = Math.round(gs.strength * scale);
+      var newSy = 50 - newSp - newSt;
+      // 増えた分を_baseにも反映（カードの(+N)表示を正しく保つ）
+      if(gs._base){
+        gs._base = {
+          spirit: gs._base.spirit + (newSp - gs.spirit),
+          strength: gs._base.strength + (newSt - gs.strength),
+          style: gs._base.style + (newSy - gs.style)
+        };
+      }
+      gs.spirit = newSp; gs.strength = newSt; gs.style = newSy;
     }
     G.en.hp = 120; G.en.maxhp = 120;
     G.en.gauge = 0;        // 0スタート（自然に溜める）
