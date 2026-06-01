@@ -1061,7 +1061,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 f";
+var BUILD = "2026-06-01 g";
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
 // 文字列値（"High" "Common" 等）を数値1〜10に換算する辞書
@@ -1266,6 +1266,8 @@ var SFX = (function(){
   // 神戦の特別音楽（降臨・崩壊）。あればこちらを優先、無ければ合成音
   tryLoadSE('god_entrance', 'se_god_entrance.mp3');
   tryLoadSE('god_collapse', 'se_god_collapse.mp3');
+  // 回復音（任意）。あれば再生、無ければ無音
+  tryLoadSE('heal', 'se_heal.mp3');
 
   function playCustomSE(key){
     if(!sfxEnabled) return true; // ★ミュート中は再生せず、合成音フォールバックも防ぐ(trueを返す)
@@ -1509,13 +1511,8 @@ var SFX = (function(){
     },
 
     heal: function(){
-      init();
-      var t = ctx.currentTime;
-      var out = bus(0.5);
-      [659, 988, 1319].forEach(function(f,i){
-        osc(t + i*0.04, .4 - i*0.05, f, f*0.98, .2 - i*0.05, 'sine', out, .005);
-      });
-      osc(t+.1, .25, 1319, 1976, .12, 'triangle', out, .005);
+      // se_heal.mp3があればそれを再生。無ければ無音（合成音=純正音は鳴らさない）
+      playCustomSE('heal');
     },
 
     click: function(){
@@ -4750,7 +4747,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 f</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 g</div>
 
 
 </body></html>
