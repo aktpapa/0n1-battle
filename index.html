@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_14.html -->
+<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_17.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -270,6 +270,12 @@ header{text-align:center;margin-bottom:14px}
   );z-index:2}
 .ragefill{height:100%;width:0;background:linear-gradient(90deg,#7a5400,var(--gold));transition:width .4s,background .3s;border-radius:4px;position:relative;z-index:1}
 .ragefill.full{animation:rgfull .8s infinite}
+/* 神の2本目（オレンジ）：1本目の上に重ねて表示 */
+.ragefill2{position:absolute;top:0;left:0;height:100%;width:0;
+  background:linear-gradient(90deg,#ff8a1f,#ffb347);border-radius:4px;
+  transition:width .4s;z-index:2;display:none}
+.ragefill2.show{display:block}
+.ragefill2.full{background:linear-gradient(90deg,#ff8a1f,#ff1f6d);animation:rgfull .6s infinite}
 .ragefill.god2{background:linear-gradient(90deg,#ff8a1f,#ffb347)}
 .ragefill.god2.full{background:linear-gradient(90deg,#ff8a1f,#ff1f6d)}
 @keyframes rgfull{0%,100%{box-shadow:0 0 4px var(--gold)}50%{box-shadow:0 0 16px var(--gold)}}
@@ -588,6 +594,13 @@ header{text-align:center;margin-bottom:14px}
   0%,100%{box-shadow:0 0 18px 4px rgba(255,200,58,.6),0 0 40px 10px rgba(255,138,31,.3)}
   50%{box-shadow:0 0 28px 8px rgba(255,200,58,.95),0 0 60px 18px rgba(255,138,31,.5)}}
 /* 神降臨の全画面演出 */
+.enclave-collapse{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(20,0,0,.6);pointer-events:none;overflow:hidden}
+.enclave-collapse.flash{background:rgba(255,255,255,.92)}
+.enclave-collapse.blackout{background:#000;transition:background .6s}
+.enclave-collapse .ec-noise{position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(0deg,rgba(255,255,255,.15) 0px,transparent 2px,rgba(255,0,0,.1) 3px,transparent 4px);animation:ecNoise .1s steps(2) infinite}
+@keyframes ecNoise{0%{transform:translateY(0)}100%{transform:translateY(4px)}}
+.enclave-collapse .ec-text{position:relative;z-index:2;font-family:'Zen Dots',sans-serif;font-size:6vmin;color:#ff1f6d;text-shadow:0 0 20px #ff1f6d,0 0 40px #fff;text-align:center;animation:ecText .3s steps(2) infinite}
+@keyframes ecText{0%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.04)}100%{opacity:1;transform:scale(1)}}
 .god-entrance{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;
   align-items:center;justify-content:center;pointer-events:none;
   background:radial-gradient(circle at 50% 50%,rgba(40,20,0,.5),rgba(0,0,0,.92));
@@ -788,7 +801,7 @@ header{text-align:center;margin-bottom:14px}
   <!-- 右下：BGM/言語切替（縦並び） -->
   <div class="ctrl-stack">
     <button class="ctrl-btn" id="bgmToggle" title="音 ON/OFF（BGM・効果音）">🔊</button>
-    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to Japanese">JP</button>
+    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to Japanese">EN</button>
   </div>
 
   <header>
@@ -824,7 +837,7 @@ header{text-align:center;margin-bottom:14px}
 
   <div class="panel" id="start" style="display:none">
     <h2 data-i18n="summon_title">Summon Your Fighter</h2>
-    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Yokai/Bakemono/Oni/Kami) determine your power.</p>
+    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.</p>
     <div class="irow">
       <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
       <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
@@ -901,7 +914,7 @@ header{text-align:center;margin-bottom:14px}
       <div class="bars top en">
         <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #----</span><span class="hptxt" id="enHpTxt">100/100</span></div>
         <div class="barwrap"><div class="barfill" id="enHp" style="width:100%"></div></div>
-        <div class="ragewrap"><div class="ragefill" id="enRage"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="enRage"></div><div class="ragefill2" id="enRage2"></div></div>
       </div>
 
       <!-- 敵：奥 -->
@@ -1236,6 +1249,9 @@ var SFX = (function(){
   tryLoadSE('view_ranking', 'se_view_ranking.mp3');
   tryLoadSE('rematch', 'se_rematch.mp3');
   tryLoadSE('back_title', 'se_back_title.mp3');
+  // 神戦の特別音楽（降臨・崩壊）。あればこちらを優先、無ければ合成音
+  tryLoadSE('god_entrance', 'se_god_entrance.mp3');
+  tryLoadSE('god_collapse', 'se_god_collapse.mp3');
 
   function playCustomSE(key){
     if(!sfxEnabled) return true; // ★ミュート中は再生せず、合成音フォールバックも防ぐ(trueを返す)
@@ -1605,8 +1621,57 @@ var SFX = (function(){
     },
 
     // ボクシングのゴング「カーン！」（mp3があればそちらを使う）
+    // エンクレイヴ崩壊：世界が壊れる重低音＋ノイズの轟音
+    collapse: function(){
+      if(playCustomSE('god_collapse')) return; // MP3があればそれを優先
+      init();
+      var t = ctx.currentTime;
+      var out = bus(0.6);
+      // 1. 超低音の地鳴り（下降）
+      var sub = ctx.createOscillator(); sub.type='sine';
+      sub.frequency.setValueAtTime(90, t);
+      sub.frequency.exponentialRampToValueAtTime(18, t+2.5);
+      var sg = ctx.createGain();
+      sg.gain.setValueAtTime(0.6, t);
+      sg.gain.setValueAtTime(0.6, t+1.8);
+      sg.gain.exponentialRampToValueAtTime(0.001, t+2.8);
+      sub.connect(sg).connect(out); sub.start(t); sub.stop(t+2.9);
+      // 2. ノイズの轟音（崩壊・瓦礫）
+      var nlen = Math.floor(ctx.sampleRate*2.8);
+      var nbuf = ctx.createBuffer(1, nlen, ctx.sampleRate);
+      var nd = nbuf.getChannelData(0);
+      for(var i=0;i<nlen;i++){ nd[i] = (Math.random()*2-1) * Math.pow(1-i/nlen, 0.4); }
+      var noise = ctx.createBufferSource(); noise.buffer = nbuf;
+      var nf = ctx.createBiquadFilter(); nf.type='lowpass';
+      nf.frequency.setValueAtTime(800, t);
+      nf.frequency.exponentialRampToValueAtTime(120, t+2.5);
+      var ng = ctx.createGain(); ng.gain.value=0.5;
+      noise.connect(nf).connect(ng).connect(out); noise.start(t); noise.stop(t+2.8);
+      // 3. 不協和音の衝撃（破滅感）
+      [110, 116, 155].forEach(function(f){
+        var o = ctx.createOscillator(); o.type='sawtooth'; o.frequency.value=f;
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.18, t+0.05);
+        g.gain.exponentialRampToValueAtTime(0.001, t+2.0);
+        o.connect(g).connect(out); o.start(t); o.stop(t+2.1);
+      });
+      // 4. ガラスが砕けるような高音の連打
+      for(var k=0;k<6;k++){
+        var ot = t + k*0.18 + Math.random()*0.1;
+        var cr = ctx.createOscillator(); cr.type='triangle';
+        cr.frequency.value = 1500 + Math.random()*2000;
+        var cg = ctx.createGain();
+        cg.gain.setValueAtTime(0.0001, ot);
+        cg.gain.exponentialRampToValueAtTime(0.12, ot+0.01);
+        cg.gain.exponentialRampToValueAtTime(0.001, ot+0.25);
+        cr.connect(cg).connect(out); cr.start(ot); cr.stop(ot+0.3);
+      }
+    },
+
     // 神降臨：パイプオルガン風の荘厳な讃美歌コード（約2.6秒）
     godHymn: function(){
+      if(playCustomSE('god_entrance')) return; // MP3があればそれを優先
       init();
       var t0 = ctx.currentTime;
       var out = bus(0.85); // リバーブ多めで荘厳に（聖堂の残響）
@@ -1780,19 +1845,25 @@ var SFX = (function(){
 // 【単一ファイル】
 //   bgm_start.mp3   ... スタート画面（キャラ選択時）のBGM
 //   bgm_battle.mp3  ... 戦闘中のBGM
+//   bgm_godbattle.mp3 ... K4M-1戦のBGM
 //
 // 【複数ファイル（プレイリスト）】
 //   bgm_start_1.mp3, bgm_start_2.mp3 ... bgm_start_8.mp3   (最大8曲)
 //   bgm_battle_1.mp3, bgm_battle_2.mp3 ... bgm_battle_8.mp3  (最大8曲)
+//   bgm_godbattle_1.mp3 ... bgm_godbattle_8.mp3  (K4M-1戦・最大8曲ランダム)
+//
+// 【神戦の特別音楽（一回再生）】
+//   se_god_entrance.mp3 ... K4M-1降臨シーンの音楽
+//   se_god_collapse.mp3 ... エンクレイヴ崩壊（K4M-1の決着）の音楽
 //
 // 複数あれば自動でランダム再生（曲が終わったら次の曲をランダムに）。
-// ファイルが無い場合は Web Audio で合成したループBGMが流れます。
+// ファイルが無い場合は Web Audio で合成したループBGM/効果音が流れます。
 // =========================================================
 var BGM = (function(){
   var ctx = null;
   var currentTrack = null; // 'title' | 'start' | 'battle' | null
-  var playlist = {title:[], start:[], battle:[]};        // 利用可能なAudio配列
-  var currentAudio = {title:null, start:null, battle:null}; // 現在再生中のAudio
+  var playlist = {title:[], start:[], battle:[], godbattle:[]};        // 利用可能なAudio配列
+  var currentAudio = {title:null, start:null, battle:null, godbattle:null}; // 現在再生中のAudio
   var synthState = null;     // 合成BGM動作中の状態
   var enabled = true;
   var masterVol = 0.45;
@@ -1825,7 +1896,7 @@ var BGM = (function(){
 
   function preload(){
     // 単一ファイル名（旧仕様）と番号付き（新仕様）の両方を試す
-    ['title','start','battle'].forEach(function(key){
+    ['title','start','battle','godbattle'].forEach(function(key){
       tryLoadMp3(key, 'bgm_'+key+'.mp3');
       for(var i=1;i<=MAX_TRACKS;i++){
         tryLoadMp3(key, 'bgm_'+key+'_'+i+'.mp3');
@@ -1834,7 +1905,7 @@ var BGM = (function(){
   }
 
   // プレイリストからランダム選曲（前回と違う曲を優先）
-  var lastPlayed = {title:null, start:null, battle:null};
+  var lastPlayed = {title:null, start:null, battle:null, godbattle:null};
   function pickRandomTrack(key){
     var list = playlist[key];
     if(!list || list.length === 0) return null;
@@ -2159,7 +2230,7 @@ var BGM = (function(){
         dlog('[BGM] '+kind+' 状態は再生中だが実は止まっている → 再起動');
       }
       // 前のトラックをフェードアウト
-      ['title','start','battle'].forEach(function(k){
+      ['title','start','battle','godbattle'].forEach(function(k){
         if(k !== kind) fadeAllOut(k, 0.8);
       });
       stopSynthBgm();
@@ -2173,7 +2244,7 @@ var BGM = (function(){
         playMp3('start');
       } else {
         // 合成BGMで代替（titleの場合はstart用の合成を使う）
-        var synthKind = (kind === 'title') ? 'start' : kind;
+        var synthKind = (kind === 'title') ? 'start' : (kind === 'godbattle' ? 'battle' : kind);
         setTimeout(function(){ startSynthBgm(synthKind); }, 100);
       }
     },
@@ -2481,7 +2552,7 @@ var I18N = {
   ja: {
     // スタート画面
     summon_title: "ファイターを召喚",
-    summon_desc: "0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style と Type（妖怪/化け物/鬼/神）が能力を決める。",
+    summon_desc: "0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style と Type（Y0K-A1/B4K3M0-N0/0N1/K4M-1）が能力を決める。",
     ph_token: "例: 4718",
     btn_summon: "召喚",
     btn_random: "ランダムで選ぶ",
@@ -2532,10 +2603,10 @@ var I18N = {
     log_attack_counter: "{tag}も反撃！ {target}に → <span class=\"dmg\">{dmg}</span> ダメージ（⚡+1）",
     log_fall_no_counter: "{target}は倒れて反撃できなかった",
     log_both_defend: "両者防御…互いに隙がなく、にらみ合い（両者 ⚡-1）",
-    log_both_charge: "両者ため！ 互いに ⚡+3",
+    log_both_charge: "両者ため！ 互いに隙がなく、ためられない（±0）",
     log_both_counter: "両者カウンター…どちらも空振り！（両者 ⚡-2）",
     log_special_clash: "必殺技同士の激突！ 相討ち（YOU→ <span class=\"dmg\">{dm}</span> ダメージ / ENEMY→ <span class=\"dmg\">{de}</span> ダメージ）",
-    log_defend_block: "{def}は防御！ {att}の攻撃を完全に防いだ",
+    log_defend_block: "{def}が防御！ {att}の攻撃を半減 → <span class=\"dmg\">{dmg}</span> ダメージに抑え、HP+<span style=\"color:var(--cyan)\">{hp}</span>",
     log_charge_break: "{cS}のため解除！ {aS}の攻撃 → <span class=\"dmg\">{dmg}</span> ダメージ（⚡+1）",
     log_counter_hit: "{co}のカウンター成立！ {at}に → <span class=\"dmg\">{dmg}</span> ダメージ返し（⚡+1）",
     log_charge_gap: "{tag}は隙をついて気を溜めた（⚡+3）",
@@ -2561,15 +2632,16 @@ var I18N = {
     blessing_yokai: "{tag} 妖怪の覚醒 — M0R1Aの加護が発動！（種族数に応じてステータスが向上する）",
     blessing_bakemono: "{tag} 化け物の覚醒 — D34THが能力を解放する！（種族数に応じてステータスが向上する）",
     blessing_oni: "{tag} 鬼の覚醒 — M33KASAの守護が体を覆う！（種族数に応じてステータスが向上する）",
-    blessing_kami: "{tag} 神の覚醒 — One Sourceから力を吸い上げる！（全ステータスが上昇する）",
+    blessing_kami: "{tag} K4M-1の覚醒 — One Sourceから力を吸い上げる！（全ステータスが上昇する）",
     archetype_str: "{tag} 性格：武闘派（STR最高 — 攻撃を好む）",
     archetype_spi: "{tag} 性格：守護型（SPI最高 — 防御で粘る）",
     archetype_sty: "{tag} 性格：技巧派（STY最高 — カウンターで翻弄）",
-    god_instakill: "☠☠☠ 神の必殺技が炸裂！ One Sourceの力の前に、あなたの魂は砕け散った…",
-    god_charge_warning: "⚡⚡ 神が力を高めようとしている…！ このターン「ためる」を攻撃で潰せ！（阻止できねば必殺で即死）",
-    god_charge_broken: "💥 神の蓄積を打ち砕いた！ SPゲージ1本分を破壊（必殺を阻止）",
+    god_instakill: "☠☠☠ K4M-1の必殺技が炸裂！ One Sourceの力の前に、あなたの魂は砕け散った…",
+    god_charge_warning: "⚡⚡ K4M-1がOne Sourceから力を吸い上げている！<br>M0R1A：このターンK4M-1の「ためる」を攻撃で潰せ！ 阻止できねばエンクレイヴは崩壊します！",
+    god_charge_broken: "💥 One Sourceの暴走を阻止！ SPゲージ1本分を破壊（崩壊を阻止）",
     enemy_special_warning: "⚡ 敵のSPが満タン！ このターン必殺技を放ってくる！",
-    god_descend: "═══ 天地が震える…！ 神 K4M-1 が降臨した ═══",
+    god_descend: "═══ 天地が震える…！ K4M-1 が降臨した ═══",
+    enclave_collapse: "💀💀💀 エンクレイヴが崩壊する…！ One Sourceの力がエンクレイヴを呑み込む — 世界の終わり",
     matchup_log_adv: "⚡ 属性相性は YOU 有利！",
     matchup_log_dis: "属性相性は YOU 不利…",
     matchup_log_neu: "属性相性は互角",
@@ -2594,7 +2666,7 @@ var I18N = {
   },
   en: {
     summon_title: "Summon Your Fighter",
-    summon_desc: "Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Yokai/Bakemono/Oni/Kami) determine your power.",
+    summon_desc: "Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.",
     ph_token: "e.g. 4718",
     btn_summon: "Summon",
     btn_random: "Pick at Random",
@@ -2644,10 +2716,10 @@ var I18N = {
     log_attack_counter: "{tag} counters! {target} → <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
     log_fall_no_counter: "{target} fell, no counterattack",
     log_both_defend: "Both defend... no opening, a standoff (both ⚡-1)",
-    log_both_charge: "Both charge! Each gains ⚡+3",
+    log_both_charge: "Both try to charge! No opening — neither can (±0)",
     log_both_counter: "Both counter... both miss! (both ⚡-2)",
     log_special_clash: "Special clash! Mutual destruction (YOU→ <span class=\"dmg\">{dm}</span> dmg / ENEMY→ <span class=\"dmg\">{de}</span> dmg)",
-    log_defend_block: "{def} defends! {att}'s attack completely blocked",
+    log_defend_block: "{def} defends! Halved {att}'s attack → <span class=\"dmg\">{dmg}</span> damage, HP+<span style=\"color:var(--cyan)\">{hp}</span>",
     log_charge_break: "{cS}'s charge broken! {aS}'s attack → <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
     log_counter_hit: "{co}'s counter lands! {at} → <span class=\"dmg\">{dmg}</span> damage (⚡+1)",
     log_charge_gap: "{tag} exploited the gap and charged (⚡+3)",
@@ -2671,15 +2743,16 @@ var I18N = {
     blessing_yokai: "{tag} Yokai Awakening — M0R1A's blessing activates! (Stats rise based on race population)",
     blessing_bakemono: "{tag} Bakemono Awakening — D34TH unleashes power! (Stats rise based on race population)",
     blessing_oni: "{tag} Oni Awakening — M33KASA's protection envelops the body! (Stats rise based on race population)",
-    blessing_kami: "{tag} Kami Awakening — Drawing power from the One Source! (All stats rise)",
+    blessing_kami: "{tag} K4M-1 Awakening — Drawing power from the One Source! (All stats rise)",
     archetype_str: "{tag} Nature: Brawler (STR highest — favors attacks)",
     archetype_spi: "{tag} Nature: Guardian (SPI highest — endures with defense)",
     archetype_sty: "{tag} Nature: Trickster (STY highest — toys with counters)",
-    god_instakill: "☠☠☠ The Kami's special erupts! Before the One Source's might, your soul is shattered…",
-    god_charge_warning: "⚡⚡ The Kami is gathering power…! Crush its CHARGE with an attack this turn! (Fail = instant death by special)",
-    god_charge_broken: "💥 You shattered the Kami's buildup! Destroyed one SP bar (special prevented)",
+    god_instakill: "☠☠☠ K4M-1's special erupts! Before the One Source's might, your soul is shattered…",
+    god_charge_warning: "⚡⚡ K4M-1 is drawing power from the One Source!<br>M0R1A: Crush K4M-1's CHARGE with an attack this turn! If you fail, the Enclave will collapse!",
+    god_charge_broken: "💥 Halted the One Source's surge! Destroyed one SP bar (collapse prevented)",
     enemy_special_warning: "⚡ Enemy SP is full! It will unleash its special this turn!",
-    god_descend: "═══ Heaven and earth tremble…! The Kami K4M-1 has descended ═══",
+    god_descend: "═══ Heaven and earth tremble…! K4M-1 has descended ═══",
+    enclave_collapse: "💀💀💀 The Enclave collapses…! The One Source devours the Enclave — the end of the world",
     matchup_log_adv: "⚡ Type matchup: YOU Advantage!",
     matchup_log_dis: "Type matchup: YOU Disadvantage...",
     matchup_log_neu: "Type matchup is even",
@@ -2740,6 +2813,16 @@ function applyI18n(){
 }
 var ANAME={attack:'攻撃',counter:'反撃',defend:'防御',charge:'ためる',special:'必殺'};
 var GAUGE_MAX=8; // 必殺技ゲージ上限（v7+G8）
+
+// ===== ダメージ調整つまみ（全戦闘共通）=====
+var SPI_RESIST  = 0.2; // 素の被弾：SPI1につきこの分だけ軽減（−SPI×0.2）
+var DEFEND_MULT = 0.5; // 防御：素の被弾をこの倍率に（0.5=半減）
+var DEFEND_HEAL = 3;   // 防御時の回復（固定・キャラ差なし）
+// 攻撃ダメージにSPIレジストを適用（受け手のSPIで軽減・最低1）
+function applySpiResist(dmg, defChar){
+  return Math.max(1, Math.round(dmg - defChar.st.spirit * SPI_RESIST));
+}
+
 var G=null;
 function el(q){return document.querySelector(q);}
 
@@ -2861,23 +2944,33 @@ function updateBars(f,side){
   el(p+'HpTxt').textContent=Math.max(0,Math.round(f.hp))+'/'+f.maxhp;
   // 必殺技ゲージ表示
   var rf=el(p+'Rage');
-  // ★神（敵・2段ゲージ）の表示：1本目=黄色、2本目=オレンジ
+  // ★神（敵・2段ゲージ）の表示：1本目=黄色は満タンで残し、2本目=オレンジを上に重ねる
   if(side==='en' && G && G.isGod && G.godGaugeMax){
     var g = f.gauge;
+    var rf2 = el('#enRage2');
     if(g <= 8){
-      // 1本目（黄色）が溜まり中
+      // 1本目（黄色）が溜まり中。2本目は非表示
       rf.style.width = Math.min(100, g/8*100)+'%';
       rf.classList.remove('full','god2');
+      if(rf2){ rf2.classList.remove('show','full'); rf2.style.width='0%'; }
     } else {
-      // 2本目（オレンジ）が溜まり中。バーはオレンジで2本目の量を表示
-      rf.style.width = Math.min(100, (g-8)/8*100)+'%';
-      rf.classList.add('god2');
-      if(g >= G.godGaugeMax) rf.classList.add('full'); else rf.classList.remove('full');
+      // 1本目は満タン（黄色100%固定で残す）、2本目（オレンジ）を上に重ねて表示
+      rf.style.width = '100%';
+      rf.classList.remove('god2');
+      rf.classList.add('full'); // 黄色満タンで点滅
+      if(rf2){
+        rf2.classList.add('show');
+        rf2.style.width = Math.min(100, (g-8)/8*100)+'%';
+        if(g >= G.godGaugeMax) rf2.classList.add('full'); else rf2.classList.remove('full');
+      }
     }
   } else {
     rf.style.width=Math.min(100, (f.gauge/GAUGE_MAX*100))+'%';
     rf.classList.remove('god2');
     if(f.gauge>=GAUGE_MAX)rf.classList.add('full');else rf.classList.remove('full');
+    // 神以外では2本目バーを隠す
+    var rf2b = (side==='en') ? el('#enRage2') : null;
+    if(rf2b){ rf2b.classList.remove('show','full'); rf2b.style.width='0%'; }
   }
   if(side==='me')el('#spBtn').classList.toggle('ready',f.gauge>=GAUGE_MAX);
   // 上のtypebarも更新（ゲージ数値表示のため）
@@ -2904,9 +2997,8 @@ function enemyPlan(){
   for(var i=0;i<3;i++){
     var s=en.st;
     // 厳密な必殺技判定：現在の予測ゲージがMAX以上の時のみ
-    // ★神は必ず撃つ（即死級）。通常敵は90%
-    var spProb = (G.isGod ? 1.0 : 0.9);
-    if(predGauge >= gmax && Math.random() < spProb){
+    // ★神は必殺を撃たず「崩壊」で決着するので、神は必殺をplanに入れない
+    if(!(G.isGod && G.godGaugeMax) && predGauge >= gmax && Math.random() < 0.9){
       plan.push('special');
       predGauge = 0;
       continue;
@@ -2916,7 +3008,7 @@ function enemyPlan(){
     // ★行動特性：一番高いステで「性格」が決まる
     var hi = Math.max(s.strength, s.spirit, s.style);
     if(s.strength === hi){
-      // 武闘派：攻撃的、必殺も積極
+      // 武闘派：攻撃的
       w.attack += 1.0; w.charge += 0.3;
     } else if(s.spirit === hi){
       // 守護型：守って粘る
@@ -2925,22 +3017,27 @@ function enemyPlan(){
       // 技巧派（STY最高）：カウンター・先制で翻弄
       w.counter += 0.8; w.attack += 0.4;
     }
+    // ★神は普通に攻撃中心で戦う（SPは行動するたび自動で増えるので、ためるは自分から選ばない）
+    if(G.isGod && G.godGaugeMax){
+      w = {attack:1.4, defend:0.6, charge:0, counter:0.7}; // 神はためないで攻めてくる
+    }
     // 補助：各ステが高ければさらに微増
-    if(s.strength >= 15) w.attack += 0.3;
-    if(s.style >= 15) w.counter += 0.3;
-    if(s.spirit >= 15) w.defend += 0.3;
-    // HP少ない時は守り寄り
-    if(en.hp/en.maxhp < 0.35){ w.defend += 0.8; w.attack *= 0.7; }
-    // ゲージ高い時はためるを減らす（神は16基準、通常敵は8基準）
-    var chargeCap = (G.isGod && G.godGaugeMax) ? G.godGaugeMax : GAUGE_MAX;
-    if(predGauge >= chargeCap - 2) w.charge *= 0.3;
-    else if(predGauge >= Math.floor(chargeCap*0.5)) w.charge *= 0.6;
-    // ★同じ行動の繰り返しを抑制（直前と同じ手は重みを下げる、3連続はさらに）
-    var prev = plan.length>0 ? plan[plan.length-1] : null;
-    var prev2 = plan.length>1 ? plan[plan.length-2] : null;
-    if(prev && w[prev] !== undefined){
-      w[prev] *= 0.45; // 直前と同じ手は出にくく
-      if(prev2 === prev && w[prev] !== undefined) w[prev] *= 0.3; // 2連続続いたら更に強く抑制
+    if(!(G.isGod && G.godGaugeMax)){
+      if(s.strength >= 15) w.attack += 0.3;
+      if(s.style >= 15) w.counter += 0.3;
+      if(s.spirit >= 15) w.defend += 0.3;
+      // HP少ない時は守り寄り
+      if(en.hp/en.maxhp < 0.35){ w.defend += 0.8; w.attack *= 0.7; }
+      // ゲージ高い時はためるを減らす
+      if(predGauge >= GAUGE_MAX - 2) w.charge *= 0.3;
+      else if(predGauge >= Math.floor(GAUGE_MAX*0.5)) w.charge *= 0.6;
+    }
+    // 同じ行動の繰り返しを抑制（神も含め全員に適用＝単調さ回避）
+    var prevA = plan.length>0 ? plan[plan.length-1] : null;
+    var prev2A = plan.length>1 ? plan[plan.length-2] : null;
+    if(prevA && w[prevA] !== undefined){
+      w[prevA] *= 0.45;
+      if(prev2A === prevA && w[prevA] !== undefined) w[prevA] *= 0.3;
     }
     var tot=w.attack+w.defend+w.charge+w.counter, pk=Math.random()*tot;
     var chosen;
@@ -2949,8 +3046,6 @@ function enemyPlan(){
     else if((pk-=w.charge)<0) chosen='charge';
     else chosen='counter';
     plan.push(chosen);
-    // ためる成功は不確実なので予測ゲージに加算しない（v7修正）
-    // → これによって「ためる→必殺技」を1ラウンド内で連続選択できなくなる
   }
   return plan;
 }
@@ -3025,8 +3120,13 @@ function resolvePair(meAct,enAct){
   }
   function addGauge(f, side, n){
     var before = f.gauge;
-    // 神（敵・2段ゲージ）は上限16、それ以外は8
-    var cap = (side==='en' && G.isGod && G.godGaugeMax) ? G.godGaugeMax : GAUGE_MAX;
+    var isGodEn = (side==='en' && G.isGod && G.godGaugeMax);
+    // ★神のSPは減らない（負は無視）＋1手あたり最大+2にキャップ（崩壊が早すぎないよう）
+    if(isGodEn){
+      if(n < 0) n = 0;
+      if(n > 2) n = 2;
+    }
+    var cap = isGodEn ? G.godGaugeMax : GAUGE_MAX;
     f.gauge = Math.min(cap, Math.max(0, f.gauge + n));
     if(typeof console !== 'undefined'){
       dlog('[gauge] '+side+': '+before+' -> '+f.gauge+' (+'+n+')');
@@ -3034,6 +3134,8 @@ function resolvePair(meAct,enAct){
     updateBars(f, side);
   }
   function resetGauge(f, side){
+    // ★神(敵)のSPはリセットされない（必殺で撃った時を除く＝別処理）
+    if(side==='en' && G.isGod && G.godGaugeMax){ return; }
     if(f.gauge !== 0){
       dlog('[gauge RESET] '+side+': '+f.gauge+' -> 0');
     }
@@ -3085,7 +3187,7 @@ function resolvePair(meAct,enAct){
       showFullFx('attack', 800); SFX.attack();
       var firstTarget = f==='me' ? 'en' : 'me';
       var attChar1 = f==='me'?me:en, defChar1 = f==='me'?en:me;
-      var d1 = applyTypeMod(Math.ceil(4 + attChar1.st.strength * 0.6), attChar1.type, defChar1.type); // v7: 4+STR*0.6
+      var d1 = applySpiResist(applyTypeMod(Math.ceil(4 + attChar1.st.strength * 0.6), attChar1.type, defChar1.type), defChar1); // v7: 4+STR*0.6 − SPIレジスト
       dealDamage(defChar1, firstTarget, d1);
       hitGauge(f);  // 攻撃ヒットで攻撃側+1
       var adv1 = typeAdvLog(attChar1.type, defChar1.type, f); if(adv1) lines.push(adv1);
@@ -3094,7 +3196,7 @@ function resolvePair(meAct,enAct){
         // 後発反撃
         var secondSide = f==='me'?'en':'me';
         var attChar2 = secondSide==='me'?me:en, defChar2 = secondSide==='me'?en:me;
-        var d2 = applyTypeMod(Math.ceil(4 + attChar2.st.strength * 0.6), attChar2.type, defChar2.type); // v7: 4+STR*0.6
+        var d2 = applySpiResist(applyTypeMod(Math.ceil(4 + attChar2.st.strength * 0.6), attChar2.type, defChar2.type), defChar2); // v7: 4+STR*0.6 − SPIレジスト
         setTimeout(function(){
           if(G.over) return;
           showFullFx('attack', 800); SFX.attack();
@@ -3119,11 +3221,9 @@ function resolvePair(meAct,enAct){
       return lines;
     }
     if(meAct === 'charge'){
-      // v7: ためる獲得量 = 2 + floor(SPI*0.15)
-      var meCharge = 2 + Math.floor(me.st.spirit * 0.15);
-      var enCharge = 2 + Math.floor(en.st.spirit * 0.15);
-      addGauge(me, 'me', meCharge); addGauge(en, 'en', enCharge);
-      floatTxt('me','+'+meCharge,'#ffc83a'); floatTxt('en','+'+enCharge,'#ffc83a');
+      // 両者ため：互いに隙がなく溜められない（±0）
+      addGauge(me, 'me', 0); addGauge(en, 'en', 0);
+      floatTxt('me','±0','#888'); floatTxt('en','±0','#888');
       lines.push({h:T('log_both_charge'), c:'sys'});
       return lines;
     }
@@ -3161,7 +3261,8 @@ function resolvePair(meAct,enAct){
     // 攻撃ダメ = ceil(4 + STR*0.6) × Type補正
     // 軽減後 = max(1, ceil(攻撃ダメ - SPI*0.4))
     var atkDmgBase = applyTypeMod(Math.ceil(4 + atkChar.st.strength * 0.6), atkChar.type, defChar2.type);
-    var reduced = Math.max(1, Math.ceil(atkDmgBase - defChar2.st.spirit * 0.4));
+    var resisted = applySpiResist(atkDmgBase, defChar2);                 // ②素の被弾（SPIレジスト後）
+    var reduced = Math.max(1, Math.round(resisted * DEFEND_MULT));       // ③防御でさらに半減
     dlog('  [case] 攻撃 vs 防御 (v7軽減: '+atkDmgBase+'→'+reduced+')');
     // 攻撃エフェクト
     showFullFx('attack', 700); SFX.attack();
@@ -3174,10 +3275,11 @@ function resolvePair(meAct,enAct){
     dealDamage(defChar2, defSide, reduced, {});
     // v8変更: ゲージは防御側+1（攻撃を受け止めた防御側が気を溜める）
     addGauge(defChar2, defSide, 1);
-    // 防御側に SPI*0.2 追加回復
-    var addHeal = Math.ceil(defChar2.st.spirit * 0.2);
+    // 防御側に固定回復
+    var addHeal = DEFEND_HEAL;
+    var realHeal = 0;
     if(defChar2.hp > 0 && defChar2.hp < defChar2.maxhp){
-      var realHeal = Math.min(addHeal, defChar2.maxhp - defChar2.hp);
+      realHeal = Math.min(addHeal, defChar2.maxhp - defChar2.hp);
       defChar2.hp += realHeal;
       updateBars(defChar2, defSide);
       setTimeout(function(){
@@ -3185,7 +3287,7 @@ function resolvePair(meAct,enAct){
         floatTxt(defSide, '+'+realHeal, '#22e6e0');
       }, 500);
     }
-    lines.push({h:T('log_defend_block',{def:tagOf(defSide),att:tagOf(atkSide)}), c:'sys'});
+    lines.push({h:T('log_defend_block',{def:tagOf(defSide),att:tagOf(atkSide),dmg:reduced,hp:realHeal}), c:'sys'});
     return lines;
   }
 
@@ -3197,7 +3299,7 @@ function resolvePair(meAct,enAct){
     var attChar = aS==='me'?me:en;
     var chgChar = cS==='me'?me:en;
     showFullFx('attack', 800); SFX.attack();
-    var dmg = applyTypeMod(Math.ceil(4 + attChar.st.strength * 0.6) + 2, attChar.type, chgChar.type); // v7: (4+STR*0.6)+2
+    var dmg = applySpiResist(applyTypeMod(Math.ceil(4 + attChar.st.strength * 0.6) + 2, attChar.type, chgChar.type), chgChar); // v7: (4+STR*0.6)+2 − SPIレジスト
     // v10変更: ためるはキャンセルされるだけ（SPは増えない・減りもしない）
     dealDamage(chgChar, cS, dmg);
     hitGauge(aS);  // 攻撃ヒットで+1
@@ -3214,8 +3316,8 @@ function resolvePair(meAct,enAct){
     var coChar = coS==='me'?me:en;
     var atChar = atS==='me'?me:en;
     showFullFx('counter', 1000); SFX.counter();
-    // カウンター反撃 = Strength + Style（相性適用）
-    var ctr = applyTypeMod(Math.ceil(4 + coChar.st.style * 0.6), coChar.type, atChar.type); // v7: STY連動 4+STY*0.6
+    // カウンター反撃 = 4 + STY*0.6（相性適用）− 受け手のSPIレジスト
+    var ctr = applySpiResist(applyTypeMod(Math.ceil(4 + coChar.st.style * 0.6), coChar.type, atChar.type), atChar); // v7: STY連動 4+STY*0.6 − SPIレジスト
     dealDamage(atChar, atS, ctr, {crit:true});
     hitGauge(coS);  // カウンター成功で+1
     var adv = typeAdvLog(coChar.type, atChar.type, coS); if(adv) lines.push(adv);
@@ -3381,17 +3483,57 @@ function resolvePair(meAct,enAct){
   return lines;
 }
 
+// エンクレイヴ崩壊（神のSP16到達でゲームオーバー）
+function triggerEnclaveCollapse(){
+  G.phase = 'collapse';
+  log(T('enclave_collapse',{}), 'clash');
+  var ov = document.createElement('div');
+  ov.className = 'enclave-collapse';
+  ov.innerHTML = '<div class="ec-noise"></div><div class="ec-text">'+
+    (LANG==='ja'?'エンクレイヴが崩壊する':'THE ENCLAVE COLLAPSES')+'</div>';
+  document.body.appendChild(ov);
+  try{ SFX.init(); SFX.collapse(); }catch(e){}
+  var flashes = 0;
+  var iv = setInterval(function(){
+    flashes++;
+    ov.classList.toggle('flash');
+    document.body.style.transform = (flashes%2===0) ? 'translate(6px,-4px)' : 'translate(-6px,4px)';
+    if(flashes >= 12){
+      clearInterval(iv);
+      document.body.style.transform = '';
+      ov.classList.add('blackout');
+    }
+  }, 140);
+  setTimeout(function(){
+    G.me.hp = 0; updateBars(G.me,'me');
+    if(ov.parentNode) ov.parentNode.removeChild(ov);
+    document.body.style.transform = '';
+    finish();
+  }, 2800);
+}
+
 function startTurn(){
+  // ★神戦：SP16到達済みなら、プレイヤー行動前に「エンクレイヴ崩壊」→ゲームオーバー
+  if(G.isGod && G.godGaugeMax && G.en.gauge >= G.godGaugeMax){
+    if(window.DBG_INVINCIBLE){
+      // 無敵：崩壊を回避（確認用）。SPを13に戻して継続
+      log('🛡 [DEBUG] 無敵で崩壊を回避（SPを13に戻す）', 'adv');
+      G.en.gauge = 13; updateBars(G.en,'en');
+    } else {
+      triggerEnclaveCollapse();
+      return;
+    }
+  }
   G.meQueue=[];
   G.enQueue=enemyPlan();
   G.godChargingThisTurn = false;
-  // ★神戦：2本目(SP10以上=オレンジ途中)で必殺モード。次の手のどこか1つで「ためる」して2本目満タン狙い
-  if(G.isGod && G.godGaugeMax && G.en.gauge>=10 && G.en.gauge<G.godGaugeMax){
+  // ★神戦：SP13以上で警告→次の手のどこか1つに「ためる」を仕込む（プレイヤーが攻撃で潰せる）
+  if(G.isGod && G.godGaugeMax && G.en.gauge>=13 && G.en.gauge<G.godGaugeMax){
     G.godChargingThisTurn = true;
     var chargePos = Math.floor(Math.random()*3); // ためる位置（プレイヤーには見えない）
     G.godChargePos = chargePos;
     for(var i=0;i<3;i++){
-      G.enQueue[i] = (i===chargePos) ? 'charge' : (Math.random()<0.6?'attack':'defend');
+      G.enQueue[i] = (i===chargePos) ? 'charge' : (Math.random()<0.5?'attack':'defend');
     }
   }
   G.phase='select';
@@ -3410,7 +3552,7 @@ function startTurn(){
   if(G.isGod && G.godGaugeMax){
     var gg = G.en.gauge;
     var bars = gg<=8 ? ('1本目 '+gg+'/8') : ('2本目 '+(gg-8)+'/8（計'+gg+'/16）');
-    log((LANG==='ja'?'神のSP: ':'Kami SP: ')+bars, 'sys');
+    log((LANG==='ja'?'K4M-1のSP: ':'K4M-1 SP: ')+bars, 'sys');
   }
   el('#phase').innerHTML=T('phase_select_turn',{n:G.turn});
   el('#phase').className='phase';
@@ -3546,7 +3688,7 @@ function doFight(){
         // ★神戦：神が必殺技を出したらプレイヤー即死（2本=16必要）
         if(G.godInstakill && G.enQueue[step]==='special' && G.en.gauge>=godMax){
           if(window.DBG_INVINCIBLE){
-            log('🛡 [DEBUG] 無敵で神の必殺を耐えた！', 'adv');
+            log('🛡 [DEBUG] 無敵でK4M-1の必殺を耐えた！', 'adv');
             G.en.gauge = 0; updateBars(G.en,'en');
           } else {
             log(T('god_instakill',{}), 'clash');
@@ -3557,18 +3699,13 @@ function doFight(){
             setTimeout(finish,1000); return;
           }
         }
-        // ★神戦：神が「力を高めている」予告中(2本目を溜め中)に、その「ためる」を
-        //   攻撃/必殺で潰すと、2本目だけが0に戻る（1本目=8は残す）。
-        //   1本目を溜めてる最中(予告なし)は普通のキャンセル＝SP維持（0にしない）。
+        // ★神戦：予告中(SP13以上)の「ためる」を攻撃/必殺で当てると、そのターンの
+        //   ためる分を無効化（SPは減らさず据え置き＝それ以上溜まらない）
         var godChargeBroken = false;
+        var godGaugeBefore = G.en.gauge;
         if(G.isGod && G.godChargingThisTurn && G.enQueue[step]==='charge' &&
            (G.meQueue[step]==='attack' || G.meQueue[step]==='special')){
-          var before = G.en.gauge;
-          // 2本目を捨てる＝最低8（1本目）まで戻す。8未満なら何もしない
-          if(G.en.gauge > 8){
-            G.en.gauge = 8;
-            godChargeBroken = true;
-          }
+          godChargeBroken = true;
         }
         var result = resolvePair(G.meQueue[step],G.enQueue[step]);
         if(result && result.forEach){
@@ -3576,9 +3713,21 @@ function doFight(){
         } else {
           console.warn('[戦闘] resolvePair が空を返した:', G.meQueue[step], 'vs', G.enQueue[step]);
         }
-        if(godChargeBroken){
-          log(T('god_charge_broken',{}), 'adv');
-          updateBars(G.en,'en');
+        if(G.isGod){
+          if(godChargeBroken){
+            // ためる潰し成功：SPを8に戻す＝2本目（オレンジ）バーを破壊
+            G.en.gauge = Math.min(godGaugeBefore, 8);
+            updateBars(G.en,'en');
+            log(T('god_charge_broken',{}), 'adv');
+          } else {
+            // ★神はためる以外の行動でもSPが増える（一方通行・上限16）。ためるは別途resolvePairで+済み
+            if(G.enQueue[step] !== 'charge'){
+              G.en.gauge = Math.min(G.godGaugeMax, G.en.gauge + 1);
+              updateBars(G.en,'en');
+            }
+          }
+          // 各手後の神SPをログ表示
+          log('  └ '+(LANG==='ja'?'K4M-1 SP':'K4M-1 SP')+' = '+G.en.gauge+'/16', 'sys');
         }
       } catch(e){
         console.error('[戦闘エラー]', e, 'step=', step, 'pair=', G.meQueue[step], 'vs', G.enQueue[step]);
@@ -3642,7 +3791,7 @@ function renderScore(sc){
 
   var lines = [];
   if(sc.win){
-    lines.push('<b>'+(LANG==='ja'?'撃破ボーナス':'Defeat Bonus')+'</b> +' + sc.enemyBase + (sc.isGod?(LANG==='ja'?'（神！）':' (Kami!)'):''));
+    lines.push('<b>'+(LANG==='ja'?'撃破ボーナス':'Defeat Bonus')+'</b> +' + sc.enemyBase + (sc.isGod?(LANG==='ja'?'（K4M-1！）':' (K4M-1!)'):''));
     lines.push('<b>'+(LANG==='ja'?'鮮やかさ':'Brilliance')+'</b> '+(sc.sharp>=0?'+':'') + sc.sharp);
     lines.push('<span style="font-size:11px;opacity:.7">'+(LANG==='ja'?'（与ダメ×2 − 被ダメ×1 + 残HP + 速攻ボーナス）':'(Dealt×2 − Taken×1 + HP + Speed bonus)')+'</span>');
   } else {
@@ -3680,7 +3829,7 @@ function renderCampaignProgress(sc){
     html += '<div class="cp-god">'+(ja?'⚡ 次は神（K4M-1）との決戦！ ⚡':'⚡ Next: Battle vs the Kami (K4M-1)! ⚡')+'</div>';
   } else {
     var remain = SETS_PER_GOD - CAMPAIGN.setsCleared;
-    html += '<div class="cp-label" style="margin-top:6px;opacity:.8">'+(ja?('神まであと '+remain+' セット'):('Kami in '+remain+' set(s)'))+'</div>';
+    html += '<div class="cp-label" style="margin-top:6px;opacity:.8">'+(ja?('K4M-1まであと '+remain+' セット'):('K4M-1 in '+remain+' set(s)'))+'</div>';
   }
   box.innerHTML = html;
 
@@ -3855,7 +4004,7 @@ function showRanking(){
       }
       var winStr = d.win ? '🏆' : '☠';
       var gk = d.godKills || 0;
-      var godStr = gk>0 ? ' <span class="god-kill-tag" title="神討伐">⛩'+gk+'</span>' : '';
+      var godStr = gk>0 ? ' <span class="god-kill-tag" title="K4M-1討伐">⛩'+gk+'</span>' : '';
       html += '<div class="rankrow '+rowCls+'">'+
         '<div class="rk">'+rank+'</div>'+
         '<div class="nm">'+winStr+' '+escapeHtml(d.name||'?')+godStr+'</div>'+
@@ -3863,7 +4012,7 @@ function showRanking(){
         '<div class="meta">'+
           '<span class="type-tag">'+(d.meType||'?')+'</span>'+
           '#'+ (d.meId||'?') +
-          (gk>0 ? ' / '+(LANG==='ja'?'神討伐':'Kami slain')+': '+gk : '')+
+          (gk>0 ? ' / '+(LANG==='ja'?'K4M-1討伐':'K4M-1 slain')+': '+gk : '')+
           ' / '+T('ranking_dmg_dealt')+': '+(d.dmgDealt||0)+
           ' / '+(d.rounds||0)+'R'+
           (dateStr ? ' / '+dateStr+' JST' : '')+
@@ -3874,7 +4023,7 @@ function showRanking(){
     // ★全体の神討伐回数を表示
     var gkEl = el('#rankingGodKills');
     if(gkEl){
-      gkEl.innerHTML = '⛩ ' + (LANG==='ja'?'今期の全体 神討伐回数':'Total Kami slain this season') + ': <b>' + totalGodKills + '</b>';
+      gkEl.innerHTML = '⛩ ' + (LANG==='ja'?'今期の全体 K4M-1討伐回数':'Total K4M-1 slain this season') + ': <b>' + totalGodKills + '</b>';
     }
     if(rank === 0){
       listEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">'+T('ranking_empty')+'</div>';
@@ -4009,24 +4158,25 @@ function startBattle(myId, keepCampaign){
   }
   if(enId === myId){ enId = randomEnemyOfType(enType); }
 
+  // ★isGodは「敵が神タイプか」で確実に判定（CAMPAIGN状態に依存しない）
+  var enIsGod = (enType === 'K4M-1') || (typeOf(enId) === 'K4M-1');
   G={me:makeFighter(myId),en:makeFighter(enId),turn:1,phase:'select',meQueue:[],enQueue:[],over:false,
-     dmgDealt:0,dmgTaken:0, isGod:isGod};
+     dmgDealt:0,dmgTaken:0, isGod:enIsGod};
 
-  // ★神戦の特殊強化：HP120, 2段ゲージ, 必殺=即死
-  if(isGod){
+  // ★神戦の特殊強化：HP120, 2段ゲージ, 必殺=即死（敵が神なら必ず適用）
+  if(G.isGod){
     // ステータス底上げ：最終値(spirit/strength/style)だけ整数で底上げ。
     // _base/_raw/_bonus_intは触らない（カードの(+N)表示の誤差を防ぐため）
     var gs = G.en.st;
     var cur = Math.round(gs.spirit) + Math.round(gs.strength) + Math.round(gs.style);
-    if(cur > 0 && cur < 50){
-      var add = 50 - cur; // 不足分を整数で配る
-      // STR→SPI→STYの順に多めに加算
+    if(cur > 0 && cur < 80){
+      var add = 80 - cur; // 不足分を整数で配る（合計80＝STR27/SPI26/STY27相当）
       var addSt = Math.ceil(add/3), addSp = Math.round(add/3), addSy = add - addSt - addSp;
       gs.strength = Math.round(gs.strength) + addSt;
       gs.spirit   = Math.round(gs.spirit)   + addSp;
       gs.style    = Math.round(gs.style)    + addSy;
     }
-    G.en.hp = 120; G.en.maxhp = 120;
+    G.en.hp = 150; G.en.maxhp = 150;
     G.en.gauge = 0;        // 0スタート（自然に溜める）
     G.godGaugeMax = 16;    // ★神は2本分(16)で必殺
     G.godSpMult = 1;       // SP獲得は普通(1倍)
@@ -4066,9 +4216,10 @@ function startBattle(myId, keepCampaign){
   log(T(archetypeKey(G.en.st),{tag:'<span class="en-a">ENEMY</span>'}),'sys');
   // ★神戦：降臨演出（全画面の荘厳なエフェクト＋専用ログ）を出してから開始
   if(G.isGod){
+    BGM.stop();               // 降臨中は降臨音楽だけにする（戦闘BGMを止める）
     showGodEntrance();
     log(T('god_descend',{}), 'clash');
-    setTimeout(startTurn, 2600); // 演出を見せてからターン開始
+    setTimeout(function(){ BGM.play('godbattle'); startTurn(); }, 2600); // 演出後にK4M-1戦BGM＋ターン開始
   } else {
     startTurn();
   }
@@ -4153,7 +4304,7 @@ el('#nextBattleBtn').addEventListener('click',function(){
     }
   }
   el('#nextBattleBtn').style.display='none';
-  BGM.play(CAMPAIGN && CAMPAIGN.inGodBattle ? 'battle' : 'battle');
+  BGM.play(CAMPAIGN && CAMPAIGN.inGodBattle ? 'godbattle' : 'battle');
   // 同じプレイヤーIDで次の戦闘（CAMPAIGNが進行状態を保持）
   startBattle(CAMPAIGN.playerId);
 });
@@ -4262,25 +4413,25 @@ function renderHowto(){
       '<h3>5つのコマンド</h3>'+
       '<table>'+
         '<tr><th>コマンド</th><th>効果</th></tr>'+
-        '<tr><td class="cmd-name">攻撃</td><td>確実な一撃（STR分のダメージ・⚡+1）</td></tr>'+
-        '<tr><td class="cmd-name">防御</td><td>ダメージ激減＋HP回復</td></tr>'+
-        '<tr><td class="cmd-name">カウンター</td><td>攻撃にだけ反撃（STR+STYで返す・⚡+1）</td></tr>'+
+        '<tr><td class="cmd-name">攻撃</td><td>確実な一撃（STR分のダメージ、相手のSpiritで軽減・⚡+1）</td></tr>'+
+        '<tr><td class="cmd-name">防御</td><td>被ダメージを半減＋HP+3回復</td></tr>'+
+        '<tr><td class="cmd-name">カウンター</td><td>攻撃にだけ反撃（STY分のダメージで返す・⚡+1）</td></tr>'+
         '<tr><td class="cmd-name">ためる</td><td>ゲージ+3。攻撃と必殺技に弱い</td></tr>'+
-        '<tr><td class="cmd-name">必殺技</td><td>ゲージ満タン(⚡10)必要。大ダメージ</td></tr>'+
+        '<tr><td class="cmd-name">必殺技</td><td>ゲージ満タン(⚡8)必要。大ダメージ</td></tr>'+
       '</table>'+
       '<h3>4つのType（覚醒の段階）</h3>'+
-      '<p>妖怪 Y0K-A1 → 化け物 B4K3M0-N0 → 鬼 0N1 → 神 K4M-1 の順に希少で強い。<br>希少なTypeほど戦闘ステータスが高い（相性による有利不利は無し。ステータスと読み合いだけの勝負）。</p>'+
+      '<p>Y0K-A1 → B4K3M0-N0 → 0N1 → K4M-1 の順に希少で強い。<br>希少なTypeほど戦闘ステータスが高い（相性による有利不利は無し。ステータスと読み合いだけの勝負）。</p>'+
       '<h3>ステータス</h3>'+
-      '<p><b>Spirit</b>：防御回復量、必殺技軽減<br><b>Strength</b>：通常攻撃・必殺技のダメージ<br><b>Style</b>：先制判定、カウンター反撃量</p>'+
+      '<p><b>Spirit</b>：被ダメージ軽減（攻撃・カウンター・必殺）<br><b>Strength</b>：通常攻撃・必殺技のダメージ<br><b>Style</b>：先制判定、カウンター反撃量</p>'+
       '<h3>ステータスの覚醒（重要）</h3>'+
       '<p>0N1は肉体ではなく<b>魂</b>で戦う。カードに表示される数字は「現世の肉体」の強さだが、リングに立つと<b>覚醒</b>し、魂の力で戦う。<br>'+
       'そのため戦闘ステータスは「元の数字 <b>(+覚醒分)</b>」で表示される。元が弱いキャラほど、覚醒で大きく引き上げられる。</p>'+
       '<table>'+
         '<tr><th>種族</th><th>覚醒</th></tr>'+
-        '<tr><td class="cmd-name">妖怪 Y0K-A1</td><td>M0R1Aの加護が発動！（種族数に応じてステータスが向上する）</td></tr>'+
-        '<tr><td class="cmd-name">化け物 B4K3M0-N0</td><td>D34THが能力を解放する！（種族数に応じてステータスが向上する）</td></tr>'+
-        '<tr><td class="cmd-name">鬼 0N1</td><td>M33KASAの守護が体を覆う！（種族数に応じてステータスが向上する）</td></tr>'+
-        '<tr><td class="cmd-name">神 K4M-1</td><td>One Sourceから力を吸い上げる！（全ステータスが上昇する）</td></tr>'+
+        '<tr><td class="cmd-name">Y0K-A1</td><td>M0R1Aの加護が発動！（種族数に応じてステータスが向上する）</td></tr>'+
+        '<tr><td class="cmd-name">B4K3M0-N0</td><td>D34THが能力を解放する！（種族数に応じてステータスが向上する）</td></tr>'+
+        '<tr><td class="cmd-name">0N1</td><td>M33KASAの守護が体を覆う！（種族数に応じてステータスが向上する）</td></tr>'+
+        '<tr><td class="cmd-name">K4M-1</td><td>One Sourceから力を吸い上げる！（全ステータスが上昇する）</td></tr>'+
       '</table>'+
       '<p>さらに、身につけた<b>パーツ（装備）</b>はワン・ソースの断片。剛なパーツは攻撃を、柔なパーツはスタイルを、断なパーツは精神を高める。</p>'+
       '<h3>行動特性（性格）</h3>'+
@@ -4292,13 +4443,13 @@ function renderHowto(){
         '<tr><td class="cmd-name">Style</td><td>技巧派</td><td>カウンター・先制で翻弄する</td></tr>'+
       '</table>'+
       '<h3>キャンペーン（5連戦×4セット）</h3>'+
-      '<p>1セット＝5連戦（妖怪→妖怪→化け物→化け物→鬼）。各戦HP全回復、負けても次へ進む。<br>'+
-      '4セット（20戦）を終えると<b>神（K4M-1）との決戦</b >！ 神を倒すか敗れるか、その後また周回が続く。</p>'+
-      '<h3>神（K4M-1）との決戦</h3>'+
-      '<p>神は別格。HPが多く、必殺ゲージが2倍速で溜まる。<b>神の必殺技を食らうと即死</b>。<br>'+
-      '神が力を高め始めたら（予告が出る）、そのターンの「ためる」を<b>攻撃で潰せ</b>。位置を読んで攻撃を合わせられないと、必殺で沈む。</p>'+
+      '<p>1セット＝5連戦（Y0K-A1→Y0K-A1→B4K3M0-N0→B4K3M0-N0→0N1）。各戦HP全回復、負けても次へ進む。<br>'+
+      '4セット（20戦）を終えると<b>K4M-1との決戦</b>！ K4M-1を倒すか敗れるか、その後また周回が続く。</p>'+
+      '<h3>K4M-1との決戦</h3>'+
+      '<p>K4M-1は別格。HPが分厚く、行動するたびSPゲージ（2本＝16）が一方通行で溜まり続ける。<b>SPが満タン(16)に達するとエンクレイヴが崩壊し、ゲームオーバー</b>（K4M-1は必殺を撃たない＝崩壊が必殺技）。<br>'+
+      'SPが13に達すると警告が出て、そのターンK4M-1はどこかで「ためる」を使う。その手を<b>攻撃で潰せばSPを1本分(8)破壊</b>でき、崩壊を遅らせられる。倒すには、崩壊までの限られたターンで殴り切るしかない。</p>'+
       '<h3>スコア（累計で競う）</h3>'+
-      '<p>勝った戦だけ加点：妖怪+100/+150、化け物+300/+400、鬼+600、<b>神+2500</b>。<br>'+
+      '<p>勝った戦だけ加点：Y0K-A1 +100/+150、B4K3M0-N0 +300/+400、0N1 +600、<b>K4M-1 +2500</b>。<br>'+
       'さらに鮮やかさ（与ダメ×2−被ダメ＋残HP＋速攻ボーナス）が上乗せ。負けた戦は0点。累計スコアでランキングを競う。</p>';
   } else {
     body.innerHTML =
@@ -4307,25 +4458,25 @@ function renderHowto(){
       '<h3>5 Commands</h3>'+
       '<table>'+
         '<tr><th>Command</th><th>Effect</th></tr>'+
-        '<tr><td class="cmd-name">Attack</td><td>Reliable hit (STR damage, ⚡+1)</td></tr>'+
-        '<tr><td class="cmd-name">Defend</td><td>Block damage + recover HP</td></tr>'+
-        '<tr><td class="cmd-name">Counter</td><td>Counters attacks (STR+STY return, ⚡+1)</td></tr>'+
+        '<tr><td class="cmd-name">Attack</td><td>Reliable hit (STR damage, reduced by target Spirit, ⚡+1)</td></tr>'+
+        '<tr><td class="cmd-name">Defend</td><td>Halve incoming damage + recover HP (+3)</td></tr>'+
+        '<tr><td class="cmd-name">Counter</td><td>Counters attacks only (STY-based return, ⚡+1)</td></tr>'+
         '<tr><td class="cmd-name">Charge</td><td>Gauge +3. Weak to attack/special</td></tr>'+
-        '<tr><td class="cmd-name">Special</td><td>Requires full gauge (⚡10). Big damage</td></tr>'+
+        '<tr><td class="cmd-name">Special</td><td>Requires full gauge (⚡8). Big damage</td></tr>'+
       '</table>'+
       '<h3>4 Types (Awakening Stages)</h3>'+
-      '<p>Yokai Y0K-A1 → Bakemono B4K3M0-N0 → Oni 0N1 → Kami K4M-1: rarer and stronger in this order.<br>Rarer types have higher battle stats (no type advantage/disadvantage — pure stats and mind games).</p>'+
+      '<p>Y0K-A1 → B4K3M0-N0 → 0N1 → K4M-1: rarer and stronger in this order.<br>Rarer types have higher battle stats (no type advantage/disadvantage — pure stats and mind games).</p>'+
       '<h3>Stats</h3>'+
-      '<p><b>Spirit</b>: Defense recovery, special reduction<br><b>Strength</b>: Attack/special damage<br><b>Style</b>: Speed, counter strength</p>'+
+      '<p><b>Spirit</b>: Damage reduction (attacks, counters & specials)<br><b>Strength</b>: Attack/special damage<br><b>Style</b>: Speed, counter strength</p>'+
       '<h3>Stat Awakening (Important)</h3>'+
       '<p>0N1 fight with their <b>soul</b>, not their body. The numbers on the card show the strength of the "physical form," but upon entering the ring they <b>awaken</b> and fight with soul power.<br>'+
       'So battle stats are shown as "base number <b>(+awakening)</b>". The weaker the original, the greater the boost from awakening.</p>'+
       '<table>'+
         '<tr><th>Race</th><th>Awakening</th></tr>'+
-        '<tr><td class="cmd-name">Yokai Y0K-A1</td><td>M0R1A\'s blessing activates! (Stats rise based on race population)</td></tr>'+
-        '<tr><td class="cmd-name">Bakemono B4K3M0-N0</td><td>D34TH unleashes power! (Stats rise based on race population)</td></tr>'+
-        '<tr><td class="cmd-name">Oni 0N1</td><td>M33KASA\'s protection envelops the body! (Stats rise based on race population)</td></tr>'+
-        '<tr><td class="cmd-name">Kami K4M-1</td><td>Draws power from the One Source! (All stats rise)</td></tr>'+
+        '<tr><td class="cmd-name">Y0K-A1</td><td>M0R1A\'s blessing activates! (Stats rise based on race population)</td></tr>'+
+        '<tr><td class="cmd-name">B4K3M0-N0</td><td>D34TH unleashes power! (Stats rise based on race population)</td></tr>'+
+        '<tr><td class="cmd-name">0N1</td><td>M33KASA\'s protection envelops the body! (Stats rise based on race population)</td></tr>'+
+        '<tr><td class="cmd-name">K4M-1</td><td>Draws power from the One Source! (All stats rise)</td></tr>'+
       '</table>'+
       '<p>Also, equipped <b>parts</b> are fragments of the One Source. Fierce parts raise Attack, supple parts raise Style, serene parts raise Spirit.</p>'+
       '<h3>Battle Nature</h3>'+
@@ -4337,13 +4488,13 @@ function renderHowto(){
         '<tr><td class="cmd-name">Style</td><td>Trickster</td><td>Toys with counters and first strikes</td></tr>'+
       '</table>'+
       '<h3>Campaign (5 battles × 4 sets)</h3>'+
-      '<p>1 set = 5 battles (Yokai→Yokai→Bakemono→Bakemono→Oni). Full HP each battle; you proceed even if you lose.<br>'+
-      'After 4 sets (20 battles), face the <b>Kami (K4M-1)</b>! Win or lose, the cycle then continues.</p>'+
-      '<h3>Battle vs the Kami (K4M-1)</h3>'+
-      '<p>The Kami is in a league of its own: high HP, and its special gauge fills twice as fast. <b>Its special is an instant kill</b>.<br>'+
-      'When it starts gathering power (a warning appears), <b>crush its CHARGE with an attack</b> that turn. Read the position and land your strike, or be wiped out.</p>'+
+      '<p>1 set = 5 battles (Y0K-A1→Y0K-A1→B4K3M0-N0→B4K3M0-N0→0N1). Full HP each battle; you proceed even if you lose.<br>'+
+      'After 4 sets (20 battles), face <b>K4M-1</b>! Win or lose, the cycle then continues.</p>'+
+      '<h3>Battle vs K4M-1</h3>'+
+      '<p>K4M-1 is in a league of its own: thick HP, and its SP gauge (2 bars = 16) fills one-way every time it acts. <b>When SP hits full (16), the Enclave collapses — game over</b> (K4M-1 never uses a special; the collapse IS its finisher).<br>'+
+      'When SP reaches 13, a warning appears and K4M-1 will CHARGE somewhere that turn. <b>Crush that charge with an attack to destroy one SP bar (back to 8)</b> and delay the collapse. To win, you must beat it down within the limited turns before collapse.</p>'+
       '<h3>Score (compete by total)</h3>'+
-      '<p>Only won battles score: Yokai +100/+150, Bakemono +300/+400, Oni +600, <b>Kami +2500</b>.<br>'+
+      '<p>Only won battles score: Y0K-A1 +100/+150, B4K3M0-N0 +300/+400, 0N1 +600, <b>K4M-1 +2500</b>.<br>'+
       'Plus brilliance (Dealt×2 − Taken + HP + Speed bonus). Lost battles = 0. Compete on the ranking by total score.</p>';
   }
 }
@@ -4441,8 +4592,8 @@ document.querySelectorAll('.cmd').forEach(function(b){
 function updateLangToggleText(){
   var btn = el('#langToggle');
   if(btn){
-    // 現在の言語と逆を表示（押すと切り替わる先）
-    btn.textContent = (LANG === 'en') ? 'JP' : 'EN';
+    // 現在の言語を表示（英語表示中はEN・日本語表示中はJP）
+    btn.textContent = (LANG === 'en') ? 'EN' : 'JP';
     btn.title = (LANG === 'en') ? 'Switch to Japanese' : 'Switch to English';
   }
 }
