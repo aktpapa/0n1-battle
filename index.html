@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
-<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ctext y=&#39;26&#39; font-size=&#39;28&#39;%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='28'%3E⚔%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
 :root{
@@ -801,7 +801,7 @@ header{text-align:center;margin-bottom:14px}
   <!-- 右下：BGM/言語切替（縦並び） -->
   <div class="ctrl-stack">
     <button class="ctrl-btn" id="bgmToggle" title="音 ON/OFF（BGM・効果音）">🔊</button>
-    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to Japanese">EN</button>
+    <button class="ctrl-btn lang-toggle" id="langToggle">EN</button>
   </div>
 
   <header>
@@ -810,9 +810,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel power-off" id="title" style="display: block;">
+  <div class="panel" id="title">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay" style="display: flex;">
+    <div class="click-overlay" id="clickOverlay">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -821,32 +821,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
     <div class="title-buttons">
-      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
-      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
-      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
+      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">ゲーム開始</button>
+      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">ランキング</button>
+      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">遊び方</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
   <!-- ===== 遊び方画面 ===== -->
   <div class="panel" id="howto" style="display:none">
-    <h2 data-i18n="how_title">How to Play</h2>
+    <h2 data-i18n="how_title">遊び方</h2>
     <div class="howto-body" id="howtoBody"></div>
-    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
+    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← タイトルに戻る</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
-    <h2 data-i18n="summon_title">Summon Your Fighter</h2>
-    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.</p>
+    <h2 data-i18n="summon_title">ファイターを召喚</h2>
+    <p data-i18n="summon_desc"></p>
     <div class="irow">
-      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
-      <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
     </div>
-    <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
-    <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
+    <div class="hint" data-i18n="hint"></div>
     <!-- ▼▼▼ DEBUG（確認用・あとで削除） ▼▼▼ -->
     <div id="debugPanel" style="margin-top:18px;padding:12px;border:1px dashed #ff1f6d;border-radius:10px;background:rgba(255,31,109,.06)">
-      <div style="font-family:&#39;Zen Dots&#39;;font-size:10px;color:#ff1f6d;letter-spacing:.1em;margin-bottom:8px">⚠ DEBUG（テスト用）</div>
+      <div style="font-family:'Zen Dots';font-size:10px;color:#ff1f6d;letter-spacing:.1em;margin-bottom:8px">⚠ DEBUG（テスト用）</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
         <button class="btn ghost" id="dbgGodBtn" style="font-size:12px">神戦をすぐ試す</button>
         <button class="btn ghost" id="dbgLastSetBtn" style="font-size:12px">最終セット5戦目から</button>
@@ -856,7 +856,7 @@ header{text-align:center;margin-bottom:14px}
     <!-- ▲▲▲ DEBUG ▲▲▲ -->
   </div>
 
-  <div id="battle" style="display: none;">
+  <div id="battle">
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
       <div class="stand l"></div><div class="stand r"></div>
@@ -881,32 +881,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="ropes">
         <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <!-- 奥ロープ（左ポスト→右ポスト 横3本）-->
-          <line class="rope-line pink" x1="184" y1="460" x2="816" y2="460" stroke-width="3"></line>
-          <line class="rope-line gold" x1="184" y1="510" x2="816" y2="510" stroke-width="3"></line>
-          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="184" y1="460" x2="816" y2="460" stroke-width="3"/>
+          <line class="rope-line gold"   x1="184" y1="510" x2="816" y2="510" stroke-width="3"/>
+          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"/>
           <!-- 手前ロープ（左手前→右手前 横3本）-->
-          <line class="rope-line pink" x1="50" y1="720" x2="950" y2="720" stroke-width="5"></line>
-          <line class="rope-line gold" x1="50" y1="820" x2="950" y2="820" stroke-width="5"></line>
-          <line class="rope-line violet" x1="50" y1="920" x2="950" y2="920" stroke-width="5"></line>
+          <line class="rope-line pink"   x1="50"  y1="720" x2="950" y2="720" stroke-width="5"/>
+          <line class="rope-line gold"   x1="50"  y1="820" x2="950" y2="820" stroke-width="5"/>
+          <line class="rope-line violet" x1="50"  y1="920" x2="950" y2="920" stroke-width="5"/>
           <!-- 左サイドロープ（奥左→手前左 斜め3本）-->
-          <line class="rope-line pink" x1="184" y1="460" x2="50" y2="720" stroke-width="3"></line>
-          <line class="rope-line gold" x1="184" y1="510" x2="50" y2="820" stroke-width="3"></line>
-          <line class="rope-line violet" x1="184" y1="560" x2="50" y2="920" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="184" y1="460" x2="50"  y2="720" stroke-width="3"/>
+          <line class="rope-line gold"   x1="184" y1="510" x2="50"  y2="820" stroke-width="3"/>
+          <line class="rope-line violet" x1="184" y1="560" x2="50"  y2="920" stroke-width="3"/>
           <!-- 右サイドロープ（奥右→手前右 斜め3本）-->
-          <line class="rope-line pink" x1="816" y1="460" x2="950" y2="720" stroke-width="3"></line>
-          <line class="rope-line gold" x1="816" y1="510" x2="950" y2="820" stroke-width="3"></line>
-          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"></line>
+          <line class="rope-line pink"   x1="816" y1="460" x2="950" y2="720" stroke-width="3"/>
+          <line class="rope-line gold"   x1="816" y1="510" x2="950" y2="820" stroke-width="3"/>
+          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"/>
         </svg>
       </div>
       <div class="fog"></div>
 
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
-        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
+        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY CMD</div>
         <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
-        <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
+        <div class="ring-qlabel" data-i18n="your_cmd">YOUR CMD</div>
         <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
@@ -938,16 +938,16 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
+    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
 
     <!-- コマンドエリア（FIGHT/取消ボタンが上に重なる） -->
     <div class="commands-wrap">
       <div class="commands" id="commandsArea">
-        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
-        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
-        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
-        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
+        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
+        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
+        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
+        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
       <div class="cmd-overlay" id="ctrlTop" style="display:none">
@@ -959,32 +959,33 @@ header{text-align:center;margin-bottom:14px}
 
     <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
 
-  <div class="panel" id="result" style="display: none;">
+  <div class="panel" id="result">
     <div class="rt" id="rTitle">VICTORY</div>
     <p id="rDesc"></p>
     <!-- キャンペーン進行表示 -->
     <div id="campaignProgress" class="campaignbox" style="display:none"></div>
     <!-- スコア表示 -->
     <div id="scorePanel" class="scorebox">
-      <div class="scoretitle" data-i18n="score_label">SCORE</div>
+      <div class="scoretitle" data-i18n="score_label">スコア</div>
       <div class="scoreval" id="scoreVal">0</div>
       <div class="scorebreakdown" id="scoreBreakdown"></div>
     </div>
     <!-- 名前入力＆登録 -->
     <div id="regForm" class="regbox">
-      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
-        border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
+      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）"
+        style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
+        border-radius:8px;color:var(--ink);font-family:'Chakra Petch';font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <button class="btn" id="nextBattleBtn" style="display:none">次の戦へ →</button>
-        <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
-        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
-        <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
-        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
+        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
+        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← タイトル</button>
       </div>
     </div>
   </div>
@@ -999,8 +1000,8 @@ header{text-align:center;margin-bottom:14px}
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
-      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
-      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
+      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← タイトル</button>
     </div>
   </div>
 </div>
@@ -1047,7 +1048,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // }
 // 両方とも自動で解釈する。Typeのみの指定でもOK（その場合はTypeデフォルトのステータスが使われる）。
 // =========================================================
-var TRAITS_FILE = "0n1_traits.json?v=20260531b";
+var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
 // 文字列値（"High" "Common" 等）を数値1〜10に換算する辞書
@@ -2900,6 +2901,11 @@ function buildCard(side){
   var rawSt = f.st._raw || {spirit:Math.floor(f.st.spirit), strength:Math.floor(f.st.strength), style:Math.floor(f.st.style)};
   var base = f.st._base || {spirit:Math.floor(f.st.spirit), strength:Math.floor(f.st.strength), style:Math.floor(f.st.style)};
   var bInt = f.st._bonus_int || {spirit:0, strength:0, style:0};
+  // ★神(K4M-1)の敵は戦闘開始時に合計80へ底上げされる。カードも実戦力を表示する
+  if(G.isGod && side==='en'){
+    base = {spirit:Math.round(f.st.spirit), strength:Math.round(f.st.strength), style:Math.round(f.st.style)};
+    bInt = {spirit:0, strength:0, style:0};
+  }
 
   c.innerHTML='<div class="tcg-head"><span class="nm">'+realBadge+'0N1 #'+f.id+'</span>'+
     '<span class="tcg-type" style="color:'+col+'">'+f.type+'</span></div>'+
@@ -3514,15 +3520,10 @@ function triggerEnclaveCollapse(){
 
 function startTurn(){
   // ★神戦：SP16到達済みなら、プレイヤー行動前に「エンクレイヴ崩壊」→ゲームオーバー
+  // 崩壊だけは無敵デバッグでも貫通する（確定仕様）
   if(G.isGod && G.godGaugeMax && G.en.gauge >= G.godGaugeMax){
-    if(window.DBG_INVINCIBLE){
-      // 無敵：崩壊を回避（確認用）。SPを13に戻して継続
-      log('🛡 [DEBUG] 無敵で崩壊を回避（SPを13に戻す）', 'adv');
-      G.en.gauge = 13; updateBars(G.en,'en');
-    } else {
-      triggerEnclaveCollapse();
-      return;
-    }
+    triggerEnclaveCollapse();
+    return;
   }
   G.meQueue=[];
   G.enQueue=enemyPlan();
@@ -4678,6 +4679,5 @@ applyI18n();
 loadTraits();
 })();
 </script>
-
-
-</body></html>
+</body>
+</html>
