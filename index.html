@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
+<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_18.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -568,6 +568,11 @@ header{text-align:center;margin-bottom:14px}
 .howto-body th{background:rgba(155,60,255,.15);padding:6px;border:1px solid rgba(155,60,255,.3);color:var(--violet)}
 .howto-body td{padding:6px;border:1px solid rgba(155,60,255,.2)}
 .howto-body .cmd-name{color:var(--cyan);font-weight:700}
+/* 装備図鑑 */
+.dex-grid{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 16px}
+.dex-chip{display:inline-flex;align-items:stretch;border:1px solid;border-radius:8px;overflow:hidden;font-size:11px}
+.dex-chip .dex-v{padding:3px 7px;color:var(--ink);white-space:nowrap}
+.dex-chip .dex-b{padding:3px 6px;color:#0a0a14;font-weight:700;font-size:10px;display:flex;align-items:center}
 
 /* ===== スコア・ランキング ===== */
 .scorebox{margin:14px 0;padding:14px 18px;text-align:center;
@@ -836,6 +841,7 @@ header{text-align:center;margin-bottom:14px}
       <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
       <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
       <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
+      <button class="btn ghost title-btn" id="titleEquipBtn" data-i18n="title_equip">Equipment Guide</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
@@ -845,6 +851,13 @@ header{text-align:center;margin-bottom:14px}
     <h2 data-i18n="how_title">How to Play</h2>
     <div class="howto-body" id="howtoBody"></div>
     <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
+  </div>
+
+  <!-- ===== 装備図鑑 ===== -->
+  <div class="panel" id="equipDex" style="display:none">
+    <h2 data-i18n="equip_title">Equipment Guide — Stat per Part</h2>
+    <div class="howto-body" id="equipBody"></div>
+    <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_title">← Title</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
@@ -1061,7 +1074,8 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 g";
+var BUILD = "2026-06-01 j";
+var EQUIP_DEX = {"Background":[["Azurite","STY",0],["Citrine","STY",0],["Dark Smoke","SPI",0],["Jasper","STR",0],["Light Smoke","SPI",0],["Technogod","SPI",0],["Technogod (Azurite)","SPI",1],["Technogod (Citrine)","SPI",1],["Technogod (Jasper)","SPI",1],["Technogod (Pearl)","SPI",1]],"Body":[["Ash","SPI",0],["Azurite","STY",0],["Citrine","STY",0],["Jasper","STR",0],["Kabuki","STR",0],["Obsidian","SPI",0],["Pearlescent","SPI",0],["Tiger Skin","STR",0],["Type-01","SPI",0],["Water","SPI",0]],"Eyes":[["Aggressive","SPI",0],["Angry (Azurite)","STR",0],["Angry (Citrine)","STR",0],["Angry (Jasper)","STR",0],["Angry (Oni)","STR",0],["Closed Eye","SPI",0],["Eye Shadow (Azurite)","STY",0],["Eye Shadow (Citrine)","STY",0],["Eye Shadow (Jasper)","STR",0],["Eyebags","SPI",0],["Flat","SPI",0],["Half Open (Azurite)","STY",0],["Half Open (Citrine)","STY",0],["Half Open (Jasper)","STR",0],["Half Open (Oni)","STR",0],["Hypnotized","SPI",0],["Open (Azurite)","STY",0],["Open (Citrine)","STY",0],["Open (Jasper)","STR",0],["Possessed","SPI",0],["Squint (Azurite)","STY",0],["Squint (Citrine)","STY",0],["Squint (Jasper)","STR",0]],"Mouth":[["Angry","STR",0],["Angry (Oni)","STR",0],["Frown","STR",0],["Neutral","SPI",0],["Open","SPI",0],["Smile","STY",0],["Smirk","STY",0],["uwu","SPI",0]],"Wear":[["Bomber Jacket (Jasper/Obsidian)","STR",0],["Bomber Jacket (Obsidian/Pearl)","STR",0],["Bomber Jacket (Pearl/Azurite)","STR",0],["Bomber Jacket (Pine)","STR",0],["Bomber Jacket (Rose)","STR",0],["Bomber Jacket (Saddle)","STR",0],["Dress (Obsidian)","STY",0],["Dress (Pearl)","STY",0],["Kimono (Azurite)","STY",0],["Kimono (Rose)","SPI",0],["Neon Hood (Emerald)","STY",0],["Neon Hood (Rose)","STY",0],["Ninja (Obsidian)","STR",0],["Ninja (Pearl)","STR",0],["Sleeveless (Citrine)","STY",0],["Sleeveless (Obsidian)","SPI",0],["Sleeveless (Pearl)","SPI",0],["Suit (Obsidian)","STY",0],["Suit (Pearl)","STY",0],["T-Shirt (Jasper)","STR",0],["T-Shirt (Obsidian)","STY",0],["T-Shirt (Pearl)","STY",0],["Tech Jacket (Gold)","STR",0],["Tech Jacket (Reflective)","STR",0],["Thermal Hoodie (Citrine)","STR",0],["Thermal Hoodie (Jasper)","STR",0],["Thermal Hoodie (Obsidian)","STR",0],["Thermal Hoodie (Pearl)","STR",0],["Thermal Hoodie (Turquoise)","STR",0],["Track Jacket (Azurite)","STR",0],["Track Jacket (Citrine)","STR",0],["Track Jacket (Obsidian)","STR",0],["Track Jacket (Pearl)","STR",0],["Track Jacket (Topaz)","STR",0],["Yukata (Azurite)","STY",0],["Yukata (Pearl)","SPI",0],["01-Hood","STY",1],["02-Bomber Jacket","STR",1],["03-Bomber Jacket","STR",1],["04-Kimono","STY",1],["05-Track Jacket","STR",1],["06-Hood","STY",1],["07-Kimono","STY",1]],"Hair":[["Bald","SPI",0],["Bob (Azurite)","STY",0],["Bob (Obsidian)","STY",0],["Bob (Quartz)","STY",0],["Bob (Rose)","STY",0],["Dreads (Azurite)","STY",0],["Dreads (Bronzite)","SPI",0],["Dreads (Jasper)","STR",0],["Dreads (Obsidian)","SPI",0],["Fade (Azurite)","STY",0],["Fade (Citrine)","STY",0],["Fade (Ethereum)","STY",0],["Fade (Jasper)","STR",0],["Fade (Obsidian)","STY",0],["Fade (Pearl)","STY",0],["Half-Buzz (Amethyst)","SPI",0],["Half-Buzz (Pearl)","SPI",0],["Half-Buzz (Turquoise)","SPI",0],["High Ponytail (Bronzite)","STY",0],["High Ponytail (Obsidian)","STY",0],["High Ponytail (Pearl)","STY",0],["Long (Citirine)","SPI",0],["Long (Obsidian)","SPI",0],["Long (Rose)","SPI",0],["Long (Turquoise)","SPI",0],["Pixie (Citrine)","STY",0],["Pixie (Obsidian)","STY",0],["Pixie (Pearl)","STY",0],["Pixie (Rose)","STY",0],["Pixie (Turquoise)","STY",0],["Pompadour (Citrine)","STY",0],["Pompadour (Jasper)","STR",0],["Pompadour (Obsidian)","SPI",0],["Ponytail (Jasper)","STR",0],["Ponytail (Obsidian)","STY",0],["Ponytail (Rose)","STY",0],["Ponytail (Turquoise)","STY",0],["Slick (Citrine)","STY",0],["Slick (Obsidian)","SPI",0],["Slick (Pearl)","SPI",0],["Spiky (Citrine)","STY",0],["Spiky (Jasper)","STR",0],["Spiky (Obsidian)","SPI",0],["Spiky (Pearl)","SPI",0],["Top Knot (Jasper)","STR",0],["Top Knot (Obsidian)","SPI",0],["Top Knot (Pearl)","SPI",0]],"Face":[["Bandaid","STY",0],["Barong","SPI",0],["Bubblegum","SPI",0],["Dali Mask","STR",0],["Foodmasku","STR",0],["Garou (Azurite)","STY",0],["Garou (Citrine)","STY",0],["Garou (Jasper)","STR",0],["Gas Mask (Obsidian)","STR",0],["Gas Mask (Pearl)","STR",0],["Glasses (Obsidian)","SPI",0],["Glasses (Pearl)","SPI",0],["Hannya Mask (Jasper)","STR",0],["Hannya Mask (Obsidian)","STR",0],["Hannya Mask (Pearl)","STR",0],["KULT Mask (Obsidian)","STR",0],["KULT Mask (Pearl)","STR",0],["Kitsune Mask (Gold)","STR",0],["Kitsune Mask (Obsidian)","STR",0],["Kitsune Mask (Pearl)","STR",0],["Masquerade (Obsidian)","SPI",0],["Masquerade (Pearl)","SPI",0],["Mech Mask","STR",0],["Mempo Mask (Jasper)","STR",0],["Mempo Mask (Obsidian)","STR",0],["Nose Scar","SPI",0],["PR Mask (Charcoal)","STR",0],["PR Mask (Citrine)","STR",0],["PR Mask (Jasper)","STR",0],["PR Mask (Turqouise)","STR",0],["Plague Mask (Obsidian)","STR",0],["Plague Mask (Pearl)","STR",0],["Ra Mask","STR",0],["Skull Mask","STR",0],["T-Goggles","STY",0],["Tengu Mask","STR",0],["Tengu Mask (Gold)","STR",0],["V-Shades","STY",0],["VR (Obsidian)","SPI",0],["VR (Pearl)","SPI",0],["Vape","SPI",0],["Void","SPI",0]],"Head":[["0-Headphones (Obsidian)","STY",0],["0-Headphones (Pearl)","STY",0],["Antlers (Gold)","SPI",0],["Cat Ears","SPI",0],["Cat Ears (Cool)","SPI",0],["Crown","SPI",0],["E-A1D","SPI",0],["Earbuds","SPI",0],["Fedora (Charcoal)","STY",0],["Fedora (Obsidian)","STY",0],["Flat Cap (Obsidian)","STY",0],["Flat Cap (Pearl)","STY",0],["Headphones (Citrine)","STY",0],["Headphones (Jasper)","STR",0],["Headphones (Obsidian)","STY",0],["Headphones (Pearl)","STY",0],["Headphones (Rose)","STY",0],["Headphones (Turquoise)","STY",0],["Headset","STY",0],["Horns (Gold)","STR",0],["Horns (Obsidian)","STR",0],["Pen","SPI",0],["Rose","SPI",0],["Snapback (Jasper)","STR",0],["Snapback (Multicolor)","STY",0],["Snapback (Obsidian)","STY",0],["Snapback (Pearl)","STY",0],["Void","SPI",0]],"Extra":[["0N1 Logo Pin (Black)","STY",0],["0N1 Logo Pin (White)","STY",0],["Banana Pin","STY",0],["Canary","SPI",0],["Dark Aura","SPI",0],["Earring (Double)","STY",0],["Haunted","SPI",0],["Loop Earring","STY",0],["Lucky no. 7 Earring","STY",0],["Lucky no. 7 Pin","STY",0],["Oni Doll (Azurite)","STR",0],["Oni Doll (Jasper)","STR",0],["Strawberry Pin","STY",0],["Super Aura","SPI",0],["Void","SPI",0],["Y0N1 Pin","STY",0]]};
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
 // 文字列値（"High" "Common" 等）を数値1〜10に換算する辞書
@@ -2592,6 +2606,8 @@ var I18N = {
     title_ranking: "ランキング",
     title_how: "遊び方",
     how_title: "遊び方",
+    title_equip: "装備図鑑",
+    equip_title: "装備図鑑 — 各装備が上げるステ",
     score_label: "SCORE",
     sc_dmg_dealt: "与ダメージ:",
     sc_dmg_taken: "被ダメージ:",
@@ -2706,6 +2722,8 @@ var I18N = {
     title_ranking: "Ranking",
     title_how: "How to Play",
     how_title: "How to Play",
+    title_equip: "Equipment Guide",
+    equip_title: "Equipment Guide — Stat per Part",
     score_label: "SCORE",
     sc_dmg_dealt: "Damage Dealt:",
     sc_dmg_taken: "Damage Taken:",
@@ -2823,6 +2841,9 @@ function applyI18n(){
   // 遊び方画面が開いていれば再描画
   if(el('#howto') && el('#howto').style.display === 'block'){
     if(typeof renderHowto === 'function') renderHowto();
+  }
+  if(el('#equipDex') && el('#equipDex').style.display === 'block'){
+    if(typeof renderEquipDex === 'function') renderEquipDex();
   }
 }
 var ANAME={attack:'攻撃',counter:'反撃',defend:'防御',charge:'ためる',special:'必殺'};
@@ -4244,7 +4265,7 @@ function startBattle(myId, keepCampaign){
   }
   G.startHp = G.me.hp;  // スコア計算用に開始HP記録
   el('#start').style.display='none';el('#result').style.display='none';
-  el('#title').style.display='none';el('#howto').style.display='none';el('#ranking').style.display='none';
+  el('#title').style.display='none';el('#howto').style.display='none';el('#ranking').style.display='none';el('#equipDex')&&(el('#equipDex').style.display='none');
   el('#battle').style.display='block';clearLog();
   updateGlobalTitleBtn();
   el('#meName').textContent='0N1 #'+myId;
@@ -4416,7 +4437,7 @@ function showTitle(){
   CAMPAIGN = null;
   var nb = el('#nextBattleBtn'); if(nb) nb.style.display='none';
   // すべての画面を隠す
-  ['#title','#howto','#start','#battle','#result','#ranking'].forEach(function(sel){
+  ['#title','#howto','#start','#battle','#result','#ranking','#equipDex'].forEach(function(sel){
     var e = el(sel); if(e) e.style.display = 'none';
   });
   // タイトル画面を表示
@@ -4446,7 +4467,7 @@ function showTitle(){
   }
 }
 function showStart(){
-  ['#title','#howto','#battle','#result','#ranking'].forEach(function(sel){
+  ['#title','#howto','#battle','#result','#ranking','#equipDex'].forEach(function(sel){
     var e = el(sel); if(e) e.style.display = 'none';
   });
   el('#start').style.display = 'block';
@@ -4454,13 +4475,48 @@ function showStart(){
   updateGlobalTitleBtn();
 }
 function showHowto(){
-  ['#title','#start','#battle','#result','#ranking'].forEach(function(sel){
+  ['#title','#start','#battle','#result','#ranking','#equipDex'].forEach(function(sel){
     var e = el(sel); if(e) e.style.display = 'none';
   });
   el('#howto').style.display = 'block';
   renderHowto();
   BGM.play('title'); // 遊び方画面でもtitle BGMを継続
   updateGlobalTitleBtn();
+}
+function showEquipDex(){
+  ['#title','#start','#battle','#result','#ranking','#howto'].forEach(function(sel){
+    var e = el(sel); if(e) e.style.display = 'none';
+  });
+  el('#equipDex').style.display = 'block';
+  renderEquipDex();
+  BGM.play('title');
+  updateGlobalTitleBtn();
+}
+function renderEquipDex(){
+  var ja = (LANG === 'ja');
+  var SLOT_JA = {Background:'背景',Body:'体',Eyes:'目',Mouth:'口',Wear:'服',Hair:'髪',Face:'顔',Head:'頭',Extra:'装飾'};
+  var STAT = {
+    STR:{label: ja?'剛 Strength':'Strength', col:'#ff6ea0'},
+    STY:{label: ja?'柔 Style':'Style',       col:'#22e6e0'},
+    SPI:{label: ja?'断 Spirit':'Spirit',     col:'#9b3cff'}
+  };
+  var html = '<p style="font-size:12px;opacity:.9">'+(ja
+    ? '各装備が上げるステータスの一覧。装備1つにつき <b style="color:#ff6ea0">剛=Strength</b> / <b style="color:#22e6e0">柔=Style</b> / <b style="color:#9b3cff">断=Spirit</b> のどれかに +1。空きスロット(Void)はSpirit。<b style="color:var(--gold)">★</b>=K4M-1専用（神は特殊計算のため分類は参考値）。装備が決まればステも決まる（プレイヤーは選べないNFT固定）。'
+    : 'Which stat each part raises. Each part adds +1 to one of <b style="color:#ff6ea0">Strength</b> / <b style="color:#22e6e0">Style</b> / <b style="color:#9b3cff">Spirit</b>. Empty slot (Void) = Spirit. <b style="color:var(--gold)">★</b> = K4M-1 only (gods use special stats; class is nominal). Parts are fixed per NFT.')+'</p>';
+  var order=['Background','Body','Eyes','Mouth','Wear','Hair','Face','Head','Extra'];
+  order.forEach(function(slot){
+    var arr = EQUIP_DEX[slot] || [];
+    html += '<h3>'+(ja?SLOT_JA[slot]:slot)+' <span style="font-size:11px;opacity:.6">('+arr.length+')</span></h3><div class="dex-grid">';
+    arr.forEach(function(pair){
+      var st = STAT[pair[1]] || STAT.SPI;
+      var godMark = pair[2] ? '<span style="color:var(--gold)">★</span>' : '';
+      html += '<span class="dex-chip" style="border-color:'+st.col+'">'+
+        '<span class="dex-v">'+godMark+pair[0]+'</span>'+
+        '<span class="dex-b" style="background:'+st.col+'">'+st.label+'</span></span>';
+    });
+    html += '</div>';
+  });
+  el('#equipBody').innerHTML = html;
 }
 function renderHowto(){
   var ja = (LANG === 'ja');
@@ -4493,7 +4549,7 @@ function renderHowto(){
         '<tr><td class="cmd-name">0N1</td><td>M33KASAの守護が体を覆う！（種族数に応じてステータスが向上する）</td></tr>'+
         '<tr><td class="cmd-name">K4M-1</td><td>One Sourceから力を吸い上げる！（全ステータスが上昇する）</td></tr>'+
       '</table>'+
-      '<p>さらに、身につけた<b>パーツ（装備）</b>はワン・ソースの断片。剛なパーツは攻撃を、柔なパーツはスタイルを、断なパーツは精神を高める。</p>'+
+      '<p>さらに、身につけた<b>パーツ（装備）</b>もステータスを底上げする。攻撃寄りのパーツは<b>Strength</b>、技寄りのパーツは<b>Style</b>、精神寄りのパーツは<b>Spirit</b>を高め、その上昇分はカードの<b>(+N)</b>に含まれて表示される。</p>'+
       '<h3>行動特性（性格）</h3>'+
       '<p>一番高いステータスによって、戦い方のクセ（性格）が決まる。敵はこの性格に沿って行動する。</p>'+
       '<table>'+
@@ -4538,7 +4594,7 @@ function renderHowto(){
         '<tr><td class="cmd-name">0N1</td><td>M33KASA\'s protection envelops the body! (Stats rise based on race population)</td></tr>'+
         '<tr><td class="cmd-name">K4M-1</td><td>Draws power from the One Source! (All stats rise)</td></tr>'+
       '</table>'+
-      '<p>Also, equipped <b>parts</b> are fragments of the One Source. Fierce parts raise Attack, supple parts raise Style, serene parts raise Spirit.</p>'+
+      '<p>Also, equipped <b>parts</b> boost stats: offensive parts raise <b>Strength</b>, technical parts raise <b>Style</b>, and spiritual parts raise <b>Spirit</b>. These boosts are included in the <b>(+N)</b> shown on the card.</p>'+
       '<h3>Battle Nature</h3>'+
       '<p>The highest stat determines fighting style (nature). Enemies act according to this nature.</p>'+
       '<table>'+
@@ -4591,6 +4647,14 @@ el('#titleHowBtn').addEventListener('click', function(){
   showHowto();
 });
 el('#howBackBtn').addEventListener('click', function(){
+  SFX.click();
+  showTitle();
+});
+el('#titleEquipBtn').addEventListener('click', function(){
+  SFX.init(); if(SFX.howtoBtn) SFX.howtoBtn();
+  showEquipDex();
+});
+el('#equipBackBtn').addEventListener('click', function(){
   SFX.click();
   showTitle();
 });
@@ -4747,7 +4811,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 g</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 j</div>
 
 
 </body></html>
