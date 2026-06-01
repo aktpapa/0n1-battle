@@ -367,6 +367,9 @@ header{text-align:center;margin-bottom:14px}
 @keyframes hkm{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-45%)}}
 .flash{animation:fl .4s}
 @keyframes fl{0%{filter:none}50%{filter:brightness(1.9) saturate(2)}100%{filter:none}}
+/* ①被ダメ側のカードを少し揺らす */
+.tcg.cardhit{animation:cardhit .38s ease-out}
+@keyframes cardhit{0%,100%{transform:translate(0,0) rotate(0)}15%{transform:translate(-5px,2px) rotate(-1deg)}30%{transform:translate(4px,-2px) rotate(1deg)}45%{transform:translate(-3px,1px) rotate(-.6deg)}60%{transform:translate(3px,-1px)}80%{transform:translate(-2px,0)}}
 .float{position:absolute;font-family:'Zen Dots';font-size:30px;pointer-events:none;z-index:30;
   animation:fu 1.1s ease-out forwards;left:50%;text-shadow:0 2px 12px #000,0 0 20px currentColor}
 @keyframes fu{0%{opacity:0;transform:translate(-50%,0) scale(.5)}20%{opacity:1;transform:translate(-50%,-14px) scale(1.3)}100%{opacity:0;transform:translate(-50%,-70px) scale(1)}}
@@ -601,6 +604,15 @@ header{text-align:center;margin-bottom:14px}
 @keyframes ecNoise{0%{transform:translateY(0)}100%{transform:translateY(4px)}}
 .enclave-collapse .ec-text{position:relative;z-index:2;font-family:'Zen Dots',sans-serif;font-size:6vmin;color:#ff1f6d;text-shadow:0 0 20px #ff1f6d,0 0 40px #fff;text-align:center;animation:ecText .3s steps(2) infinite}
 @keyframes ecText{0%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.04)}100%{opacity:1;transform:scale(1)}}
+/* ②崩壊：暗転イントロ→フラッシュ＆グリッチ */
+.enclave-collapse.intro{background:rgba(0,0,0,.9);transition:background .5s}
+.enclave-collapse.intro .ec-noise{opacity:.15}
+.enclave-collapse .ec-intro{position:relative;z-index:2;font-family:'Zen Dots',sans-serif;font-size:3.4vmin;line-height:1.6;color:#ff6a86;text-align:center;text-shadow:0 0 16px #ff1f6d;opacity:0;animation:ecIntroIn .6s ease-out forwards}
+@keyframes ecIntroIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.enclave-collapse.intro .ec-text{display:none}
+.enclave-collapse.crashing .ec-intro{display:none}
+.enclave-collapse.crashing .ec-text{animation:ecText .3s steps(2) infinite, ecGlitch .22s steps(2) infinite}
+@keyframes ecGlitch{0%{text-shadow:2px 0 #00f6ff,-2px 0 #ff1f6d,0 0 22px #ff1f6d}50%{text-shadow:-3px 0 #00f6ff,3px 0 #ff1f6d,0 0 34px #fff}100%{text-shadow:2px 0 #ff1f6d,-2px 0 #00f6ff,0 0 22px #ff1f6d}}
 .god-entrance{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;
   align-items:center;justify-content:center;pointer-events:none;
   background:radial-gradient(circle at 50% 50%,rgba(40,20,0,.5),rgba(0,0,0,.92));
@@ -1049,7 +1061,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 e";
+var BUILD = "2026-06-01 f";
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
 // 文字列値（"High" "Common" 等）を数値1〜10に換算する辞書
@@ -2644,6 +2656,7 @@ var I18N = {
     enemy_special_warning: "⚡ 敵のSPが満タン！ このターン必殺技を放ってくる！",
     god_descend: "═══ 天地が震える…！ K4M-1 が降臨した ═══",
     enclave_collapse: "💀💀💀 エンクレイヴが崩壊する…！ One Sourceの力がエンクレイヴを呑み込む — 世界の終わり",
+    collapse_intro: "🌑 One Sourceの暴走を止める事ができなかった…！",
     matchup_log_adv: "⚡ 属性相性は YOU 有利！",
     matchup_log_dis: "属性相性は YOU 不利…",
     matchup_log_neu: "属性相性は互角",
@@ -2755,6 +2768,7 @@ var I18N = {
     enemy_special_warning: "⚡ Enemy SP is full! It will unleash its special this turn!",
     god_descend: "═══ Heaven and earth tremble…! K4M-1 has descended ═══",
     enclave_collapse: "💀💀💀 The Enclave collapses…! The One Source devours the Enclave — the end of the world",
+    collapse_intro: "🌑 Could not stop the One Source's rampage…!",
     matchup_log_adv: "⚡ Type matchup: YOU Advantage!",
     matchup_log_dis: "Type matchup: YOU Disadvantage...",
     matchup_log_neu: "Type matchup is even",
@@ -3014,7 +3028,10 @@ function floatTxt(side,t,col){var c=el(side==='me'?'#meCorner':'#enCorner');
   c.appendChild(f);setTimeout(function(){f.remove();},1100);}
 function shake(side,red){var c=el(side==='me'?'#meCorner':'#enCorner');
   c.classList.add('hit');if(red)c.classList.add('flash');
-  setTimeout(function(){c.classList.remove('hit','flash');},420);}
+  setTimeout(function(){c.classList.remove('hit','flash');},420);
+  var card=el(side==='me'?'#meCard':'#enCard'); // ★被ダメ側のカードも少し揺らす
+  if(card){card.classList.remove('cardhit');void card.offsetWidth;card.classList.add('cardhit');
+    setTimeout(function(){card.classList.remove('cardhit');},400);}}
 
 function atkPower(att){var base=5+att.st.strength*0.65,v=Math.random()*3-1;
   var crit=Math.random()<(0.06+att.st.style*0.012);var d=base+v;if(crit)d*=1.7;
@@ -3521,30 +3538,41 @@ function resolvePair(meAct,enAct){
 // エンクレイヴ崩壊（神のSP16到達でゲームオーバー）
 function triggerEnclaveCollapse(){
   G.phase = 'collapse';
-  log(T('enclave_collapse',{}), 'clash');
+  var ecTxt = (LANG==='ja'?'エンクレイヴが崩壊する':'THE ENCLAVE COLLAPSES');
+  var introTxt = (LANG==='ja'?'One Sourceの暴走を<br>止める事ができなかった…！':'Could not stop the<br>One Source\'s rampage…!');
+  // フェーズ1：画面が暗くなり「止められなかった」
   var ov = document.createElement('div');
-  ov.className = 'enclave-collapse';
-  ov.innerHTML = '<div class="ec-noise"></div><div class="ec-text">'+
-    (LANG==='ja'?'エンクレイヴが崩壊する':'THE ENCLAVE COLLAPSES')+'</div>';
+  ov.className = 'enclave-collapse intro';
+  ov.innerHTML = '<div class="ec-noise"></div>'+
+    '<div class="ec-intro">'+introTxt+'</div>'+
+    '<div class="ec-text">'+ecTxt+'</div>';
   document.body.appendChild(ov);
-  try{ SFX.init(); SFX.collapse(); }catch(e){}
-  var flashes = 0;
-  var iv = setInterval(function(){
-    flashes++;
-    ov.classList.toggle('flash');
-    document.body.style.transform = (flashes%2===0) ? 'translate(6px,-4px)' : 'translate(-6px,4px)';
-    if(flashes >= 12){
-      clearInterval(iv);
-      document.body.style.transform = '';
-      ov.classList.add('blackout');
-    }
-  }, 140);
+  log(T('collapse_intro',{}), 'clash');
+  // フェーズ2：少し溜めてからフラッシュ＆グリッチで崩壊
+  setTimeout(function(){
+    ov.classList.remove('intro');
+    ov.classList.add('crashing');
+    log(T('enclave_collapse',{}), 'clash');
+    try{ SFX.init(); SFX.collapse(); }catch(e){}
+    var flashes = 0;
+    var iv = setInterval(function(){
+      flashes++;
+      ov.classList.toggle('flash');
+      document.body.style.transform = (flashes%2===0) ? 'translate(6px,-4px)' : 'translate(-6px,4px)';
+      if(flashes >= 12){
+        clearInterval(iv);
+        document.body.style.transform = '';
+        ov.classList.add('blackout');
+      }
+    }, 140);
+  }, 1600);
+  // フェーズ3：終了
   setTimeout(function(){
     G.me.hp = 0; updateBars(G.me,'me');
     if(ov.parentNode) ov.parentNode.removeChild(ov);
     document.body.style.transform = '';
     finish();
-  }, 2800);
+  }, 4400);
 }
 
 function startTurn(){
@@ -4722,7 +4750,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 e</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 f</div>
 
 
 </body></html>
