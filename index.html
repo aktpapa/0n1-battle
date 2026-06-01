@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
+<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_26.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
+<!-- Xシェア時のリンクプレビュー（カード画像）。ogp.png(1200x630)をリポジトリ直下に置く -->
+<meta property="og:title" content="0N1 FORCE — NEON RING CLASH">
+<meta property="og:description" content="0N1 Forceで戦う1on1ネオン・カードバトル。K4M-1を討伐せよ。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aktpapa.github.io/0n1-battle/">
+<meta property="og:image" content="https://aktpapa.github.io/0n1-battle/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="0N1 FORCE — NEON RING CLASH">
+<meta name="twitter:description" content="0N1 Forceで戦う1on1ネオン・カードバトル。K4M-1を討伐せよ。">
+<meta name="twitter:image" content="https://aktpapa.github.io/0n1-battle/ogp.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ctext y=&#39;26&#39; font-size=&#39;28&#39;%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
@@ -42,6 +52,14 @@ header{text-align:center;margin-bottom:14px}
   -webkit-background-clip:text;background-clip:text;color:transparent;
   text-shadow:0 0 26px rgba(255,31,109,.4)}
 .sub{color:var(--muted);letter-spacing:.4em;font-size:10px;margin-top:5px;text-transform:uppercase}
+.logo-top{font-family:'Zen Dots',sans-serif;font-size:clamp(14px,3vw,22px);letter-spacing:.2em;
+  display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 10px rgba(155,60,255,.6))}
+.logo-top::before,.logo-top::after{content:'';width:26px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--violet))}
+.logo-top::after{background:linear-gradient(90deg,var(--violet),var(--cyan),transparent)}
 
 /* 言語切替 */
 .lang-switch{position:absolute;top:14px;right:14px;display:flex;gap:6px;z-index:100}
@@ -382,6 +400,7 @@ header{text-align:center;margin-bottom:14px}
 
 /* === 初期状態（電源OFF）：0N1 FORCE は薄暗く、他は非表示 === */
 /* === 初期状態（電源OFF）：0N1 FORCE は薄暗く、他は非表示 === */
+#title.power-off .title-brand,
 #title.power-off .title-sub,
 #title.power-off .title-tag,
 #title.power-off .title-buttons,
@@ -401,11 +420,16 @@ header{text-align:center;margin-bottom:14px}
 #title.powering-on .title-main{
   animation:neonPowerOn 2.5s ease-out forwards;
 }
+#title.powering-on .title-brand,
 #title.powering-on .title-sub,
 #title.powering-on .title-tag,
 #title.powering-on .title-buttons,
 #title.powering-on .title-credit{
   visibility:visible;
+}
+#title.powering-on .title-brand{
+  animation:fadeInOnly 1.5s ease-out 1.6s forwards;
+  opacity:0;
 }
 #title.powering-on .title-sub{
   animation:fadeInOnly 1.5s ease-out 1.8s forwards,
@@ -534,6 +558,14 @@ header{text-align:center;margin-bottom:14px}
 .title-sub{font-family:'Zen Dots';font-size:28px;color:var(--pink);letter-spacing:.15em;line-height:1;
   text-shadow:0 0 20px var(--pink),0 2px 4px #000;
   margin-bottom:8px;animation:titlePulse 2.5s ease-in-out infinite}
+.title-brand{font-family:'Zen Dots',sans-serif;font-size:clamp(20px,5vw,34px);letter-spacing:.18em;line-height:1;
+  display:flex;justify-content:center;align-items:center;gap:14px;margin:8px 0 6px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 14px rgba(34,230,224,.55))}
+.title-brand::before,.title-brand::after{content:'';width:34px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--violet))}
+.title-brand::after{background:linear-gradient(90deg,var(--violet),var(--cyan),transparent)}
 @keyframes titlePulse{0%,100%{opacity:1;text-shadow:0 0 20px var(--pink),0 2px 4px #000}50%{opacity:.85;text-shadow:0 0 30px var(--pink),0 0 50px var(--violet),0 2px 4px #000}}
 .title-tag{font-family:'Chakra Petch';font-size:13px;color:var(--cyan);letter-spacing:.3em;margin-top:14px}
 .title-buttons{display:flex;flex-direction:column;gap:14px;max-width:280px;margin:30px auto 24px}
@@ -562,7 +594,9 @@ header{text-align:center;margin-bottom:14px}
 .back-to-title{position:absolute;top:12px;left:12px;font-size:11px !important;padding:6px 12px !important}
 .panel{position:relative}
 /* 遊び方画面 */
-.howto-body{text-align:left;font-size:13px;line-height:1.9;color:var(--ink);padding:0 24px;max-height:60vh;overflow-y:auto}
+.howto-body{text-align:left;font-size:13px;line-height:1.9;color:var(--ink);padding:0;max-height:60vh;overflow-y:auto}
+#howto,#equipDex{max-width:720px;margin:24px auto;padding:26px 34px 28px}
+#howto h2,#equipDex h2{margin:0 0 6px}
 .howto-body h3{font-family:'Zen Dots';font-size:15px;color:var(--gold);margin:18px 0 8px;letter-spacing:.05em}
 .howto-body table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px}
 .howto-body th{background:rgba(155,60,255,.15);padding:6px;border:1px solid rgba(155,60,255,.3);color:var(--violet)}
@@ -812,7 +846,7 @@ header{text-align:center;margin-bottom:14px}
 <div class="scan"></div>
 
 <!-- 左上：ホームボタン（wrapの外に置いて重なり順の問題を回避） -->
-<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
+<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display: none;">🏠</button>
 
 <div class="wrap">
   <!-- 右下：BGM/言語切替（縦並び） -->
@@ -822,18 +856,20 @@ header{text-align:center;margin-bottom:14px}
   </div>
 
   <header>
+    <div class="logo-top">0N1 BATTLE</div>
     <div class="logo">NEON RING CLASH</div>
     <div class="sub">0N1 Force · Cyber Trading Battle</div>
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel power-off" id="title" style="display: block;">
+  <div class="panel" id="title" style="display: block;">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay" style="display: flex;">
+    <div class="click-overlay fading" id="clickOverlay" style="display: none;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
       <div class="title-main">0N1 FORCE</div>
+      <div class="title-brand">0N1 BATTLE</div>
       <div class="title-sub">NEON RING CLASH</div>
       <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
@@ -841,23 +877,22 @@ header{text-align:center;margin-bottom:14px}
       <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
       <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
       <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
-      <button class="btn ghost title-btn" id="titleEquipBtn" data-i18n="title_equip">Equipment Guide</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
   <!-- ===== 遊び方画面 ===== -->
-  <div class="panel" id="howto" style="display:none">
+  <div class="panel" id="howto" style="display: none;">
     <h2 data-i18n="how_title">How to Play</h2>
-    <div class="howto-body" id="howtoBody"></div>
+    <div class="howto-body" id="howtoBody"><h3>Basic Rules</h3><p>Fight with HP 80. Each round, select 3 commands and resolve them one by one against the opponent's 3 commands. The first to reach 0 HP loses.</p><h3>5 Commands</h3><table><tbody><tr><th>Command</th><th>Effect</th></tr><tr><td class="cmd-name">Attack</td><td>Reliable hit (STR damage, reduced by target Spirit, ⚡+1)</td></tr><tr><td class="cmd-name">Defend</td><td>Halve incoming damage + recover HP (+3)</td></tr><tr><td class="cmd-name">Counter</td><td>Counters attacks only (STY-based return, ⚡+1)</td></tr><tr><td class="cmd-name">Charge</td><td>Gauge +3. Weak to attack/special</td></tr><tr><td class="cmd-name">Special</td><td>Requires full gauge (⚡8). Big damage</td></tr></tbody></table><h3>4 Types (Awakening Stages)</h3><p>Y0K-A1 → B4K3M0-N0 → 0N1 → K4M-1: rarer and stronger in this order.<br>Rarer types have higher battle stats (no type advantage/disadvantage — pure stats and mind games).</p><h3>Stats</h3><p><b>Spirit</b>: Damage reduction (attacks, counters &amp; specials)<br><b>Strength</b>: Attack/special damage<br><b>Style</b>: Speed, counter strength</p><h3>Stat Awakening (Important)</h3><p>0N1 fight with their <b>soul</b>, not their body. The numbers on the card show the strength of the "physical form," but upon entering the ring they <b>awaken</b> and fight with soul power.<br>So battle stats are shown as "base number <b>(+awakening)</b>". The weaker the original, the greater the boost from awakening.</p><table><tbody><tr><th>Race</th><th>Awakening</th></tr><tr><td class="cmd-name">Y0K-A1</td><td>M0R1A's blessing activates! (Stats rise based on race population)</td></tr><tr><td class="cmd-name">B4K3M0-N0</td><td>D34TH unleashes power! (Stats rise based on race population)</td></tr><tr><td class="cmd-name">0N1</td><td>M33KASA's protection envelops the body! (Stats rise based on race population)</td></tr><tr><td class="cmd-name">K4M-1</td><td>Draws power from the One Source! (All stats rise)</td></tr></tbody></table><p>Also, equipped <b>parts</b> boost stats: offensive parts raise <b>Strength</b>, technical parts raise <b>Style</b>, and spiritual parts raise <b>Spirit</b>. These boosts are included in the <b>(+N)</b> shown on the card.</p><p style="margin:4px 0 14px"><span onclick="showEquipDex()" style="cursor:pointer;color:var(--cyan);text-decoration:underline;font-weight:700">▶ See details (open Equipment Guide)</span></p><h3>Battle Nature</h3><p>The highest stat determines fighting style (nature). Enemies act according to this nature.</p><table><tbody><tr><th>Highest Stat</th><th>Nature</th><th>Tendency</th></tr><tr><td class="cmd-name">Strength</td><td>Brawler</td><td>Favors attacks and specials</td></tr><tr><td class="cmd-name">Spirit</td><td>Guardian</td><td>Endures with defense and charge</td></tr><tr><td class="cmd-name">Style</td><td>Trickster</td><td>Toys with counters and first strikes</td></tr></tbody></table><h3>Campaign (5 battles × 4 sets)</h3><p>1 set = 5 battles (Y0K-A1→Y0K-A1→B4K3M0-N0→B4K3M0-N0→0N1). Full HP each battle; you proceed even if you lose.<br>After 4 sets (20 battles), face <b>K4M-1</b>! Win or lose, the cycle then continues.</p><h3>Battle vs K4M-1</h3><p>K4M-1 is in a league of its own: thick HP, and its SP gauge (2 bars = 16) fills one-way every time it acts. <b>When SP hits full (16), the Enclave collapses — game over</b> (K4M-1 never uses a special; the collapse IS its finisher).<br>When SP reaches 13, a warning appears and K4M-1 will CHARGE somewhere that turn. <b>Crush that charge with an attack to destroy one SP bar (back to 8)</b> and delay the collapse. To win, you must beat it down within the limited turns before collapse.</p><h3>Score (compete by total)</h3><p>Only won battles score: Y0K-A1 +100/+150, B4K3M0-N0 +300/+400, 0N1 +600, <b>K4M-1 +2500</b>.<br>Plus brilliance (Dealt×2 − Taken + HP + Speed bonus). Lost battles = 0. Compete on the ranking by total score.</p></div>
     <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
   </div>
 
   <!-- ===== 装備図鑑 ===== -->
-  <div class="panel" id="equipDex" style="display:none">
+  <div class="panel" id="equipDex" style="display: none;">
     <h2 data-i18n="equip_title">Equipment Guide — Stat per Part</h2>
-    <div class="howto-body" id="equipBody"></div>
-    <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_title">← Title</button>
+    <div class="howto-body" id="equipBody"><p style="font-size:12px;opacity:.9">Which stat each part raises. Each part adds +1 to one of <b style="color:#ff6ea0">Strength</b> / <b style="color:#22e6e0">Style</b> / <b style="color:#9b3cff">Spirit</b>. Empty slot (Void) = Spirit. <b style="color:var(--gold)">★</b> = K4M-1 only (gods use special stats; class is nominal). Parts are fixed per NFT.</p><h3>Background <span style="font-size:11px;opacity:.6">(10)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Azurite</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Citrine</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Dark Smoke</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Jasper</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Light Smoke</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Technogod</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v"><span style="color:var(--gold)">★</span>Technogod (Azurite)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v"><span style="color:var(--gold)">★</span>Technogod (Citrine)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v"><span style="color:var(--gold)">★</span>Technogod (Jasper)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v"><span style="color:var(--gold)">★</span>Technogod (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span></div><h3>Body <span style="font-size:11px;opacity:.6">(10)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Ash</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Azurite</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Citrine</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Jasper</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Kabuki</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Obsidian</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Pearlescent</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Tiger Skin</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Type-01</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Water</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span></div><h3>Eyes <span style="font-size:11px;opacity:.6">(23)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Aggressive</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Angry (Azurite)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Angry (Citrine)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Angry (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Angry (Oni)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Closed Eye</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Eye Shadow (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Eye Shadow (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Eye Shadow (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Eyebags</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Flat</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Half Open (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Half Open (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Half Open (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Half Open (Oni)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Hypnotized</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Open (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Open (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Open (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Possessed</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Squint (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Squint (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Squint (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span></div><h3>Mouth <span style="font-size:11px;opacity:.6">(8)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Angry</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Angry (Oni)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Frown</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Neutral</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Open</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Smile</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Smirk</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">uwu</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span></div><h3>Wear <span style="font-size:11px;opacity:.6">(43)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Bomber Jacket (Jasper/Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Bomber Jacket (Obsidian/Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Bomber Jacket (Pearl/Azurite)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Bomber Jacket (Pine)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Bomber Jacket (Rose)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Bomber Jacket (Saddle)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Dress (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Dress (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Kimono (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Kimono (Rose)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Neon Hood (Emerald)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Neon Hood (Rose)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Ninja (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Ninja (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Sleeveless (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Sleeveless (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Sleeveless (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Suit (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Suit (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">T-Shirt (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">T-Shirt (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">T-Shirt (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Tech Jacket (Gold)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Tech Jacket (Reflective)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Thermal Hoodie (Citrine)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Thermal Hoodie (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Thermal Hoodie (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Thermal Hoodie (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Thermal Hoodie (Turquoise)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Track Jacket (Azurite)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Track Jacket (Citrine)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Track Jacket (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Track Jacket (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Track Jacket (Topaz)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Yukata (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Yukata (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v"><span style="color:var(--gold)">★</span>01-Hood</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v"><span style="color:var(--gold)">★</span>02-Bomber Jacket</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v"><span style="color:var(--gold)">★</span>03-Bomber Jacket</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v"><span style="color:var(--gold)">★</span>04-Kimono</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v"><span style="color:var(--gold)">★</span>05-Track Jacket</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v"><span style="color:var(--gold)">★</span>06-Hood</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v"><span style="color:var(--gold)">★</span>07-Kimono</span><span class="dex-b" style="background:#22e6e0">Style</span></span></div><h3>Hair <span style="font-size:11px;opacity:.6">(47)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Bald</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Bob (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Bob (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Bob (Quartz)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Bob (Rose)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Dreads (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Dreads (Bronzite)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Dreads (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Dreads (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Fade (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Fade (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Fade (Ethereum)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Fade (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Fade (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Fade (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Half-Buzz (Amethyst)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Half-Buzz (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Half-Buzz (Turquoise)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">High Ponytail (Bronzite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">High Ponytail (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">High Ponytail (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Long (Citirine)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Long (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Long (Rose)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Long (Turquoise)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Pixie (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Pixie (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Pixie (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Pixie (Rose)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Pixie (Turquoise)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Pompadour (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Pompadour (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Pompadour (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Ponytail (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Ponytail (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Ponytail (Rose)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Ponytail (Turquoise)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Slick (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Slick (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Slick (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Spiky (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Spiky (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Spiky (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Spiky (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Top Knot (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Top Knot (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Top Knot (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span></div><h3>Face <span style="font-size:11px;opacity:.6">(42)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Bandaid</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Barong</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Bubblegum</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Dali Mask</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Foodmasku</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Garou (Azurite)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Garou (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Garou (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Gas Mask (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Gas Mask (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Glasses (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Glasses (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Hannya Mask (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Hannya Mask (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Hannya Mask (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">KULT Mask (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">KULT Mask (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Kitsune Mask (Gold)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Kitsune Mask (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Kitsune Mask (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Masquerade (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Masquerade (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Mech Mask</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Mempo Mask (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Mempo Mask (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Nose Scar</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">PR Mask (Charcoal)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">PR Mask (Citrine)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">PR Mask (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">PR Mask (Turqouise)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Plague Mask (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Plague Mask (Pearl)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Ra Mask</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Skull Mask</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">T-Goggles</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Tengu Mask</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Tengu Mask (Gold)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">V-Shades</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">VR (Obsidian)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">VR (Pearl)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Vape</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Void</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span></div><h3>Head <span style="font-size:11px;opacity:.6">(28)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">0-Headphones (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">0-Headphones (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Antlers (Gold)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Cat Ears</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Cat Ears (Cool)</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Crown</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">E-A1D</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Earbuds</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Fedora (Charcoal)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Fedora (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Flat Cap (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Flat Cap (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Headphones (Citrine)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Headphones (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Headphones (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Headphones (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Headphones (Rose)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Headphones (Turquoise)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Headset</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Horns (Gold)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Horns (Obsidian)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Pen</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Rose</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Snapback (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Snapback (Multicolor)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Snapback (Obsidian)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Snapback (Pearl)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Void</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span></div><h3>Extra <span style="font-size:11px;opacity:.6">(16)</span></h3><div class="dex-grid"><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">0N1 Logo Pin (Black)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">0N1 Logo Pin (White)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Banana Pin</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Canary</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Dark Aura</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Earring (Double)</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Haunted</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Loop Earring</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Lucky no. 7 Earring</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Lucky no. 7 Pin</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Oni Doll (Azurite)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#ff6ea0"><span class="dex-v">Oni Doll (Jasper)</span><span class="dex-b" style="background:#ff6ea0">Strength</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Strawberry Pin</span><span class="dex-b" style="background:#22e6e0">Style</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Super Aura</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#9b3cff"><span class="dex-v">Void</span><span class="dex-b" style="background:#9b3cff">Spirit</span></span><span class="dex-chip" style="border-color:#22e6e0"><span class="dex-v">Y0N1 Pin</span><span class="dex-b" style="background:#22e6e0">Style</span></span></div></div>
+    <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_howto">← Back to How to Play</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
@@ -1008,6 +1043,8 @@ header{text-align:center;margin-bottom:14px}
         <button class="btn" id="nextBattleBtn" style="display:none">次の戦へ →</button>
         <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
         <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
+        <button class="btn ghost" id="shareResultBtn" data-i18n="btn_share_x">Share on 𝕏</button>
+        <button class="btn ghost" id="saveLogImgBtn" data-i18n="btn_save_log">🖼 Save Battle Image</button>
         <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
         <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
       </div>
@@ -1025,6 +1062,7 @@ header{text-align:center;margin-bottom:14px}
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
       <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
+      <button class="btn ghost" id="shareRankingBtn" data-i18n="btn_share_x">Share on 𝕏</button>
       <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
     </div>
   </div>
@@ -1074,7 +1112,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 k";
+var BUILD = "2026-06-01 x";
 var EQUIP_DEX = {"Background":[["Azurite","STY",0],["Citrine","STY",0],["Dark Smoke","SPI",0],["Jasper","STR",0],["Light Smoke","SPI",0],["Technogod","SPI",0],["Technogod (Azurite)","SPI",1],["Technogod (Citrine)","SPI",1],["Technogod (Jasper)","SPI",1],["Technogod (Pearl)","SPI",1]],"Body":[["Ash","SPI",0],["Azurite","STY",0],["Citrine","STY",0],["Jasper","STR",0],["Kabuki","STR",0],["Obsidian","SPI",0],["Pearlescent","SPI",0],["Tiger Skin","STR",0],["Type-01","SPI",0],["Water","SPI",0]],"Eyes":[["Aggressive","SPI",0],["Angry (Azurite)","STR",0],["Angry (Citrine)","STR",0],["Angry (Jasper)","STR",0],["Angry (Oni)","STR",0],["Closed Eye","SPI",0],["Eye Shadow (Azurite)","STY",0],["Eye Shadow (Citrine)","STY",0],["Eye Shadow (Jasper)","STR",0],["Eyebags","SPI",0],["Flat","SPI",0],["Half Open (Azurite)","STY",0],["Half Open (Citrine)","STY",0],["Half Open (Jasper)","STR",0],["Half Open (Oni)","STR",0],["Hypnotized","SPI",0],["Open (Azurite)","STY",0],["Open (Citrine)","STY",0],["Open (Jasper)","STR",0],["Possessed","SPI",0],["Squint (Azurite)","STY",0],["Squint (Citrine)","STY",0],["Squint (Jasper)","STR",0]],"Mouth":[["Angry","STR",0],["Angry (Oni)","STR",0],["Frown","STR",0],["Neutral","SPI",0],["Open","SPI",0],["Smile","STY",0],["Smirk","STY",0],["uwu","SPI",0]],"Wear":[["Bomber Jacket (Jasper/Obsidian)","STR",0],["Bomber Jacket (Obsidian/Pearl)","STR",0],["Bomber Jacket (Pearl/Azurite)","STR",0],["Bomber Jacket (Pine)","STR",0],["Bomber Jacket (Rose)","STR",0],["Bomber Jacket (Saddle)","STR",0],["Dress (Obsidian)","STY",0],["Dress (Pearl)","STY",0],["Kimono (Azurite)","STY",0],["Kimono (Rose)","SPI",0],["Neon Hood (Emerald)","STY",0],["Neon Hood (Rose)","STY",0],["Ninja (Obsidian)","STR",0],["Ninja (Pearl)","STR",0],["Sleeveless (Citrine)","STY",0],["Sleeveless (Obsidian)","SPI",0],["Sleeveless (Pearl)","SPI",0],["Suit (Obsidian)","STY",0],["Suit (Pearl)","STY",0],["T-Shirt (Jasper)","STR",0],["T-Shirt (Obsidian)","STY",0],["T-Shirt (Pearl)","STY",0],["Tech Jacket (Gold)","STR",0],["Tech Jacket (Reflective)","STR",0],["Thermal Hoodie (Citrine)","STR",0],["Thermal Hoodie (Jasper)","STR",0],["Thermal Hoodie (Obsidian)","STR",0],["Thermal Hoodie (Pearl)","STR",0],["Thermal Hoodie (Turquoise)","STR",0],["Track Jacket (Azurite)","STR",0],["Track Jacket (Citrine)","STR",0],["Track Jacket (Obsidian)","STR",0],["Track Jacket (Pearl)","STR",0],["Track Jacket (Topaz)","STR",0],["Yukata (Azurite)","STY",0],["Yukata (Pearl)","SPI",0],["01-Hood","STY",1],["02-Bomber Jacket","STR",1],["03-Bomber Jacket","STR",1],["04-Kimono","STY",1],["05-Track Jacket","STR",1],["06-Hood","STY",1],["07-Kimono","STY",1]],"Hair":[["Bald","SPI",0],["Bob (Azurite)","STY",0],["Bob (Obsidian)","STY",0],["Bob (Quartz)","STY",0],["Bob (Rose)","STY",0],["Dreads (Azurite)","STY",0],["Dreads (Bronzite)","SPI",0],["Dreads (Jasper)","STR",0],["Dreads (Obsidian)","SPI",0],["Fade (Azurite)","STY",0],["Fade (Citrine)","STY",0],["Fade (Ethereum)","STY",0],["Fade (Jasper)","STR",0],["Fade (Obsidian)","STY",0],["Fade (Pearl)","STY",0],["Half-Buzz (Amethyst)","SPI",0],["Half-Buzz (Pearl)","SPI",0],["Half-Buzz (Turquoise)","SPI",0],["High Ponytail (Bronzite)","STY",0],["High Ponytail (Obsidian)","STY",0],["High Ponytail (Pearl)","STY",0],["Long (Citirine)","SPI",0],["Long (Obsidian)","SPI",0],["Long (Rose)","SPI",0],["Long (Turquoise)","SPI",0],["Pixie (Citrine)","STY",0],["Pixie (Obsidian)","STY",0],["Pixie (Pearl)","STY",0],["Pixie (Rose)","STY",0],["Pixie (Turquoise)","STY",0],["Pompadour (Citrine)","STY",0],["Pompadour (Jasper)","STR",0],["Pompadour (Obsidian)","SPI",0],["Ponytail (Jasper)","STR",0],["Ponytail (Obsidian)","STY",0],["Ponytail (Rose)","STY",0],["Ponytail (Turquoise)","STY",0],["Slick (Citrine)","STY",0],["Slick (Obsidian)","SPI",0],["Slick (Pearl)","SPI",0],["Spiky (Citrine)","STY",0],["Spiky (Jasper)","STR",0],["Spiky (Obsidian)","SPI",0],["Spiky (Pearl)","SPI",0],["Top Knot (Jasper)","STR",0],["Top Knot (Obsidian)","SPI",0],["Top Knot (Pearl)","SPI",0]],"Face":[["Bandaid","STY",0],["Barong","SPI",0],["Bubblegum","SPI",0],["Dali Mask","STR",0],["Foodmasku","STR",0],["Garou (Azurite)","STY",0],["Garou (Citrine)","STY",0],["Garou (Jasper)","STR",0],["Gas Mask (Obsidian)","STR",0],["Gas Mask (Pearl)","STR",0],["Glasses (Obsidian)","SPI",0],["Glasses (Pearl)","SPI",0],["Hannya Mask (Jasper)","STR",0],["Hannya Mask (Obsidian)","STR",0],["Hannya Mask (Pearl)","STR",0],["KULT Mask (Obsidian)","STR",0],["KULT Mask (Pearl)","STR",0],["Kitsune Mask (Gold)","STR",0],["Kitsune Mask (Obsidian)","STR",0],["Kitsune Mask (Pearl)","STR",0],["Masquerade (Obsidian)","SPI",0],["Masquerade (Pearl)","SPI",0],["Mech Mask","STR",0],["Mempo Mask (Jasper)","STR",0],["Mempo Mask (Obsidian)","STR",0],["Nose Scar","SPI",0],["PR Mask (Charcoal)","STR",0],["PR Mask (Citrine)","STR",0],["PR Mask (Jasper)","STR",0],["PR Mask (Turqouise)","STR",0],["Plague Mask (Obsidian)","STR",0],["Plague Mask (Pearl)","STR",0],["Ra Mask","STR",0],["Skull Mask","STR",0],["T-Goggles","STY",0],["Tengu Mask","STR",0],["Tengu Mask (Gold)","STR",0],["V-Shades","STY",0],["VR (Obsidian)","SPI",0],["VR (Pearl)","SPI",0],["Vape","SPI",0],["Void","SPI",0]],"Head":[["0-Headphones (Obsidian)","STY",0],["0-Headphones (Pearl)","STY",0],["Antlers (Gold)","SPI",0],["Cat Ears","SPI",0],["Cat Ears (Cool)","SPI",0],["Crown","SPI",0],["E-A1D","SPI",0],["Earbuds","SPI",0],["Fedora (Charcoal)","STY",0],["Fedora (Obsidian)","STY",0],["Flat Cap (Obsidian)","STY",0],["Flat Cap (Pearl)","STY",0],["Headphones (Citrine)","STY",0],["Headphones (Jasper)","STR",0],["Headphones (Obsidian)","STY",0],["Headphones (Pearl)","STY",0],["Headphones (Rose)","STY",0],["Headphones (Turquoise)","STY",0],["Headset","STY",0],["Horns (Gold)","STR",0],["Horns (Obsidian)","STR",0],["Pen","SPI",0],["Rose","SPI",0],["Snapback (Jasper)","STR",0],["Snapback (Multicolor)","STY",0],["Snapback (Obsidian)","STY",0],["Snapback (Pearl)","STY",0],["Void","SPI",0]],"Extra":[["0N1 Logo Pin (Black)","STY",0],["0N1 Logo Pin (White)","STY",0],["Banana Pin","STY",0],["Canary","SPI",0],["Dark Aura","SPI",0],["Earring (Double)","STY",0],["Haunted","SPI",0],["Loop Earring","STY",0],["Lucky no. 7 Earring","STY",0],["Lucky no. 7 Pin","STY",0],["Oni Doll (Azurite)","STR",0],["Oni Doll (Jasper)","STR",0],["Strawberry Pin","STY",0],["Super Aura","SPI",0],["Void","SPI",0],["Y0N1 Pin","STY",0]]};
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
@@ -2600,8 +2638,11 @@ var I18N = {
     btn_registering: "登録中…",
     btn_registered: "登録完了！",
     btn_ranking: "ランキングを見る",
+    btn_share_x: "𝕏 でシェア",
+    btn_save_log: "🖼 対戦画像を保存",
     btn_close_ranking: "閉じる",
     btn_back_title: "← タイトル",
+    btn_back_howto: "← 遊び方に戻る",
     title_start: "ゲーム開始",
     title_ranking: "ランキング",
     title_how: "遊び方",
@@ -2716,8 +2757,11 @@ var I18N = {
     btn_registering: "Registering…",
     btn_registered: "Registered!",
     btn_ranking: "View Ranking",
+    btn_share_x: "Share on 𝕏",
+    btn_save_log: "🖼 Save Battle Image",
     btn_close_ranking: "Close",
     btn_back_title: "← Title",
+    btn_back_howto: "← Back to How to Play",
     title_start: "Start Game",
     title_ranking: "Ranking",
     title_how: "How to Play",
@@ -4123,6 +4167,136 @@ function escapeHtml(s){
   });
 }
 
+// ===== Xシェア =====
+var GAME_URL = 'https://aktpapa.github.io/0n1-battle/';
+var SHARE_TAGS = '0N1Force,NeonRingClash';
+var LAST_RESULT = null; // {win,isGod,score,enemyType}
+function buildShareTail(){
+  return (LANG==='ja')
+    ? '\n\n⚔ NEON RING CLASH（βテスト中）\n🎁 上位入賞者に0N1 Force JAPANグッズ割引券の贈呈を検討中\n\n#0N1Force #0N1Battle @0n1force_jp'
+    : '\n\n⚔ NEON RING CLASH (now in beta)\n🎁 Merch discount coupons for top players under consideration\n\n#0N1Force #0N1Battle @0n1force_jp';
+}
+function buildResultShareText(){
+  var ja=(LANG==='ja'); var r=LAST_RESULT, head;
+  if(!r){ head = ja?'NEON RING CLASHで対戦中！':'Playing NEON RING CLASH!'; }
+  else {
+    var enId = (r.en && r.en.id) ? r.en.id : '????';
+    if(r.isGod){
+      head = r.win
+        ? (ja?('⚔ K4M-1（神）を討伐しました！ スコア '+r.score):('⚔ Defeated K4M-1! Score '+r.score))
+        : (ja?('☠ K4M-1（神）に敗北しました… スコア '+r.score):('☠ Lost to K4M-1… Score '+r.score));
+    } else {
+      head = r.win
+        ? (ja?('0N1 #'+enId+' に勝利しました！ スコア '+r.score):('Defeated 0N1 #'+enId+'! Score '+r.score))
+        : (ja?('0N1 #'+enId+' に敗北しました… スコア '+r.score):('Lost to 0N1 #'+enId+'… Score '+r.score));
+    }
+  }
+  return head + buildShareTail();
+}
+function buildRankingShareText(){
+  var head = (LANG==='ja')?'🏆 NEON RING CLASHのランキングに挑戦中！':'🏆 Climbing the NEON RING CLASH ranking!';
+  return head + buildShareTail();
+}
+function openXIntent(text){
+  var u='https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(GAME_URL);
+  window.open(u,'_blank','noopener');
+}
+// 対戦シーンを画像化（canvas）：両カード＋勝敗＋ログ末尾
+function _artNode(boxId){ var b=el(boxId); return b ? b.querySelector('img,canvas') : null; }
+function makeShareImage(cb){
+  try{
+    var r=LAST_RESULT||{}, W=1080, H=880;
+    var c=document.createElement('canvas'); c.width=W; c.height=H; var x=c.getContext('2d');
+    var g=x.createLinearGradient(0,0,0,H); g.addColorStop(0,'#0b0820'); g.addColorStop(.55,'#140a26'); g.addColorStop(1,'#08111e');
+    x.fillStyle=g; x.fillRect(0,0,W,H);
+    x.strokeStyle='#9b3cff'; x.lineWidth=5; x.strokeRect(16,16,W-32,H-32);
+    x.textAlign='center';
+    x.fillStyle='#22e6e0'; x.font='bold 34px sans-serif'; x.fillText('NEON RING CLASH', W/2, 62);
+    x.fillStyle=r.win?'#22e6e0':'#ff1f6d'; x.font='bold 78px sans-serif'; x.fillText(r.win?'VICTORY':'DEFEAT', W/2, 150);
+    x.fillStyle='#ffc83a'; x.font='bold 36px sans-serif';
+    x.fillText((r.isGod?'vs K4M-1':('vs '+(r.enemyType||'')))+'    SCORE '+(r.score!=null?r.score:0), W/2, 200);
+    function card(side, data, cx, frameCol, tag, tagCol){
+      data=data||{}; var artSize=320, artY=240, artX=cx-artSize/2;
+      var node=_artNode(side==='me'?'#meArt':'#enArt');
+      x.save(); x.beginPath(); x.rect(artX,artY,artSize,artSize); x.clip();
+      x.fillStyle='#0a0420'; x.fillRect(artX,artY,artSize,artSize);
+      try{ if(node && (node.tagName==='CANVAS' || (node.complete && node.naturalWidth>0))) x.drawImage(node,artX,artY,artSize,artSize); }catch(e){}
+      x.restore();
+      x.strokeStyle=frameCol; x.lineWidth=4; x.strokeRect(artX,artY,artSize,artSize);
+      x.textAlign='center';
+      x.fillStyle=tagCol; x.font='bold 26px sans-serif'; x.fillText(tag, cx, artY-14);
+      x.fillStyle='#eef0ff'; x.font='bold 30px sans-serif'; x.fillText('0N1 #'+(data.id||'?'), cx, artY+artSize+42);
+      x.fillStyle='#9b3cff'; x.font='22px sans-serif'; x.fillText(data.type||'', cx, artY+artSize+74);
+      var st=data.st||{}, sy=artY+artSize+120, sw=artSize/3;
+      [['SPI',Math.round(st.spirit||0),'#9b3cff'],['STR',Math.round(st.strength||0),'#ff6ea0'],['STY',Math.round(st.style||0),'#22e6e0']].forEach(function(s,i){
+        var sx=artX+sw*i+sw/2;
+        x.fillStyle=s[2]; x.font='bold 34px sans-serif'; x.fillText(String(s[1]), sx, sy);
+        x.fillStyle='#7d72a8'; x.font='18px sans-serif'; x.fillText(s[0], sx, sy+24);
+      });
+    }
+    card('me', r.me, 285, '#22e6e0', 'YOU', '#22e6e0');
+    card('en', r.en, 795, '#ff1f6d', r.isGod?'K4M-1':'ENEMY', '#ff1f6d');
+    x.fillStyle='#ffc83a'; x.font='bold 58px sans-serif'; x.textAlign='center'; x.fillText('VS', W/2, 410);
+    // ログ末尾（勝敗の流れ）
+    var logEl=el('#log'), lines=[];
+    if(logEl){ var ps=logEl.querySelectorAll('p'); for(var i=Math.max(0,ps.length-5); i<ps.length; i++){ var t=(ps[i].textContent||'').replace(/\s+/g,' ').trim(); if(t){ var col='#cfcfe6'; try{col=getComputedStyle(ps[i]).color||col;}catch(e){} lines.push({t:t,c:col}); } } }
+    x.textAlign='center'; x.font='20px sans-serif';
+    var ly=H-148;
+    lines.forEach(function(l){ var t=l.t; if(t.length>72) t=t.slice(0,70)+'…'; x.fillStyle=l.c; x.fillText(t, W/2, ly); ly+=27; });
+    x.fillStyle='#7d72a8'; x.font='20px sans-serif'; x.fillText('0N1 FORCE  ·  '+GAME_URL.replace(/^https?:\/\//,''), W/2, H-26);
+    c.toBlob(function(b){cb(b);}, 'image/png');
+  }catch(e){ cb(null); }
+}
+// ログ画像をダウンロード保存（デスクトップで手動添付用）
+function saveLogImage(){
+  SFX.click();
+  makeShareImage(function(blob){ if(blob) _downloadBlob(blob,'neonringclash.png'); });
+}
+function _downloadBlob(blob, name){
+  try{ var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},1000); }catch(e){}
+}
+function canShareFiles(){
+  try{ return !!(navigator.canShare && navigator.canShare({files:[new File([new Blob(['x'])],'a.png',{type:'image/png'})]})); }catch(e){ return false; }
+}
+function isMobileDevice(){
+  return /Android|iPhone|iPad|iPod|Mobile|Silk|Kindle/i.test(navigator.userAgent||'');
+}
+function makeShareImageBlob(){ return new Promise(function(res,rej){ try{ makeShareImage(function(b){ b?res(b):rej(new Error('no image')); }); }catch(e){ rej(e); } }); }
+function _saveAndDrag(){
+  makeShareImage(function(b){ if(b) _downloadBlob(b,'neonringclash.png'); });
+  try{ alert(LANG==='ja'?'対戦画像を保存しました。\nX投稿画面にドラッグ＆ドロップで添付してください。':'Battle image saved. Drag & drop it into the X compose window.'); }catch(e){}
+}
+function shareResultToX(){
+  SFX.click(); var text=buildResultShareText();
+  if(isMobileDevice() && canShareFiles()){
+    // モバイル：対戦画像を共有シートで（Xアプリに添付）
+    makeShareImage(function(blob){
+      try{
+        if(blob){
+          var file=new File([blob],'neonringclash.png',{type:'image/png'});
+          if(navigator.canShare({files:[file]})){ navigator.share({files:[file], text:text+' '+GAME_URL}).catch(function(){}); return; }
+        }
+      }catch(e){}
+      openXIntent(text);
+    });
+    return;
+  }
+  // デスクトップ：画像をクリップボードにコピー→X投稿画面でCtrl+V貼り付け
+  if(navigator.clipboard && window.ClipboardItem){
+    try{
+      navigator.clipboard.write([ new ClipboardItem({'image/png': makeShareImageBlob()}) ]).then(function(){
+        openXIntent(text);
+        try{ alert(LANG==='ja'
+          ? '対戦画像をクリップボードにコピーしました。\nX投稿画面で Ctrl+V（貼り付け）すると画像が添付されます。\n※投稿画面が開かない場合はポップアップを許可してください。'
+          : 'Battle image copied to clipboard.\nPress Ctrl+V in the X compose window to attach it.'); }catch(e){}
+      }).catch(function(){ openXIntent(text); _saveAndDrag(); });
+      return;
+    }catch(e){}
+  }
+  openXIntent(text); _saveAndDrag();
+}
+function shareRankingToX(){ SFX.click(); openXIntent(buildRankingShareText()); }
+
 function finish(){
   if(G.over)return;
   G.over=true;
@@ -4158,6 +4332,10 @@ function finish(){
     // スコア計算と表示
     var sc = calcScore();
     renderScore(sc);
+    LAST_RESULT = {win:win, isGod:!!G.isGod, score:sc.total, enemyType:G.en.type,
+      me:{id:G.me.id, type:G.me.type, st:{spirit:G.me.st.spirit, strength:G.me.st.strength, style:G.me.st.style}},
+      en:{id:G.en.id, type:G.en.type, st:{spirit:G.en.st.spirit, strength:G.en.st.strength, style:G.en.st.style}}
+    }; // Xシェア用（対戦シーン画像）
 
     // ★キャンペーン進行処理
     if(CAMPAIGN){
@@ -4492,6 +4670,7 @@ function showEquipDex(){
   BGM.play('title');
   updateGlobalTitleBtn();
 }
+window.showEquipDex = showEquipDex;
 function renderEquipDex(){
   var ja = (LANG === 'ja');
   var SLOT_JA = {Background:'背景',Body:'体',Eyes:'目',Mouth:'口',Wear:'服',Hair:'髪',Face:'顔',Head:'頭',Extra:'装飾'};
@@ -4550,6 +4729,7 @@ function renderHowto(){
         '<tr><td class="cmd-name">K4M-1</td><td>One Sourceから力を吸い上げる！（全ステータスが上昇する）</td></tr>'+
       '</table>'+
       '<p>さらに、身につけた<b>パーツ（装備）</b>もステータスを底上げする。攻撃寄りのパーツは<b>Strength</b>、技寄りのパーツは<b>Style</b>、精神寄りのパーツは<b>Spirit</b>を高め、その上昇分はカードの<b>(+N)</b>に含まれて表示される。</p>'+
+      '<p style="margin:4px 0 14px"><span onclick="showEquipDex()" style="cursor:pointer;color:var(--cyan);text-decoration:underline;font-weight:700">▶ 詳細はコチラ（装備図鑑を開く）</span></p>'+
       '<h3>行動特性（性格）</h3>'+
       '<p>一番高いステータスによって、戦い方のクセ（性格）が決まる。敵はこの性格に沿って行動する。</p>'+
       '<table>'+
@@ -4595,6 +4775,7 @@ function renderHowto(){
         '<tr><td class="cmd-name">K4M-1</td><td>Draws power from the One Source! (All stats rise)</td></tr>'+
       '</table>'+
       '<p>Also, equipped <b>parts</b> boost stats: offensive parts raise <b>Strength</b>, technical parts raise <b>Style</b>, and spiritual parts raise <b>Spirit</b>. These boosts are included in the <b>(+N)</b> shown on the card.</p>'+
+      '<p style="margin:4px 0 14px"><span onclick="showEquipDex()" style="cursor:pointer;color:var(--cyan);text-decoration:underline;font-weight:700">▶ See details (open Equipment Guide)</span></p>'+
       '<h3>Battle Nature</h3>'+
       '<p>The highest stat determines fighting style (nature). Enemies act according to this nature.</p>'+
       '<table>'+
@@ -4650,14 +4831,13 @@ el('#howBackBtn').addEventListener('click', function(){
   SFX.click();
   showTitle();
 });
-el('#titleEquipBtn').addEventListener('click', function(){
-  SFX.init(); if(SFX.howtoBtn) SFX.howtoBtn();
-  showEquipDex();
-});
 el('#equipBackBtn').addEventListener('click', function(){
   SFX.click();
-  showTitle();
+  showHowto();
 });
+el('#shareResultBtn') && el('#shareResultBtn').addEventListener('click', shareResultToX);
+el('#saveLogImgBtn') && el('#saveLogImgBtn').addEventListener('click', saveLogImage);
+el('#shareRankingBtn') && el('#shareRankingBtn').addEventListener('click', shareRankingToX);
 // startBackBtnは削除済み（ホームボタン左上で代替）
 var sbb = el('#startBackBtn');
 if(sbb) sbb.addEventListener('click', function(){
@@ -4811,7 +4991,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 k</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 x</div>
 
 
 </body></html>
