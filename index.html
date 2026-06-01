@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>0N1 FORCE — NEON RING CLASH</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='28'%3E⚔%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ctext y=&#39;26&#39; font-size=&#39;28&#39;%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
 :root{
@@ -801,7 +801,7 @@ header{text-align:center;margin-bottom:14px}
   <!-- 右下：BGM/言語切替（縦並び） -->
   <div class="ctrl-stack">
     <button class="ctrl-btn" id="bgmToggle" title="音 ON/OFF（BGM・効果音）">🔊</button>
-    <button class="ctrl-btn lang-toggle" id="langToggle">EN</button>
+    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to Japanese">EN</button>
   </div>
 
   <header>
@@ -810,9 +810,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel" id="title">
+  <div class="panel power-off" id="title" style="display: block;">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay">
+    <div class="click-overlay" id="clickOverlay" style="display: flex;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -821,32 +821,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
     <div class="title-buttons">
-      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">ゲーム開始</button>
-      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">ランキング</button>
-      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">遊び方</button>
+      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
+      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
+      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
   <!-- ===== 遊び方画面 ===== -->
   <div class="panel" id="howto" style="display:none">
-    <h2 data-i18n="how_title">遊び方</h2>
+    <h2 data-i18n="how_title">How to Play</h2>
     <div class="howto-body" id="howtoBody"></div>
-    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← タイトルに戻る</button>
+    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
-    <h2 data-i18n="summon_title">ファイターを召喚</h2>
-    <p data-i18n="summon_desc"></p>
+    <h2 data-i18n="summon_title">Summon Your Fighter</h2>
+    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.</p>
     <div class="irow">
-      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
-      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
     </div>
-    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
-    <div class="hint" data-i18n="hint"></div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
+    <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
     <!-- ▼▼▼ DEBUG（確認用・あとで削除） ▼▼▼ -->
     <div id="debugPanel" style="margin-top:18px;padding:12px;border:1px dashed #ff1f6d;border-radius:10px;background:rgba(255,31,109,.06)">
-      <div style="font-family:'Zen Dots';font-size:10px;color:#ff1f6d;letter-spacing:.1em;margin-bottom:8px">⚠ DEBUG（テスト用）</div>
+      <div style="font-family:&#39;Zen Dots&#39;;font-size:10px;color:#ff1f6d;letter-spacing:.1em;margin-bottom:8px">⚠ DEBUG（テスト用）</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
         <button class="btn ghost" id="dbgGodBtn" style="font-size:12px">神戦をすぐ試す</button>
         <button class="btn ghost" id="dbgLastSetBtn" style="font-size:12px">最終セット5戦目から</button>
@@ -856,7 +856,7 @@ header{text-align:center;margin-bottom:14px}
     <!-- ▲▲▲ DEBUG ▲▲▲ -->
   </div>
 
-  <div id="battle">
+  <div id="battle" style="display: none;">
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
       <div class="stand l"></div><div class="stand r"></div>
@@ -881,32 +881,32 @@ header{text-align:center;margin-bottom:14px}
       <div class="ropes">
         <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <!-- 奥ロープ（左ポスト→右ポスト 横3本）-->
-          <line class="rope-line pink"   x1="184" y1="460" x2="816" y2="460" stroke-width="3"/>
-          <line class="rope-line gold"   x1="184" y1="510" x2="816" y2="510" stroke-width="3"/>
-          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"/>
+          <line class="rope-line pink" x1="184" y1="460" x2="816" y2="460" stroke-width="3"></line>
+          <line class="rope-line gold" x1="184" y1="510" x2="816" y2="510" stroke-width="3"></line>
+          <line class="rope-line violet" x1="184" y1="560" x2="816" y2="560" stroke-width="3"></line>
           <!-- 手前ロープ（左手前→右手前 横3本）-->
-          <line class="rope-line pink"   x1="50"  y1="720" x2="950" y2="720" stroke-width="5"/>
-          <line class="rope-line gold"   x1="50"  y1="820" x2="950" y2="820" stroke-width="5"/>
-          <line class="rope-line violet" x1="50"  y1="920" x2="950" y2="920" stroke-width="5"/>
+          <line class="rope-line pink" x1="50" y1="720" x2="950" y2="720" stroke-width="5"></line>
+          <line class="rope-line gold" x1="50" y1="820" x2="950" y2="820" stroke-width="5"></line>
+          <line class="rope-line violet" x1="50" y1="920" x2="950" y2="920" stroke-width="5"></line>
           <!-- 左サイドロープ（奥左→手前左 斜め3本）-->
-          <line class="rope-line pink"   x1="184" y1="460" x2="50"  y2="720" stroke-width="3"/>
-          <line class="rope-line gold"   x1="184" y1="510" x2="50"  y2="820" stroke-width="3"/>
-          <line class="rope-line violet" x1="184" y1="560" x2="50"  y2="920" stroke-width="3"/>
+          <line class="rope-line pink" x1="184" y1="460" x2="50" y2="720" stroke-width="3"></line>
+          <line class="rope-line gold" x1="184" y1="510" x2="50" y2="820" stroke-width="3"></line>
+          <line class="rope-line violet" x1="184" y1="560" x2="50" y2="920" stroke-width="3"></line>
           <!-- 右サイドロープ（奥右→手前右 斜め3本）-->
-          <line class="rope-line pink"   x1="816" y1="460" x2="950" y2="720" stroke-width="3"/>
-          <line class="rope-line gold"   x1="816" y1="510" x2="950" y2="820" stroke-width="3"/>
-          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"/>
+          <line class="rope-line pink" x1="816" y1="460" x2="950" y2="720" stroke-width="3"></line>
+          <line class="rope-line gold" x1="816" y1="510" x2="950" y2="820" stroke-width="3"></line>
+          <line class="rope-line violet" x1="816" y1="560" x2="950" y2="920" stroke-width="3"></line>
         </svg>
       </div>
       <div class="fog"></div>
 
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
-        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY CMD</div>
+        <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
         <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
-        <div class="ring-qlabel" data-i18n="your_cmd">YOUR CMD</div>
+        <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
         <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
@@ -938,16 +938,16 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
+    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
 
     <!-- コマンドエリア（FIGHT/取消ボタンが上に重なる） -->
     <div class="commands-wrap">
       <div class="commands" id="commandsArea">
-        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
-        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
-        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
-        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
+        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
+        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
+        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
+        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
       <div class="cmd-overlay" id="ctrlTop" style="display:none">
@@ -959,33 +959,32 @@ header{text-align:center;margin-bottom:14px}
 
     <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
 
-  <div class="panel" id="result">
+  <div class="panel" id="result" style="display: none;">
     <div class="rt" id="rTitle">VICTORY</div>
     <p id="rDesc"></p>
     <!-- キャンペーン進行表示 -->
     <div id="campaignProgress" class="campaignbox" style="display:none"></div>
     <!-- スコア表示 -->
     <div id="scorePanel" class="scorebox">
-      <div class="scoretitle" data-i18n="score_label">スコア</div>
+      <div class="scoretitle" data-i18n="score_label">SCORE</div>
       <div class="scoreval" id="scoreVal">0</div>
       <div class="scorebreakdown" id="scoreBreakdown"></div>
     </div>
     <!-- 名前入力＆登録 -->
     <div id="regForm" class="regbox">
-      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）"
-        style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
-        border-radius:8px;color:var(--ink);font-family:'Chakra Petch';font-size:14px;margin-bottom:10px">
+      <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
+        border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <button class="btn" id="nextBattleBtn" style="display:none">次の戦へ →</button>
-        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
-        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
-        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
-        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← タイトル</button>
+        <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
+        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
       </div>
     </div>
   </div>
@@ -1000,8 +999,8 @@ header{text-align:center;margin-bottom:14px}
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
-      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
-      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← タイトル</button>
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
+      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
     </div>
   </div>
 </div>
@@ -1049,6 +1048,8 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // 両方とも自動で解釈する。Typeのみの指定でもOK（その場合はTypeデフォルトのステータスが使われる）。
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
+// ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
+var BUILD = "2026-06-01 e";
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
 // 文字列値（"High" "Common" 等）を数値1〜10に換算する辞書
@@ -2779,6 +2780,7 @@ var I18N = {
 function T(key, vars){
   var s = (I18N[LANG] && I18N[LANG][key]) || (I18N.ja[key] || key);
   if(vars) for(var k in vars) s = s.split('{'+k+'}').join(vars[k]);
+  _lastT = {key:key, vars:vars, out:s}; // 直近の翻訳（log()が拾って翻訳キーを保存する）
   return s;
 }
 function applyI18n(){
@@ -2982,7 +2984,30 @@ function updateBars(f,side){
   // 上のtypebarも更新（ゲージ数値表示のため）
   if(G && !G.over){ renderTypebar(); }
 }
-function log(h,c){var L=el('#log'),p=document.createElement('p');if(c)p.className=c;p.innerHTML=h;L.appendChild(p);L.scrollTop=L.scrollHeight;}
+var LOG_HIST = [];   // 過去ログ（言語切替で作り直すため key+vars で保持）
+var _lastT = null;   // 直近のT()結果（直接 log(T(...)) を自動捕捉する用）
+function _logRender(h,c){var L=el('#log');if(!L)return;var p=document.createElement('p');if(c)p.className=c;p.innerHTML=h;L.appendChild(p);L.scrollTop=L.scrollHeight;}
+function log(h,c){
+  // 直前のT()結果と一致すれば「翻訳キー＋値」で保存（言語切替で再翻訳できる）。そうでなければ生テキスト保存
+  if(_lastT && _lastT.out === h){ LOG_HIST.push({key:_lastT.key, vars:_lastT.vars, c:c}); }
+  else { LOG_HIST.push({h:h, c:c}); }
+  _lastT = null;
+  _logRender(h,c);
+}
+function logK(key,vars,c){ var s=T(key,vars||{}); _lastT=null; LOG_HIST.push({key:key, vars:vars||{}, c:c}); _logRender(s,c); }
+function logPair(a,b){ var s=T('pair_label',{me:ANAME[a],en:ANAME[b]}); _lastT=null; LOG_HIST.push({pair:[a,b], c:'clash'}); _logRender(s,'clash'); }
+function clearLog(){ LOG_HIST=[]; var L=el('#log'); if(L)L.innerHTML=''; }
+function relogAll(){
+  var L=el('#log'); if(!L) return; L.innerHTML='';
+  for(var i=0;i<LOG_HIST.length;i++){
+    var e=LOG_HIST[i], h;
+    if(e.pair){ h=T('pair_label',{me:ANAME[e.pair[0]],en:ANAME[e.pair[1]]}); }
+    else if(e.key){ h=T(e.key, e.vars||{}); }
+    else { h=e.h; }
+    var p=document.createElement('p'); if(e.c)p.className=e.c; p.innerHTML=h; L.appendChild(p);
+  }
+  L.scrollTop=L.scrollHeight;
+}
 function floatTxt(side,t,col){var c=el(side==='me'?'#meCorner':'#enCorner');
   var f=document.createElement('div');f.className='float';f.textContent=t;
   f.style.color=col||'#ff6ea0';f.style.top=side==='me'?'-10%':'15%';
@@ -3076,20 +3101,20 @@ function resolvePair(meAct,enAct){
   // 必殺技はゲージMAXが必要（条件を満たさない場合は攻撃に降格）
   if(meAct==='special' && me.gauge<GAUGE_MAX){
     dlog('  [降格] meはゲージMAX未満で必殺→攻撃 (gauge='+me.gauge+'/'+GAUGE_MAX+')');
-    lines.push({h:T('log_demote_me'), c:'sys'});
+    lines.push({key:'log_demote_me',vars:{},c:'sys'});
     meAct='attack';
   }
   if(enAct==='special'){
     var enCap = (G.isGod && G.godGaugeMax) ? G.godGaugeMax : GAUGE_MAX;
     if(en.gauge < enCap){
       dlog('  [降格] enはゲージMAX未満で必殺→攻撃 (gauge='+en.gauge+'/'+enCap+')');
-      lines.push({h:T('log_demote_en'), c:'sys'});
+      lines.push({key:'log_demote_en',vars:{},c:'sys'});
       enAct='attack';
     }
   }
   dlog('  pair = "'+meAct+':'+enAct+'"');
 
-  lines.push({h:T('pair_label',{me:ANAME[meAct],en:ANAME[enAct]}),c:'clash'});
+  lines.push({pair:[meAct,enAct],c:'clash'});
 
   // -------- 演出（攻撃/必殺以外の即時エフェクト・効果音）--------
   var _hasDef = (meAct==='defend'||enAct==='defend');
@@ -3201,7 +3226,7 @@ function resolvePair(meAct,enAct){
       dealDamage(defChar1, firstTarget, d1);
       hitGauge(f);  // 攻撃ヒットで攻撃側+1
       var adv1 = typeAdvLog(attChar1.type, defChar1.type, f); if(adv1) lines.push(adv1);
-      lines.push({h:T('log_attack_first',{tag:tagOf(f),target:nameOf(firstTarget),dmg:d1}), c:f==='me'?'me-a':'en-a'});
+      lines.push({key:'log_attack_first',vars:{tag:tagOf(f),target:nameOf(firstTarget),dmg:d1},c:f==='me'?'me-a':'en-a'});
       if(defChar1.hp > 0){
         // 後発反撃
         var secondSide = f==='me'?'en':'me';
@@ -3214,9 +3239,9 @@ function resolvePair(meAct,enAct){
           hitGauge(secondSide);  // 反撃ヒットでも+1
         }, 600);
         var adv2 = typeAdvLog(attChar2.type, defChar2.type, secondSide); if(adv2) lines.push(adv2);
-        lines.push({h:T('log_attack_counter',{tag:tagOf(secondSide),target:nameOf(f),dmg:d2}), c:secondSide==='me'?'me-a':'en-a'});
+        lines.push({key:'log_attack_counter',vars:{tag:tagOf(secondSide),target:nameOf(f),dmg:d2},c:secondSide==='me'?'me-a':'en-a'});
       } else {
-        lines.push({h:T('log_fall_no_counter',{target:nameOf(firstTarget)}), c:'sys'});
+        lines.push({key:'log_fall_no_counter',vars:{target:nameOf(firstTarget)},c:'sys'});
       }
       return lines;
     }
@@ -3227,14 +3252,14 @@ function resolvePair(meAct,enAct){
       addGauge(me, 'me', -1);
       addGauge(en, 'en', -1);
       floatTxt('me','⚡-1','#9b3cff'); floatTxt('en','⚡-1','#9b3cff');
-      lines.push({h:T('log_both_defend'), c:'sys'});
+      lines.push({key:'log_both_defend',vars:{},c:'sys'});
       return lines;
     }
     if(meAct === 'charge'){
       // 両者ため：互いに隙がなく溜められない（±0）
       addGauge(me, 'me', 0); addGauge(en, 'en', 0);
       floatTxt('me','±0','#888'); floatTxt('en','±0','#888');
-      lines.push({h:T('log_both_charge'), c:'sys'});
+      lines.push({key:'log_both_charge',vars:{},c:'sys'});
       return lines;
     }
     if(meAct === 'counter'){
@@ -3243,7 +3268,7 @@ function resolvePair(meAct,enAct){
       addGauge(me, 'me', -1);
       addGauge(en, 'en', -1);
       floatTxt('me','⚡-1','#9b3cff'); floatTxt('en','⚡-1','#9b3cff');
-      lines.push({h:T('log_both_counter'), c:'sys'});
+      lines.push({key:'log_both_counter',vars:{},c:'sys'});
       return lines;
     }
     if(meAct === 'special'){
@@ -3256,7 +3281,7 @@ function resolvePair(meAct,enAct){
       dealDamage(me,'me',de,{crit:true});
       var advLog1 = typeAdvLog(me.type, en.type, 'me'); if(advLog1) lines.push(advLog1);
       var advLog2 = typeAdvLog(en.type, me.type, 'en'); if(advLog2) lines.push(advLog2);
-      lines.push({h:T('log_special_clash',{dm:dm,de:de}), c:'clash'});
+      lines.push({key:'log_special_clash',vars:{dm:dm,de:de},c:'clash'});
       return lines;
     }
   }
@@ -3297,7 +3322,7 @@ function resolvePair(meAct,enAct){
         floatTxt(defSide, '+'+realHeal, '#22e6e0');
       }, 500);
     }
-    lines.push({h:T('log_defend_block',{def:tagOf(defSide),att:tagOf(atkSide),dmg:reduced,hp:realHeal}), c:'sys'});
+    lines.push({key:'log_defend_block',vars:{def:tagOf(defSide),att:tagOf(atkSide),dmg:reduced,hp:realHeal},c:'sys'});
     return lines;
   }
 
@@ -3314,7 +3339,7 @@ function resolvePair(meAct,enAct){
     dealDamage(chgChar, cS, dmg);
     hitGauge(aS);  // 攻撃ヒットで+1
     var adv = typeAdvLog(attChar.type, chgChar.type, aS); if(adv) lines.push(adv);
-    lines.push({h:T('log_charge_break',{cS:tagOf(cS),aS:tagOf(aS),dmg:dmg}), c:aS==='me'?'me-a':'en-a'});
+    lines.push({key:'log_charge_break',vars:{cS:tagOf(cS),aS:tagOf(aS),dmg:dmg},c:aS==='me'?'me-a':'en-a'});
     return lines;
   }
 
@@ -3331,7 +3356,7 @@ function resolvePair(meAct,enAct){
     dealDamage(atChar, atS, ctr, {crit:true});
     hitGauge(coS);  // カウンター成功で+1
     var adv = typeAdvLog(coChar.type, atChar.type, coS); if(adv) lines.push(adv);
-    lines.push({h:T('log_counter_hit',{co:tagOf(coS),at:tagOf(atS),dmg:ctr}), c:'clash'});
+    lines.push({key:'log_counter_hit',vars:{co:tagOf(coS),at:tagOf(atS),dmg:ctr},c:'clash'});
     return lines;
   }
 
@@ -3344,7 +3369,7 @@ function resolvePair(meAct,enAct){
     dlog('  [case] 防御 vs ためる (ためる側 ⚡+'+cAmt+')');
     addGauge(chChar, chS, cAmt);
     floatTxt(chS,'+'+cAmt,'#ffc83a');
-    lines.push({h:T('log_charge_gap',{tag:tagOf(chS)}), c:'sys'});
+    lines.push({key:'log_charge_gap',vars:{tag:tagOf(chS)},c:'sys'});
     return lines;
   }
 
@@ -3373,7 +3398,7 @@ function resolvePair(meAct,enAct){
     shake(ctrSide,true);
     SFX.defend(); if(actual>0) SFX.heal();
     showFullFx('defend', 900);
-    lines.push({h:T('log_counter_miss_defend',{ctr:tagOf(ctrSide),def:tagOf(defSide),hp:actual}), c:'sys'});
+    lines.push({key:'log_counter_miss_defend',vars:{ctr:tagOf(ctrSide),def:tagOf(defSide),hp:actual},c:'sys'});
     return lines;
   }
 
@@ -3395,7 +3420,7 @@ function resolvePair(meAct,enAct){
     floatTxt(ctS, '-'+penalty2, '#ff1f6d');
     addGauge(ctChar, ctS, -1);
     shake(ctS,true);
-    lines.push({h:T('log_counter_miss_charge',{ct:tagOf(ctS),cg:tagOf(cgS)}), c:'sys'});
+    lines.push({key:'log_counter_miss_charge',vars:{ct:tagOf(ctS),cg:tagOf(cgS)},c:'sys'});
     return lines;
   }
 
@@ -3419,9 +3444,9 @@ function resolvePair(meAct,enAct){
         showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
         dealDamage(oppChar, oppS, spDmg, {crit:true});
         if(advSp) lines.push(advSp);
-        lines.push({h:T('log_special_first',{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg}), c:spS==='me'?'me-a':'en-a'});
+        lines.push({key:'log_special_first',vars:{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg},c:spS==='me'?'me-a':'en-a'});
         if(oppChar.hp <= 0){
-          lines.push({h:T('log_fall_no_counter_sp',{target:tagOf(oppS)}), c:'sys'});
+          lines.push({key:'log_fall_no_counter_sp',vars:{target:tagOf(oppS)},c:'sys'});
         } else {
           setTimeout(function(){
             if(G.over) return;
@@ -3430,7 +3455,7 @@ function resolvePair(meAct,enAct){
             hitGauge(oppS);  // 通常攻撃側がヒットで+1
           }, 600);
           if(advAt) lines.push(advAt);
-          lines.push({h:T('log_attack_back',{tag:tagOf(oppS),target:tagOf(spS),dmg:atkDmg}), c:oppS==='me'?'me-a':'en-a'});
+          lines.push({key:'log_attack_back',vars:{tag:tagOf(oppS),target:tagOf(spS),dmg:atkDmg},c:oppS==='me'?'me-a':'en-a'});
         }
       } else {
         // 通常攻撃が先制
@@ -3438,14 +3463,14 @@ function resolvePair(meAct,enAct){
         dealDamage(spChar, spS, atkDmg);
         hitGauge(oppS);  // 通常攻撃側がヒットで+1
         if(advAt) lines.push(advAt);
-        lines.push({h:T('log_attack_lead',{tag:tagOf(oppS),target:tagOf(spS),dmg:atkDmg}), c:oppS==='me'?'me-a':'en-a'});
+        lines.push({key:'log_attack_lead',vars:{tag:tagOf(oppS),target:tagOf(spS),dmg:atkDmg},c:oppS==='me'?'me-a':'en-a'});
         setTimeout(function(){
           if(G.over) return;
           showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
           dealDamage(oppChar, oppS, spDmg, {crit:true});
         }, 600);
         if(advSp) lines.push(advSp);
-        lines.push({h:T('log_special_hit',{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg}), c:spS==='me'?'me-a':'en-a'});
+        lines.push({key:'log_special_hit',vars:{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg},c:spS==='me'?'me-a':'en-a'});
       }
       return lines;
     }
@@ -3459,7 +3484,7 @@ function resolvePair(meAct,enAct){
       showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
       dealDamage(oppChar, oppS, redDmg, {crit:true});
       var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
-      lines.push({h:T('log_special_blocked',{tag:tagOf(oppS),dmg:redDmg}), c:'sys'});
+      lines.push({key:'log_special_blocked',vars:{tag:tagOf(oppS),dmg:redDmg},c:'sys'});
       return lines;
     }
 
@@ -3471,7 +3496,7 @@ function resolvePair(meAct,enAct){
       showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
       dealDamage(oppChar, oppS, chgDmg, {crit:true});
       var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
-      lines.push({h:T('log_special_on_charge',{tag:tagOf(oppS),dmg:chgDmg}), c:'clash'});
+      lines.push({key:'log_special_on_charge',vars:{tag:tagOf(oppS),dmg:chgDmg},c:'clash'});
       return lines;
     }
 
@@ -3482,14 +3507,14 @@ function resolvePair(meAct,enAct){
       showFullFx(specialFxKind(spChar.special.kind), 1200); SFX.special();
       dealDamage(oppChar, oppS, spDmg2, {crit:true});
       var adv = typeAdvLog(spChar.type, oppChar.type, spS); if(adv) lines.push(adv);
-      lines.push({h:T('log_special_first',{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg2}), c:spS==='me'?'me-a':'en-a'});
+      lines.push({key:'log_special_first',vars:{tag:tagOf(spS),target:tagOf(oppS),dmg:spDmg2},c:spS==='me'?'me-a':'en-a'});
       return lines;
     }
   }
 
   // 未定義の組み合わせ（フォールバック）
   console.warn('[戦闘] 未定義のペア: '+pair);
-  lines.push({h:T('log_no_action'), c:'sys'});
+  lines.push({key:'log_no_action',vars:{},c:'sys'});
   return lines;
 }
 
@@ -3714,7 +3739,12 @@ function doFight(){
         }
         var result = resolvePair(G.meQueue[step],G.enQueue[step]);
         if(result && result.forEach){
-          result.forEach(function(l){log(l.h,l.c);});
+          result.forEach(function(l){
+            if(typeof l==='string'){ log(l,''); }
+            else if(l.pair){ logPair(l.pair[0], l.pair[1]); }
+            else if(l.key){ logK(l.key, l.vars, l.c); }
+            else { log(l.h, l.c); }
+          });
         } else {
           console.warn('[戦闘] resolvePair が空を返した:', G.meQueue[step], 'vs', G.enQueue[step]);
         }
@@ -4190,7 +4220,7 @@ function startBattle(myId, keepCampaign){
   G.startHp = G.me.hp;  // スコア計算用に開始HP記録
   el('#start').style.display='none';el('#result').style.display='none';
   el('#title').style.display='none';el('#howto').style.display='none';el('#ranking').style.display='none';
-  el('#battle').style.display='block';el('#log').innerHTML='';
+  el('#battle').style.display='block';clearLog();
   updateGlobalTitleBtn();
   el('#meName').textContent='0N1 #'+myId;
   el('#enName').textContent='0N1 #'+enId;
@@ -4606,7 +4636,8 @@ el('#langToggle').addEventListener('click', function(){
   LANG = (LANG === 'en') ? 'ja' : 'en';
   updateLangToggleText();
   SFX.click();
-  applyI18n();
+  applyI18n();   // ANAMEなどを新言語に差し替え
+  relogAll();    // 過去ログを新言語で作り直す
 });
 updateLangToggleText();
 
@@ -4679,9 +4710,19 @@ showTitle();
 
 // 初期表示で適用
 applyI18n();
+// ★ビルド番号を画面右下に常時表示（古いキャッシュかどうか一目で判別）
+(function(){
+  try{
+    var bt = document.createElement('div');
+    bt.textContent = 'build ' + BUILD;
+    bt.style.cssText = 'position:fixed;right:6px;bottom:4px;z-index:99999;font:10px/1.2 monospace;color:#9b3cff;opacity:.5;pointer-events:none';
+    document.body.appendChild(bt);
+  }catch(e){}
+})();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script>
-</body>
-</html>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 e</div>
+
+
+</body></html>
