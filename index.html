@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
+<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_17.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -846,7 +846,7 @@ header{text-align:center;margin-bottom:14px}
 <div class="scan"></div>
 
 <!-- 左上：ホームボタン（wrapの外に置いて重なり順の問題を回避） -->
-<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display: none;">🏠</button>
+<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
 
 <div class="wrap">
   <!-- 右下：BGM/言語切替（縦並び） -->
@@ -862,9 +862,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel" id="title" style="display: block;">
+  <div class="panel power-off" id="title" style="display: block;">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay fading" id="clickOverlay" style="display: none;">
+    <div class="click-overlay" id="clickOverlay" style="display: flex;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -895,7 +895,7 @@ header{text-align:center;margin-bottom:14px}
     <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_howto">← Back to How to Play</button>
   </div>
 
-  <div class="panel" id="start" style="display: none;">
+  <div class="panel" id="start" style="display:none">
     <h2 data-i18n="summon_title">Summon Your Fighter</h2>
     <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.</p>
     <div class="irow">
@@ -963,84 +963,84 @@ header{text-align:center;margin-bottom:14px}
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
         <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
-        <div class="ring-qslots" id="ringEnQueue"><div class="ring-qslot en reveal"><span class="ic">⚔</span>Attack</div><div class="ring-qslot en reveal active"><span class="ic">↩</span>Counter</div><div class="ring-qslot en reveal"><span class="ic">⚔</span>Attack</div></div>
+        <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
         <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
-        <div class="ring-qslots" id="ringMeQueue"><div class="ring-qslot filled"><span class="ic">⚔</span>Attack</div><div class="ring-qslot filled active"><span class="ic">⚔</span>Attack</div><div class="ring-qslot filled"><span class="ic">⚔</span>Attack</div></div>
+        <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
       <!-- HPバー：敵が上、自分が下 -->
       <div class="bars top en">
-        <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #1544</span><span class="hptxt" id="enHpTxt">146/150</span></div>
-        <div class="barwrap"><div class="barfill" id="enHp" style="width: 97.3333%;"></div></div>
-        <div class="ragewrap"><div class="ragefill full" id="enRage" style="width: 100%;"></div><div class="ragefill2 show" id="enRage2" style="width: 25%;"></div></div>
+        <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #----</span><span class="hptxt" id="enHpTxt">100/100</span></div>
+        <div class="barwrap"><div class="barfill" id="enHp" style="width:100%"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="enRage"></div><div class="ragefill2" id="enRage2"></div></div>
       </div>
 
       <!-- 敵：奥 -->
       <div class="corner en" id="enCorner">
-        <div class="tcg god-aura" id="enCard"><div class="tcg-head"><span class="nm">0N1 #1544</span><span class="tcg-type" style="color:#9b3cff">K4M-1</span></div><div class="tcg-art" id="enArt"><div class="tcg-fx" id="enFx"></div><canvas width="340" height="340"></canvas></div><div class="tcg-stats"><div class="st sp"><div class="l">Spirit</div><div class="v">28</div></div><div class="st str"><div class="l">Strength</div><div class="v">29</div></div><div class="st sty"><div class="l">Style</div><div class="v">23</div></div></div><div class="tcg-foot">K4M-1 · VOID CRASH</div></div>
+        <div class="tcg" id="enCard"></div>
       </div>
       <!-- 自分：手前下 -->
       <div class="corner me" id="meCorner">
-        <div class="tcg" id="meCard"><div class="tcg-head"><span class="nm">0N1 #5484</span><span class="tcg-type" style="color:#22e6e0">Y0K-A1</span></div><div class="tcg-art" id="meArt"><div class="tcg-fx" id="meFx"></div><canvas width="340" height="340"></canvas></div><div class="tcg-stats"><div class="st sp"><div class="l">Spirit</div><div class="v">7</div></div><div class="st str"><div class="l">Strength</div><div class="v">6</div></div><div class="st sty"><div class="l">Style</div><div class="v">1</div></div></div><div class="tcg-foot">Y0K-A1 · OVERDRIVE FIST</div></div>
+        <div class="tcg" id="meCard"></div>
       </div>
 
       <div class="bars bot me">
-        <div class="nameline"><span class="me-a nm-id" id="meName">0N1 #5484</span><span class="hptxt" id="meHpTxt">0/80</span></div>
-        <div class="barwrap"><div class="barfill" id="meHp" style="width: 0%;"></div></div>
-        <div class="ragewrap"><div class="ragefill" id="meRage" style="width: 37.5%;"></div></div>
+        <div class="nameline"><span class="me-a nm-id" id="meName">0N1 #----</span><span class="hptxt" id="meHpTxt">100/100</span></div>
+        <div class="barwrap"><div class="barfill" id="meHp" style="width:100%"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="meRage"></div></div>
       </div>
 
       <!-- 全画面エフェクトレイヤー -->
       <div class="fullfx" id="fullfx"></div>
     </div>
 
-    <div class="panel typebar" id="typebar"><span class="typechip" style="color:#22e6e0">Y0K-A1</span><span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡3</span><span class="vsmark">VS</span><span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡<span style="color:#ff8a1f">10/16</span></span><span class="typechip" style="color:#9b3cff">K4M-1</span></div>
+    <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase solve" id="phase" data-i18n="phase_select">— CLASH —</div>
+    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
 
     <!-- コマンドエリア（FIGHT/取消ボタンが上に重なる） -->
     <div class="commands-wrap">
       <div class="commands" id="commandsArea">
-        <button class="cmd" data-act="attack" disabled=""><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
-        <button class="cmd" data-act="counter" disabled=""><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
-        <button class="cmd" data-act="defend" disabled=""><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
-        <button class="cmd" data-act="charge" disabled=""><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn" disabled=""><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">OVERDRIVE FIST</span></button>
+        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
+        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
+        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
+        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
-      <div class="cmd-overlay" id="ctrlTop" style="display: none;">
+      <div class="cmd-overlay" id="ctrlTop" style="display:none">
         <div class="cmd-overlay-buttons">
-          <button class="btn" id="fightBtn" data-i18n="btn_fight" disabled="">FIGHT！</button>
+          <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
         </div>
       </div>
     </div>
 
     <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo" disabled="">Undo</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
     </div>
-    
-  <div class="panel log" id="log" style=""><p class="me-a">⚔ 0N1 #5484 [Y0K-A1/Y0K-A1] enters the ring!</p><p class="en-a">☠ Enemy 0N1 #1544 [K4M-1/K4M-1] appears!</p><p class="sys"><span class="me-a">YOU</span> Yokai Awakening — M0R1A's blessing activates! (Stats rise based on race population)</p><p class="sys"><span class="en-a">ENEMY</span> K4M-1 Awakening — Drawing power from the One Source! (All stats rise)</p><p class="sys"><span class="me-a">YOU</span> Nature: Guardian (SPI highest — endures with defense)</p><p class="sys"><span class="en-a">ENEMY</span> Nature: Brawler (STR highest — favors attacks)</p><p class="clash">═══ Heaven and earth tremble…! K4M-1 has descended ═══</p><p class="sys">K4M-1 SP: 1本目 0/8</p><p class="sys">━━ ROUND 1 ━━</p><p class="clash"><span class="me-a">YOU</span> [Attack] ✕ <span class="en-a">ENEMY</span> [Attack]</p><p class="en-a"><span class="en-a">ENEMY</span> strikes first! you → <span class="dmg">21</span> damage (⚡+1)</p><p class="me-a"><span class="me-a">YOU</span> counters! enemy → <span class="dmg">2</span> damage (⚡+1)</p><p class="sys">  └ K4M-1 SP = 2/16</p><p class="clash"><span class="me-a">YOU</span> [Attack] ✕ <span class="en-a">ENEMY</span> [Defend]</p><p class="sys"><span class="en-a">ENEMY</span> defends! Halved <span class="me-a">YOU</span>'s attack → <span class="dmg">1</span> damage, HP+<span style="color:var(--cyan)">3</span></p><p class="sys">  └ K4M-1 SP = 4/16</p><p class="clash"><span class="me-a">YOU</span> [Attack] ✕ <span class="en-a">ENEMY</span> [Attack]</p><p class="en-a"><span class="en-a">ENEMY</span> strikes first! you → <span class="dmg">21</span> damage (⚡+1)</p><p class="me-a"><span class="me-a">YOU</span> counters! enemy → <span class="dmg">2</span> damage (⚡+1)</p><p class="sys">  └ K4M-1 SP = 6/16</p><p class="sys">K4M-1 SP: 1本目 6/8</p><p class="sys">━━ ROUND 2 ━━</p><p class="clash"><span class="me-a">YOU</span> [Attack] ✕ <span class="en-a">ENEMY</span> [Attack]</p><p class="en-a"><span class="en-a">ENEMY</span> strikes first! you → <span class="dmg">21</span> damage (⚡+1)</p><p class="me-a"><span class="me-a">YOU</span> counters! enemy → <span class="dmg">2</span> damage (⚡+1)</p><p class="sys">  └ K4M-1 SP = 8/16</p><p class="clash"><span class="me-a">YOU</span> [Attack] ✕ <span class="en-a">ENEMY</span> [Counter]</p><p class="clash"><span class="en-a">ENEMY</span>'s counter lands! <span class="me-a">YOU</span> → <span class="dmg">17</span> damage (⚡+1)</p><p class="sys">  └ K4M-1 SP = 10/16</p><p class="sys">━━━━━━━━━━━━━━</p><p class="sys"><span style="color:var(--pink);font-weight:700;font-size:14px">☠ DEFEAT ☠</span></p><p class="sys">━━━━━━━━━━━━━━</p></div></div>
+    <div class="panel log" id="log"></div>
+  </div>
 
   <div class="panel" id="result" style="display: none;">
-    <div class="rt lose" id="rTitle">DEFEAT</div>
-    <p id="rDesc">0N1 #5484 was defeated by 0N1 #1544 (K4M-1/K4M-1)...</p>
+    <div class="rt" id="rTitle">VICTORY</div>
+    <p id="rDesc"></p>
     <!-- キャンペーン進行表示 -->
-    <div id="campaignProgress" class="campaignbox" style="display: block;"><div class="cp-label">Set 1 / 4</div><div class="cp-stages"><div class="cp-stage done">Y0K-A1</div><div class="cp-stage current">Y0K-A1</div><div class="cp-stage">B4K3M0-N0</div><div class="cp-stage">B4K3M0-N0</div><div class="cp-stage">0N1</div></div><div class="cp-label">TOTAL SCORE</div><div class="cp-total">0</div><div class="cp-label" style="margin-top:6px;opacity:.8">K4M-1 in 4 set(s)</div></div>
+    <div id="campaignProgress" class="campaignbox" style="display:none"></div>
     <!-- スコア表示 -->
     <div id="scorePanel" class="scorebox">
       <div class="scoretitle" data-i18n="score_label">SCORE</div>
-      <div class="scoreval" id="scoreVal" style="color: var(--gold); text-shadow: 0 0 18px var(--gold),0 2px 6px #000;">+0</div>
-      <div class="scorebreakdown" id="scoreBreakdown"><b>Defeat — No score</b><br><span style="font-size:11px;opacity:.7">Only won battles score</span></div>
+      <div class="scoreval" id="scoreVal">0</div>
+      <div class="scorebreakdown" id="scoreBreakdown"></div>
     </div>
     <!-- 名前入力＆登録 -->
     <div id="regForm" class="regbox">
       <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
         border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="btn" id="nextBattleBtn" style="display: none;">Next Battle →</button>
+        <button class="btn" id="nextBattleBtn" style="display:none">次の戦へ →</button>
         <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
         <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
         <button class="btn ghost" id="shareResultBtn" data-i18n="btn_share_x">Share on 𝕏</button>
@@ -1049,7 +1049,7 @@ header{text-align:center;margin-bottom:14px}
         <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
       </div>
     </div>
-  <div class="log-title-after">— BATTLE LOG —</div></div>
+  </div>
 
   <!-- ランキング画面 -->
   <div class="panel" id="ranking" style="display:none;max-width:680px;margin:30px auto">
@@ -1112,7 +1112,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 y";
+var BUILD = "2026-06-01 z";
 var EQUIP_DEX = {"Background":[["Azurite","STY",0],["Citrine","STY",0],["Dark Smoke","SPI",0],["Jasper","STR",0],["Light Smoke","SPI",0],["Technogod","SPI",0],["Technogod (Azurite)","SPI",1],["Technogod (Citrine)","SPI",1],["Technogod (Jasper)","SPI",1],["Technogod (Pearl)","SPI",1]],"Body":[["Ash","SPI",0],["Azurite","STY",0],["Citrine","STY",0],["Jasper","STR",0],["Kabuki","STR",0],["Obsidian","SPI",0],["Pearlescent","SPI",0],["Tiger Skin","STR",0],["Type-01","SPI",0],["Water","SPI",0]],"Eyes":[["Aggressive","SPI",0],["Angry (Azurite)","STR",0],["Angry (Citrine)","STR",0],["Angry (Jasper)","STR",0],["Angry (Oni)","STR",0],["Closed Eye","SPI",0],["Eye Shadow (Azurite)","STY",0],["Eye Shadow (Citrine)","STY",0],["Eye Shadow (Jasper)","STR",0],["Eyebags","SPI",0],["Flat","SPI",0],["Half Open (Azurite)","STY",0],["Half Open (Citrine)","STY",0],["Half Open (Jasper)","STR",0],["Half Open (Oni)","STR",0],["Hypnotized","SPI",0],["Open (Azurite)","STY",0],["Open (Citrine)","STY",0],["Open (Jasper)","STR",0],["Possessed","SPI",0],["Squint (Azurite)","STY",0],["Squint (Citrine)","STY",0],["Squint (Jasper)","STR",0]],"Mouth":[["Angry","STR",0],["Angry (Oni)","STR",0],["Frown","STR",0],["Neutral","SPI",0],["Open","SPI",0],["Smile","STY",0],["Smirk","STY",0],["uwu","SPI",0]],"Wear":[["Bomber Jacket (Jasper/Obsidian)","STR",0],["Bomber Jacket (Obsidian/Pearl)","STR",0],["Bomber Jacket (Pearl/Azurite)","STR",0],["Bomber Jacket (Pine)","STR",0],["Bomber Jacket (Rose)","STR",0],["Bomber Jacket (Saddle)","STR",0],["Dress (Obsidian)","STY",0],["Dress (Pearl)","STY",0],["Kimono (Azurite)","STY",0],["Kimono (Rose)","SPI",0],["Neon Hood (Emerald)","STY",0],["Neon Hood (Rose)","STY",0],["Ninja (Obsidian)","STR",0],["Ninja (Pearl)","STR",0],["Sleeveless (Citrine)","STY",0],["Sleeveless (Obsidian)","SPI",0],["Sleeveless (Pearl)","SPI",0],["Suit (Obsidian)","STY",0],["Suit (Pearl)","STY",0],["T-Shirt (Jasper)","STR",0],["T-Shirt (Obsidian)","STY",0],["T-Shirt (Pearl)","STY",0],["Tech Jacket (Gold)","STR",0],["Tech Jacket (Reflective)","STR",0],["Thermal Hoodie (Citrine)","STR",0],["Thermal Hoodie (Jasper)","STR",0],["Thermal Hoodie (Obsidian)","STR",0],["Thermal Hoodie (Pearl)","STR",0],["Thermal Hoodie (Turquoise)","STR",0],["Track Jacket (Azurite)","STR",0],["Track Jacket (Citrine)","STR",0],["Track Jacket (Obsidian)","STR",0],["Track Jacket (Pearl)","STR",0],["Track Jacket (Topaz)","STR",0],["Yukata (Azurite)","STY",0],["Yukata (Pearl)","SPI",0],["01-Hood","STY",1],["02-Bomber Jacket","STR",1],["03-Bomber Jacket","STR",1],["04-Kimono","STY",1],["05-Track Jacket","STR",1],["06-Hood","STY",1],["07-Kimono","STY",1]],"Hair":[["Bald","SPI",0],["Bob (Azurite)","STY",0],["Bob (Obsidian)","STY",0],["Bob (Quartz)","STY",0],["Bob (Rose)","STY",0],["Dreads (Azurite)","STY",0],["Dreads (Bronzite)","SPI",0],["Dreads (Jasper)","STR",0],["Dreads (Obsidian)","SPI",0],["Fade (Azurite)","STY",0],["Fade (Citrine)","STY",0],["Fade (Ethereum)","STY",0],["Fade (Jasper)","STR",0],["Fade (Obsidian)","STY",0],["Fade (Pearl)","STY",0],["Half-Buzz (Amethyst)","SPI",0],["Half-Buzz (Pearl)","SPI",0],["Half-Buzz (Turquoise)","SPI",0],["High Ponytail (Bronzite)","STY",0],["High Ponytail (Obsidian)","STY",0],["High Ponytail (Pearl)","STY",0],["Long (Citirine)","SPI",0],["Long (Obsidian)","SPI",0],["Long (Rose)","SPI",0],["Long (Turquoise)","SPI",0],["Pixie (Citrine)","STY",0],["Pixie (Obsidian)","STY",0],["Pixie (Pearl)","STY",0],["Pixie (Rose)","STY",0],["Pixie (Turquoise)","STY",0],["Pompadour (Citrine)","STY",0],["Pompadour (Jasper)","STR",0],["Pompadour (Obsidian)","SPI",0],["Ponytail (Jasper)","STR",0],["Ponytail (Obsidian)","STY",0],["Ponytail (Rose)","STY",0],["Ponytail (Turquoise)","STY",0],["Slick (Citrine)","STY",0],["Slick (Obsidian)","SPI",0],["Slick (Pearl)","SPI",0],["Spiky (Citrine)","STY",0],["Spiky (Jasper)","STR",0],["Spiky (Obsidian)","SPI",0],["Spiky (Pearl)","SPI",0],["Top Knot (Jasper)","STR",0],["Top Knot (Obsidian)","SPI",0],["Top Knot (Pearl)","SPI",0]],"Face":[["Bandaid","STY",0],["Barong","SPI",0],["Bubblegum","SPI",0],["Dali Mask","STR",0],["Foodmasku","STR",0],["Garou (Azurite)","STY",0],["Garou (Citrine)","STY",0],["Garou (Jasper)","STR",0],["Gas Mask (Obsidian)","STR",0],["Gas Mask (Pearl)","STR",0],["Glasses (Obsidian)","SPI",0],["Glasses (Pearl)","SPI",0],["Hannya Mask (Jasper)","STR",0],["Hannya Mask (Obsidian)","STR",0],["Hannya Mask (Pearl)","STR",0],["KULT Mask (Obsidian)","STR",0],["KULT Mask (Pearl)","STR",0],["Kitsune Mask (Gold)","STR",0],["Kitsune Mask (Obsidian)","STR",0],["Kitsune Mask (Pearl)","STR",0],["Masquerade (Obsidian)","SPI",0],["Masquerade (Pearl)","SPI",0],["Mech Mask","STR",0],["Mempo Mask (Jasper)","STR",0],["Mempo Mask (Obsidian)","STR",0],["Nose Scar","SPI",0],["PR Mask (Charcoal)","STR",0],["PR Mask (Citrine)","STR",0],["PR Mask (Jasper)","STR",0],["PR Mask (Turqouise)","STR",0],["Plague Mask (Obsidian)","STR",0],["Plague Mask (Pearl)","STR",0],["Ra Mask","STR",0],["Skull Mask","STR",0],["T-Goggles","STY",0],["Tengu Mask","STR",0],["Tengu Mask (Gold)","STR",0],["V-Shades","STY",0],["VR (Obsidian)","SPI",0],["VR (Pearl)","SPI",0],["Vape","SPI",0],["Void","SPI",0]],"Head":[["0-Headphones (Obsidian)","STY",0],["0-Headphones (Pearl)","STY",0],["Antlers (Gold)","SPI",0],["Cat Ears","SPI",0],["Cat Ears (Cool)","SPI",0],["Crown","SPI",0],["E-A1D","SPI",0],["Earbuds","SPI",0],["Fedora (Charcoal)","STY",0],["Fedora (Obsidian)","STY",0],["Flat Cap (Obsidian)","STY",0],["Flat Cap (Pearl)","STY",0],["Headphones (Citrine)","STY",0],["Headphones (Jasper)","STR",0],["Headphones (Obsidian)","STY",0],["Headphones (Pearl)","STY",0],["Headphones (Rose)","STY",0],["Headphones (Turquoise)","STY",0],["Headset","STY",0],["Horns (Gold)","STR",0],["Horns (Obsidian)","STR",0],["Pen","SPI",0],["Rose","SPI",0],["Snapback (Jasper)","STR",0],["Snapback (Multicolor)","STY",0],["Snapback (Obsidian)","STY",0],["Snapback (Pearl)","STY",0],["Void","SPI",0]],"Extra":[["0N1 Logo Pin (Black)","STY",0],["0N1 Logo Pin (White)","STY",0],["Banana Pin","STY",0],["Canary","SPI",0],["Dark Aura","SPI",0],["Earring (Double)","STY",0],["Haunted","SPI",0],["Loop Earring","STY",0],["Lucky no. 7 Earring","STY",0],["Lucky no. 7 Pin","STY",0],["Oni Doll (Azurite)","STR",0],["Oni Doll (Jasper)","STR",0],["Strawberry Pin","STY",0],["Super Aura","SPI",0],["Void","SPI",0],["Y0N1 Pin","STY",0]]};
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
@@ -4494,7 +4494,7 @@ function showGodEntrance(){
     '<div class="ge-sub">'+(LANG==='ja'?'— 降 臨 —':'— DESCENT —')+'</div>'+
     '<div class="ge-name">K4M-1 · ONE SOURCE</div>';
   document.body.appendChild(ov);
-  try{ SFX.init(); SFX.godHymn(); showFullFx('god', 2400); }catch(e){}
+  try{ SFX.init(); SFX.godHymn(); }catch(e){}
   setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }, 2500);
 }
 
@@ -4990,7 +4990,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 y</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 z</div>
 
 
 </body></html>
