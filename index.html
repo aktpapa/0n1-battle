@@ -3092,8 +3092,12 @@ function resolvePair(meAct,enAct){
   lines.push({h:T('pair_label',{me:ANAME[meAct],en:ANAME[enAct]}),c:'clash'});
 
   // -------- 演出（攻撃/必殺以外の即時エフェクト・効果音）--------
-  if(meAct==='defend'||enAct==='defend'){ showFullFx('defend',900); SFX.defend(); }
-  else if(meAct==='counter'||enAct==='counter'){ showFullFx('counter',900); SFX.counter(); }
+  var _hasDef = (meAct==='defend'||enAct==='defend');
+  var _hasCtr = (meAct==='counter'||enAct==='counter');
+  if(_hasDef){ showFullFx('defend',900); }      // 画面FXは防御優先（重複表示を避ける）
+  else if(_hasCtr){ showFullFx('counter',900); }
+  if(_hasDef) SFX.defend();                      // 音は両方鳴らす（消えないように）
+  if(_hasCtr) SFX.counter();
   if(meAct==='charge'||enAct==='charge'){ showFullFx('charge',1000); SFX.charge(); }
 
   // -------- ヘルパー：HP/ゲージ操作と表示 --------
