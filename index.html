@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_19.html -->
+<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -8,12 +8,12 @@
 <meta property="og:title" content="0N1 FORCE — NEON RING CLASH">
 <meta property="og:description" content="0N1 Forceで戦う1on1ネオン・カードバトル。K4M-1を討伐せよ。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://aktpapa.github.io/0n1-battle/">
-<meta property="og:image" content="https://aktpapa.github.io/0n1-battle/ogp.png">
+<meta property="og:url" content="https://0n1japan.aktpapa.com/0n1battle/">
+<meta property="og:image" content="https://0n1japan.aktpapa.com/0n1battle/ogp.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="0N1 FORCE — NEON RING CLASH">
 <meta name="twitter:description" content="0N1 Forceで戦う1on1ネオン・カードバトル。K4M-1を討伐せよ。">
-<meta name="twitter:image" content="https://aktpapa.github.io/0n1-battle/ogp.png">
+<meta name="twitter:image" content="https://0n1japan.aktpapa.com/0n1battle/ogp.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ctext y=&#39;26&#39; font-size=&#39;28&#39;%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
@@ -862,9 +862,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel power-off" id="title" style="display: block;">
+  <div class="panel powering-on" id="title" style="display: block;">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay" style="display: flex;">
+    <div class="click-overlay fading" id="clickOverlay" style="display: none;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -904,7 +904,7 @@ header{text-align:center;margin-bottom:14px}
     <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
     <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br><b>Type matchup</b> alters damage ±. Take damage to fill Rage; full Rage unlocks Special.</div>
     <!-- ▼▼▼ DEBUG（確認用・あとで削除） ▼▼▼ -->
-    <div id="debugPanel" style="margin-top:18px;padding:12px;border:1px dashed #ff1f6d;border-radius:10px;background:rgba(255,31,109,.06)">
+    <div id="debugPanel" style="display:none;margin-top:18px;padding:12px;border:1px dashed #ff1f6d;border-radius:10px;background:rgba(255,31,109,.06)">
       <div style="font-family:&#39;Zen Dots&#39;;font-size:10px;color:#ff1f6d;letter-spacing:.1em;margin-bottom:8px">⚠ DEBUG（テスト用）</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
         <button class="btn ghost" id="dbgGodBtn" style="font-size:12px">神戦をすぐ試す</button>
@@ -1111,7 +1111,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 ad";
+var BUILD = "2026-06-01 ag";
 var EQUIP_DEX = {"Background":[["Azurite","STY",0],["Citrine","STY",0],["Dark Smoke","SPI",0],["Jasper","STR",0],["Light Smoke","SPI",0],["Technogod","SPI",0],["Technogod (Azurite)","SPI",1],["Technogod (Citrine)","SPI",1],["Technogod (Jasper)","SPI",1],["Technogod (Pearl)","SPI",1]],"Body":[["Ash","SPI",0],["Azurite","STY",0],["Citrine","STY",0],["Jasper","STR",0],["Kabuki","STR",0],["Obsidian","SPI",0],["Pearlescent","SPI",0],["Tiger Skin","STR",0],["Type-01","SPI",0],["Water","SPI",0]],"Eyes":[["Aggressive","SPI",0],["Angry (Azurite)","STR",0],["Angry (Citrine)","STR",0],["Angry (Jasper)","STR",0],["Angry (Oni)","STR",0],["Closed Eye","SPI",0],["Eye Shadow (Azurite)","STY",0],["Eye Shadow (Citrine)","STY",0],["Eye Shadow (Jasper)","STR",0],["Eyebags","SPI",0],["Flat","SPI",0],["Half Open (Azurite)","STY",0],["Half Open (Citrine)","STY",0],["Half Open (Jasper)","STR",0],["Half Open (Oni)","STR",0],["Hypnotized","SPI",0],["Open (Azurite)","STY",0],["Open (Citrine)","STY",0],["Open (Jasper)","STR",0],["Possessed","SPI",0],["Squint (Azurite)","STY",0],["Squint (Citrine)","STY",0],["Squint (Jasper)","STR",0]],"Mouth":[["Angry","STR",0],["Angry (Oni)","STR",0],["Frown","STR",0],["Neutral","SPI",0],["Open","SPI",0],["Smile","STY",0],["Smirk","STY",0],["uwu","SPI",0]],"Wear":[["Bomber Jacket (Jasper/Obsidian)","STR",0],["Bomber Jacket (Obsidian/Pearl)","STR",0],["Bomber Jacket (Pearl/Azurite)","STR",0],["Bomber Jacket (Pine)","STR",0],["Bomber Jacket (Rose)","STR",0],["Bomber Jacket (Saddle)","STR",0],["Dress (Obsidian)","STY",0],["Dress (Pearl)","STY",0],["Kimono (Azurite)","STY",0],["Kimono (Rose)","SPI",0],["Neon Hood (Emerald)","STY",0],["Neon Hood (Rose)","STY",0],["Ninja (Obsidian)","STR",0],["Ninja (Pearl)","STR",0],["Sleeveless (Citrine)","STY",0],["Sleeveless (Obsidian)","SPI",0],["Sleeveless (Pearl)","SPI",0],["Suit (Obsidian)","STY",0],["Suit (Pearl)","STY",0],["T-Shirt (Jasper)","STR",0],["T-Shirt (Obsidian)","STY",0],["T-Shirt (Pearl)","STY",0],["Tech Jacket (Gold)","STR",0],["Tech Jacket (Reflective)","STR",0],["Thermal Hoodie (Citrine)","STR",0],["Thermal Hoodie (Jasper)","STR",0],["Thermal Hoodie (Obsidian)","STR",0],["Thermal Hoodie (Pearl)","STR",0],["Thermal Hoodie (Turquoise)","STR",0],["Track Jacket (Azurite)","STR",0],["Track Jacket (Citrine)","STR",0],["Track Jacket (Obsidian)","STR",0],["Track Jacket (Pearl)","STR",0],["Track Jacket (Topaz)","STR",0],["Yukata (Azurite)","STY",0],["Yukata (Pearl)","SPI",0],["01-Hood","STY",1],["02-Bomber Jacket","STR",1],["03-Bomber Jacket","STR",1],["04-Kimono","STY",1],["05-Track Jacket","STR",1],["06-Hood","STY",1],["07-Kimono","STY",1]],"Hair":[["Bald","SPI",0],["Bob (Azurite)","STY",0],["Bob (Obsidian)","STY",0],["Bob (Quartz)","STY",0],["Bob (Rose)","STY",0],["Dreads (Azurite)","STY",0],["Dreads (Bronzite)","SPI",0],["Dreads (Jasper)","STR",0],["Dreads (Obsidian)","SPI",0],["Fade (Azurite)","STY",0],["Fade (Citrine)","STY",0],["Fade (Ethereum)","STY",0],["Fade (Jasper)","STR",0],["Fade (Obsidian)","STY",0],["Fade (Pearl)","STY",0],["Half-Buzz (Amethyst)","SPI",0],["Half-Buzz (Pearl)","SPI",0],["Half-Buzz (Turquoise)","SPI",0],["High Ponytail (Bronzite)","STY",0],["High Ponytail (Obsidian)","STY",0],["High Ponytail (Pearl)","STY",0],["Long (Citirine)","SPI",0],["Long (Obsidian)","SPI",0],["Long (Rose)","SPI",0],["Long (Turquoise)","SPI",0],["Pixie (Citrine)","STY",0],["Pixie (Obsidian)","STY",0],["Pixie (Pearl)","STY",0],["Pixie (Rose)","STY",0],["Pixie (Turquoise)","STY",0],["Pompadour (Citrine)","STY",0],["Pompadour (Jasper)","STR",0],["Pompadour (Obsidian)","SPI",0],["Ponytail (Jasper)","STR",0],["Ponytail (Obsidian)","STY",0],["Ponytail (Rose)","STY",0],["Ponytail (Turquoise)","STY",0],["Slick (Citrine)","STY",0],["Slick (Obsidian)","SPI",0],["Slick (Pearl)","SPI",0],["Spiky (Citrine)","STY",0],["Spiky (Jasper)","STR",0],["Spiky (Obsidian)","SPI",0],["Spiky (Pearl)","SPI",0],["Top Knot (Jasper)","STR",0],["Top Knot (Obsidian)","SPI",0],["Top Knot (Pearl)","SPI",0]],"Face":[["Bandaid","STY",0],["Barong","SPI",0],["Bubblegum","SPI",0],["Dali Mask","STR",0],["Foodmasku","STR",0],["Garou (Azurite)","STY",0],["Garou (Citrine)","STY",0],["Garou (Jasper)","STR",0],["Gas Mask (Obsidian)","STR",0],["Gas Mask (Pearl)","STR",0],["Glasses (Obsidian)","SPI",0],["Glasses (Pearl)","SPI",0],["Hannya Mask (Jasper)","STR",0],["Hannya Mask (Obsidian)","STR",0],["Hannya Mask (Pearl)","STR",0],["KULT Mask (Obsidian)","STR",0],["KULT Mask (Pearl)","STR",0],["Kitsune Mask (Gold)","STR",0],["Kitsune Mask (Obsidian)","STR",0],["Kitsune Mask (Pearl)","STR",0],["Masquerade (Obsidian)","SPI",0],["Masquerade (Pearl)","SPI",0],["Mech Mask","STR",0],["Mempo Mask (Jasper)","STR",0],["Mempo Mask (Obsidian)","STR",0],["Nose Scar","SPI",0],["PR Mask (Charcoal)","STR",0],["PR Mask (Citrine)","STR",0],["PR Mask (Jasper)","STR",0],["PR Mask (Turqouise)","STR",0],["Plague Mask (Obsidian)","STR",0],["Plague Mask (Pearl)","STR",0],["Ra Mask","STR",0],["Skull Mask","STR",0],["T-Goggles","STY",0],["Tengu Mask","STR",0],["Tengu Mask (Gold)","STR",0],["V-Shades","STY",0],["VR (Obsidian)","SPI",0],["VR (Pearl)","SPI",0],["Vape","SPI",0],["Void","SPI",0]],"Head":[["0-Headphones (Obsidian)","STY",0],["0-Headphones (Pearl)","STY",0],["Antlers (Gold)","SPI",0],["Cat Ears","SPI",0],["Cat Ears (Cool)","SPI",0],["Crown","SPI",0],["E-A1D","SPI",0],["Earbuds","SPI",0],["Fedora (Charcoal)","STY",0],["Fedora (Obsidian)","STY",0],["Flat Cap (Obsidian)","STY",0],["Flat Cap (Pearl)","STY",0],["Headphones (Citrine)","STY",0],["Headphones (Jasper)","STR",0],["Headphones (Obsidian)","STY",0],["Headphones (Pearl)","STY",0],["Headphones (Rose)","STY",0],["Headphones (Turquoise)","STY",0],["Headset","STY",0],["Horns (Gold)","STR",0],["Horns (Obsidian)","STR",0],["Pen","SPI",0],["Rose","SPI",0],["Snapback (Jasper)","STR",0],["Snapback (Multicolor)","STY",0],["Snapback (Obsidian)","STY",0],["Snapback (Pearl)","STY",0],["Void","SPI",0]],"Extra":[["0N1 Logo Pin (Black)","STY",0],["0N1 Logo Pin (White)","STY",0],["Banana Pin","STY",0],["Canary","SPI",0],["Dark Aura","SPI",0],["Earring (Double)","STY",0],["Haunted","SPI",0],["Loop Earring","STY",0],["Lucky no. 7 Earring","STY",0],["Lucky no. 7 Pin","STY",0],["Oni Doll (Azurite)","STR",0],["Oni Doll (Jasper)","STR",0],["Strawberry Pin","STY",0],["Super Aura","SPI",0],["Void","SPI",0],["Y0N1 Pin","STY",0]]};
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
@@ -2933,6 +2933,7 @@ function randomEnemyOfType(type){
   return 1+Math.floor(Math.random()*7777); // フォールバック
 }
 function newCampaign(playerId){
+  window.DBG_TAINT = !!window.DBG_INVINCIBLE; // 新規キャンペーンで汚染リセット（無敵ON中はその時点で汚染）
   CAMPAIGN = {
     playerId: playerId,
     setIndex: 0,    // 現在のセット番号(0-3)
@@ -3977,6 +3978,7 @@ function setStoredName(n){
 
 // Firebase に登録
 function registerToRanking(){
+  if(window.DBG_TAINT){ alert(LANG==='ja'?'デバッグ機能を使ったプレイはランキングに登録できません。':'Plays that used debug features cannot be registered to the ranking.'); return; }
   var nameEl = el('#playerName');
   var name = (nameEl.value || '').trim().slice(0,16);
   if(!name){ alert(T('err_no_name')); nameEl.focus(); return; }
@@ -4166,7 +4168,7 @@ function escapeHtml(s){
 }
 
 // ===== Xシェア =====
-var GAME_URL = 'https://aktpapa.github.io/0n1-battle/';
+var GAME_URL = 'https://0n1japan.aktpapa.com/0n1battle/';
 var SHARE_TAGS = '0N1Force,NeonRingClash';
 var LAST_RESULT = null; // {win,isGod,score,enemyType}
 function buildShareTail(){
@@ -4241,7 +4243,7 @@ function makeShareImage(cb){
     x.textAlign='center'; x.font='20px sans-serif';
     var ly=H-148;
     lines.forEach(function(l){ var t=l.t; if(t.length>72) t=t.slice(0,70)+'…'; x.fillStyle=l.c; x.fillText(t, W/2, ly); ly+=27; });
-    x.fillStyle='#7d72a8'; x.font='20px sans-serif'; x.fillText('0N1 FORCE  ·  '+GAME_URL.replace(/^https?:\/\//,''), W/2, H-26);
+    x.fillStyle='#7d72a8'; x.font='20px sans-serif'; x.fillText('0N1 FORCE', W/2, H-26);
     c.toBlob(function(b){cb(b);}, 'image/png');
   }catch(e){ cb(null); }
 }
@@ -4499,6 +4501,12 @@ function showGodEntrance(){
 
 el('#summonBtn').addEventListener('click',function(){
   SFX.init();
+  var raw=(el('#tokenId').value||'').trim();
+  if(raw==='9998'){ // 隠しコマンド：デバッグ表示のトグル（再度9998で消える）
+    var dp=el('#debugPanel');
+    if(dp){ dp.style.display=(dp.style.display==='none'||!dp.style.display)?'block':'none'; }
+    el('#tokenId').value=''; SFX.click(); return;
+  }
   var v=parseInt(el('#tokenId').value,10);
   if(!v||v<1||v>7777){el('#tokenId').focus();el('#tokenId').style.borderColor='var(--pink)';return;}
   SFX.summon();
@@ -4527,6 +4535,7 @@ el('#dbgGodBtn').addEventListener('click',function(){
   var pool = buildTypePool()['Y0K-A1'];
   var myId = (pool && pool.length) ? pool[Math.floor(Math.random()*pool.length)] : 1;
   newCampaign(myId);
+  window.DBG_TAINT = true;
   CAMPAIGN.setsCleared = SETS_PER_GOD;
   CAMPAIGN.inGodBattle = true;
   startBattle(myId, true);
@@ -4536,6 +4545,7 @@ el('#dbgLastSetBtn').addEventListener('click',function(){
   var pool = buildTypePool()['Y0K-A1'];
   var myId = (pool && pool.length) ? pool[Math.floor(Math.random()*pool.length)] : 1;
   newCampaign(myId);
+  window.DBG_TAINT = true;
   CAMPAIGN.setIndex = 3;
   CAMPAIGN.stageIndex = 4;
   CAMPAIGN.setsCleared = 3;
@@ -4543,6 +4553,7 @@ el('#dbgLastSetBtn').addEventListener('click',function(){
 });
 el('#dbgInvincibleBtn').addEventListener('click',function(){
   window.DBG_INVINCIBLE = !window.DBG_INVINCIBLE;
+  if(window.DBG_INVINCIBLE) window.DBG_TAINT = true;
   this.textContent = '無敵：' + (window.DBG_INVINCIBLE ? 'ON' : 'OFF');
   this.style.color = window.DBG_INVINCIBLE ? '#22e6e0' : '';
   this.style.borderColor = window.DBG_INVINCIBLE ? '#22e6e0' : '';
@@ -4989,7 +5000,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 ad</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 ag</div>
 
 
 </body></html>
