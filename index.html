@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_20.html -->
+<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -846,13 +846,13 @@ header{text-align:center;margin-bottom:14px}
 <div class="scan"></div>
 
 <!-- 左上：ホームボタン（wrapの外に置いて重なり順の問題を回避） -->
-<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display: none;">🏠</button>
+<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
 
 <div class="wrap">
   <!-- 右下：BGM/言語切替（縦並び） -->
   <div class="ctrl-stack">
     <button class="ctrl-btn" id="bgmToggle" title="音 ON/OFF（BGM・効果音）">🔊</button>
-    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to English">JP</button>
+    <button class="ctrl-btn lang-toggle" id="langToggle" title="Switch to Japanese">EN</button>
   </div>
 
   <header>
@@ -862,9 +862,9 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel" id="title" style="display: block;">
+  <div class="panel power-off" id="title" style="display: block;">
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay fading" id="clickOverlay" style="display: none;">
+    <div class="click-overlay" id="clickOverlay" style="display: flex;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -873,37 +873,37 @@ header{text-align:center;margin-bottom:14px}
       <div class="title-tag">— CYBER TRADING BATTLE —</div>
     </div>
     <div class="title-buttons">
-      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">ゲーム開始</button>
-      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">ランキング</button>
-      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">遊び方</button>
+      <button class="btn title-btn" id="titleStartBtn" data-i18n="title_start">Start Game</button>
+      <button class="btn ghost title-btn" id="titleRankingBtn" data-i18n="title_ranking">Ranking</button>
+      <button class="btn ghost title-btn" id="titleHowBtn" data-i18n="title_how">How to Play</button>
     </div>
     <div class="title-credit">7777 Unique NFT Fighters · Hash-Based Stats</div>
   </div>
 
   <!-- ===== 遊び方画面 ===== -->
-  <div class="panel" id="howto" style="display: none;">
-    <h2 data-i18n="how_title">遊び方</h2>
-    <div class="howto-body" id="howtoBody"><h3>基本ルール</h3><p>HP 80で対戦。1ラウンドに3コマンドをセットし、相手の3手と1手ずつ突き合わせ解決。先にHPが0になった方が負け。</p><h3>5つのコマンド</h3><table><tbody><tr><th>コマンド</th><th>効果</th></tr><tr><td class="cmd-name">攻撃</td><td>確実な一撃（STR分のダメージ、相手のSpiritで軽減・⚡+1）</td></tr><tr><td class="cmd-name">防御</td><td>通常攻撃を半減・必殺技も大幅軽減＋HP+3回復（防御側は⚡+1）</td></tr><tr><td class="cmd-name">カウンター</td><td>攻撃にだけ反撃（STY分のダメージで返す・⚡+1）</td></tr><tr><td class="cmd-name">ためる</td><td>怒りゲージを溜める（Spiritが高いほど多い／約+2〜+6）。攻撃と必殺技に弱い（潰されて被弾）</td></tr><tr><td class="cmd-name">必殺技</td><td>ゲージ満タン(⚡8)必要。大ダメージ</td></tr></tbody></table><h3>4つのType（覚醒の段階）</h3><p>Y0K-A1 → B4K3M0-N0 → 0N1 → K4M-1 の順に希少で強い。<br>希少なTypeほど戦闘ステータスが高い（相性による有利不利は無し。ステータスと読み合いだけの勝負）。</p><h3>ステータス</h3><p><b>Spirit</b>：被ダメージ軽減（攻撃・カウンター・必殺）<br><b>Strength</b>：通常攻撃・必殺技のダメージ<br><b>Style</b>：先制判定、カウンター反撃量</p><h3>ステータスの覚醒（重要）</h3><p>0N1は肉体ではなく<b>魂</b>で戦う。カードに表示される数字は「現世の肉体」の強さだが、リングに立つと<b>覚醒</b>し、魂の力で戦う。<br>そのため戦闘ステータスは「元の数字 <b>(+覚醒分)</b>」で表示される。元が弱いキャラほど、覚醒で大きく引き上げられる。</p><table><tbody><tr><th>種族</th><th>覚醒</th></tr><tr><td class="cmd-name">Y0K-A1</td><td>M0R1Aの加護が発動！（種族数に応じてステータスが向上する）</td></tr><tr><td class="cmd-name">B4K3M0-N0</td><td>D34THが能力を解放する！（種族数に応じてステータスが向上する）</td></tr><tr><td class="cmd-name">0N1</td><td>M33KASAの守護が体を覆う！（種族数に応じてステータスが向上する）</td></tr><tr><td class="cmd-name">K4M-1</td><td>One Sourceから力を吸い上げる！（全ステータスが上昇する）</td></tr></tbody></table><p>さらに、身につけた<b>パーツ（装備）</b>もステータスを底上げする。攻撃寄りのパーツは<b>Strength</b>、技寄りのパーツは<b>Style</b>、精神寄りのパーツは<b>Spirit</b>を高め、その上昇分はカードの<b>(+N)</b>に含まれて表示される。</p><p style="margin:4px 0 14px"><span onclick="showEquipDex()" style="cursor:pointer;color:var(--cyan);text-decoration:underline;font-weight:700">▶ 詳細はコチラ（装備図鑑を開く）</span></p><h3>行動特性（性格）</h3><p>一番高いステータスによって、戦い方のクセ（性格）が決まる。敵はこの性格に沿って行動する。</p><table><tbody><tr><th>最高ステ</th><th>性格</th><th>傾向</th></tr><tr><td class="cmd-name">Strength</td><td>武闘派</td><td>攻撃を好む。必殺技も積極的</td></tr><tr><td class="cmd-name">Spirit</td><td>守護型</td><td>防御・ためるで粘り強く戦う</td></tr><tr><td class="cmd-name">Style</td><td>技巧派</td><td>カウンター・先制で翻弄する</td></tr></tbody></table><h3>キャンペーン（5連戦×4セット）</h3><p>1セット＝5連戦（Y0K-A1→Y0K-A1→B4K3M0-N0→B4K3M0-N0→0N1）。各戦HP全回復、負けても次へ進む。<br>4セット（20戦）を終えると<b>K4M-1との決戦</b>！ K4M-1を倒すか敗れるか、その後また周回が続く。</p><h3>K4M-1との決戦</h3><p>K4M-1は別格。HPが分厚く、行動するたびSPゲージ（2本＝16）が一方通行で溜まり続ける。<b>SPが満タン(16)に達するとエンクレイヴが崩壊し、ゲームオーバー</b>（K4M-1は必殺を撃たない＝崩壊が必殺技）。<br>SPが13に達すると警告が出て、そのターンK4M-1はどこかで「ためる」を使う。その手を<b>攻撃で潰せばSPを1本分(8)破壊</b>でき、崩壊を遅らせられる。倒すには、崩壊までの限られたターンで殴り切るしかない。</p><h3>スコア（累計で競う）</h3><p>勝った戦だけ加点：Y0K-A1 +100/+150、B4K3M0-N0 +300/+400、0N1 +600、<b>K4M-1 +2500</b>。<br>さらに鮮やかさ（与ダメ×2−被ダメ＋残HP＋速攻ボーナス）が上乗せ。負けた戦は0点。累計スコアでランキングを競う。</p></div>
-    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← タイトル</button>
+  <div class="panel" id="howto" style="display:none">
+    <h2 data-i18n="how_title">How to Play</h2>
+    <div class="howto-body" id="howtoBody"></div>
+    <button class="btn ghost" id="howBackBtn" data-i18n="btn_back_title">← Title</button>
   </div>
 
   <!-- ===== 装備図鑑 ===== -->
   <div class="panel" id="equipDex" style="display:none">
-    <h2 data-i18n="equip_title">装備図鑑 — 各装備が上げるステ</h2>
+    <h2 data-i18n="equip_title">Equipment Guide — Stat per Part</h2>
     <div class="howto-body" id="equipBody"></div>
-    <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_howto">← 遊び方に戻る</button>
+    <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_howto">← Back to How to Play</button>
   </div>
 
   <div class="panel" id="start" style="display:none">
-    <h2 data-i18n="summon_title">ファイターを召喚</h2>
-    <p data-i18n="summon_desc">0N1 Force のトークン番号（1〜7777）を入力。<br>Spirit / Strength / Style と Type（Y0K-A1/B4K3M0-N0/0N1/K4M-1）が能力を決める。</p>
+    <h2 data-i18n="summon_title">Summon Your Fighter</h2>
+    <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.</p>
     <div class="irow">
-      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="例: 4718">
-      <button class="btn" id="summonBtn" data-i18n="btn_summon">召喚</button>
+      <input id="tokenId" type="number" min="1" max="7777" data-i18n-ph="ph_token" placeholder="e.g. 4718">
+      <button class="btn" id="summonBtn" data-i18n="btn_summon">Summon</button>
     </div>
-    <button class="btn ghost" id="randBtn" data-i18n="btn_random">ランダムで選ぶ</button>
-    <div data-i18n="random_note" style="font-size:12px;color:#9b86c9;opacity:.85;margin-top:8px;line-height:1.5">※「ランダムで選ぶ」では神（K4M-1）は出現しません。</div>
-    <div class="hint" data-i18n="hint">毎ラウンド、5種から3つ選んでセット → 相手の伏せた3手と1手ずつ突き合わせ解決。<br>コマンドの読み合いとステータスで勝負。被ダメで怒り蓄積、満タンで必殺技。</div>
+    <button class="btn ghost" id="randBtn" data-i18n="btn_random">Pick at Random</button>
+    <div data-i18n="random_note" style="font-size:12px;color:#9b86c9;opacity:.85;margin-top:8px;line-height:1.5">* "Pick at Random" never summons a god (K4M-1).</div>
+    <div class="hint" data-i18n="hint">Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br>Win through mind games &amp; stats. Take damage to fill Rage; full Rage unlocks Special.</div>
     <!-- ▼▼▼ DEBUG（確認用・あとで削除） ▼▼▼ -->
     <div id="debugPanel" style="display:none;margin-top:18px;padding:12px;border:1px dashed #ff1f6d;border-radius:10px;background:rgba(255,31,109,.06)">
       <div style="font-family:&#39;Zen Dots&#39;;font-size:10px;color:#ff1f6d;letter-spacing:.1em;margin-bottom:8px">⚠ DEBUG（テスト用）</div>
@@ -998,16 +998,16 @@ header{text-align:center;margin-bottom:14px}
 
     <div class="panel typebar" id="typebar"></div>
 
-    <div class="phase" id="phase" data-i18n="phase_select">コマンドを3つ選べ</div>
+    <div class="phase" id="phase" data-i18n="phase_select">Pick 3 Commands</div>
 
     <!-- コマンドエリア（FIGHT/取消ボタンが上に重なる） -->
     <div class="commands-wrap">
       <div class="commands" id="commandsArea">
-        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">攻撃</span><span class="sm" data-i18n="cmd_attack_d">確実な一撃</span></button>
-        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">カウンター</span><span class="sm" data-i18n="cmd_counter_d">受ければ反撃</span></button>
-        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">防御</span><span class="sm" data-i18n="cmd_defend_d">被ダメ激減+回復</span></button>
-        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">ためる</span><span class="sm" data-i18n="cmd_charge_d">怒り大↑/隙</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">必殺技</span><span class="sm" id="spName" data-i18n="cmd_special_d">怒り満タン</span></button>
+        <button class="cmd" data-act="attack"><span class="ic">⚔</span><span data-i18n="cmd_attack">Attack</span><span class="sm" data-i18n="cmd_attack_d">Solid hit</span></button>
+        <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
+        <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
+        <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
       <div class="cmd-overlay" id="ctrlTop" style="display:none">
@@ -1019,7 +1019,7 @@ header{text-align:center;margin-bottom:14px}
 
     <!-- 下は取消だけ -->
     <div class="ctrlrow">
-      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">取消</button>
+      <button class="btn ghost" id="undoBtn" data-i18n="btn_undo">Undo</button>
     </div>
     <div class="panel log" id="log"></div>
   </div>
@@ -1037,16 +1037,17 @@ header{text-align:center;margin-bottom:14px}
     </div>
     <!-- 名前入力＆登録 -->
     <div id="regForm" class="regbox">
+      <div data-i18n="prize_note_short" style="text-align:center;font-size:11px;color:#9b86c9;margin-bottom:10px;line-height:1.6">🎁 Prizes are for those who share with #0N1Battle. Top players, DM @0n1force_jp.</div>
       <input type="text" id="playerName" maxlength="16" placeholder="あなたの名前（最大16文字）" style="width:100%;padding:10px 12px;background:rgba(0,0,0,.5);border:1px solid var(--violet);
         border-radius:8px;color:var(--ink);font-family:&#39;Chakra Petch&#39;;font-size:14px;margin-bottom:10px">
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
         <button class="btn" id="nextBattleBtn" style="display:none">次の戦へ →</button>
-        <button class="btn" id="registerBtn" data-i18n="btn_register">ランキングに登録</button>
-        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">ランキングを見る</button>
-        <button class="btn ghost" id="shareResultBtn" data-i18n="btn_share_x">𝕏 でシェア</button>
-        <button class="btn ghost" id="saveLogImgBtn" data-i18n="btn_save_log">🖼 対戦画像を保存</button>
-        <button class="btn ghost" id="againBtn" data-i18n="btn_again">再戦</button>
-        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← タイトル</button>
+        <button class="btn" id="registerBtn" data-i18n="btn_register">Register to Ranking</button>
+        <button class="btn ghost" id="rankingBtn" data-i18n="btn_ranking">View Ranking</button>
+        <button class="btn ghost" id="shareResultBtn" data-i18n="btn_share_x">Share on 𝕏</button>
+        <button class="btn ghost" id="saveLogImgBtn" data-i18n="btn_save_log">🖼 Save Battle Image</button>
+        <button class="btn ghost" id="againBtn" data-i18n="btn_again">Rematch</button>
+        <button class="btn ghost" id="resultTitleBtn" data-i18n="btn_back_title">← Title</button>
       </div>
     </div>
   </div>
@@ -1058,12 +1059,14 @@ header{text-align:center;margin-bottom:14px}
     </div>
     <div id="rankingSeasonInfo" class="season-info"></div>
     <div id="rankingGodKills" class="ranking-godkills"></div>
+    <div data-i18n="prize_note" style="text-align:center;font-size:12px;color:#cdbcf2;background:rgba(155,60,255,.1);border:1px solid rgba(155,60,255,.3);border-radius:8px;padding:9px 12px;margin:8px 0 4px;line-height:1.6">🎁 Prizes (0N1 Force JAPAN merch coupons) are for players who share their result with #0N1Battle. Top finishers, please DM @0n1force_jp (we'll verify your score and reach out).</div>
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
-      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">閉じる</button>
-      <button class="btn ghost" id="shareRankingBtn" data-i18n="btn_share_x">𝕏 でシェア</button>
-      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← タイトル</button>
+      <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
+      <button class="btn ghost" id="csvExportBtn" style="display:none">📥 CSV出力</button>
+      <button class="btn ghost" id="shareRankingBtn" data-i18n="btn_share_x">Share on 𝕏</button>
+      <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
     </div>
   </div>
 </div>
@@ -1112,7 +1115,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 aj";
+var BUILD = "2026-06-01 aq";
 var EQUIP_DEX = {"Background":[["Azurite","STY",0],["Citrine","STY",0],["Dark Smoke","SPI",0],["Jasper","STR",0],["Light Smoke","SPI",0],["Technogod","SPI",0],["Technogod (Azurite)","SPI",1],["Technogod (Citrine)","SPI",1],["Technogod (Jasper)","SPI",1],["Technogod (Pearl)","SPI",1]],"Body":[["Ash","SPI",0],["Azurite","STY",0],["Citrine","STY",0],["Jasper","STR",0],["Kabuki","STR",0],["Obsidian","SPI",0],["Pearlescent","SPI",0],["Tiger Skin","STR",0],["Type-01","SPI",0],["Water","SPI",0]],"Eyes":[["Aggressive","SPI",0],["Angry (Azurite)","STR",0],["Angry (Citrine)","STR",0],["Angry (Jasper)","STR",0],["Angry (Oni)","STR",0],["Closed Eye","SPI",0],["Eye Shadow (Azurite)","STY",0],["Eye Shadow (Citrine)","STY",0],["Eye Shadow (Jasper)","STR",0],["Eyebags","SPI",0],["Flat","SPI",0],["Half Open (Azurite)","STY",0],["Half Open (Citrine)","STY",0],["Half Open (Jasper)","STR",0],["Half Open (Oni)","STR",0],["Hypnotized","SPI",0],["Open (Azurite)","STY",0],["Open (Citrine)","STY",0],["Open (Jasper)","STR",0],["Possessed","SPI",0],["Squint (Azurite)","STY",0],["Squint (Citrine)","STY",0],["Squint (Jasper)","STR",0]],"Mouth":[["Angry","STR",0],["Angry (Oni)","STR",0],["Frown","STR",0],["Neutral","SPI",0],["Open","SPI",0],["Smile","STY",0],["Smirk","STY",0],["uwu","SPI",0]],"Wear":[["Bomber Jacket (Jasper/Obsidian)","STR",0],["Bomber Jacket (Obsidian/Pearl)","STR",0],["Bomber Jacket (Pearl/Azurite)","STR",0],["Bomber Jacket (Pine)","STR",0],["Bomber Jacket (Rose)","STR",0],["Bomber Jacket (Saddle)","STR",0],["Dress (Obsidian)","STY",0],["Dress (Pearl)","STY",0],["Kimono (Azurite)","STY",0],["Kimono (Rose)","SPI",0],["Neon Hood (Emerald)","STY",0],["Neon Hood (Rose)","STY",0],["Ninja (Obsidian)","STR",0],["Ninja (Pearl)","STR",0],["Sleeveless (Citrine)","STY",0],["Sleeveless (Obsidian)","SPI",0],["Sleeveless (Pearl)","SPI",0],["Suit (Obsidian)","STY",0],["Suit (Pearl)","STY",0],["T-Shirt (Jasper)","STR",0],["T-Shirt (Obsidian)","STY",0],["T-Shirt (Pearl)","STY",0],["Tech Jacket (Gold)","STR",0],["Tech Jacket (Reflective)","STR",0],["Thermal Hoodie (Citrine)","STR",0],["Thermal Hoodie (Jasper)","STR",0],["Thermal Hoodie (Obsidian)","STR",0],["Thermal Hoodie (Pearl)","STR",0],["Thermal Hoodie (Turquoise)","STR",0],["Track Jacket (Azurite)","STR",0],["Track Jacket (Citrine)","STR",0],["Track Jacket (Obsidian)","STR",0],["Track Jacket (Pearl)","STR",0],["Track Jacket (Topaz)","STR",0],["Yukata (Azurite)","STY",0],["Yukata (Pearl)","SPI",0],["01-Hood","STY",1],["02-Bomber Jacket","STR",1],["03-Bomber Jacket","STR",1],["04-Kimono","STY",1],["05-Track Jacket","STR",1],["06-Hood","STY",1],["07-Kimono","STY",1]],"Hair":[["Bald","SPI",0],["Bob (Azurite)","STY",0],["Bob (Obsidian)","STY",0],["Bob (Quartz)","STY",0],["Bob (Rose)","STY",0],["Dreads (Azurite)","STY",0],["Dreads (Bronzite)","SPI",0],["Dreads (Jasper)","STR",0],["Dreads (Obsidian)","SPI",0],["Fade (Azurite)","STY",0],["Fade (Citrine)","STY",0],["Fade (Ethereum)","STY",0],["Fade (Jasper)","STR",0],["Fade (Obsidian)","STY",0],["Fade (Pearl)","STY",0],["Half-Buzz (Amethyst)","SPI",0],["Half-Buzz (Pearl)","SPI",0],["Half-Buzz (Turquoise)","SPI",0],["High Ponytail (Bronzite)","STY",0],["High Ponytail (Obsidian)","STY",0],["High Ponytail (Pearl)","STY",0],["Long (Citirine)","SPI",0],["Long (Obsidian)","SPI",0],["Long (Rose)","SPI",0],["Long (Turquoise)","SPI",0],["Pixie (Citrine)","STY",0],["Pixie (Obsidian)","STY",0],["Pixie (Pearl)","STY",0],["Pixie (Rose)","STY",0],["Pixie (Turquoise)","STY",0],["Pompadour (Citrine)","STY",0],["Pompadour (Jasper)","STR",0],["Pompadour (Obsidian)","SPI",0],["Ponytail (Jasper)","STR",0],["Ponytail (Obsidian)","STY",0],["Ponytail (Rose)","STY",0],["Ponytail (Turquoise)","STY",0],["Slick (Citrine)","STY",0],["Slick (Obsidian)","SPI",0],["Slick (Pearl)","SPI",0],["Spiky (Citrine)","STY",0],["Spiky (Jasper)","STR",0],["Spiky (Obsidian)","SPI",0],["Spiky (Pearl)","SPI",0],["Top Knot (Jasper)","STR",0],["Top Knot (Obsidian)","SPI",0],["Top Knot (Pearl)","SPI",0]],"Face":[["Bandaid","STY",0],["Barong","SPI",0],["Bubblegum","SPI",0],["Dali Mask","STR",0],["Foodmasku","STR",0],["Garou (Azurite)","STY",0],["Garou (Citrine)","STY",0],["Garou (Jasper)","STR",0],["Gas Mask (Obsidian)","STR",0],["Gas Mask (Pearl)","STR",0],["Glasses (Obsidian)","SPI",0],["Glasses (Pearl)","SPI",0],["Hannya Mask (Jasper)","STR",0],["Hannya Mask (Obsidian)","STR",0],["Hannya Mask (Pearl)","STR",0],["KULT Mask (Obsidian)","STR",0],["KULT Mask (Pearl)","STR",0],["Kitsune Mask (Gold)","STR",0],["Kitsune Mask (Obsidian)","STR",0],["Kitsune Mask (Pearl)","STR",0],["Masquerade (Obsidian)","SPI",0],["Masquerade (Pearl)","SPI",0],["Mech Mask","STR",0],["Mempo Mask (Jasper)","STR",0],["Mempo Mask (Obsidian)","STR",0],["Nose Scar","SPI",0],["PR Mask (Charcoal)","STR",0],["PR Mask (Citrine)","STR",0],["PR Mask (Jasper)","STR",0],["PR Mask (Turqouise)","STR",0],["Plague Mask (Obsidian)","STR",0],["Plague Mask (Pearl)","STR",0],["Ra Mask","STR",0],["Skull Mask","STR",0],["T-Goggles","STY",0],["Tengu Mask","STR",0],["Tengu Mask (Gold)","STR",0],["V-Shades","STY",0],["VR (Obsidian)","SPI",0],["VR (Pearl)","SPI",0],["Vape","SPI",0],["Void","SPI",0]],"Head":[["0-Headphones (Obsidian)","STY",0],["0-Headphones (Pearl)","STY",0],["Antlers (Gold)","SPI",0],["Cat Ears","SPI",0],["Cat Ears (Cool)","SPI",0],["Crown","SPI",0],["E-A1D","SPI",0],["Earbuds","SPI",0],["Fedora (Charcoal)","STY",0],["Fedora (Obsidian)","STY",0],["Flat Cap (Obsidian)","STY",0],["Flat Cap (Pearl)","STY",0],["Headphones (Citrine)","STY",0],["Headphones (Jasper)","STR",0],["Headphones (Obsidian)","STY",0],["Headphones (Pearl)","STY",0],["Headphones (Rose)","STY",0],["Headphones (Turquoise)","STY",0],["Headset","STY",0],["Horns (Gold)","STR",0],["Horns (Obsidian)","STR",0],["Pen","SPI",0],["Rose","SPI",0],["Snapback (Jasper)","STR",0],["Snapback (Multicolor)","STY",0],["Snapback (Obsidian)","STY",0],["Snapback (Pearl)","STY",0],["Void","SPI",0]],"Extra":[["0N1 Logo Pin (Black)","STY",0],["0N1 Logo Pin (White)","STY",0],["Banana Pin","STY",0],["Canary","SPI",0],["Dark Aura","SPI",0],["Earring (Double)","STY",0],["Haunted","SPI",0],["Loop Earring","STY",0],["Lucky no. 7 Earring","STY",0],["Lucky no. 7 Pin","STY",0],["Oni Doll (Azurite)","STR",0],["Oni Doll (Jasper)","STR",0],["Strawberry Pin","STY",0],["Super Aura","SPI",0],["Void","SPI",0],["Y0N1 Pin","STY",0]]};
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
@@ -2620,6 +2623,8 @@ var I18N = {
     btn_summon: "召喚",
     btn_random: "ランダムで選ぶ",
     random_note: "※「ランダムで選ぶ」では神（K4M-1）は出現しません。",
+    prize_note: "🎁 賞品（0N1 Force JAPANグッズ割引券）の対象は、結果を #0N1Battle 付きでシェアした方です。上位入賞の方は @0n1force_jp までDMしてください（スコアを確認してご連絡します）。",
+    prize_note_short: "🎁 賞品対象は結果を #0N1Battle でシェアした方。上位の方は @0n1force_jp へDMを。",
     hint: "毎ラウンド、5種から3つ選んでセット → 相手の伏せた3手と1手ずつ突き合わせ解決。<br>コマンドの読み合いとステータスで勝負。被ダメで怒り蓄積、満タンで必殺技。",
     // バトル
     enemy_cmd: "ENEMY",
@@ -2741,6 +2746,8 @@ var I18N = {
     btn_summon: "Summon",
     btn_random: "Pick at Random",
     random_note: "* \"Pick at Random\" never summons a god (K4M-1).",
+    prize_note: "🎁 Prizes (0N1 Force JAPAN merch coupons) are for players who share their result with #0N1Battle. Top finishers, please DM @0n1force_jp (we'll verify your score and reach out).",
+    prize_note_short: "🎁 Prizes are for those who share with #0N1Battle. Top players, DM @0n1force_jp.",
     hint: "Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br>Win through mind games & stats. Take damage to fill Rage; full Rage unlocks Special.",
     enemy_cmd: "ENEMY",
     your_cmd: "YOU",
@@ -3980,8 +3987,18 @@ function setStoredName(n){
 }
 
 // Firebase に登録
+function applySeasonLockUI(){
+  var rb = el('#registerBtn'); if(!rb) return;
+  if(getCurrentSeason().locked){
+    rb.disabled = true;
+    rb.style.opacity = '0.5';
+    rb.style.cursor = 'not-allowed';
+    rb.textContent = (LANG==='ja'?'🔒 登録締切（集計中）':'🔒 Closed (finalizing)');
+  }
+}
 function registerToRanking(){
   if(window.DBG_TAINT){ alert(LANG==='ja'?'デバッグ機能を使ったプレイはランキングに登録できません。':'Plays that used debug features cannot be registered to the ranking.'); return; }
+  if(getCurrentSeason().locked){ alert(LANG==='ja'?'今期の登録は締め切りました（集計中）。':'Registration for this season is closed (finalizing).'); applySeasonLockUI(); return; }
   var nameEl = el('#playerName');
   var name = (nameEl.value || '').trim().slice(0,16);
   if(!name){ alert(T('err_no_name')); nameEl.focus(); return; }
@@ -3997,7 +4014,7 @@ function registerToRanking(){
   btn.disabled = true;
   btn.textContent = T('btn_registering');
 
-  window.FB.addDoc(window.FB.collection(window.FB.db, 'rankings'), {
+  var payload = {
     name: name,
     score: regScore,
     win: sc.win,
@@ -4008,41 +4025,53 @@ function registerToRanking(){
     meType: G.me.type,
     meId: G.me.id,
     enId: G.en.id,
-    godKills: (CAMPAIGN ? CAMPAIGN.godKills : 0), // ★神討伐回数
-    createdAt: window.FB.serverTimestamp()
-  }).then(function(){
+    godKills: (CAMPAIGN ? CAMPAIGN.godKills : 0) // ★神討伐回数
+  };
+  function _regOk(){
     btn.textContent = T('btn_registered');
     btn.disabled = true;
     setTimeout(function(){ showRanking(); }, 800);
-  }).catch(function(e){
-    console.error('[Firebase] 登録失敗', e);
-    alert(T('err_register_failed') + ': ' + e.message);
+  }
+  function _regErr(e){
+    console.error('[Ranking] 登録失敗', e);
+    alert(T('err_register_failed') + ': ' + (e && e.message ? e.message : e));
     btn.disabled = false;
     btn.textContent = T('btn_register');
-  });
+  }
+  if(window.RANK_API){
+    // Cloudflare Worker 経由（サーバー側で検証して書き込み）
+    fetch(window.RANK_API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+      .then(function(r){ if(!r.ok){ return r.text().then(function(t){ throw new Error('HTTP '+r.status+' '+t); }); } return r.json(); })
+      .then(_regOk).catch(_regErr);
+  } else {
+    // 直接Firestore（Worker未設定時のフォールバック）
+    payload.createdAt = window.FB.serverTimestamp();
+    window.FB.addDoc(window.FB.collection(window.FB.db, 'rankings'), payload).then(_regOk).catch(_regErr);
+  }
 }
 
 // ランキング表示
 // シーズン管理：UTC月曜0時を基準に1週間ごとのシーズンを区切る
 // 例: 2026/5/18(月) 0:00 UTC 〜 2026/5/24(日) 23:59 UTC が1シーズン
+// ▼▼▼ ランキング競争の設定（リセット＝この2つを書き換えて再アップ）▼▼▼
+var SEASON_START = '2026-06-05T22:59:00+09:00'; // 競争の開始日時（日本時間）＝今から
+var SEASON_END   = '2026-06-13T12:00:00+09:00'; // 競争の終了日時＝この時刻でロック（日本時間）
+// ▲▲▲ 次の競争を始める時はこの2つを更新して再アップ（順位がリセットされる）▲▲▲
 function getCurrentSeason(){
   var now = new Date();
-  // 固定基準日（2026-01-05 月曜 0時UTC）から2週間(14日)単位で区切る
-  var anchor = Date.UTC(2026, 0, 5, 0, 0, 0); // 2026/01/05 00:00 UTC（月曜）
-  var period = 14*24*60*60*1000; // 2週間
-  var elapsed = now.getTime() - anchor;
-  var idx = Math.floor(elapsed / period);
-  var seasonStart = new Date(anchor + idx*period);
-  var seasonEnd = new Date(seasonStart.getTime() + period);
+  var seasonStart = new Date(SEASON_START);
+  var seasonEnd = new Date(SEASON_END);
   var remainMs = seasonEnd.getTime() - now.getTime();
-  var remainDays = Math.floor(remainMs / (24*60*60*1000));
-  var remainHours = Math.floor((remainMs % (24*60*60*1000)) / (60*60*1000));
+  var locked = remainMs <= 0; // 終了時刻を過ぎたらロック（登録締切・順位固定）
+  var remainDays = Math.max(0, Math.floor(remainMs / (24*60*60*1000)));
+  var remainHours = Math.max(0, Math.floor((remainMs % (24*60*60*1000)) / (60*60*1000)));
   return {
     start: seasonStart,
     end: seasonEnd,
     remainDays: remainDays,
     remainHours: remainHours,
-    remainMs: remainMs
+    remainMs: remainMs,
+    locked: locked
   };
 }
 
@@ -4073,6 +4102,7 @@ function showRanking(){
   el('#result').style.display = 'none';
   var r = el('#ranking');
   r.style.display = 'block';
+  var _csvBtn = el('#csvExportBtn'); if(_csvBtn){ _csvBtn.style.display = window.ADMIN_MODE ? '' : 'none'; }
   updateGlobalTitleBtn();
   var status = el('#rankingStatus');
   var listEl = el('#rankingList');
@@ -4083,13 +4113,19 @@ function showRanking(){
   var season = getCurrentSeason();
   var seasonInfoEl = el('#rankingSeasonInfo');
   if(seasonInfoEl){
-    var endsLabel = (LANG === 'ja') ? '今期（2週間）のランキング 終了まで' : 'This season (2 weeks) ends in';
+    var endsLabel = (LANG === 'ja') ? '今期のランキング 終了まで' : 'This season ends in';
     var daysLabel = (LANG === 'ja') ? '日' : 'd';
     var hoursLabel = (LANG === 'ja') ? '時間' : 'h';
     var resetLabel = (LANG === 'ja') ? 'リセット' : 'Reset';
-    seasonInfoEl.innerHTML =
-      '<div class="season-remain">⏳ ' + endsLabel + ' <b>' + season.remainDays + daysLabel + ' ' + season.remainHours + hoursLabel + '</b></div>' +
-      '<div class="season-reset">' + resetLabel + ': ' + formatDateTimeJSTUTC(season.end) + '</div>';
+    if(season.locked){
+      seasonInfoEl.innerHTML =
+        '<div class="season-remain" style="color:var(--pink)">🔒 ' + (LANG==='ja'?'今期の登録は締め切りました（集計中）':'Registration closed (finalizing)') + '</div>' +
+        '<div class="season-reset">' + (LANG==='ja'?'期間':'Period') + ': ' + formatDateTimeJSTUTC(season.start) + ' 〜 ' + formatDateTimeJSTUTC(season.end) + '</div>';
+    } else {
+      seasonInfoEl.innerHTML =
+        '<div class="season-remain">⏳ ' + endsLabel + ' <b>' + season.remainDays + daysLabel + ' ' + season.remainHours + hoursLabel + '</b></div>' +
+        '<div class="season-reset">' + resetLabel + ': ' + formatDateTimeJSTUTC(season.end) + '</div>';
+    }
   }
 
   if(!window.FB || !window.FB.ready){
@@ -4172,6 +4208,8 @@ function escapeHtml(s){
 
 // ===== Xシェア =====
 var GAME_URL = 'https://0n1japan.aktpapa.com/0n1battle/';
+// ▼ ランキング登録をCloudflare Worker経由にする場合、ここにWorkerのURLを入れる（空なら従来どおり直接Firestoreに書き込み）
+window.RANK_API = '';
 var SHARE_TAGS = '0N1Force,NeonRingClash';
 var LAST_RESULT = null; // {win,isGod,score,enemyType}
 function buildShareTail(){
@@ -4375,6 +4413,9 @@ function finish(){
     var rBtn = el('#registerBtn');
     rBtn.disabled = false;
     rBtn.textContent = T('btn_register');
+    rBtn.style.opacity = '';
+    rBtn.style.cursor = '';
+    applySeasonLockUI();
 
     // ログだけリザルト画面の下に移動して残す
     var logEl = el('#log');
@@ -4508,6 +4549,7 @@ el('#summonBtn').addEventListener('click',function(){
   if(raw==='9998'){ // 隠しコマンド：デバッグ表示のトグル（再度9998で消える）
     var dp=el('#debugPanel');
     if(dp){ dp.style.display=(dp.style.display==='none'||!dp.style.display)?'block':'none'; }
+    window.ADMIN_MODE = dp ? (dp.style.display!=='none') : false; // 管理モード（CSV出力ボタン表示に使用）
     el('#tokenId').value=''; SFX.click(); return;
   }
   var v=parseInt(el('#tokenId').value,10);
@@ -4850,6 +4892,30 @@ el('#equipBackBtn').addEventListener('click', function(){
 el('#shareResultBtn') && el('#shareResultBtn').addEventListener('click', shareResultToX);
 el('#saveLogImgBtn') && el('#saveLogImgBtn').addEventListener('click', saveLogImage);
 el('#shareRankingBtn') && el('#shareRankingBtn').addEventListener('click', shareRankingToX);
+function csvCell(v){ var s=(v==null?'':String(v)); return /[",\r\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; }
+function exportRankingCSV(){
+  if(!window.FB || !window.FB.ready){ alert(T('err_fb_not_ready')); return; }
+  var season = getCurrentSeason();
+  var q = window.FB.query(window.FB.collection(window.FB.db,'rankings'), window.FB.orderBy('score','desc'), window.FB.limit(5000));
+  window.FB.getDocs(q).then(function(snap){
+    var rows = [['rank','name','score','win','dmgDealt','dmgTaken','remainHp','rounds','meType','meId','enId','godKills','createdAt_JST','inThisSeason']];
+    var i=0;
+    snap.forEach(function(doc){
+      var d=doc.data(); i++;
+      var dt=(d.createdAt && d.createdAt.toDate)?d.createdAt.toDate():null;
+      var jst=dt?new Date(dt.getTime()+9*60*60*1000).toISOString().replace('T',' ').slice(0,19):'';
+      var inSeason=dt?(dt.getTime()>=season.start.getTime() && dt.getTime()<season.end.getTime()):false;
+      rows.push([i, d.name||'', d.score||0, d.win?1:0, d.dmgDealt||0, d.dmgTaken||0, d.remainHp||0, d.rounds||0, d.meType||'', d.meId||'', d.enId||'', d.godKills||0, jst, inSeason?1:0]);
+    });
+    var csv = rows.map(function(r){ return r.map(csvCell).join(','); }).join('\r\n');
+    var blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a=document.createElement('a'); a.href=url; a.download='ranking_'+new Date().toISOString().slice(0,10)+'.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }).catch(function(e){ alert('CSV出力失敗: '+(e&&e.message?e.message:e)); });
+}
+el('#csvExportBtn') && el('#csvExportBtn').addEventListener('click', function(){ SFX.click(); exportRankingCSV(); });
 // startBackBtnは削除済み（ホームボタン左上で代替）
 var sbb = el('#startBackBtn');
 if(sbb) sbb.addEventListener('click', function(){
@@ -5003,7 +5069,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 aj</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 aq</div>
 
 
 </body></html>
