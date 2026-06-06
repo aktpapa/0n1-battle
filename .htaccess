@@ -1,0 +1,14 @@
+# 0n1battle.aktpapa.com 用
+# 親(WordPress)から継承される .htaccess ルールを無効化し、
+# 静的ファイル(json/mp3/webp等)が500になるのを防ぐ。
+
+<IfModule mod_rewrite.c>
+  RewriteEngine Off
+</IfModule>
+
+ErrorDocument 401 default
+ErrorDocument 403 default
+ErrorDocument 404 default
+ErrorDocument 500 default
+
+Options -MultiViews
