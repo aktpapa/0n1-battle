@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/townc/Downloads/index.html -->
+<!-- saved from url=(0046)file:///C:/Users/townc/Downloads/index_24.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -8,12 +8,12 @@
 <meta property="og:title" content="0N1 FORCE — NEON RING CLASH">
 <meta property="og:description" content="0N1 Forceで戦う1on1ネオン・カードバトル。K4M-1を討伐せよ。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://0n1japan.aktpapa.com/0n1battle/">
-<meta property="og:image" content="https://0n1japan.aktpapa.com/0n1battle/ogp.png">
+<meta property="og:url" content="https://0n1battle.aktpapa.com/">
+<meta property="og:image" content="https://0n1battle.aktpapa.com/ogp.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="0N1 FORCE — NEON RING CLASH">
 <meta name="twitter:description" content="0N1 Forceで戦う1on1ネオン・カードバトル。K4M-1を討伐せよ。">
-<meta name="twitter:image" content="https://0n1japan.aktpapa.com/0n1battle/ogp.png">
+<meta name="twitter:image" content="https://0n1battle.aktpapa.com/ogp.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ctext y=&#39;26&#39; font-size=&#39;28&#39;%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Dots&display=swap');
@@ -558,13 +558,13 @@ header{text-align:center;margin-bottom:14px}
 .title-sub{font-family:'Zen Dots';font-size:28px;color:var(--pink);letter-spacing:.15em;line-height:1;
   text-shadow:0 0 20px var(--pink),0 2px 4px #000;
   margin-bottom:8px;animation:titlePulse 2.5s ease-in-out infinite}
-.beta-tag{position:absolute;top:-13px;left:-10px;z-index:30;
+.beta-tag{position:absolute;top:-24px;left:-10px;z-index:30;
   font-size:12px;font-weight:700;letter-spacing:.02em;
   color:var(--cyan);background:rgba(6,2,18,.85);
   padding:3px 11px;border-radius:8px;line-height:1.4;white-space:nowrap;
   border:1.5px solid var(--cyan);box-shadow:0 0 14px -4px var(--cyan);
   pointer-events:none}
-@media(max-width:600px){.beta-tag{font-size:11px;top:-11px;left:-6px;padding:2px 9px}}
+@media(max-width:600px){.beta-tag{font-size:11px;top:-21px;left:-6px;padding:2px 9px}}
 #championBtn{background:linear-gradient(135deg,#ffc83a,#ff8a3a);color:#1a1003;font-weight:800;border:none;
   box-shadow:0 0 16px -4px var(--gold);animation:champPulse 1.8s ease-in-out infinite}
 @keyframes champPulse{0%,100%{box-shadow:0 0 12px -4px var(--gold)}50%{box-shadow:0 0 26px 0 var(--gold)}}
@@ -874,7 +874,7 @@ header{text-align:center;margin-bottom:14px}
 <div class="scan"></div>
 
 <!-- 左上：ホームボタン（wrapの外に置いて重なり順の問題を回避） -->
-<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display: flex;">🏠</button>
+<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
 
 <div class="wrap">
   <!-- 右下：BGM/言語切替（縦並び） -->
@@ -890,10 +890,10 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel powering-on" id="title" style="display: none;">
+  <div class="panel power-off" id="title" style="display: block;">
     <span class="beta-tag">β TEST</span>
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay fading" id="clickOverlay" style="display: none;">
+    <div class="click-overlay" id="clickOverlay" style="display: flex;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -924,7 +924,7 @@ header{text-align:center;margin-bottom:14px}
     <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_howto">← Back to How to Play</button>
   </div>
 
-  <div class="panel" id="start" style="display: none;">
+  <div class="panel" id="start" style="display:none">
     <h2 data-i18n="summon_title">Summon Your Fighter</h2>
     <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.</p>
     <div class="irow">
@@ -946,7 +946,7 @@ header{text-align:center;margin-bottom:14px}
     <!-- ▲▲▲ DEBUG ▲▲▲ -->
   </div>
 
-  <div id="battle" style="display: block;">
+  <div id="battle" style="display: none;">
     <span class="beta-tag">β TEST</span>
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
@@ -994,43 +994,43 @@ header{text-align:center;margin-bottom:14px}
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
         <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
-        <div class="ring-qslots" id="ringEnQueue"><div class="ring-qslot en back"><span class="ic">?</span></div><div class="ring-qslot en back"><span class="ic">?</span></div><div class="ring-qslot en back"><span class="ic">?</span></div></div>
+        <div class="ring-qslots" id="ringEnQueue"></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
         <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
-        <div class="ring-qslots" id="ringMeQueue"><div class="ring-qslot"><span style="opacity:.5">1</span></div><div class="ring-qslot"><span style="opacity:.5">2</span></div><div class="ring-qslot"><span style="opacity:.5">3</span></div></div>
+        <div class="ring-qslots" id="ringMeQueue"></div>
       </div>
 
       <!-- HPバー：敵が上、自分が下 -->
       <div class="bars top en">
-        <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #3240</span><span class="hptxt" id="enHpTxt">147/150</span></div>
-        <div class="barwrap"><div class="barfill" id="enHp" style="width: 98%;"></div></div>
-        <div class="ragewrap"><div class="ragefill" id="enRage" style="width: 37.5%;"></div><div class="ragefill2" id="enRage2" style="width: 0%;"></div></div>
+        <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #----</span><span class="hptxt" id="enHpTxt">100/100</span></div>
+        <div class="barwrap"><div class="barfill" id="enHp" style="width:100%"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="enRage"></div><div class="ragefill2" id="enRage2"></div></div>
       </div>
 
       <!-- 敵：奥 -->
       <div class="corner en" id="enCorner">
-        <div class="tcg god-aura" id="enCard"><div class="tcg-head"><span class="nm">0N1 #3240</span><span class="tcg-type" style="color:#9b3cff">K4M-1</span></div><div class="tcg-art" id="enArt"><div class="tcg-fx" id="enFx"></div><canvas width="340" height="340"></canvas></div><div class="tcg-stats"><div class="st sp"><div class="l">Spirit</div><div class="v">28</div></div><div class="st str"><div class="l">Strength</div><div class="v">25</div></div><div class="st sty"><div class="l">Style</div><div class="v">27</div></div></div><div class="tcg-foot">K4M-1 · VOID CRASH</div></div>
+        <div class="tcg" id="enCard"></div>
       </div>
       <!-- 自分：手前下 -->
       <div class="corner me" id="meCorner">
-        <div class="tcg" id="meCard"><div class="tcg-head"><span class="nm">0N1 #3707</span><span class="tcg-type" style="color:#ff1f6d">B4K3M0-N0</span></div><div class="tcg-art" id="meArt"><div class="tcg-fx" id="meFx"></div><canvas width="340" height="340"></canvas></div><div class="tcg-stats"><div class="st sp"><div class="l">Spirit</div><div class="v">9</div></div><div class="st str"><div class="l">Strength</div><div class="v">6</div></div><div class="st sty"><div class="l">Style</div><div class="v">8</div></div></div><div class="tcg-foot">B4K3M0-N0 · PHANTOM SLASH</div></div>
+        <div class="tcg" id="meCard"></div>
       </div>
 
       <div class="bars bot me">
-        <div class="nameline"><span class="me-a nm-id" id="meName">0N1 #3707</span><span class="hptxt" id="meHpTxt">76/80</span></div>
-        <div class="barwrap"><div class="barfill" id="meHp" style="width: 95%;"></div></div>
-        <div class="ragewrap"><div class="ragefill" id="meRage" style="width: 0%;"></div></div>
+        <div class="nameline"><span class="me-a nm-id" id="meName">0N1 #----</span><span class="hptxt" id="meHpTxt">100/100</span></div>
+        <div class="barwrap"><div class="barfill" id="meHp" style="width:100%"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="meRage"></div></div>
       </div>
 
       <!-- 全画面エフェクトレイヤー -->
       <div class="fullfx" id="fullfx"></div>
     </div>
 
-    <div class="panel typebar" id="typebar"><span class="typechip" style="color:#ff1f6d">B4K3M0-N0</span><span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡0</span><span class="vsmark">VS</span><span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡3/16</span><span class="typechip" style="color:#9b3cff">K4M-1</span></div>
+    <div class="panel typebar" id="typebar"></div>
 
     <div id="phaserow" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px">
-      <div class="phase" id="phase" data-i18n="phase_select" style="margin-bottom:0;text-align:left;flex:1">Pick 3 Commands (Round 2)</div>
+      <div class="phase" id="phase" data-i18n="phase_select" style="margin-bottom:0;text-align:left;flex:1">Pick 3 Commands</div>
       <button class="btn ghost" id="undoBtn" data-i18n="btn_undo" style="flex:none">Undo</button>
     </div>
 
@@ -1041,17 +1041,17 @@ header{text-align:center;margin-bottom:14px}
         <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
         <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
         <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn" disabled=""><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">PHANTOM SLASH</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
-      <div class="cmd-overlay" id="ctrlTop" style="display: none;">
+      <div class="cmd-overlay" id="ctrlTop" style="display:none">
         <div class="cmd-overlay-buttons">
-          <button class="btn" id="fightBtn" data-i18n="btn_fight" disabled="">FIGHT！</button>
+          <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
         </div>
       </div>
     </div>
 
-    <div class="panel log" id="log"><p class="me-a">⚔ 0N1 #3707 [B4K3M0-N0/B4K3M0-N0] enters the ring!</p><p class="en-a">☠ Enemy 0N1 #3240 [K4M-1/K4M-1] appears!</p><p class="sys"><span class="me-a">YOU</span> Bakemono Awakening — D34TH unleashes power! (Stats rise based on race population)</p><p class="sys"><span class="en-a">ENEMY</span> K4M-1 Awakening — Drawing power from the One Source! (All stats rise)</p><p class="sys"><span class="me-a">YOU</span> Nature: Guardian (SPI highest — endures with defense)</p><p class="sys"><span class="en-a">ENEMY</span> Nature: Guardian (SPI highest — endures with defense)</p><p class="clash">═══ Heaven and earth tremble…! K4M-1 has descended ═══</p><p class="sys">K4M-1 SP: 1本目 0/8</p><p class="sys">━━ ROUND 1 ━━</p><p class="clash"><span class="me-a">YOU</span> [Counter] ✕ <span class="en-a">ENEMY</span> [Defend]</p><p class="sys"><span class="me-a">YOU</span>'s counter missed. <span class="en-a">ENEMY</span> recovers HP+<span style="color:var(--cyan)">0</span></p><p class="sys">  └ K4M-1 SP = 1/16</p><p class="clash"><span class="me-a">YOU</span> [Counter] ✕ <span class="en-a">ENEMY</span> [Attack]</p><p class="clash"><span class="me-a">YOU</span>'s counter lands! <span class="en-a">ENEMY</span> → <span class="dmg">3</span> damage (⚡+1)</p><p class="sys">  └ K4M-1 SP = 2/16</p><p class="clash"><span class="me-a">YOU</span> [Counter] ✕ <span class="en-a">ENEMY</span> [Counter]</p><p class="sys">Both counter... both miss! (both ⚡-2)</p><p class="sys">  └ K4M-1 SP = 3/16</p><p class="sys">K4M-1 SP: 1本目 3/8</p></div>
+    <div class="panel log" id="log"></div>
   </div>
 
   <div class="panel" id="result" style="display: none;">
@@ -1158,7 +1158,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 bh";
+var BUILD = "2026-06-01 bl";
 var EQUIP_DEX = {"Background":[["Azurite","STY",0],["Citrine","STY",0],["Dark Smoke","SPI",0],["Jasper","STR",0],["Light Smoke","SPI",0],["Technogod","SPI",0],["Technogod (Azurite)","SPI",1],["Technogod (Citrine)","SPI",1],["Technogod (Jasper)","SPI",1],["Technogod (Pearl)","SPI",1]],"Body":[["Ash","SPI",0],["Azurite","STY",0],["Citrine","STY",0],["Jasper","STR",0],["Kabuki","STR",0],["Obsidian","SPI",0],["Pearlescent","SPI",0],["Tiger Skin","STR",0],["Type-01","SPI",0],["Water","SPI",0]],"Eyes":[["Aggressive","SPI",0],["Angry (Azurite)","STR",0],["Angry (Citrine)","STR",0],["Angry (Jasper)","STR",0],["Angry (Oni)","STR",0],["Closed Eye","SPI",0],["Eye Shadow (Azurite)","STY",0],["Eye Shadow (Citrine)","STY",0],["Eye Shadow (Jasper)","STR",0],["Eyebags","SPI",0],["Flat","SPI",0],["Half Open (Azurite)","STY",0],["Half Open (Citrine)","STY",0],["Half Open (Jasper)","STR",0],["Half Open (Oni)","STR",0],["Hypnotized","SPI",0],["Open (Azurite)","STY",0],["Open (Citrine)","STY",0],["Open (Jasper)","STR",0],["Possessed","SPI",0],["Squint (Azurite)","STY",0],["Squint (Citrine)","STY",0],["Squint (Jasper)","STR",0]],"Mouth":[["Angry","STR",0],["Angry (Oni)","STR",0],["Frown","STR",0],["Neutral","SPI",0],["Open","SPI",0],["Smile","STY",0],["Smirk","STY",0],["uwu","SPI",0]],"Wear":[["Bomber Jacket (Jasper/Obsidian)","STR",0],["Bomber Jacket (Obsidian/Pearl)","STR",0],["Bomber Jacket (Pearl/Azurite)","STR",0],["Bomber Jacket (Pine)","STR",0],["Bomber Jacket (Rose)","STR",0],["Bomber Jacket (Saddle)","STR",0],["Dress (Obsidian)","STY",0],["Dress (Pearl)","STY",0],["Kimono (Azurite)","STY",0],["Kimono (Rose)","SPI",0],["Neon Hood (Emerald)","STY",0],["Neon Hood (Rose)","STY",0],["Ninja (Obsidian)","STR",0],["Ninja (Pearl)","STR",0],["Sleeveless (Citrine)","STY",0],["Sleeveless (Obsidian)","SPI",0],["Sleeveless (Pearl)","SPI",0],["Suit (Obsidian)","STY",0],["Suit (Pearl)","STY",0],["T-Shirt (Jasper)","STR",0],["T-Shirt (Obsidian)","STY",0],["T-Shirt (Pearl)","STY",0],["Tech Jacket (Gold)","STR",0],["Tech Jacket (Reflective)","STR",0],["Thermal Hoodie (Citrine)","STR",0],["Thermal Hoodie (Jasper)","STR",0],["Thermal Hoodie (Obsidian)","STR",0],["Thermal Hoodie (Pearl)","STR",0],["Thermal Hoodie (Turquoise)","STR",0],["Track Jacket (Azurite)","STR",0],["Track Jacket (Citrine)","STR",0],["Track Jacket (Obsidian)","STR",0],["Track Jacket (Pearl)","STR",0],["Track Jacket (Topaz)","STR",0],["Yukata (Azurite)","STY",0],["Yukata (Pearl)","SPI",0],["01-Hood","STY",1],["02-Bomber Jacket","STR",1],["03-Bomber Jacket","STR",1],["04-Kimono","STY",1],["05-Track Jacket","STR",1],["06-Hood","STY",1],["07-Kimono","STY",1]],"Hair":[["Bald","SPI",0],["Bob (Azurite)","STY",0],["Bob (Obsidian)","STY",0],["Bob (Quartz)","STY",0],["Bob (Rose)","STY",0],["Dreads (Azurite)","STY",0],["Dreads (Bronzite)","SPI",0],["Dreads (Jasper)","STR",0],["Dreads (Obsidian)","SPI",0],["Fade (Azurite)","STY",0],["Fade (Citrine)","STY",0],["Fade (Ethereum)","STY",0],["Fade (Jasper)","STR",0],["Fade (Obsidian)","STY",0],["Fade (Pearl)","STY",0],["Half-Buzz (Amethyst)","SPI",0],["Half-Buzz (Pearl)","SPI",0],["Half-Buzz (Turquoise)","SPI",0],["High Ponytail (Bronzite)","STY",0],["High Ponytail (Obsidian)","STY",0],["High Ponytail (Pearl)","STY",0],["Long (Citirine)","SPI",0],["Long (Obsidian)","SPI",0],["Long (Rose)","SPI",0],["Long (Turquoise)","SPI",0],["Pixie (Citrine)","STY",0],["Pixie (Obsidian)","STY",0],["Pixie (Pearl)","STY",0],["Pixie (Rose)","STY",0],["Pixie (Turquoise)","STY",0],["Pompadour (Citrine)","STY",0],["Pompadour (Jasper)","STR",0],["Pompadour (Obsidian)","SPI",0],["Ponytail (Jasper)","STR",0],["Ponytail (Obsidian)","STY",0],["Ponytail (Rose)","STY",0],["Ponytail (Turquoise)","STY",0],["Slick (Citrine)","STY",0],["Slick (Obsidian)","SPI",0],["Slick (Pearl)","SPI",0],["Spiky (Citrine)","STY",0],["Spiky (Jasper)","STR",0],["Spiky (Obsidian)","SPI",0],["Spiky (Pearl)","SPI",0],["Top Knot (Jasper)","STR",0],["Top Knot (Obsidian)","SPI",0],["Top Knot (Pearl)","SPI",0]],"Face":[["Bandaid","STY",0],["Barong","SPI",0],["Bubblegum","SPI",0],["Dali Mask","STR",0],["Foodmasku","STR",0],["Garou (Azurite)","STY",0],["Garou (Citrine)","STY",0],["Garou (Jasper)","STR",0],["Gas Mask (Obsidian)","STR",0],["Gas Mask (Pearl)","STR",0],["Glasses (Obsidian)","SPI",0],["Glasses (Pearl)","SPI",0],["Hannya Mask (Jasper)","STR",0],["Hannya Mask (Obsidian)","STR",0],["Hannya Mask (Pearl)","STR",0],["KULT Mask (Obsidian)","STR",0],["KULT Mask (Pearl)","STR",0],["Kitsune Mask (Gold)","STR",0],["Kitsune Mask (Obsidian)","STR",0],["Kitsune Mask (Pearl)","STR",0],["Masquerade (Obsidian)","SPI",0],["Masquerade (Pearl)","SPI",0],["Mech Mask","STR",0],["Mempo Mask (Jasper)","STR",0],["Mempo Mask (Obsidian)","STR",0],["Nose Scar","SPI",0],["PR Mask (Charcoal)","STR",0],["PR Mask (Citrine)","STR",0],["PR Mask (Jasper)","STR",0],["PR Mask (Turqouise)","STR",0],["Plague Mask (Obsidian)","STR",0],["Plague Mask (Pearl)","STR",0],["Ra Mask","STR",0],["Skull Mask","STR",0],["T-Goggles","STY",0],["Tengu Mask","STR",0],["Tengu Mask (Gold)","STR",0],["V-Shades","STY",0],["VR (Obsidian)","SPI",0],["VR (Pearl)","SPI",0],["Vape","SPI",0],["Void","SPI",0]],"Head":[["0-Headphones (Obsidian)","STY",0],["0-Headphones (Pearl)","STY",0],["Antlers (Gold)","SPI",0],["Cat Ears","SPI",0],["Cat Ears (Cool)","SPI",0],["Crown","SPI",0],["E-A1D","SPI",0],["Earbuds","SPI",0],["Fedora (Charcoal)","STY",0],["Fedora (Obsidian)","STY",0],["Flat Cap (Obsidian)","STY",0],["Flat Cap (Pearl)","STY",0],["Headphones (Citrine)","STY",0],["Headphones (Jasper)","STR",0],["Headphones (Obsidian)","STY",0],["Headphones (Pearl)","STY",0],["Headphones (Rose)","STY",0],["Headphones (Turquoise)","STY",0],["Headset","STY",0],["Horns (Gold)","STR",0],["Horns (Obsidian)","STR",0],["Pen","SPI",0],["Rose","SPI",0],["Snapback (Jasper)","STR",0],["Snapback (Multicolor)","STY",0],["Snapback (Obsidian)","STY",0],["Snapback (Pearl)","STY",0],["Void","SPI",0]],"Extra":[["0N1 Logo Pin (Black)","STY",0],["0N1 Logo Pin (White)","STY",0],["Banana Pin","STY",0],["Canary","SPI",0],["Dark Aura","SPI",0],["Earring (Double)","STY",0],["Haunted","SPI",0],["Loop Earring","STY",0],["Lucky no. 7 Earring","STY",0],["Lucky no. 7 Pin","STY",0],["Oni Doll (Azurite)","STR",0],["Oni Doll (Jasper)","STR",0],["Strawberry Pin","STY",0],["Super Aura","SPI",0],["Void","SPI",0],["Y0N1 Pin","STY",0]]};
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
@@ -4122,6 +4122,8 @@ function registerToRanking(){
 // ▼▼▼ ランキング競争の設定（リセット＝この2つを書き換えて再アップ）▼▼▼
 var SEASON_START = '2026-06-05T22:59:00+09:00'; // 競争の開始日時（日本時間）＝今から
 var SEASON_END   = '2026-06-13T12:00:00+09:00'; // 競争の終了日時＝この時刻でロック（日本時間）
+// ▼ 特典・クーポン機能の表示ON/OFF。β中は false（「🎁 特典・クーポン」ボタンを隠す）。本番で出すときは true に変更して再アップ。
+var REWARDS_ENABLED = false;
 // ▲▲▲ 次の競争を始める時はこの2つを更新して再アップ（順位がリセットされる）▲▲▲
 function getCurrentSeason(){
   var now = new Date();
@@ -4276,7 +4278,7 @@ function showRanking(){
     // ★参加者なら特典ボタンを表示。順位はメッセージ出し分けに使用
     window.MY_RANK = myRank;
     var _cbtn = el('#championBtn');
-    if(_cbtn){ _cbtn.style.display = isParticipant ? '' : 'none'; }
+    if(_cbtn){ _cbtn.style.display = (REWARDS_ENABLED && isParticipant) ? '' : 'none'; }
   }).catch(function(e){
     console.error('[Firebase] 取得失敗', e);
     status.textContent = T('err_load_failed') + ': ' + e.message;
@@ -4289,7 +4291,7 @@ function escapeHtml(s){
 }
 
 // ===== Xシェア =====
-var GAME_URL = 'https://0n1japan.aktpapa.com/0n1battle/';
+var GAME_URL = 'https://0n1battle.aktpapa.com/';
 // ▼ ランキング登録をCloudflare Worker経由にする場合、ここにWorkerのURLを入れる（空なら従来どおり直接Firestoreに書き込み）
 window.RANK_API = '';
 var SHARE_TAGS = '0N1Force,NeonRingClash';
@@ -4425,8 +4427,8 @@ function makeRewardImage(){
     x.fillText(_nm, W/2, _nmBase);
     if(r>=1 && r<=3){
       var ccol = r===1?'#ffd700':(r===2?'#d8dde6':'#cd7f32');
-      var cs=58; x.save();
-      x.translate(_nmLeft-16, _nmTop-4);
+      var cs=54; x.save();
+      x.translate(_nmLeft-30, _nmTop-26);
       x.rotate(-25*Math.PI/180);
       x.scale(cs/24, cs/24);
       x.beginPath();
@@ -5264,7 +5266,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 bh</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 bl</div>
 
 
 </body></html>
