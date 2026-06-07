@@ -565,6 +565,21 @@ header{text-align:center;margin-bottom:14px}
   border:1.5px solid var(--cyan);box-shadow:0 0 14px -4px var(--cyan);
   pointer-events:none}
 @media(max-width:600px){.beta-tag{font-size:11px;top:-11px;left:-6px;padding:2px 9px}}
+#championBtn{background:linear-gradient(135deg,#ffc83a,#ff8a3a);color:#1a1003;font-weight:800;border:none;
+  box-shadow:0 0 16px -4px var(--gold);animation:champPulse 1.8s ease-in-out infinite}
+@keyframes champPulse{0%,100%{box-shadow:0 0 12px -4px var(--gold)}50%{box-shadow:0 0 26px 0 var(--gold)}}
+#championOverlay{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;
+  background:rgba(2,1,10,.82);backdrop-filter:blur(4px);padding:18px}
+.champ-card{position:relative;max-width:440px;width:100%;text-align:center;padding:30px 24px 26px;border-radius:18px;
+  background:linear-gradient(160deg,#1b1230,#0c0718);border:2px solid var(--gold);box-shadow:0 0 40px -8px var(--gold)}
+.champ-crown{font-size:54px;line-height:1;filter:drop-shadow(0 0 14px var(--gold))}
+.champ-card h2{font-family:'Zen Dots',sans-serif;color:var(--gold);letter-spacing:.12em;margin:8px 0 14px;font-size:26px;text-shadow:0 0 16px var(--gold)}
+.champ-msg{color:#fff;font-size:15px;line-height:1.85;margin-bottom:16px}
+.champ-prize{font-size:13px;line-height:1.7;color:#ffe7b0;background:rgba(255,200,58,.1);
+  border:1px solid rgba(255,200,58,.35);border-radius:10px;padding:11px 13px;margin-bottom:18px}
+.champ-msg b{color:var(--gold)}
+.rankrow.mine{outline:2px solid var(--cyan);outline-offset:-2px;background:rgba(34,230,224,.08)}
+.rankrow.mine .nm{color:var(--cyan)!important;text-shadow:0 0 8px var(--cyan)}
 .title-brand{font-family:'Zen Dots',sans-serif;font-size:clamp(20px,5vw,34px);letter-spacing:.18em;line-height:1;
   display:flex;justify-content:center;align-items:center;gap:14px;margin:8px 0 6px;
   background:linear-gradient(90deg,var(--cyan),var(--violet),var(--gold));
@@ -689,7 +704,7 @@ header{text-align:center;margin-bottom:14px}
 .scorebreakdown{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7}
 .scorebreakdown b{color:var(--ink);font-weight:600}
 .regbox{padding:8px 4px}
-.ranklist{max-height:480px;overflow-y:auto;background:rgba(0,0,0,.4);border-radius:10px;padding:6px}
+.ranklist{max-height:480px;overflow-y:auto;background:rgba(0,0,0,.4);border-radius:10px;padding:12px 6px 6px}
 .rankrow{display:grid;grid-template-columns:46px 1fr 80px;gap:8px;padding:8px 12px;align-items:center;
   border-bottom:1px solid rgba(155,60,255,.15);font-size:12px}
 .rankrow:last-child{border-bottom:none}
@@ -697,7 +712,13 @@ header{text-align:center;margin-bottom:14px}
 .rankrow.top1 .rk{color:#ffd700;text-shadow:0 0 6px #ffd700}
 .rankrow.top2 .rk{color:#c0c0c0;text-shadow:0 0 6px #c0c0c0}
 .rankrow.top3 .rk{color:#cd7f32;text-shadow:0 0 6px #cd7f32}
-.rankrow .nm{font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rankrow .nm{font-weight:700;color:var(--ink);position:relative;min-width:0}
+.rankrow .nm .nmtxt{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rankrow .crown{position:absolute;top:-8px;left:-7px;width:24px;height:24px;transform:rotate(-25deg);
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.75));pointer-events:none;z-index:3}
+.rankrow .crown.c1{color:#ffd700}
+.rankrow .crown.c2{color:#d8dde6}
+.rankrow .crown.c3{color:#cd7f32}
 .rankrow .sc{font-family:'Zen Dots';color:var(--gold);text-align:right;font-size:13px}
 .rankrow .meta{grid-column:1/-1;font-size:10px;color:var(--muted);margin-top:2px}
 .rankrow .meta .type-tag{display:inline-block;padding:0 6px;border-radius:4px;
@@ -853,7 +874,7 @@ header{text-align:center;margin-bottom:14px}
 <div class="scan"></div>
 
 <!-- 左上：ホームボタン（wrapの外に置いて重なり順の問題を回避） -->
-<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display:none">🏠</button>
+<button class="home-btn" id="globalTitleBtn" title="Return to Title" style="display: flex;">🏠</button>
 
 <div class="wrap">
   <!-- 右下：BGM/言語切替（縦並び） -->
@@ -869,10 +890,10 @@ header{text-align:center;margin-bottom:14px}
   </header>
 
   <!-- ===== タイトル画面 ===== -->
-  <div class="panel power-off" id="title" style="display: block;">
+  <div class="panel powering-on" id="title" style="display: none;">
     <span class="beta-tag">β TEST</span>
     <!-- CLICK TO PLAY オーバーレイ（初回起動時のみ表示）-->
-    <div class="click-overlay" id="clickOverlay" style="display: flex;">
+    <div class="click-overlay fading" id="clickOverlay" style="display: none;">
       <button class="click-to-play" id="clickToPlayBtn">CLICK TO PLAY</button>
     </div>
     <div class="title-logo">
@@ -903,7 +924,7 @@ header{text-align:center;margin-bottom:14px}
     <button class="btn ghost" id="equipBackBtn" data-i18n="btn_back_howto">← Back to How to Play</button>
   </div>
 
-  <div class="panel" id="start" style="display:none">
+  <div class="panel" id="start" style="display: none;">
     <h2 data-i18n="summon_title">Summon Your Fighter</h2>
     <p data-i18n="summon_desc">Enter a 0N1 Force token number (1–7777).<br>Spirit / Strength / Style and Type (Y0K-A1/B4K3M0-N0/0N1/K4M-1) determine your power.</p>
     <div class="irow">
@@ -925,7 +946,7 @@ header{text-align:center;margin-bottom:14px}
     <!-- ▲▲▲ DEBUG ▲▲▲ -->
   </div>
 
-  <div id="battle" style="display: none;">
+  <div id="battle" style="display: block;">
     <span class="beta-tag">β TEST</span>
     <div class="ring" id="ring">
       <!-- 背景レイヤー -->
@@ -973,43 +994,43 @@ header{text-align:center;margin-bottom:14px}
       <!-- リング内コマンドマス：敵は左上、自分は右下 -->
       <div class="ring-queue en" id="ringEnQueueWrap">
         <div class="ring-qlabel" data-i18n="enemy_cmd">ENEMY</div>
-        <div class="ring-qslots" id="ringEnQueue"></div>
+        <div class="ring-qslots" id="ringEnQueue"><div class="ring-qslot en back"><span class="ic">?</span></div><div class="ring-qslot en back"><span class="ic">?</span></div><div class="ring-qslot en back"><span class="ic">?</span></div></div>
       </div>
       <div class="ring-queue me" id="ringMeQueueWrap">
         <div class="ring-qlabel" data-i18n="your_cmd">YOU</div>
-        <div class="ring-qslots" id="ringMeQueue"></div>
+        <div class="ring-qslots" id="ringMeQueue"><div class="ring-qslot"><span style="opacity:.5">1</span></div><div class="ring-qslot"><span style="opacity:.5">2</span></div><div class="ring-qslot"><span style="opacity:.5">3</span></div></div>
       </div>
 
       <!-- HPバー：敵が上、自分が下 -->
       <div class="bars top en">
-        <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #----</span><span class="hptxt" id="enHpTxt">100/100</span></div>
-        <div class="barwrap"><div class="barfill" id="enHp" style="width:100%"></div></div>
-        <div class="ragewrap"><div class="ragefill" id="enRage"></div><div class="ragefill2" id="enRage2"></div></div>
+        <div class="nameline"><span class="en-a nm-id" id="enName">0N1 #3240</span><span class="hptxt" id="enHpTxt">147/150</span></div>
+        <div class="barwrap"><div class="barfill" id="enHp" style="width: 98%;"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="enRage" style="width: 37.5%;"></div><div class="ragefill2" id="enRage2" style="width: 0%;"></div></div>
       </div>
 
       <!-- 敵：奥 -->
       <div class="corner en" id="enCorner">
-        <div class="tcg" id="enCard"></div>
+        <div class="tcg god-aura" id="enCard"><div class="tcg-head"><span class="nm">0N1 #3240</span><span class="tcg-type" style="color:#9b3cff">K4M-1</span></div><div class="tcg-art" id="enArt"><div class="tcg-fx" id="enFx"></div><canvas width="340" height="340"></canvas></div><div class="tcg-stats"><div class="st sp"><div class="l">Spirit</div><div class="v">28</div></div><div class="st str"><div class="l">Strength</div><div class="v">25</div></div><div class="st sty"><div class="l">Style</div><div class="v">27</div></div></div><div class="tcg-foot">K4M-1 · VOID CRASH</div></div>
       </div>
       <!-- 自分：手前下 -->
       <div class="corner me" id="meCorner">
-        <div class="tcg" id="meCard"></div>
+        <div class="tcg" id="meCard"><div class="tcg-head"><span class="nm">0N1 #3707</span><span class="tcg-type" style="color:#ff1f6d">B4K3M0-N0</span></div><div class="tcg-art" id="meArt"><div class="tcg-fx" id="meFx"></div><canvas width="340" height="340"></canvas></div><div class="tcg-stats"><div class="st sp"><div class="l">Spirit</div><div class="v">9</div></div><div class="st str"><div class="l">Strength</div><div class="v">6</div></div><div class="st sty"><div class="l">Style</div><div class="v">8</div></div></div><div class="tcg-foot">B4K3M0-N0 · PHANTOM SLASH</div></div>
       </div>
 
       <div class="bars bot me">
-        <div class="nameline"><span class="me-a nm-id" id="meName">0N1 #----</span><span class="hptxt" id="meHpTxt">100/100</span></div>
-        <div class="barwrap"><div class="barfill" id="meHp" style="width:100%"></div></div>
-        <div class="ragewrap"><div class="ragefill" id="meRage"></div></div>
+        <div class="nameline"><span class="me-a nm-id" id="meName">0N1 #3707</span><span class="hptxt" id="meHpTxt">76/80</span></div>
+        <div class="barwrap"><div class="barfill" id="meHp" style="width: 95%;"></div></div>
+        <div class="ragewrap"><div class="ragefill" id="meRage" style="width: 0%;"></div></div>
       </div>
 
       <!-- 全画面エフェクトレイヤー -->
       <div class="fullfx" id="fullfx"></div>
     </div>
 
-    <div class="panel typebar" id="typebar"></div>
+    <div class="panel typebar" id="typebar"><span class="typechip" style="color:#ff1f6d">B4K3M0-N0</span><span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡0</span><span class="vsmark">VS</span><span style="color:var(--gold);font-family:Zen Dots;font-size:11px">⚡3/16</span><span class="typechip" style="color:#9b3cff">K4M-1</span></div>
 
     <div id="phaserow" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px">
-      <div class="phase" id="phase" data-i18n="phase_select" style="margin-bottom:0;text-align:left;flex:1">Pick 3 Commands</div>
+      <div class="phase" id="phase" data-i18n="phase_select" style="margin-bottom:0;text-align:left;flex:1">Pick 3 Commands (Round 2)</div>
       <button class="btn ghost" id="undoBtn" data-i18n="btn_undo" style="flex:none">Undo</button>
     </div>
 
@@ -1020,17 +1041,17 @@ header{text-align:center;margin-bottom:14px}
         <button class="cmd" data-act="counter"><span class="ic">↩</span><span data-i18n="cmd_counter">Counter</span><span class="sm" data-i18n="cmd_counter_d">Reflect attack</span></button>
         <button class="cmd" data-act="defend"><span class="ic">🛡</span><span data-i18n="cmd_defend">Defend</span><span class="sm" data-i18n="cmd_defend_d">Reduce &amp; heal</span></button>
         <button class="cmd" data-act="charge"><span class="ic">⚡</span><span data-i18n="cmd_charge">Charge</span><span class="sm" data-i18n="cmd_charge_d">Rage++ / open</span></button>
-        <button class="cmd sp" data-act="special" id="spBtn"><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">Need full Rage</span></button>
+        <button class="cmd sp" data-act="special" id="spBtn" disabled=""><span class="ic">✦</span><span data-i18n="cmd_special">Special</span><span class="sm" id="spName" data-i18n="cmd_special_d">PHANTOM SLASH</span></button>
       </div>
       <!-- 3つ揃った時にコマンドエリアに重なるオーバーレイ（FIGHTのみ） -->
-      <div class="cmd-overlay" id="ctrlTop" style="display:none">
+      <div class="cmd-overlay" id="ctrlTop" style="display: none;">
         <div class="cmd-overlay-buttons">
-          <button class="btn" id="fightBtn" data-i18n="btn_fight">FIGHT！</button>
+          <button class="btn" id="fightBtn" data-i18n="btn_fight" disabled="">FIGHT！</button>
         </div>
       </div>
     </div>
 
-    <div class="panel log" id="log"></div>
+    <div class="panel log" id="log"><p class="me-a">⚔ 0N1 #3707 [B4K3M0-N0/B4K3M0-N0] enters the ring!</p><p class="en-a">☠ Enemy 0N1 #3240 [K4M-1/K4M-1] appears!</p><p class="sys"><span class="me-a">YOU</span> Bakemono Awakening — D34TH unleashes power! (Stats rise based on race population)</p><p class="sys"><span class="en-a">ENEMY</span> K4M-1 Awakening — Drawing power from the One Source! (All stats rise)</p><p class="sys"><span class="me-a">YOU</span> Nature: Guardian (SPI highest — endures with defense)</p><p class="sys"><span class="en-a">ENEMY</span> Nature: Guardian (SPI highest — endures with defense)</p><p class="clash">═══ Heaven and earth tremble…! K4M-1 has descended ═══</p><p class="sys">K4M-1 SP: 1本目 0/8</p><p class="sys">━━ ROUND 1 ━━</p><p class="clash"><span class="me-a">YOU</span> [Counter] ✕ <span class="en-a">ENEMY</span> [Defend]</p><p class="sys"><span class="me-a">YOU</span>'s counter missed. <span class="en-a">ENEMY</span> recovers HP+<span style="color:var(--cyan)">0</span></p><p class="sys">  └ K4M-1 SP = 1/16</p><p class="clash"><span class="me-a">YOU</span> [Counter] ✕ <span class="en-a">ENEMY</span> [Attack]</p><p class="clash"><span class="me-a">YOU</span>'s counter lands! <span class="en-a">ENEMY</span> → <span class="dmg">3</span> damage (⚡+1)</p><p class="sys">  └ K4M-1 SP = 2/16</p><p class="clash"><span class="me-a">YOU</span> [Counter] ✕ <span class="en-a">ENEMY</span> [Counter]</p><p class="sys">Both counter... both miss! (both ⚡-2)</p><p class="sys">  └ K4M-1 SP = 3/16</p><p class="sys">K4M-1 SP: 1本目 3/8</p></div>
   </div>
 
   <div class="panel" id="result" style="display: none;">
@@ -1068,15 +1089,28 @@ header{text-align:center;margin-bottom:14px}
     <div class="rt" data-i18n="ranking_title" style="color:var(--gold);background:linear-gradient(135deg,#3a2400,#1a1003);">🏆 RANKING TOP 100</div>
     <div id="rankingSeasonInfo" class="season-info"></div>
     <div id="rankingGodKills" class="ranking-godkills"></div>
-    <div data-i18n="prize_note" style="text-align:center;font-size:12px;color:#cdbcf2;background:rgba(155,60,255,.1);border:1px solid rgba(155,60,255,.3);border-radius:8px;padding:9px 12px;margin:8px 0 4px;line-height:1.6">🎁 As this is a beta, prizes (0N1 Force JAPAN merch coupons) for top-ranked players are under consideration. Please post your result with #0N1Battle and an @0n1force_jp mention.</div>
+    <div data-i18n="prize_note" style="text-align:center;font-size:12px;color:#cdbcf2;background:rgba(155,60,255,.1);border:1px solid rgba(155,60,255,.3);border-radius:8px;padding:9px 12px;margin:8px 0 4px;line-height:1.6">🎁 As this is a beta, prizes (0N1 Force JAPAN merch coupons) for top-ranked players are under consideration. Please post your result with #0N1Battle and an <a href="https://x.com/0n1force_jp" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">@0n1force_jp</a> mention.</div>
     <div id="rankingStatus" style="text-align:center;color:var(--muted);font-size:12px;padding:8px">読み込み中...</div>
     <div id="rankingList" class="ranklist"></div>
-    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+      <button class="btn" id="championBtn" data-i18n="reward_btn" style="display:none">🎁 Rewards</button>
       <button class="btn ghost" id="closeRankingBtn" data-i18n="btn_close_ranking">Close</button>
       <button class="btn ghost" id="csvExportBtn" style="display:none">📥 CSV出力</button>
       <button class="btn ghost" id="shareRankingBtn" data-i18n="btn_share_x">Share on 𝕏</button>
       <button class="btn ghost" id="rankingTitleBtn" data-i18n="btn_back_title">← Title</button>
     </div>
+  </div>
+</div>
+
+<div id="championOverlay">
+  <div class="champ-card">
+    <div class="champ-crown">🏆</div>
+    <h2 id="champTitle">CHAMPION</h2>
+    <div class="champ-msg" id="champMsg"></div>
+    <div class="champ-prize" id="champPrize"></div>
+    <button class="btn" id="champShotBtn" style="margin-bottom:8px">📸 スクショ用画像を保存</button>
+    <button class="btn ghost" id="champDmBtn" style="margin-bottom:10px">✉ @0n1force_jp を開く</button>
+    <button class="btn ghost" id="champCloseBtn">閉じる</button>
   </div>
 </div>
 
@@ -1124,7 +1158,7 @@ function seeded(s){s=s>>>0;return function(){s=(s*1664525+1013904223)>>>0;return
 // =========================================================
 var TRAITS_FILE = "0n1_traits.json?v=20260601a";
 // ★ビルド番号（変更のたびにここを上げる）。画面右下に表示され、最新が反映されているか一目でわかる
-var BUILD = "2026-06-01 bb";
+var BUILD = "2026-06-01 bh";
 var EQUIP_DEX = {"Background":[["Azurite","STY",0],["Citrine","STY",0],["Dark Smoke","SPI",0],["Jasper","STR",0],["Light Smoke","SPI",0],["Technogod","SPI",0],["Technogod (Azurite)","SPI",1],["Technogod (Citrine)","SPI",1],["Technogod (Jasper)","SPI",1],["Technogod (Pearl)","SPI",1]],"Body":[["Ash","SPI",0],["Azurite","STY",0],["Citrine","STY",0],["Jasper","STR",0],["Kabuki","STR",0],["Obsidian","SPI",0],["Pearlescent","SPI",0],["Tiger Skin","STR",0],["Type-01","SPI",0],["Water","SPI",0]],"Eyes":[["Aggressive","SPI",0],["Angry (Azurite)","STR",0],["Angry (Citrine)","STR",0],["Angry (Jasper)","STR",0],["Angry (Oni)","STR",0],["Closed Eye","SPI",0],["Eye Shadow (Azurite)","STY",0],["Eye Shadow (Citrine)","STY",0],["Eye Shadow (Jasper)","STR",0],["Eyebags","SPI",0],["Flat","SPI",0],["Half Open (Azurite)","STY",0],["Half Open (Citrine)","STY",0],["Half Open (Jasper)","STR",0],["Half Open (Oni)","STR",0],["Hypnotized","SPI",0],["Open (Azurite)","STY",0],["Open (Citrine)","STY",0],["Open (Jasper)","STR",0],["Possessed","SPI",0],["Squint (Azurite)","STY",0],["Squint (Citrine)","STY",0],["Squint (Jasper)","STR",0]],"Mouth":[["Angry","STR",0],["Angry (Oni)","STR",0],["Frown","STR",0],["Neutral","SPI",0],["Open","SPI",0],["Smile","STY",0],["Smirk","STY",0],["uwu","SPI",0]],"Wear":[["Bomber Jacket (Jasper/Obsidian)","STR",0],["Bomber Jacket (Obsidian/Pearl)","STR",0],["Bomber Jacket (Pearl/Azurite)","STR",0],["Bomber Jacket (Pine)","STR",0],["Bomber Jacket (Rose)","STR",0],["Bomber Jacket (Saddle)","STR",0],["Dress (Obsidian)","STY",0],["Dress (Pearl)","STY",0],["Kimono (Azurite)","STY",0],["Kimono (Rose)","SPI",0],["Neon Hood (Emerald)","STY",0],["Neon Hood (Rose)","STY",0],["Ninja (Obsidian)","STR",0],["Ninja (Pearl)","STR",0],["Sleeveless (Citrine)","STY",0],["Sleeveless (Obsidian)","SPI",0],["Sleeveless (Pearl)","SPI",0],["Suit (Obsidian)","STY",0],["Suit (Pearl)","STY",0],["T-Shirt (Jasper)","STR",0],["T-Shirt (Obsidian)","STY",0],["T-Shirt (Pearl)","STY",0],["Tech Jacket (Gold)","STR",0],["Tech Jacket (Reflective)","STR",0],["Thermal Hoodie (Citrine)","STR",0],["Thermal Hoodie (Jasper)","STR",0],["Thermal Hoodie (Obsidian)","STR",0],["Thermal Hoodie (Pearl)","STR",0],["Thermal Hoodie (Turquoise)","STR",0],["Track Jacket (Azurite)","STR",0],["Track Jacket (Citrine)","STR",0],["Track Jacket (Obsidian)","STR",0],["Track Jacket (Pearl)","STR",0],["Track Jacket (Topaz)","STR",0],["Yukata (Azurite)","STY",0],["Yukata (Pearl)","SPI",0],["01-Hood","STY",1],["02-Bomber Jacket","STR",1],["03-Bomber Jacket","STR",1],["04-Kimono","STY",1],["05-Track Jacket","STR",1],["06-Hood","STY",1],["07-Kimono","STY",1]],"Hair":[["Bald","SPI",0],["Bob (Azurite)","STY",0],["Bob (Obsidian)","STY",0],["Bob (Quartz)","STY",0],["Bob (Rose)","STY",0],["Dreads (Azurite)","STY",0],["Dreads (Bronzite)","SPI",0],["Dreads (Jasper)","STR",0],["Dreads (Obsidian)","SPI",0],["Fade (Azurite)","STY",0],["Fade (Citrine)","STY",0],["Fade (Ethereum)","STY",0],["Fade (Jasper)","STR",0],["Fade (Obsidian)","STY",0],["Fade (Pearl)","STY",0],["Half-Buzz (Amethyst)","SPI",0],["Half-Buzz (Pearl)","SPI",0],["Half-Buzz (Turquoise)","SPI",0],["High Ponytail (Bronzite)","STY",0],["High Ponytail (Obsidian)","STY",0],["High Ponytail (Pearl)","STY",0],["Long (Citirine)","SPI",0],["Long (Obsidian)","SPI",0],["Long (Rose)","SPI",0],["Long (Turquoise)","SPI",0],["Pixie (Citrine)","STY",0],["Pixie (Obsidian)","STY",0],["Pixie (Pearl)","STY",0],["Pixie (Rose)","STY",0],["Pixie (Turquoise)","STY",0],["Pompadour (Citrine)","STY",0],["Pompadour (Jasper)","STR",0],["Pompadour (Obsidian)","SPI",0],["Ponytail (Jasper)","STR",0],["Ponytail (Obsidian)","STY",0],["Ponytail (Rose)","STY",0],["Ponytail (Turquoise)","STY",0],["Slick (Citrine)","STY",0],["Slick (Obsidian)","SPI",0],["Slick (Pearl)","SPI",0],["Spiky (Citrine)","STY",0],["Spiky (Jasper)","STR",0],["Spiky (Obsidian)","SPI",0],["Spiky (Pearl)","SPI",0],["Top Knot (Jasper)","STR",0],["Top Knot (Obsidian)","SPI",0],["Top Knot (Pearl)","SPI",0]],"Face":[["Bandaid","STY",0],["Barong","SPI",0],["Bubblegum","SPI",0],["Dali Mask","STR",0],["Foodmasku","STR",0],["Garou (Azurite)","STY",0],["Garou (Citrine)","STY",0],["Garou (Jasper)","STR",0],["Gas Mask (Obsidian)","STR",0],["Gas Mask (Pearl)","STR",0],["Glasses (Obsidian)","SPI",0],["Glasses (Pearl)","SPI",0],["Hannya Mask (Jasper)","STR",0],["Hannya Mask (Obsidian)","STR",0],["Hannya Mask (Pearl)","STR",0],["KULT Mask (Obsidian)","STR",0],["KULT Mask (Pearl)","STR",0],["Kitsune Mask (Gold)","STR",0],["Kitsune Mask (Obsidian)","STR",0],["Kitsune Mask (Pearl)","STR",0],["Masquerade (Obsidian)","SPI",0],["Masquerade (Pearl)","SPI",0],["Mech Mask","STR",0],["Mempo Mask (Jasper)","STR",0],["Mempo Mask (Obsidian)","STR",0],["Nose Scar","SPI",0],["PR Mask (Charcoal)","STR",0],["PR Mask (Citrine)","STR",0],["PR Mask (Jasper)","STR",0],["PR Mask (Turqouise)","STR",0],["Plague Mask (Obsidian)","STR",0],["Plague Mask (Pearl)","STR",0],["Ra Mask","STR",0],["Skull Mask","STR",0],["T-Goggles","STY",0],["Tengu Mask","STR",0],["Tengu Mask (Gold)","STR",0],["V-Shades","STY",0],["VR (Obsidian)","SPI",0],["VR (Pearl)","SPI",0],["Vape","SPI",0],["Void","SPI",0]],"Head":[["0-Headphones (Obsidian)","STY",0],["0-Headphones (Pearl)","STY",0],["Antlers (Gold)","SPI",0],["Cat Ears","SPI",0],["Cat Ears (Cool)","SPI",0],["Crown","SPI",0],["E-A1D","SPI",0],["Earbuds","SPI",0],["Fedora (Charcoal)","STY",0],["Fedora (Obsidian)","STY",0],["Flat Cap (Obsidian)","STY",0],["Flat Cap (Pearl)","STY",0],["Headphones (Citrine)","STY",0],["Headphones (Jasper)","STR",0],["Headphones (Obsidian)","STY",0],["Headphones (Pearl)","STY",0],["Headphones (Rose)","STY",0],["Headphones (Turquoise)","STY",0],["Headset","STY",0],["Horns (Gold)","STR",0],["Horns (Obsidian)","STR",0],["Pen","SPI",0],["Rose","SPI",0],["Snapback (Jasper)","STR",0],["Snapback (Multicolor)","STY",0],["Snapback (Obsidian)","STY",0],["Snapback (Pearl)","STY",0],["Void","SPI",0]],"Extra":[["0N1 Logo Pin (Black)","STY",0],["0N1 Logo Pin (White)","STY",0],["Banana Pin","STY",0],["Canary","SPI",0],["Dark Aura","SPI",0],["Earring (Double)","STY",0],["Haunted","SPI",0],["Loop Earring","STY",0],["Lucky no. 7 Earring","STY",0],["Lucky no. 7 Pin","STY",0],["Oni Doll (Azurite)","STR",0],["Oni Doll (Jasper)","STR",0],["Strawberry Pin","STY",0],["Super Aura","SPI",0],["Void","SPI",0],["Y0N1 Pin","STY",0]]};
 var TRAITS_DATA = null; // 読み込み成功時に {id: {Background, Spirit, ...}} が入る
 
@@ -2637,7 +2671,7 @@ var I18N = {
     btn_summon: "召喚",
     btn_random: "ランダムで選ぶ",
     random_note: "※「ランダムで選ぶ」では神（K4M-1）は出現しません。",
-    prize_note: "🎁 β版のため、ランキング上位者への賞品（0N1 Force JAPANグッズ割引券）は検討中です。結果はぜひ #0N1Battle と @0n1force_jp メンション付きで投稿してください。",
+    prize_note: "🎁 β版のため、ランキング上位者への賞品（0N1 Force JAPANグッズ割引券）は検討中です。結果はぜひ #0N1Battle と <a href='https://x.com/0n1force_jp' target='_blank' rel='noopener' style='color:var(--gold);font-weight:700'>@0n1force_jp</a> メンション付きで投稿してください。",
     prize_note_short: "🎁 β版のため賞品は検討中です。結果は #0N1Battle と @0n1force_jp 付きで投稿を。",
     hint: "毎ラウンド、5種から3つ選んでセット → 相手の伏せた3手と1手ずつ突き合わせ解決。<br>コマンドの読み合いとステータスで勝負。被ダメで怒り蓄積、満タンで必殺技。",
     // バトル
@@ -2681,6 +2715,14 @@ var I18N = {
     err_load_failed: "読み込みに失敗しました",
     ranking_loading: "ランキング読み込み中…",
     ranking_title: "🏆 ランキング TOP100",
+    champ_title: "🏆 CHAMPION",
+    champ_msg: "おめでとうございます！<br>あなたは現在 <b>NEON RING CLASH</b> ランキング <b>第1位</b>！<br>称号：<b>0N1 RING CHAMPION</b>",
+    champ_prize: "β版のため賞品は検討中ですが、記念に結果を #0N1Battle と @0n1force_jp メンション付きで投稿のうえ、<a href='https://x.com/0n1force_jp' target='_blank' rel='noopener' style='color:var(--gold);font-weight:700'>@0n1force_jp</a> までDMしてください。",
+    champ_close: "閉じる",
+    reward_btn: "🎁 特典・クーポン",
+    reward_coupon: "下の「📸 スクショ用画像を保存」を押して、その画像と一緒に <a href='https://x.com/0n1force_jp' target='_blank' rel='noopener' style='color:var(--gold);font-weight:700'>@0n1force_jp</a> までDMしてください。<br>0N1 Force JAPAN グッズ割引クーポンをお送りします。",
+    reward_shot: "📸 スクショ用画像を保存",
+    reward_dm: "✉ @0n1force_jp を開く",
     ranking_empty: "まだ記録がありません。最初の挑戦者になろう！",
     ranking_count: "{n}件の記録",
     ranking_dmg_dealt: "与",
@@ -2761,7 +2803,7 @@ var I18N = {
     btn_summon: "Summon",
     btn_random: "Pick at Random",
     random_note: "* \"Pick at Random\" never summons a god (K4M-1).",
-    prize_note: "🎁 As this is a beta, prizes (0N1 Force JAPAN merch coupons) for top-ranked players are under consideration. Please post your result with #0N1Battle and an @0n1force_jp mention.",
+    prize_note: "🎁 As this is a beta, prizes (0N1 Force JAPAN merch coupons) for top-ranked players are under consideration. Please post your result with #0N1Battle and an <a href='https://x.com/0n1force_jp' target='_blank' rel='noopener' style='color:var(--gold);font-weight:700'>@0n1force_jp</a> mention.",
     prize_note_short: "🎁 Beta: prizes are under consideration. Post your result with #0N1Battle and @0n1force_jp.",
     hint: "Each round, pick 3 of 5 commands → resolve against opponent's hidden 3 one by one.<br>Win through mind games & stats. Take damage to fill Rage; full Rage unlocks Special.",
     enemy_cmd: "ENEMY",
@@ -2804,6 +2846,14 @@ var I18N = {
     err_load_failed: "Failed to load",
     ranking_loading: "Loading ranking…",
     ranking_title: "🏆 RANKING TOP 100",
+    champ_title: "🏆 CHAMPION",
+    champ_msg: "Congratulations!<br>You are currently <b>#1</b> on the <b>NEON RING CLASH</b> ranking!<br>Title: <b>0N1 RING CHAMPION</b>",
+    champ_prize: "Prizes are still under consideration during beta. To celebrate, post your result with #0N1Battle and an @0n1force_jp mention, then DM <a href='https://x.com/0n1force_jp' target='_blank' rel='noopener' style='color:var(--gold);font-weight:700'>@0n1force_jp</a>.",
+    champ_close: "Close",
+    reward_btn: "🎁 Rewards",
+    reward_coupon: "Tap “📸 Save image” below and DM it to <a href='https://x.com/0n1force_jp' target='_blank' rel='noopener' style='color:var(--gold);font-weight:700'>@0n1force_jp</a>.<br>We'll send you a 0N1 Force JAPAN merch discount coupon.",
+    reward_shot: "📸 Save image",
+    reward_dm: "✉ Open @0n1force_jp",
     ranking_empty: "No records yet. Be the first challenger!",
     ranking_count: "{n} records",
     ranking_dmg_dealt: "Dealt",
@@ -4156,6 +4206,10 @@ function showRanking(){
   window.FB.getDocs(q).then(function(snap){
     var rank = 0;
     var html = '';
+    var champName = ''; // ★1位の名前（CHAMPION判定用）
+    var myname = (getStoredName()||'').trim().toLowerCase(); // ★自分の名前
+    var isParticipant = false; var myRank = 0;
+    window.MY_ENTRY = null;
     var filteredCount = 0;
     var totalGodKills = 0; // ★全体の神討伐回数（期間内）
     snap.forEach(function(doc){
@@ -4169,9 +4223,17 @@ function showRanking(){
         }
       }
       totalGodKills += (d.godKills || 0); // ★全体集計（TOP100外も含む）
+      var _nm = (d.name||'').trim().toLowerCase();
+      if(myname && _nm===myname){
+        isParticipant = true;
+        if(!window.MY_ENTRY){ window.MY_ENTRY = {name:d.name, score:d.score, rank:0, win:d.win, meType:d.meType, meId:d.meId}; }
+      }
       if(rank >= 100) return; // TOP100まで
       rank++;
+      if(rank===1){ champName = d.name||''; } // ★1位の名前を記録
+      if(myname && _nm===myname && window.MY_ENTRY && !window.MY_ENTRY.rank){ window.MY_ENTRY.rank = rank; myRank = rank; }
       var rowCls = rank<=3 ? 'top'+rank : '';
+      if(myname && _nm===myname){ rowCls += ' mine'; } // ★自分の行をハイライト
       var dateStr = '';
       if(d.createdAt && d.createdAt.toDate){
         var dt = d.createdAt.toDate();
@@ -4187,7 +4249,7 @@ function showRanking(){
       var godStr = gk>0 ? ' <span class="god-kill-tag" title="K4M-1討伐">⛩'+gk+'</span>' : '';
       html += '<div class="rankrow '+rowCls+'">'+
         '<div class="rk">'+rank+'</div>'+
-        '<div class="nm">'+winStr+' '+escapeHtml(d.name||'?')+godStr+'</div>'+
+        '<div class="nm">'+(rank<=3?('<svg class="crown c'+rank+'" viewBox="0 0 24 24"><path fill="currentColor" stroke="rgba(0,0,0,.5)" stroke-width="0.7" d="M2 8.5 L7 12.5 L12 4.5 L17 12.5 L22 8.5 L20 18.5 L4 18.5 Z"/></svg>'):'')+'<span class="nmtxt">'+winStr+' '+escapeHtml(d.name||'?')+godStr+'</span></div>'+
         '<div class="sc">'+(d.score>=0?'+':'')+d.score+'</div>'+
         '<div class="meta">'+
           '<span class="type-tag">'+(d.meType||'?')+'</span>'+
@@ -4211,6 +4273,10 @@ function showRanking(){
       listEl.innerHTML = html;
     }
     status.textContent = T('ranking_count',{n:rank});
+    // ★参加者なら特典ボタンを表示。順位はメッセージ出し分けに使用
+    window.MY_RANK = myRank;
+    var _cbtn = el('#championBtn');
+    if(_cbtn){ _cbtn.style.display = isParticipant ? '' : 'none'; }
   }).catch(function(e){
     console.error('[Firebase] 取得失敗', e);
     status.textContent = T('err_load_failed') + ': ' + e.message;
@@ -4331,6 +4397,68 @@ function isMobileDevice(){
   return /Android|iPhone|iPad|iPod|Mobile|Silk|Kindle/i.test(navigator.userAgent||'');
 }
 function makeShareImageBlob(){ return new Promise(function(res,rej){ try{ makeShareImage(function(b){ b?res(b):rej(new Error('no image')); }); }catch(e){ rej(e); } }); }
+// 特典用のSS画像（名前・順位・スコア・参加お礼・クーポン案内）をワンクリック保存
+function makeRewardImage(){
+  try{
+    var e = window.MY_ENTRY || {};
+    var ja = (LANG==='ja');
+    var W=1080, H=620;
+    var c=document.createElement('canvas'); c.width=W; c.height=H; var x=c.getContext('2d');
+    var g=x.createLinearGradient(0,0,0,H); g.addColorStop(0,'#0b0820'); g.addColorStop(.55,'#140a26'); g.addColorStop(1,'#08111e');
+    x.fillStyle=g; x.fillRect(0,0,W,H);
+    x.strokeStyle='#9b3cff'; x.lineWidth=5; x.strokeRect(16,16,W-32,H-32);
+    // β TEST バッジ（左上）
+    (function(){ x.save(); x.textAlign='left'; x.textBaseline='alphabetic'; x.font='bold 30px sans-serif';
+      var bt='β TEST',padX=18,bh=52,bx=42,by=42; var bw=x.measureText(bt).width+padX*2;
+      x.fillStyle='rgba(6,2,18,.85)'; x.fillRect(bx,by,bw,bh);
+      x.strokeStyle='#22e6e0'; x.lineWidth=3; x.strokeRect(bx,by,bw,bh);
+      x.fillStyle='#22e6e0'; x.fillText(bt,bx+padX,by+bh-17); x.restore(); })();
+    x.textAlign='center'; x.textBaseline='alphabetic';
+    x.fillStyle='#22e6e0'; x.font='bold 36px sans-serif'; x.fillText('NEON RING CLASH', W/2, 80);
+    var r = e.rank||0;
+    x.fillStyle='#ffc83a'; x.font='bold 76px sans-serif';
+    x.fillText(r>0 ? ('RANK #'+r) : 'PLAYER', W/2, 196);
+    // 名前（＋1〜3位は名前の左上に斜めの王冠＝金/銀/銅）
+    var _nm = e.name||'PLAYER';
+    x.fillStyle='#ffffff'; x.font='bold 56px sans-serif';
+    var _nmW = x.measureText(_nm).width, _nmBase=300, _nmLeft=W/2-_nmW/2, _nmTop=_nmBase-46;
+    x.fillText(_nm, W/2, _nmBase);
+    if(r>=1 && r<=3){
+      var ccol = r===1?'#ffd700':(r===2?'#d8dde6':'#cd7f32');
+      var cs=58; x.save();
+      x.translate(_nmLeft-16, _nmTop-4);
+      x.rotate(-25*Math.PI/180);
+      x.scale(cs/24, cs/24);
+      x.beginPath();
+      x.moveTo(2,8.5); x.lineTo(7,12.5); x.lineTo(12,4.5); x.lineTo(17,12.5); x.lineTo(22,8.5); x.lineTo(20,18.5); x.lineTo(4,18.5); x.closePath();
+      x.fillStyle=ccol; x.fill(); x.lineWidth=0.9; x.strokeStyle='rgba(0,0,0,.55)'; x.stroke();
+      x.restore();
+    }
+    x.fillStyle='#cfcfe6'; x.font='32px sans-serif';
+    x.fillText('SCORE '+(e.score!=null?e.score:0)+'    '+(e.meType||'')+' #'+(e.meId||'?'), W/2, 356);
+    x.fillStyle='#22e6e0'; x.font='bold 40px sans-serif';
+    x.fillText(ja?'参加してくれてありがとう！':'Thank you for playing!', W/2, 446);
+    x.fillStyle='#ffe7b0'; x.font='26px sans-serif';
+    if(ja){
+      x.fillText('この画像と一緒に @0n1force_jp へDMで', W/2, 506);
+      x.fillText('グッズ割引クーポンをお送りします', W/2, 544);
+    } else {
+      x.fillText('DM this image to @0n1force_jp', W/2, 506);
+      x.fillText('to receive a merch discount coupon', W/2, 544);
+    }
+    x.fillStyle='#7d72a8'; x.font='20px sans-serif'; x.fillText('0N1 FORCE  #0N1Battle', W/2, H-28);
+    c.toBlob(function(b){
+      if(!b){ alert(ja?'画像の生成に失敗しました':'Failed to make image'); return; }
+      var file=null; try{ file=new File([b],'neonringclash_rank.png',{type:'image/png'}); }catch(e){}
+      if(file && isMobileDevice() && canShareFiles()){
+        var txt = ja ? '参加しました！ @0n1force_jp #0N1Battle' : 'I played! @0n1force_jp #0N1Battle';
+        navigator.share({files:[file], text:txt}).catch(function(){ _downloadBlob(b,'neonringclash_rank.png'); });
+      } else {
+        _downloadBlob(b,'neonringclash_rank.png');
+      }
+    }, 'image/png');
+  }catch(err){ alert('SS error: '+(err&&err.message?err.message:err)); }
+}
 function _saveAndDrag(){
   makeShareImage(function(b){ if(b) _downloadBlob(b,'neonringclash.png'); });
   try{ alert(LANG==='ja'?'対戦画像を保存しました。\nX投稿画面にドラッグ＆ドロップで添付してください。':'Battle image saved. Drag & drop it into the X compose window.'); }catch(e){}
@@ -4944,6 +5072,45 @@ function exportRankingCSV(){
   }).catch(function(e){ alert('CSV出力失敗: '+(e&&e.message?e.message:e)); });
 }
 el('#csvExportBtn') && el('#csvExportBtn').addEventListener('click', function(){ SFX.click(); exportRankingCSV(); });
+// ===== 特典ページ（1〜3位は特別メッセージ／全参加者にお礼＋クーポン案内）=====
+el('#championBtn') && el('#championBtn').addEventListener('click', function(){
+  try{ SFX.click(); }catch(e){}
+  var r = window.MY_RANK || (window.MY_ENTRY && window.MY_ENTRY.rank) || 0;
+  var ja = (LANG==='ja');
+  var medal = r===1?'🥇':r===2?'🥈':r===3?'🥉':'';
+  var title, msg;
+  if(r>=1 && r<=3){
+    title = medal + ' ' + (ja ? ('第'+r+'位！') : ('RANK #'+r+'!'));
+    msg = ja
+      ? ('おめでとうございます！ あなたは <b>第'+r+'位</b>！<br>参加してくれてありがとう！')
+      : ('Congratulations! You placed <b>#'+r+'</b>!<br>Thank you for playing!');
+  } else {
+    title = ja ? '🎉 ありがとう！' : '🎉 Thank you!';
+    msg = ja ? '参加してくれてありがとう！' : 'Thank you for playing!';
+  }
+  el('#champTitle').textContent = title;
+  el('#champMsg').innerHTML = msg;
+  el('#champPrize').innerHTML = T('reward_coupon');
+  el('#champShotBtn').textContent = T('reward_shot');
+  el('#champDmBtn').textContent = T('reward_dm');
+  el('#champCloseBtn').textContent = T('champ_close');
+  el('#championOverlay').style.display = 'flex';
+});
+el('#champDmBtn') && el('#champDmBtn').addEventListener('click', function(){
+  try{ SFX.click(); }catch(e){}
+  window.open('https://x.com/0n1force_jp', '_blank', 'noopener');
+});
+el('#champShotBtn') && el('#champShotBtn').addEventListener('click', function(){
+  try{ SFX.click(); }catch(e){}
+  makeRewardImage();
+});
+el('#champCloseBtn') && el('#champCloseBtn').addEventListener('click', function(){
+  try{ SFX.click(); }catch(e){}
+  el('#championOverlay').style.display = 'none';
+});
+el('#championOverlay') && el('#championOverlay').addEventListener('click', function(e){
+  if(e.target === this) this.style.display = 'none';
+});
 // startBackBtnは削除済み（ホームボタン左上で代替）
 var sbb = el('#startBackBtn');
 if(sbb) sbb.addEventListener('click', function(){
@@ -5097,7 +5264,7 @@ applyI18n();
 // 特性データを読み込み（成功すれば本物の特性が反映される）
 loadTraits();
 })();
-</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 bb</div>
+</script><div style="position: fixed; right: 6px; bottom: 4px; z-index: 99999; font: 10px / 1.2 monospace; color: rgb(155, 60, 255); opacity: 0.5; pointer-events: none;">build 2026-06-01 bh</div>
 
 
 </body></html>
